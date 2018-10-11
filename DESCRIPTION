@@ -1,7 +1,7 @@
 Type: Package
 Package: MazamaCoreUtils
 Version: 0.1.0
-Title: Utility Functions for Production Level Projects
+Title: Utility Functions for Production R Code
 Authors@R: c(
     person("Jonathan", "Callahan", email="jonathan.s.callahan@gmail.com", role=c("aut","cre")),
     person("Thomas", "Bergamaschi", email="tbergama@gmail.com", role=c("aut"))
@@ -15,13 +15,12 @@ Imports:
     dplyr,
     futile.logger,
     lubridate,
-    mime,
-    stringr,
-    webutils
+    stringr
 Suggests:
     knitr,
     markdown,
-    testthat
+    testthat,
+    rmarkdown
 Description: A suite of utility functions providing functionality commonly
     needed for production level projects such as logging, error handling,
     and cache management.

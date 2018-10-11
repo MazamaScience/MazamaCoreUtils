@@ -7,11 +7,12 @@
 #' @param sortBy value to sort by when sorting eligible files for removal
 #' @return Invisibly returns the number of files removed.
 #' @description If \code{cacheDir} takes up more than \code{maxCacheSize}
-#' megabytes on disk, files wll be removed in order of oldest access time 
-#' (\code{sortBy='a'}), modification time (\code{sortBy='m'}), or creation 
-#' time, (\code{sortBy='c'}). Only files matching \code{extensions} 
-#' are eligible for removal.
-#' @examples 
+#' megabytes on disk, files will be removed in order of access time by
+#' default. Only files matching \code{extensions} are eligible for removal.
+#' Files can also be removed in order of change time with \code{sortBy='c'}  
+#' or modify time with \code{sortBy='m'}. This may be useful for removing 
+#' out of date data from a cache.
+#' @examples
 #' # Create a cache directory and fill it with 1.6 MB of data
 #' CACHE_DIR <- tempdir()
 #' write.csv(matrix(1,400,500), file=file.path(CACHE_DIR,'m1.csv'))
@@ -21,8 +22,13 @@
 #' for (file in list.files(CACHE_DIR, full.names=TRUE)) {
 #'   print(file.info(file)[,c(1,6)])
 #' }
-#' # Remove files based on last access time until we get under 1 MB
+#' # Remove files based on access time until we get under 1 MB
 #' manageCache(CACHE_DIR, extensions='csv', maxCacheSize=1, sortBy='a')
+#' for (file in list.files(CACHE_DIR, full.names=TRUE)) {
+#'   print(file.info(file)[,c(1,6)])
+#' }
+#' # Or remove files based on modify time
+#' manageCache(CACHE_DIR, extensions='csv', maxCacheSize=1, sortBy='m')
 #' for (file in list.files(CACHE_DIR, full.names=TRUE)) {
 #'   print(file.info(file)[,c(1,6)])
 #' }

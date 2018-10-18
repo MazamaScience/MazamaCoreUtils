@@ -1,5 +1,20 @@
 context("cacheManagement")
 
+test_that("manageCache() tests sortBy values", {
+  expect_error({
+    removedCount <- manageCache(tempdir(),
+                              extensions=".MazamaWebUtils-test",
+                              maxCacheSize=1e-6, # 1 Byte
+                              sortBy = "a")
+  }, NULL) # expects error
+  expect_error({
+    removedCount <- manageCache(tempdir(),
+                                extensions=".MazamaWebUtils-test",
+                                maxCacheSize=1e-6, # 1 Byte
+                                sortBy = "atime")
+  }, NA) # expects no error
+})
+
 test_that("manageCache() doesn't remove files when maxCacheSize is big", {
   # setup
   count <- 4

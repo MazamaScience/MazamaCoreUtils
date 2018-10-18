@@ -2,23 +2,23 @@
 % Please edit documentation in R/pylogger.R
 \name{logger.setup}
 \alias{logger.setup}
-\title{Set Up Python-Style Logging}
+\title{Set up python-style logging}
 \usage{
 logger.setup(traceLog = NULL, debugLog = NULL, infoLog = NULL,
   warnLog = NULL, errorLog = NULL, fatalLog = NULL)
 }
 \arguments{
-\item{traceLog}{file name or full path where \code{logger.trace()} messages will be sent}
+\item{traceLog}{File name or full path where \code{logger.trace()} messages will be sent.}
 
-\item{debugLog}{file name or full path where \code{logger.debug()} messages will be sent}
+\item{debugLog}{File name or full path where \code{logger.debug()} messages will be sent.}
 
-\item{infoLog}{file name or full path where \code{logger.info()} messages will be sent}
+\item{infoLog}{File name or full path where \code{logger.info()} messages will be sent.}
 
-\item{warnLog}{file name or full path where \code{logger.warn()} messages will be sent}
+\item{warnLog}{File name or full path where \code{logger.warn()} messages will be sent.}
 
-\item{errorLog}{file name or full path where \code{logger.error()} messages will be sent}
+\item{errorLog}{File name or full path where \code{logger.error()} messages will be sent.}
 
-\item{fatalLog}{file name or full path where \code{logger.fatal()} messages will be sent}
+\item{fatalLog}{File name or full path where \code{logger.fatal()} messages will be sent.}
 }
 \value{
 No return value.

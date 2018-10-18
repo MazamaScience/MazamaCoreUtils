@@ -1,8 +1,8 @@
 #' @name stopOnError
 #' @export
-#' @title Error Message Translator
-#' @param result return from a \code{try()} block
-#' @param err_msg custom error message
+#' @title Error message translator
+#' @param result Return from a \code{try()} block.
+#' @param err_msg Custom error message.
 #' @return Issues a \code{stop()} with an appropriate error message.
 #' @description When writing R code to be used in production systems that work
 #' with user supplied input, it is important to enclose chunks of code inside 
@@ -11,10 +11,10 @@
 #' fails
 #' 
 #' At Mazama Science we have our own internal standard for how to do error 
-#' handling in a manner that allows os to quickly navigate to the source of
+#' handling in a manner that allows us to quickly navigate to the source of
 #' errors in a production system.
 #' 
-#' The example section contains a snippet of how we use this function.
+#' The example section contains a snippet showing how we use this function.
 #' @examples 
 #' \dontrun{
 #' logger.setup()

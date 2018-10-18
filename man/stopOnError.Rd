@@ -2,14 +2,14 @@
 % Please edit documentation in R/errorHandling.R
 \name{stopOnError}
 \alias{stopOnError}
-\title{Error Message Translator}
+\title{Error message translator}
 \usage{
 stopOnError(result, err_msg = "")
 }
 \arguments{
-\item{result}{return from a \code{try()} block}
+\item{result}{Return from a \code{try()} block.}
 
-\item{err_msg}{custom error message}
+\item{err_msg}{Custom error message.}
 }
 \value{
 Issues a \code{stop()} with an appropriate error message.
@@ -22,10 +22,10 @@ messages that can be found and understood during an autopsy when something
 fails
 
 At Mazama Science we have our own internal standard for how to do error 
-handling in a manner that allows os to quickly navigate to the source of
+handling in a manner that allows us to quickly navigate to the source of
 errors in a production system.
 
-The example section contains a snippet of how we use this function.
+The example section contains a snippet showing how we use this function.
 }
 \examples{
 \dontrun{

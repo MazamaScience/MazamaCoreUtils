@@ -16,10 +16,16 @@ knitr::opts_chunk$set(
 )
 ```
 
-This vignette illustrates the usage of ```manageCache()```, a function for managing space in a web cache. It is desirable when building a web service to store commonly requested products to avoid time wasted by reproducing them. Because the cache has finite disk space allocated to it, the cache should be routinely purged of old or outdated files to make room new ones. The ```manageCache()``` utility function simplifies this process.
+When building a web service, it is desirable to save commonly 
+requested products in a cache directory to avoid time wasted reproducing them
+unnecessarily.
+Because the cache has finite disk space allocated to it, the cache should be 
+routinely purged of old or outdated files to make room new ones. The 
+```manageCache()``` utility function simplifies this process.
 
-## An Example
-Lets first make a cache directory and put some data in it.
+## A Product Cache Example
+
+Lets first make a cache directory and put some data products in it.
 
 ``` {r createCache}
 # Create a cache directory
@@ -30,7 +36,7 @@ if ( file.exists(CACHE_DIR) == FALSE ) {
 
 # Add a few files to the cache
 write.csv(matrix(1,400,500), file=file.path(CACHE_DIR,'m1.csv'))
-Sys.sleep(1) # wait a bit between each to give them different mtime
+Sys.sleep(1) # wait a bit between each to give them different mtimes
 write.csv(matrix(2,400,500), file=file.path(CACHE_DIR,'m2.csv'))
 Sys.sleep(1)
 write.csv(matrix(3,400,500), file=file.path(CACHE_DIR,'m3.csv'))
@@ -38,7 +44,8 @@ Sys.sleep(1)
 write.csv(matrix(4,400,500), file=file.path(CACHE_DIR,'m4.csv'))
 ```
 
-We can look in our new cache directory and see the four files we just added, and we can see that the directory contains about 1.5 MB of data.
+We can look in our new cache directory and see the four files we just added. 
+The directory contains about 1.5 MB of data.
 
 ``` {r checkCache}
 cachedFiles <- list.files(CACHE_DIR, full.names = TRUE)
@@ -48,9 +55,10 @@ print(list.files(CACHE_DIR))
 sprintf("Cache size = %s MB", cacheSize)
 ```
 
-In order to simulate file requests, lets read two of them to update their access time.
+In order to simulate file requests, lets read two of them to update their access 
+time.
 
-``` {r accessFiles, echo=FALSE}
+``` {r accessFiles, echo=TRUE}
 # Access two of the files, updating their atime
 invisible( read.csv(file.path(CACHE_DIR, 'm1.csv')) )
 invisible( read.csv(file.path(CACHE_DIR, 'm2.csv')) )
@@ -64,7 +72,8 @@ library(MazamaCoreUtils)
 manageCache(CACHE_DIR, extensions = 'csv', maxCacheSize = 1)
 ```
 
-When we check our cache again, we will see that the two files that were least recently accessed are gone, and the cache size is now under 1 MB.
+When we check our cache again, we will see that the two files with the oldest
+access times are gone and the cache size is now under 1 MB.
 
 ``` {r checkCacheAgain}
 # Check cache contents and total size again
@@ -75,4 +84,14 @@ print(list.files(CACHE_DIR))
 sprintf("Cache size = %s MB", cacheSize)
 ```
 
+## Other Use Cases
 
+In the case of a product cache, the most typical behavior will be to sort
+files based on last access time. The `manageCache()` function uses
+`sortBy = "atime"` as the default. It is also possible to sort based on 
+modification time `mtime` or change time `ctime`.
+
+The use case scenario for `sortBy = "mtime"` might involve files that are
+considered *stale* if the contents aren't updated.
+
+A use case scenario for `sortBy = "ctime"` is not clear.

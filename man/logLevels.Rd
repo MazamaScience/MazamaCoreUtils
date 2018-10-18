@@ -9,7 +9,7 @@
 \alias{INFO}
 \alias{DEBUG}
 \alias{TRACE}
-\title{Log Levels}
+\title{Log levels}
 \format{An object of class \code{integer} of length 1.}
 \usage{
 FATAL

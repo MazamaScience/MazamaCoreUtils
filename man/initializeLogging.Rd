@@ -2,12 +2,12 @@
 % Please edit documentation in R/initializeLogging.R
 \name{initializeLogging}
 \alias{initializeLogging}
-\title{Initialize Standard Log Files}
+\title{Initialize standard log files}
 \usage{
 initializeLogging(logDir = NULL)
 }
 \arguments{
-\item{logDir}{directory in which to write log files}
+\item{logDir}{Directory in which to write log files.}
 }
 \value{
 No return value.

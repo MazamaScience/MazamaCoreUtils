@@ -1,7 +1,7 @@
 #' @name initializeLogging
 #' @export
-#' @title Initialize Standard Log Files
-#' @param logDir directory in which to write log files
+#' @title Initialize standard log files
+#' @param logDir Directory in which to write log files.
 #' @return No return value.
 #' @description Convenience function that wraps logging initialization steps
 #' common to Mazama Science web services:

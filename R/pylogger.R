@@ -3,13 +3,13 @@
 #' @importFrom futile.logger appender.console appender.file appender.tee
 #' @importFrom futile.logger flog.appender flog.logger flog.threshold
 #' @importFrom futile.logger flog.debug flog.error flog.fatal flog.info flog.trace flog.warn
-#' @title Set Up Python-Style Logging
-#' @param traceLog file name or full path where \code{logger.trace()} messages will be sent
-#' @param debugLog file name or full path where \code{logger.debug()} messages will be sent
-#' @param infoLog file name or full path where \code{logger.info()} messages will be sent
-#' @param warnLog file name or full path where \code{logger.warn()} messages will be sent
-#' @param errorLog file name or full path where \code{logger.error()} messages will be sent
-#' @param fatalLog file name or full path where \code{logger.fatal()} messages will be sent
+#' @title Set up python-style logging
+#' @param traceLog File name or full path where \code{logger.trace()} messages will be sent.
+#' @param debugLog File name or full path where \code{logger.debug()} messages will be sent.
+#' @param infoLog File name or full path where \code{logger.info()} messages will be sent.
+#' @param warnLog File name or full path where \code{logger.warn()} messages will be sent.
+#' @param errorLog File name or full path where \code{logger.error()} messages will be sent.
+#' @param fatalLog File name or full path where \code{logger.fatal()} messages will be sent.
 #' @return No return value.
 #' @description Good logging allows package developers and users to create log files at different
 #' levels to track and debug lengthy or complex calculations. "Python-style" logging is intended
@@ -109,10 +109,10 @@ logger.setup <- function(traceLog=NULL,
 
 #' @name logger.setLevel
 #' @export
-#' @title Set Console Log Level
-#' @param level threshold level
+#' @title Set console log level
+#' @param level Threshold level.
 #' @return No return value.
-#' @description By default, the looger threshold is set to \code{FATAL} so that the console
+#' @description By default, the logger threshold is set to \code{FATAL} so that the console
 #' will typically receive no log messages. By setting the level to one of the other log levels:
 #' \code{TRACE, DEBUG, INFO, WARN, ERROR} users can see logging messages while running 
 #' commands at the command line.
@@ -131,9 +131,9 @@ logger.setLevel <- function(level) {
 
 #' @name logger.trace
 #' @export
-#' @title Python-Style Logging Statements
-#' @param msg message with format strings applied to additional arguments
-#' @param \dots additional arguments to be formatted
+#' @title Python-style logging statements
+#' @param msg Message with format strings applied to additional arguments.
+#' @param \dots Additional arguments to be formatted.
 #' @return No return value.
 #' @description After initializing the level-specific log files with \code{logger.setup(...)},
 #' this function will generate \code{TRACE} level log statements.
@@ -163,9 +163,9 @@ logger.trace <- function(msg, ...) {
 
 #' @name logger.debug
 #' @export
-#' @title Python-Style Logging Statements
-#' @param msg message with format strings applied to additional arguments
-#' @param \dots additional arguments to be formatted
+#' @title Python-style logging statements
+#' @param msg Message with format strings applied to additional arguments.
+#' @param \dots Additional arguments to be formatted.
 #' @return No return value.
 #' @description After initializing the level-specific log files with \code{logger.setup(...)},
 #' this function will generate \code{DEBUG} level log statements.
@@ -196,9 +196,9 @@ logger.debug <- function(msg, ...) {
 
 #' @name logger.info
 #' @export
-#' @title Python-Style Logging Statements
-#' @param msg message with format strings applied to additional arguments
-#' @param \dots additional arguments to be formatted
+#' @title Python-style logging statements
+#' @param msg Message with format strings applied to additional arguments.
+#' @param \dots Additional arguments to be formatted.
 #' @return No return value.
 #' @description After initializing the level-specific log files with \code{logger.setup(...)},
 #' this function will generate \code{INFO} level log statements.
@@ -230,9 +230,9 @@ logger.info <- function(msg, ...) {
 
 #' @name logger.warn
 #' @export
-#' @title Python-Style Logging Statements
-#' @param msg message with format strings applied to additional arguments
-#' @param \dots additional arguments to be formatted
+#' @title Python-style logging statements
+#' @param msg Message with format strings applied to additional arguments.
+#' @param \dots Additional arguments to be formatted.
 #' @return No return value.
 #' @description After initializing the level-specific log files with \code{logger.setup(...)},
 #' this function will generate \code{WARN} level log statements.
@@ -265,9 +265,9 @@ logger.warn <- function(msg, ...) {
 
 #' @name logger.error
 #' @export
-#' @title Python-Style Logging Statements
-#' @param msg message with format strings applied to additional arguments
-#' @param \dots additional arguments to be formatted
+#' @title Python-style logging statements
+#' @param msg Message with format strings applied to additional arguments.
+#' @param \dots Additional arguments to be formatted.
 #' @return No return value.
 #' @description After initializing the level-specific log files with \code{logger.setup(...)},
 #' this function will generate \code{ERROR} level log statements.
@@ -301,9 +301,9 @@ logger.error <- function(msg, ...) {
 
 #' @name logger.fatal
 #' @export
-#' @title Python-Style Logging Statements
-#' @param msg message with format strings applied to additional arguments
-#' @param \dots additional arguments to be formatted
+#' @title Python-style logging statements
+#' @param msg Message with format strings applied to additional arguments.
+#' @param \dots Additional arguments to be formatted.
 #' @return No return value.
 #' @description After initializing the level-specific log files with \code{logger.setup(...)},
 #' this function will generate \code{FATAL} level log statements.
@@ -356,7 +356,7 @@ stopIfNotInitialized <- function() {
 #' @docType data
 #' @name logLevels
 #' @aliases FATAL ERROR WARN INFO DEBUG TRACE
-#' @title Log Levels
+#' @title Log levels
 #' @description Log levels matching those found in \pkg{futile.logger}.
 #' Available levels include:
 #' 

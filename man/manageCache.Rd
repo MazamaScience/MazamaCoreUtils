@@ -2,15 +2,20 @@
 % Please edit documentation in R/cacheManagement.R
 \name{manageCache}
 \alias{manageCache}
-\title{Manage the Size of a Cache}
+\title{Manage the size of a cache}
+\usage{
+manageCache(cacheDir, extensions = c("html", "json", "pdf", "png"),
+  maxCacheSize = 100, sortBy = "atime")
+}
 \arguments{
-\item{cacheDir}{location of cache directory}
+\item{cacheDir}{Location of cache directory.}
 
-\item{extensions}{vector of file extensions eligible for removal}
+\item{extensions}{Vector of file extensions eligible for removal.}
 
-\item{maxCacheSize}{maximum cache size in megabytes}
+\item{maxCacheSize}{Maximum cache size in megabytes.}
 
-\item{sortBy}{value to sort by when sorting eligible files for removal}
+\item{sortBy}{Timestamp to sort by when sorting files eligible for removal.
+One of \code{atime|ctime|mtime}.}
 }
 \value{
 Invisibly returns the number of files removed.
@@ -19,9 +24,19 @@ Invisibly returns the number of files removed.
 If \code{cacheDir} takes up more than \code{maxCacheSize}
 megabytes on disk, files will be removed in order of access time by
 default. Only files matching \code{extensions} are eligible for removal.
-Files can also be removed in order of change time with \code{sortBy='c'}  
-or modify time with \code{sortBy='m'}. This may be useful for removing 
-out of date data from a cache.
+Files can also be removed in order of change time with \code{sortBy='ctime'}  
+or modification time with \code{sortBy='mtime'}. This may be useful for 
+removing out of date data from a cache.
+
+It is important to understand precisely what these timestamps
+represent:
+\itemize{
+\item{\code{atime} -- File access time: updated whenever a file is opened.}
+\item{\code{ctime} -- File change time: updated whenever a file's metadata
+changes e.g. name, permission, ownership.}
+\item{\code{mtime} -- file modification time: updated whenever a file's 
+contents change.}
+}
 }
 \examples{
 # Create a cache directory and fill it with 1.6 MB of data
@@ -33,13 +48,15 @@ write.csv(matrix(4,400,500), file=file.path(CACHE_DIR,'m4.csv'))
 for (file in list.files(CACHE_DIR, full.names=TRUE)) {
   print(file.info(file)[,c(1,6)])
 }
+
 # Remove files based on access time until we get under 1 MB
-manageCache(CACHE_DIR, extensions='csv', maxCacheSize=1, sortBy='a')
+manageCache(CACHE_DIR, extensions='csv', maxCacheSize=1, sortBy='atime')
 for (file in list.files(CACHE_DIR, full.names=TRUE)) {
   print(file.info(file)[,c(1,6)])
 }
-# Or remove files based on modify time
-manageCache(CACHE_DIR, extensions='csv', maxCacheSize=1, sortBy='m')
+
+# Or remove files based on modification time
+manageCache(CACHE_DIR, extensions='csv', maxCacheSize=1, sortBy='mtime')
 for (file in list.files(CACHE_DIR, full.names=TRUE)) {
   print(file.info(file)[,c(1,6)])
 }

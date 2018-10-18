@@ -2,14 +2,14 @@
 % Please edit documentation in R/pylogger.R
 \name{logger.debug}
 \alias{logger.debug}
-\title{Python-Style Logging Statements}
+\title{Python-style logging statements}
 \usage{
 logger.debug(msg, ...)
 }
 \arguments{
-\item{msg}{message with format strings applied to additional arguments}
+\item{msg}{Message with format strings applied to additional arguments.}
 
-\item{\dots}{additional arguments to be formatted}
+\item{\dots}{Additional arguments to be formatted.}
 }
 \value{
 No return value.

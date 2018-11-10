@@ -16,9 +16,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-When building a web service, it is desirable to save commonly 
-requested products in a cache directory to avoid time wasted reproducing them
-unnecessarily.
+When building a web service, it is desirable to save commonly requested products
+in a cache directory to avoid time wasted reproducing them unnecessarily.
 Because the cache has finite disk space allocated to it, the cache should be 
 routinely purged of old or outdated files to make room new ones. The 
 ```manageCache()``` utility function simplifies this process.
@@ -82,6 +81,28 @@ infoDF <- file.info(cachedFiles)
 cacheSize = (sum(infoDF$size) / 1e6) # in MB
 print(list.files(CACHE_DIR))
 sprintf("Cache size = %s MB", cacheSize)
+```
+
+## Removing 'Stale' Products
+
+Web services that provide access to real-time data often generate products that
+have an expiration date. Files older than a specific number of days or hours 
+should be removed from the cache because they no longer represent the current
+status.
+
+Removing stale files can also help to keep the cache much smaller than the
+absolute maximum cache size, enhancing overall performance.
+
+Stale files -- files that haven't been modified in a while -- can be removed 
+regardless of  cache size with the `maxFileAge` parameter. When this is set, 
+files with an  `mtime` older than `maxFileAge` will  be removed before any test 
+of the  `maxCacheSize`. Fractional days are allowed.
+
+You can remove standard products in the cache that haven't been modified in the 
+last 3 hours with:
+
+```
+manageCache(CACHE_DIR, maxFileAge = 3/24)
 ```
 
 ## Other Use Cases

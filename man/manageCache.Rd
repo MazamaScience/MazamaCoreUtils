@@ -5,7 +5,7 @@
 \title{Manage the size of a cache}
 \usage{
 manageCache(cacheDir, extensions = c("html", "json", "pdf", "png"),
-  maxCacheSize = 100, sortBy = "atime")
+  maxCacheSize = 100, sortBy = "atime", maxFileAge = NULL)
 }
 \arguments{
 \item{cacheDir}{Location of cache directory.}
@@ -16,6 +16,8 @@ manageCache(cacheDir, extensions = c("html", "json", "pdf", "png"),
 
 \item{sortBy}{Timestamp to sort by when sorting files eligible for removal.
 One of \code{atime|ctime|mtime}.}
+
+\item{maxFileAge}{Maximum age in days of files allowed in the cache.}
 }
 \value{
 Invisibly returns the number of files removed.
@@ -25,8 +27,12 @@ If \code{cacheDir} takes up more than \code{maxCacheSize}
 megabytes on disk, files will be removed in order of access time by
 default. Only files matching \code{extensions} are eligible for removal.
 Files can also be removed in order of change time with \code{sortBy='ctime'}  
-or modification time with \code{sortBy='mtime'}. This may be useful for 
-removing out of date data from a cache.
+or modification time with \code{sortBy='mtime'}.
+
+The \code{maxFileAge} parameter can also be used to remove files that haven't
+been modified in a certain number of days. Fractional days are allowed. This 
+removal happens without regard to the size of the cache and is useful for 
+removing out-of-date data.
 
 It is important to understand precisely what these timestamps
 represent:

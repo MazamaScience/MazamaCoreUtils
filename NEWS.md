@@ -1,18 +1,13 @@
-# Updates to the MazamaCoreUtils R Package
+# MazamaCoreUtils 0.1.2
 
-```
-A suite of utility functions providing functionality commonly needed for 
-production level projects such as logging, error handling, and cache management.
-```
-
-----
-
-## Version 0.1 -- First Version
-
-### MazamaCoreUtils 0.1.1
-
- * minor cleanup and documentation improvements
+ * Added `maxFileAge` parameter to `cacheManagement()` to help with removal of
+ out-of-data products.
+ * New dependencies on *magrittr* and *rlang* packages.
  
-### MazamaCoreUtils 0.1.0
+# MazamaCoreUtils 0.1.1
 
- * initial functionality
+ * Minor cleanup and documentation improvements.
+ 
+# MazamaCoreUtils 0.1.0
+
+ * Initial functionality.

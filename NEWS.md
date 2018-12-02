@@ -1,6 +1,9 @@
 # MazamaCoreUtils 0.1.3
 
  * Added pkgdown documentation.
+ * New `logging` vignette.
+ * Package now **Depends:** on futile.logger -- avoids `futile.logger not found`
+ error messages.
 
 # MazamaCoreUtils 0.1.2
 

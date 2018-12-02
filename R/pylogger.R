@@ -51,7 +51,7 @@ logger.setup <- function(traceLog=NULL,
                          fatalLog=NULL) {
   
   if ( ! 'futile.logger' %in% loadedNamespaces() ) {
-    requireNamespace('futile.logger', quietly=TRUE)
+    loadNamespace('futile.logger', quietly=TRUE)
   }
   
   # By default, the console receives only FATAL messages.
@@ -109,6 +109,7 @@ logger.setup <- function(traceLog=NULL,
 
 #' @name logger.setLevel
 #' @export
+#' @importFrom futile.logger flog.threshold
 #' @title Set console log level
 #' @param level Threshold level.
 #' @return No return value.
@@ -131,6 +132,7 @@ logger.setLevel <- function(level) {
 
 #' @name logger.trace
 #' @export
+#' @importFrom futile.logger flog.trace
 #' @title Python-style logging statements
 #' @param msg Message with format strings applied to additional arguments.
 #' @param \dots Additional arguments to be formatted.
@@ -163,6 +165,7 @@ logger.trace <- function(msg, ...) {
 
 #' @name logger.debug
 #' @export
+#' @importFrom futile.logger flog.debug
 #' @title Python-style logging statements
 #' @param msg Message with format strings applied to additional arguments.
 #' @param \dots Additional arguments to be formatted.
@@ -196,6 +199,7 @@ logger.debug <- function(msg, ...) {
 
 #' @name logger.info
 #' @export
+#' @importFrom futile.logger flog.debug
 #' @title Python-style logging statements
 #' @param msg Message with format strings applied to additional arguments.
 #' @param \dots Additional arguments to be formatted.
@@ -230,6 +234,7 @@ logger.info <- function(msg, ...) {
 
 #' @name logger.warn
 #' @export
+#' @importFrom futile.logger flog.warn
 #' @title Python-style logging statements
 #' @param msg Message with format strings applied to additional arguments.
 #' @param \dots Additional arguments to be formatted.
@@ -265,6 +270,7 @@ logger.warn <- function(msg, ...) {
 
 #' @name logger.error
 #' @export
+#' @importFrom futile.logger flog.error
 #' @title Python-style logging statements
 #' @param msg Message with format strings applied to additional arguments.
 #' @param \dots Additional arguments to be formatted.
@@ -301,6 +307,7 @@ logger.error <- function(msg, ...) {
 
 #' @name logger.fatal
 #' @export
+#' @importFrom futile.logger flog.fatal
 #' @title Python-style logging statements
 #' @param msg Message with format strings applied to additional arguments.
 #' @param \dots Additional arguments to be formatted.

@@ -1,0 +1,233 @@
+---
+title: "Logging"
+author: "Jonathan Callahan"
+date: "2018-12-02"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Logging}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Logging in Java and Python
+
+Operational systems, by definition, need to work without human input. Systems
+are considered "operational" after they have ben thoroughly tested and shown to
+work properly with a variety of input.
+
+However, no software is perfect and no real-world system operates with 100% 
+availability or 100% consistent input. Things occasionally go wrong -- perhaps
+intermittently. In a situation with occasional failures it is vitally important
+to have good logging information for forensic analyis.
+
+Other languages used in operational settings support logging at different levels
+of information density. The code to write out logs at these different levels
+looks very similar in java and python:
+
+**java**
+```
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.impl.Jdk14Logger;
+```
+... ugly setup of log files ...
+```
+log.error("ERROR level message");
+log.warn("WARN level message");
+log.info("INFO level message");
+log.debug("DEBUG level message");
+log.trace("TRACE level message");
+```
+
+**python**
+```
+import logging
+ 
+logging.basicConfig(filename="my_INFO.log",
+                    level=logging.INFO)
+
+logging.error("ERROR level message")
+logging.warning("WARNING level message")
+logging.info("INFO level message")
+logging.debug("DEBUG level message")
+logging.trace("TRACE level message")
+```
+
+# Logging in R
+
+The **MazamaCoreUtils** pacakge provides functions so that R logging can look
+the very similar:
+
+```
+library(MazamaCoreUtils)
+ 
+logger.setup(infoLog="my_INFO.log")
+
+logger.error("ERROR level message")
+logger.warn("WARN level message")
+logger.info("INFO level message")
+logger.debug("DEBUG level message")
+logger.trace("TRACE level message")
+```
+
+This functionality is built on top of the excellent
+[futile.logger](https://github.com/zatonovo/futile.logger) package.
+
+## Log Levels
+
+When used properly, logging at different levels lets you to create log files 
+that help you quickly navigate to the specific part of your code base that 
+generated an error.
+
+Different log levels also allow problems to be dealt with by staff with different
+skill levels. Core developers don't need to be dragged in whenever anything goes
+wrong. If a real-time web site is non-responsive, non-technical staff can be 
+assigned to look at logs to assess the situation.
+
+ * If the `ERROR` or `WARN` logs report that no data was obtained from an upstream 
+source, the problem is not with the R code.
+ * If the `INFO` log reports that incoming data was properly obtained but that
+none of it passed QC thresholds, the problem is not with the R code.
+ * If, however, these logs show everything running smoothly until some ugly R
+error message, then it is time to call in the core developers.
+
+Here are our best practices for how to use the different log levels:
+
+### ERROR
+
+`ERROR` log statements should only be generated immediately before a `stop()` is
+issued. The `ERROR.log` file should only have entries when R code failed to
+complete.
+
+### WARN
+
+`WARN` log statements imply that something unexpected happend but that R code is
+able to complete, perhaps with unpredicatble results. An appropriate use would
+be after testing the response of an internet request. R code may be able to
+trap and handle a failed request but should comment on the failure in the logs.
+
+### INFO
+
+`INFO` log statements are useful for a general overview of how your R code is
+proceeding, reflecting top level code structure and perhaps ending with a final:
+
+```
+  logger.info("Successfully completed ...")
+  logger.info("\n=============== THE END ===============\n")
+```
+
+### DEBUG
+
+`DEBUG` log statements are best used to map out the path taken through the
+code. We recommend including `DEBUG` level statements inside of top level loops
+and beginning each function with the following:
+
+```
+logger.debug("----- FUNCTION_NAME() -----")
+```
+
+### TRACE
+
+`TRACE` log statements are for the gory details of any part of your code where
+you expect or are experiencing errors. These should contain information about
+program state and are intended only for developers.
+
+# A Logging Example
+
+The following minimal example demonstrates the use of logging statements and
+their output. 
+
+```{r loggingExample}
+library(MazamaCoreUtils)
+
+# Set up logging 
+tmpDir <- tempdir()
+logger.setup(
+  errorLog = file.path(tmpDir,"ERROR.log"),
+  infoLog = file.path(tmpDir,"INFO.log"),
+  traceLog = file.path(tmpDir,"TRACE.log")
+)
+
+# Begin main program
+logger.info("Begin loggingExample ...")
+
+# Try something that might fail
+outputSums <- list()
+for ( column in names(iris) ) {
+  
+  logger.trace("Working on: %s", column)
+  
+  result <- try({
+    outputSums[[column]] <- 
+      paste0("Sum of ", column, " = ", sum(iris[[column]]))
+  }, silent = FALSE)
+  
+  if ( "try-error" %in% class(result) ) {
+    logger.warn("Oops: %s", geterrmessage())
+  }
+  
+}
+
+# Successful completion
+logger.error("NO ERRORS")
+logger.info("Successfully completed loggingExample")
+logger.info("\n=============== THE END ===============\n")
+
+# Check the output
+str(outputSums)
+```
+
+Here is what is generated in the log files:
+
+## ERROR.log
+
+```{r errorLog, echo = FALSE}
+cat(paste(readLines(file.path(tmpDir,"ERROR.log")),collapse='\n'))
+```
+
+## INFO.log
+
+```{r infoLog, echo = FALSE}
+cat(paste(readLines(file.path(tmpDir,"INFO.log")),collapse='\n'))
+```
+
+## TRACE.log
+
+```{r traceLog, echo = FALSE}
+cat(paste(readLines(file.path(tmpDir,"TRACE.log")),collapse='\n'))
+```
+
+# Extra Functionality
+
+Two more utility functions need to be mentioned
+
+### `logger.setLevel()`
+
+This function sets the log level used in the console. By default this level is
+set to `FATAL` which basically means "only when R crashes". If you are debugging
+code interactively you may wish to see log messages as the are generated by
+entering the following command:
+
+```
+logger.setLevel(TRACE)
+```
+
+### `initializeLogging()`
+
+This function is a wrapper for our typical usage. It accepts a `logDir`
+parameter and looks for `TRACE`, `DEBUG` `INFO` and `ERROR` logs in that 
+directory. If they are found, they are renamed as 
+`paste0(logLevel,".log.",timestamp)`. After renaming, new log files are setup.
+
+This is particularly useful for operational code run inside docker containers
+which may be automatically rebooted.
+
+
+

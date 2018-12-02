@@ -26,7 +26,7 @@ routinely purged of old or outdated files to make room new ones. The
 
 Lets first make a cache directory and put some data products in it.
 
-``` {r createCache}
+```{r createCache}
 # Create a cache directory
 CACHE_DIR <- file.path(tempdir(), 'cache')
 if ( file.exists(CACHE_DIR) == FALSE ) {
@@ -46,7 +46,7 @@ write.csv(matrix(4,400,500), file=file.path(CACHE_DIR,'m4.csv'))
 We can look in our new cache directory and see the four files we just added. 
 The directory contains about 1.5 MB of data.
 
-``` {r checkCache}
+```{r checkCache}
 cachedFiles <- list.files(CACHE_DIR, full.names = TRUE)
 infoDF <- file.info(cachedFiles)
 cacheSize = (sum(infoDF$size) / 1e6) # in MB
@@ -57,7 +57,7 @@ sprintf("Cache size = %s MB", cacheSize)
 In order to simulate file requests, lets read two of them to update their access 
 time.
 
-``` {r accessFiles, echo=TRUE}
+```{r accessFiles, echo=TRUE}
 # Access two of the files, updating their atime
 invisible( read.csv(file.path(CACHE_DIR, 'm1.csv')) )
 invisible( read.csv(file.path(CACHE_DIR, 'm2.csv')) )
@@ -65,7 +65,7 @@ invisible( read.csv(file.path(CACHE_DIR, 'm2.csv')) )
 
 Now, lets use ```manageCache()``` to get our cache down to 1 MB.
 
-``` {r manageCache}
+```{r manageCache}
 # Use manageCache() to get cache to 1 MB
 library(MazamaCoreUtils)
 manageCache(CACHE_DIR, extensions = 'csv', maxCacheSize = 1)
@@ -74,7 +74,7 @@ manageCache(CACHE_DIR, extensions = 'csv', maxCacheSize = 1)
 When we check our cache again, we will see that the two files with the oldest
 access times are gone and the cache size is now under 1 MB.
 
-``` {r checkCacheAgain}
+```{r checkCacheAgain}
 # Check cache contents and total size again
 cachedFiles <- list.files(CACHE_DIR, full.names = TRUE)
 infoDF <- file.info(cachedFiles)

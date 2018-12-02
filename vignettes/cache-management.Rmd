@@ -1,7 +1,7 @@
 ---
 title: "Cache Managment"
 author: "Thomas Bergamaschi"
-date: "`r Sys.Date()`"
+date: "2018-10-18"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Cache Management}

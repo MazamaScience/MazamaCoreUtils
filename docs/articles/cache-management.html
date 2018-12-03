@@ -54,6 +54,12 @@
 <li>
       <a href="../articles/cache-management.html">Cache Managment</a>
     </li>
+    <li>
+      <a href="../articles/error-handling.html">Error Handling</a>
+    </li>
+    <li>
+      <a href="../articles/logging.html">Logging</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -82,7 +88,7 @@
       <h1>Cache Managment</h1>
                         <h4 class="author">Thomas Bergamaschi</h4>
             
-            <h4 class="date">2018-12-02</h4>
+            <h4 class="date">2018-10-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/MazamaScience/MazamaCoreUtils/blob/master/vignettes/cache-management.Rmd"><code>vignettes/cache-management.Rmd</code></a></small>
       <div class="hidden name"><code>cache-management.Rmd</code></div>
@@ -125,6 +131,7 @@ cacheSize =<span class="st"> </span>(<span class="kw">sum</span>(infoDF<span cla
 <p>Now, lets use <code><a href="../reference/manageCache.html">manageCache()</a></code> to get our cache down to 1 MB.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Use manageCache() to get cache to 1 MB</span>
 <span class="kw">library</span>(MazamaCoreUtils)
+<span class="co">#&gt; Loading required package: futile.logger</span>
 <span class="kw"><a href="../reference/manageCache.html">manageCache</a></span>(CACHE_DIR, <span class="dt">extensions =</span> <span class="st">'csv'</span>, <span class="dt">maxCacheSize =</span> <span class="dv">1</span>)</code></pre></div>
 <p>When we check our cache again, we will see that the two files with the oldest access times are gone and the cache size is now under 1 MB.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Check cache contents and total size again</span>

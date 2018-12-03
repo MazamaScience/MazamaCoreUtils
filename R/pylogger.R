@@ -51,7 +51,7 @@ logger.setup <- function(traceLog=NULL,
                          fatalLog=NULL) {
   
   if ( ! 'futile.logger' %in% loadedNamespaces() ) {
-    loadNamespace('futile.logger', quietly=TRUE)
+    requireNamespace('futile.logger', quietly=TRUE)
   }
   
   # By default, the console receives only FATAL messages.

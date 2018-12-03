@@ -64,22 +64,6 @@ manageCache <- function(cacheDir,
                         sortBy = 'atime',
                         maxFileAge = NULL) {
 
-  # Debugging ------------------------------------------------------------------
-  
-  if (FALSE) {
-    
-    cacheDir <- "."
-    extensions <- "testing"
-    maxCacheSize <- 0.001
-    sortBy <- 'ctime'
-    maxFileAge <- 60
-    write.csv(matrix(1,400,500), file=file.path(cacheDir,'m1.testing'))
-    write.csv(matrix(2,400,500), file=file.path(cacheDir,'m2.testing'))
-    write.csv(matrix(3,400,500), file=file.path(cacheDir,'m3.testing'))
-    write.csv(matrix(4,400,500), file=file.path(cacheDir,'m4.testing'))
-    
-  }
-
   # Get file info --------------------------------------------------------------
   
   # Convert incoming size from megabytes to bytes

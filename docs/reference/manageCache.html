@@ -102,6 +102,12 @@ contents change.
     <li>
       <a href="../articles/cache-management.html">Cache Managment</a>
     </li>
+    <li>
+      <a href="../articles/error-handling.html">Error Handling</a>
+    </li>
+    <li>
+      <a href="../articles/logging.html">Logging</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -199,45 +205,45 @@ One of <code>atime|ctime|mtime</code>.</p></td>
 <span class='kw'>for</span> (<span class='no'>file</span> <span class='kw'>in</span> <span class='fu'>list.files</span>(<span class='no'>CACHE_DIR</span>, <span class='kw'>full.names</span><span class='kw'>=</span><span class='fl'>TRUE</span>)) {
   <span class='fu'>print</span>(<span class='fu'>file.info</span>(<span class='no'>file</span>)[,<span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>6</span>)])
 }</div><div class='output co'>#&gt;                                                                       size
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpLxF0Gz/m1.csv 405687
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//Rtmp6rTn0g/m1.csv 405687
 #&gt;                                                                                   atime
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpLxF0Gz/m1.csv 2018-12-02 08:36:41
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//Rtmp6rTn0g/m1.csv 2018-12-02 16:06:28
 #&gt;                                                                       size
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpLxF0Gz/m2.csv 405687
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//Rtmp6rTn0g/m2.csv 405687
 #&gt;                                                                                   atime
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpLxF0Gz/m2.csv 2018-12-02 08:36:41
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//Rtmp6rTn0g/m2.csv 2018-12-02 16:06:28
 #&gt;                                                                       size
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpLxF0Gz/m3.csv 405687
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//Rtmp6rTn0g/m3.csv 405687
 #&gt;                                                                                   atime
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpLxF0Gz/m3.csv 2018-12-02 08:36:42
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//Rtmp6rTn0g/m3.csv 2018-12-02 16:06:29
 #&gt;                                                                       size
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpLxF0Gz/m4.csv 405687
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//Rtmp6rTn0g/m4.csv 405687
 #&gt;                                                                                   atime
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpLxF0Gz/m4.csv 2018-12-02 08:36:42</div><div class='input'>
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//Rtmp6rTn0g/m4.csv 2018-12-02 16:06:29</div><div class='input'>
 <span class='co'># Remove files based on access time until we get under 1 MB</span>
 <span class='fu'>manageCache</span>(<span class='no'>CACHE_DIR</span>, <span class='kw'>extensions</span><span class='kw'>=</span><span class='st'>'csv'</span>, <span class='kw'>maxCacheSize</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>sortBy</span><span class='kw'>=</span><span class='st'>'atime'</span>)
 <span class='kw'>for</span> (<span class='no'>file</span> <span class='kw'>in</span> <span class='fu'>list.files</span>(<span class='no'>CACHE_DIR</span>, <span class='kw'>full.names</span><span class='kw'>=</span><span class='fl'>TRUE</span>)) {
   <span class='fu'>print</span>(<span class='fu'>file.info</span>(<span class='no'>file</span>)[,<span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>6</span>)])
 }</div><div class='output co'>#&gt;                                                                       size
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpLxF0Gz/m3.csv 405687
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//Rtmp6rTn0g/m3.csv 405687
 #&gt;                                                                                   atime
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpLxF0Gz/m3.csv 2018-12-02 08:36:42
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//Rtmp6rTn0g/m3.csv 2018-12-02 16:06:29
 #&gt;                                                                       size
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpLxF0Gz/m4.csv 405687
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//Rtmp6rTn0g/m4.csv 405687
 #&gt;                                                                                   atime
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpLxF0Gz/m4.csv 2018-12-02 08:36:42</div><div class='input'>
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//Rtmp6rTn0g/m4.csv 2018-12-02 16:06:29</div><div class='input'>
 <span class='co'># Or remove files based on modification time</span>
 <span class='fu'>manageCache</span>(<span class='no'>CACHE_DIR</span>, <span class='kw'>extensions</span><span class='kw'>=</span><span class='st'>'csv'</span>, <span class='kw'>maxCacheSize</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>sortBy</span><span class='kw'>=</span><span class='st'>'mtime'</span>)
 <span class='kw'>for</span> (<span class='no'>file</span> <span class='kw'>in</span> <span class='fu'>list.files</span>(<span class='no'>CACHE_DIR</span>, <span class='kw'>full.names</span><span class='kw'>=</span><span class='fl'>TRUE</span>)) {
   <span class='fu'>print</span>(<span class='fu'>file.info</span>(<span class='no'>file</span>)[,<span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>6</span>)])
 }</div><div class='output co'>#&gt;                                                                       size
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpLxF0Gz/m3.csv 405687
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//Rtmp6rTn0g/m3.csv 405687
 #&gt;                                                                                   atime
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpLxF0Gz/m3.csv 2018-12-02 08:36:42
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//Rtmp6rTn0g/m3.csv 2018-12-02 16:06:29
 #&gt;                                                                       size
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpLxF0Gz/m4.csv 405687
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//Rtmp6rTn0g/m4.csv 405687
 #&gt;                                                                                   atime
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpLxF0Gz/m4.csv 2018-12-02 08:36:42</div></pre>
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//Rtmp6rTn0g/m4.csv 2018-12-02 16:06:29</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

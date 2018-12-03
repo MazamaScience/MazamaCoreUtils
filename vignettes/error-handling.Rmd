@@ -1,0 +1,206 @@
+---
+title: "Error Handling"
+author: "Jonathan Callahan"
+date: "2018-12-02"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Error Handling}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+  
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Error Handling in Java and Python
+
+Operational systems, by definition, need to work without human input. Systems
+are considered "operational" after they have ben thoroughly tested and shown to
+work properly with a variety of input.
+
+However, no software is perfect and no real-world system operates with 100% 
+availability or 100% consistent input. Things occasionally go wrong -- perhaps
+intermittently. In a situation with occasional failures it is vitally important
+to have robust error handling to deal with both expected and unexpected results.
+
+Other languages used in operational settings have language statements to help
+with error handling. The code to handle errors looks very similar in java and 
+python:
+
+**java**
+```
+try {
+  myFunc(a)
+} catch (abcException e) {
+  // handle abcException
+} catch (defException e) {
+  // handle defException
+} finally {
+  // always executed after handlers
+}
+```
+
+**python**
+```
+try:
+  myFunc(a)
+except abcError:
+  # handle abcError
+except defError:
+  # handle defError
+finally:
+  # always executed after handlers
+```
+
+# Error Handling in R
+
+Not surprisingly, a functional language like R does things differently:
+
+* No language statements for error handling
+* `tryCatch()` is a function
+* Need to define warning handler function
+* Need to define error handling function
+* Scope issues
+
+Nevertheless, R's error handling functions can be made to look similar to java
+and python:
+
+```
+result <- tryCatch({
+  myFunc(a)
+}, warning = function(w) {
+  # handle all warnings
+}, error = function(e) {
+  # handle all errors
+}, finally = {
+  # always executed after handlers
+}
+```
+
+For more details see:
+
+* [Basic Error Handling with tryCatch()](http://mazamascience.com/WorkingWithData/?p=912)
+* [Exceptions and debugging - Advanced R](http://adv-r.had.co.nz/Exceptions-Debugging.html)
+
+# Simpler Error Handling in R
+
+In our experience, R's error handling is too complicated for simple use
+and requires too much from folks who don't consider themselves R-gurus.
+
+Instead, we recommend wrapping any block of code that needs error handling in
+a `try()` function and then testing the result to see if an error occurred.
+
+* `try()` is a wrapper around `tryCatch()`
+* `try()` ignores warnings
+* `try()` returns a “try-error” object on error
+* `geterrmessage()` returns latest error msg
+
+For more details see:
+
+* [Easier Error Handling with try()](http://mazamascience.com/WorkingWithData/?p=929)
+
+This strategy makes it easy to create error handling logic and easy to
+understand what it does. In the following pseudo-code please note that R 
+considers everything between `{}` to be a single *expression*:
+
+```
+result <- try{(
+  # ...
+  # lines of R code
+  # ...
+), silent = TRUE}
+
+if ( "try-error" %in% class(result) ) {
+err_msg <- geterrmessage()
+  # logging of error message
+  # detection and handling of particular error strings
+  # stop() if necessary with user friendly error strings
+}
+```
+
+# Regularized Usage in Operational Code
+
+The following utility function regularizes our handling of errors in operational
+code:
+
+### `stopOnError()`
+
+This function tests the first argument for a class of `try-error`
+and, if true, performs the following actions:
+
+ 1. creates `err_msg` from a user provided error message or, if NULL, 
+`geterrmessage()`
+ 1. logs this message with `logger.error(err_msg)`
+ 1. *throws* the potentially improved error message with `stop(err_msg)`
+
+Encouraging junior R programmers to add error handling to their code is now much
+easier. They can place any block of R code within a "try block" with the 
+following minimal syntax:
+
+```
+result <- try({
+  # ...
+  # lines of R code
+  # ...
+}, silent = FALSE)
+stopOnError(result)
+```
+
+Here is a working example demonstrating how a web service might test for user 
+input that may not have been converted from character to numeric:
+
+```{r stopOnError}
+library(MazamaCoreUtils)
+logger.setup()
+logger.setLevel(TRACE)
+
+# Arbitrarily deep in the stack we might have:
+myFunc <- function(x) {
+  a <- log(x)
+}
+
+result <- try({
+  
+  userInput <- 10
+  result <- try({
+    logger.trace("class(userInput) = %s", class(userInput))
+    myFunc(x=userInput)
+  }, silent=TRUE)
+  stopOnError(result)
+  
+}, silent = FALSE)
+
+# Continue despite any errors
+  
+result <- try({
+  userInput <- "10"
+  result <- try({
+    logger.trace("class(userInput) = %s", class(userInput))
+    myFunc(x=userInput)
+  }, silent=TRUE)
+  stopOnError(result)
+}, silent = FALSE)
+
+# Continue despite any errors
+
+result <- try({
+  result <- try({
+    logger.trace("class(userInput) = %s", class(userInput))
+    myFunc(x=userInput)
+  }, silent=TRUE)
+  stopOnError(result, "Unable to process user input")
+}, silent = FALSE)
+
+# Script completes with errors handled as they occurred
+```
+
+
+
+
+
+
+

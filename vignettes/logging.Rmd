@@ -62,7 +62,7 @@ logging.trace("TRACE level message")
 
 # Logging in R
 
-The **MazamaCoreUtils** pacakge provides functions so that R logging can look
+The **MazamaCoreUtils** package provides functions so that R logging can look
 very similar:
 
 ```

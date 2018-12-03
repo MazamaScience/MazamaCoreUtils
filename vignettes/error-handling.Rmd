@@ -108,11 +108,11 @@ understand what it does. In the following pseudo-code please note that R
 considers everything between `{}` to be a single *expression*:
 
 ```
-result <- try{(
+result <- try({
   # ...
   # lines of R code
   # ...
-), silent = TRUE}
+}, silent = TRUE)
 
 if ( "try-error" %in% class(result) ) {
 err_msg <- geterrmessage()

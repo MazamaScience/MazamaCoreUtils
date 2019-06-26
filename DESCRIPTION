@@ -1,12 +1,14 @@
 Type: Package
 Package: MazamaCoreUtils
-Version: 0.1.3
+Version: 0.1.900
 Title: Utility Functions for Production R Code
 Authors@R: c(
     person("Jonathan", "Callahan", email="jonathan.s.callahan@gmail.com", role=c("aut","cre")),
+    person("Spencer", "Pease", email="spencerpease618@gmail.com", role=c("aut")),
     person("Thomas", "Bergamaschi", email="tbergama@gmail.com", role=c("aut"))
     )
 Author: Jonathan Callahan [aut, cre],
+    Spencer Pease [aut],
     Thomas Bergamaschi [aut] 
 Maintainer: Jonathan Callahan <jonathan.s.callahan@gmail.com>
 Description: A suite of utility functions providing functionality commonly
@@ -21,7 +23,8 @@ Depends:
 Imports:
     dplyr,
     lubridate,
-    stringr
+    stringr,
+    magrittr
 Suggests:
     knitr,
     markdown,
@@ -30,4 +33,4 @@ Suggests:
 Encoding: UTF-8
 VignetteBuilder: knitr
 LazyData: true
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1

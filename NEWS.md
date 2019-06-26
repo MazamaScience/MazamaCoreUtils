@@ -1,3 +1,7 @@
+# MazamaCoreUtils 0.1.900
+
+ * Added `dateRange()` function.
+ 
 # MazamaCoreUtils 0.1.3
 
  * Added pkgdown documentation.

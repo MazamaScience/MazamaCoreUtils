@@ -1,3 +1,9 @@
+# MazamaCoreUtils 0.1.901
+
+ * Add linter
+ * Add `Rproj` file
+ * Minor style refactor
+
 # MazamaCoreUtils 0.1.900
 
  * Added `dateRange()` function.

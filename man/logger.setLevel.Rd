@@ -14,12 +14,13 @@ No return value.
 }
 \description{
 By default, the logger threshold is set to \code{FATAL} so that the console
-will typically receive no log messages. By setting the level to one of the other log levels:
-\code{TRACE, DEBUG, INFO, WARN, ERROR} users can see logging messages while running 
-commands at the command line.
+will typically receive no log messages. By setting the level to one of the
+other log levels: \code{TRACE, DEBUG, INFO, WARN, ERROR} users can see
+logging messages while running commands at the command line.
 }
 \note{
-All functionality is built on top of the excellent \pkg{futile.logger} package.
+All functionality is built on top of the excellent \pkg{futile.logger}
+  package.
 }
 \examples{
 \dontrun{
@@ -27,6 +28,7 @@ All functionality is built on top of the excellent \pkg{futile.logger} package.
 logger.setup()
 logger.setLevel(DEBUG)
 }
+
 }
 \seealso{
 \code{\link{logger.setup}}

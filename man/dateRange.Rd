@@ -8,22 +8,24 @@ dateRange(startdate = NULL, enddate = NULL, days = 7,
   timezone = "UTC", unit = "sec")
 }
 \arguments{
-\item{startdate}{desired start datetime (ISO 8601)}
+\item{startdate}{Desired start datetime (ISO 8601).}
 
-\item{enddate}{desired end datetime (ISO 8601)}
+\item{enddate}{Desired end datetime (ISO 8601).}
 
-\item{days}{number of days of data to include}
+\item{days}{Number of days of data to include.}
 
-\item{timezone}{Olson timezone used to interpret dates}
+\item{timezone}{Olson timezone used to interpret dates.}
 
-\item{unit}{units used to determine enddates final timestep}
+\item{unit}{Units used to determine enddates final timestep.}
 }
 \value{
 A vector of two \code{POSIXct}s.
 }
 \description{
 Uses incoming parameters to return a pair of \code{POSIXct}
-times in the proper order. This function always rounds to day boundaries.
+times in the proper order. The first returned time will be midnight of
+the desired starting date. The second returned time will represent the
+"end of the day" of the requested or calcualted \code{enddate}.
 
 Dates can be anything that is understood by 
 \code{lubrdiate::parse_date_time()} including either of the following 
@@ -35,6 +37,25 @@ recommended formats:
 }
 }
 \note{
-The ending \code{POSIXct} will end one \code{unit} before the specified
-\code{enddate}.
+The second of the returned \code{POSIXct}s will end one \code{unit} 
+before the specified \code{enddate}. Acceptable units are 
+\code{"day", "hour", "min", "sec"}.
+
+The aim is to quickly calculate full-day date ranges for time series whose 
+values are binned at different units. Thus, if \code{unit = "min"}, the 
+returned value associated with \code{enddate} will always be at 23:59:00
+in the requested time zone.
+
+Because the returned values always satisfy full-day date ranges, 
+specifying \code{unit = "day"} will cause the returned \code{enddate} to
+be associated with 00:00:00 of the following day.
+}
+\examples{
+dateRange("2019-01-08")
+dateRange("2019-01-08", unit = "min")
+dateRange("2019-01-08", unit = "hour")
+dateRange("2019-01-08", unit = "day")
+dateRange("2019-01-08", "2019-01-11")
+dateRange(enddate = 20190112, days = 3, 
+          unit = "day", timezone = "America/Los_Angeles")
 }

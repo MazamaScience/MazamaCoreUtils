@@ -1,35 +1,51 @@
+#' @title Set up python-style logging
+#'
+#' @description
+#' Good logging allows package developers and users to create log files at
+#' different levels to track and debug lengthy or complex calculations.
+#' "Python-style" logging is intended to suggest that users should set up
+#' multiple log files for different log severities so that the \code{errorLog}
+#' will contain only log messages at or above the \code{ERROR} level while a
+#' \code{debugLog} will contain log messages at the \code{DEBUG} level as well
+#' as all higher levels.
+#'
+#' Python-style log files are set up with \code{logger.setup()}. Logs can be set
+#' up for any combination of log levels. Accepting the default \code{NULL}
+#' setting for any log file simply means that log file will not be created.
+#'
+#' Python-style logging requires the use of \code{logger.debug()} style logging
+#' statements as seen in the example below.
+#'
+#' @param traceLog File name or full path where \code{logger.trace()} messages
+#'   will be sent.
+#' @param debugLog File name or full path where \code{logger.debug()} messages
+#'   will be sent.
+#' @param infoLog File name or full path where \code{logger.info()} messages
+#'   will be sent.
+#' @param warnLog File name or full path where \code{logger.warn()} messages
+#'   will be sent.
+#' @param errorLog File name or full path where \code{logger.error()} messages
+#'   will be sent.
+#' @param fatalLog File name or full path where \code{logger.fatal()} messages
+#'   will be sent.
+#' @return No return value.
+#'
+#' @note All functionality is built on top of the excellent \pkg{futile.logger}
+#'   package.
+#'
 #' @name logger.setup
-#' @export
+#'
 #' @importFrom futile.logger appender.console appender.file appender.tee
 #' @importFrom futile.logger flog.appender flog.logger flog.threshold
-#' @importFrom futile.logger flog.debug flog.error flog.fatal flog.info flog.trace flog.warn
-#' @title Set up python-style logging
-#' @param traceLog File name or full path where \code{logger.trace()} messages will be sent.
-#' @param debugLog File name or full path where \code{logger.debug()} messages will be sent.
-#' @param infoLog File name or full path where \code{logger.info()} messages will be sent.
-#' @param warnLog File name or full path where \code{logger.warn()} messages will be sent.
-#' @param errorLog File name or full path where \code{logger.error()} messages will be sent.
-#' @param fatalLog File name or full path where \code{logger.fatal()} messages will be sent.
-#' @return No return value.
-#' @description Good logging allows package developers and users to create log files at different
-#' levels to track and debug lengthy or complex calculations. "Python-style" logging is intended
-#' to suggest that users should set up multiple log files for different log severities 
-#' so that the \code{errorLog} will contain only log messages at or above the \code{ERROR} level while
-#' a \code{debugLog} will contain log messages at the \code{DEBUG} level as well as all higher
-#' levels.
-#' 
-#' Python-style log files are set up with \code{logger.setup()}. Logs can be set up for any
-#' combination of log levels. Accepting the default \code{NULL} setting for any log file
-#' simply means that log file will not be created.
-#' 
-#' Python-style logging requires the use of \code{logger.debug()} style logging statements as seen
-#' in the example below.
-#' @note All functionality is built on top of the excellent \pkg{futile.logger} package.
+#' @importFrom futile.logger flog.debug flog.error flog.fatal flog.info
+#'   flog.trace flog.warn
+#' @export
+#'
 #' @examples
 #' \dontrun{
 #' # Only save three log files
 #' logger.setup(debugLog='debug.log', infoLog='info.log', errorLog='error.log')
-#' 
+#'
 #' # But allow lot statements at all levels within the code
 #' logger.trace('trace statement #%d', 1)
 #' logger.debug('debug statement')
@@ -39,94 +55,106 @@
 #' logger.error('error message: %s', geterrmessage())
 #' logger.fatal('fatal statement %s', "THE END")
 #' }
-#' @seealso \code{\link{logger.trace}} \code{\link{logger.debug}}  \code{\link{logger.info}}
-#' \code{\link{logger.warn}} \code{\link{logger.error}} \code{\link{logger.fatal}}
-
+#'
+#' @seealso \code{\link{logger.trace}} \code{\link{logger.debug}}
+#'   \code{\link{logger.info}} \code{\link{logger.warn}}
+#'   \code{\link{logger.error}} \code{\link{logger.fatal}}
+#'
 # Set up logging namespaces
-logger.setup <- function(traceLog=NULL,
-                         debugLog=NULL,
-                         infoLog=NULL,
-                         warnLog=NULL,
-                         errorLog=NULL,
-                         fatalLog=NULL) {
-  
-  if ( ! 'futile.logger' %in% loadedNamespaces() ) {
-    requireNamespace('futile.logger', quietly=TRUE)
+logger.setup <- function(traceLog = NULL,
+                         debugLog = NULL,
+                         infoLog = NULL,
+                         warnLog = NULL,
+                         errorLog = NULL,
+                         fatalLog = NULL) {
+
+  if (! "futile.logger" %in% loadedNamespaces()) {
+    requireNamespace("futile.logger", quietly = TRUE)
   }
-  
+
   # By default, the console receives only FATAL messages.
   flog.threshold(FATAL)
-  
+
   # Set up TRACE logging
-  if ( is.null(traceLog) ) {
-    invisible( flog.logger("trace", TRACE, appender.null()) )
+  if (is.null(traceLog)) {
+    invisible(flog.logger("trace", TRACE, appender.null()))
   } else {
-    if ( file.exists(traceLog) ) result <- file.remove(traceLog)
-    invisible( flog.logger("trace", TRACE, appender.file(traceLog)) )
+    if (file.exists(traceLog)) result <- file.remove(traceLog)
+    invisible(flog.logger("trace", TRACE, appender.file(traceLog)))
   }
-  
+
   # Set up DEBUG logging
-  if ( is.null(debugLog) ) {
-    invisible( flog.logger("debug", DEBUG, appender.null()) )
+  if (is.null(debugLog)) {
+    invisible(flog.logger("debug", DEBUG, appender.null()))
   } else {
-    if ( file.exists(debugLog) ) result <- file.remove(debugLog)
-    invisible( flog.logger("debug", DEBUG, appender.file(debugLog)) )
+    if (file.exists(debugLog)) result <- file.remove(debugLog)
+    invisible(flog.logger("debug", DEBUG, appender.file(debugLog)))
   }
-  
+
   # Set up INFO logging
-  if ( is.null(infoLog) ) {
-    invisible( flog.logger("info", INFO, appender.null()) )
+  if (is.null(infoLog)) {
+    invisible(flog.logger("info", INFO, appender.null()))
   } else {
-    if ( file.exists(infoLog) ) result <- file.remove(infoLog)
-    invisible( flog.logger("info", INFO, appender.file(infoLog)) )
+    if (file.exists(infoLog)) result <- file.remove(infoLog)
+    invisible(flog.logger("info", INFO, appender.file(infoLog)))
   }
-  
+
   # Set up WARN logging
-  if ( is.null(warnLog) ) {
-    invisible( flog.logger("warn", WARN, appender.null()) )
+  if (is.null(warnLog)) {
+    invisible(flog.logger("warn", WARN, appender.null()))
   } else {
-    if ( file.exists(warnLog) ) result <- file.remove(warnLog)
-    invisible( flog.logger("warn", WARN, appender.file(warnLog)) )
+    if (file.exists(warnLog)) result <- file.remove(warnLog)
+    invisible(flog.logger("warn", WARN, appender.file(warnLog)))
   }
-  
+
   # Set up ERROR logging
-  if ( is.null(errorLog) ) {
-    invisible( flog.logger("error", ERROR, appender.null()) )
+  if (is.null(errorLog)) {
+    invisible(flog.logger("error", ERROR, appender.null()))
   } else {
-    if ( file.exists(errorLog) ) result <- file.remove(errorLog)
-    invisible( flog.logger("error", ERROR, appender.file(errorLog)) )
+    if (file.exists(errorLog)) result <- file.remove(errorLog)
+    invisible(flog.logger("error", ERROR, appender.file(errorLog)))
   }
-  
+
   # Set up FATAL logging
-  if ( is.null(fatalLog) ) {
-    invisible( flog.appender(appender.console(), name='ROOT') )
+  if (is.null(fatalLog)) {
+    invisible(flog.appender(appender.console(), name = "ROOT"))
   } else {
-    if ( file.exists(fatalLog) ) result <- file.remove(fatalLog)
-    invisible( flog.appender(appender.tee(fatalLog)) )
+    if (file.exists(fatalLog)) result <- file.remove(fatalLog)
+    invisible(flog.appender(appender.tee(fatalLog)))
   }
-  
+
 }
 
-#' @name logger.setLevel
-#' @export
-#' @importFrom futile.logger flog.threshold
+
 #' @title Set console log level
+#'
+#' @description
+#' By default, the logger threshold is set to \code{FATAL} so that the console
+#' will typically receive no log messages. By setting the level to one of the
+#' other log levels: \code{TRACE, DEBUG, INFO, WARN, ERROR} users can see
+#' logging messages while running commands at the command line.
+#'
 #' @param level Threshold level.
 #' @return No return value.
-#' @description By default, the logger threshold is set to \code{FATAL} so that the console
-#' will typically receive no log messages. By setting the level to one of the other log levels:
-#' \code{TRACE, DEBUG, INFO, WARN, ERROR} users can see logging messages while running 
-#' commands at the command line.
-#' @note All functionality is built on top of the excellent \pkg{futile.logger} package.
-#' @seealso \code{\link{logger.setup}}
+#'
+#' @note All functionality is built on top of the excellent \pkg{futile.logger}
+#'   package.
+#'
+#' @name logger.setLevel
+#' @importFrom futile.logger flog.threshold
+#' @export
+#'
 #' @examples
 #' \dontrun{
 #' # Set up console logging only
 #' logger.setup()
 #' logger.setLevel(DEBUG)
 #' }
+#'
+#' @seealso \code{\link{logger.setup}}
+#'
 logger.setLevel <- function(level) {
-  invisible( flog.threshold(level) )
+  invisible(flog.threshold(level))
 }
 
 
@@ -144,7 +172,7 @@ logger.setLevel <- function(level) {
 #' \dontrun{
 #' # Only save three log files
 #' logger.setup(debugLog='debug.log', infoLog='info.log', errorLog='error.log')
-#' 
+#'
 #' # But allow log statements at all levels within the code
 #' logger.trace('trace statement #%d', 1)
 #' logger.debug('debug statement')
@@ -159,8 +187,8 @@ logger.setLevel <- function(level) {
 # Log at the TRACE level
 logger.trace <- function(msg, ...) {
   stopIfNotInitialized()
-  flog.trace(msg, ..., name='ROOT')
-  flog.trace(msg, ..., name='trace')
+  flog.trace(msg, ..., name = "ROOT")
+  flog.trace(msg, ..., name = "trace")
 }
 
 #' @name logger.debug
@@ -177,7 +205,7 @@ logger.trace <- function(msg, ...) {
 #' \dontrun{
 #' # Only save three log files
 #' logger.setup(debugLog='debug.log', infoLog='info.log', errorLog='error.log')
-#' 
+#'
 #' # But allow log statements at all levels within the code
 #' logger.trace('trace statement #%d', 1)
 #' logger.debug('debug statement')
@@ -192,9 +220,9 @@ logger.trace <- function(msg, ...) {
 # Log at the DEBUG level
 logger.debug <- function(msg, ...) {
   stopIfNotInitialized()
-  flog.debug(msg, ..., name='ROOT')
-  flog.debug(msg, ..., name='trace')
-  flog.debug(msg, ..., name='debug')
+  flog.debug(msg, ..., name = "ROOT")
+  flog.debug(msg, ..., name = "trace")
+  flog.debug(msg, ..., name = "debug")
 }
 
 #' @name logger.info
@@ -211,7 +239,7 @@ logger.debug <- function(msg, ...) {
 #' \dontrun{
 #' # Only save three log files
 #' logger.setup(debugLog='debug.log', infoLog='info.log', errorLog='error.log')
-#' 
+#'
 #' # But allow log statements at all levels within the code
 #' logger.trace('trace statement #%d', 1)
 #' logger.debug('debug statement')
@@ -226,10 +254,10 @@ logger.debug <- function(msg, ...) {
 # Log at the INFO level
 logger.info <- function(msg, ...) {
   stopIfNotInitialized()
-  flog.info(msg, ..., name='ROOT')
-  flog.info(msg, ..., name='trace')
-  flog.info(msg, ..., name='debug')
-  flog.info(msg, ..., name='info')
+  flog.info(msg, ..., name = "ROOT")
+  flog.info(msg, ..., name = "trace")
+  flog.info(msg, ..., name = "debug")
+  flog.info(msg, ..., name = "info")
 }
 
 #' @name logger.warn
@@ -246,7 +274,7 @@ logger.info <- function(msg, ...) {
 #' \dontrun{
 #' # Only save three log files
 #' logger.setup(debugLog='debug.log', infoLog='info.log', errorLog='error.log')
-#' 
+#'
 #' # But allow log statements at all levels within the code
 #' logger.trace('trace statement #%d', 1)
 #' logger.debug('debug statement')
@@ -261,11 +289,11 @@ logger.info <- function(msg, ...) {
 # Log at the WARN level
 logger.warn <- function(msg, ...) {
   stopIfNotInitialized()
-  flog.warn(msg, ..., name='ROOT')
-  flog.warn(msg, ..., name='trace')
-  flog.warn(msg, ..., name='debug')
-  flog.warn(msg, ..., name='info')
-  flog.warn(msg, ..., name='warn')
+  flog.warn(msg, ..., name = "ROOT")
+  flog.warn(msg, ..., name = "trace")
+  flog.warn(msg, ..., name = "debug")
+  flog.warn(msg, ..., name = "info")
+  flog.warn(msg, ..., name = "warn")
 }
 
 #' @name logger.error
@@ -282,7 +310,7 @@ logger.warn <- function(msg, ...) {
 #' \dontrun{
 #' # Only save three log files
 #' logger.setup(debugLog='debug.log', infoLog='info.log', errorLog='error.log')
-#' 
+#'
 #' # But allow log statements at all levels within the code
 #' logger.trace('trace statement #%d', 1)
 #' logger.debug('debug statement')
@@ -297,12 +325,12 @@ logger.warn <- function(msg, ...) {
 # Log at the ERROR level
 logger.error <- function(msg, ...) {
   stopIfNotInitialized()
-  flog.error(msg, ..., name='ROOT')
-  flog.error(msg, ..., name='trace')
-  flog.error(msg, ..., name='debug')
-  flog.error(msg, ..., name='info')
-  flog.error(msg, ..., name='warn')
-  flog.error(msg, ..., name='error')
+  flog.error(msg, ..., name = "ROOT")
+  flog.error(msg, ..., name = "trace")
+  flog.error(msg, ..., name = "debug")
+  flog.error(msg, ..., name = "info")
+  flog.error(msg, ..., name = "warn")
+  flog.error(msg, ..., name = "error")
 }
 
 #' @name logger.fatal
@@ -319,7 +347,7 @@ logger.error <- function(msg, ...) {
 #' \dontrun{
 #' # Only save three log files
 #' logger.setup(debugLog='debug.log', infoLog='info.log', errorLog='error.log')
-#' 
+#'
 #' # But allow log statements at all levels within the code
 #' logger.trace('trace statement #%d', 1)
 #' logger.debug('debug statement')
@@ -334,15 +362,15 @@ logger.error <- function(msg, ...) {
 # Log at the fatal level
 logger.fatal <- function(msg, ...) {
   stopIfNotInitialized()
-  flog.fatal(msg, ..., name='ROOT')
-  flog.fatal(msg, ..., name='trace')
-  flog.fatal(msg, ..., name='debug')
-  flog.fatal(msg, ..., name='info')
-  flog.fatal(msg, ..., name='warn')
-  flog.fatal(msg, ..., name='error')
+  flog.fatal(msg, ..., name = "ROOT")
+  flog.fatal(msg, ..., name = "trace")
+  flog.fatal(msg, ..., name = "debug")
+  flog.fatal(msg, ..., name = "info")
+  flog.fatal(msg, ..., name = "warn")
+  flog.fatal(msg, ..., name = "error")
 }
 
-# ----- Utility functions -----------------------------------------------------
+# Utility functions ------------------------------------------------------------
 
 # This function is missing from futile.logger
 appender.null <- function() {
@@ -351,13 +379,16 @@ appender.null <- function() {
 
 # Quick test if futile.logger namespace is loaded
 stopIfNotInitialized <- function() {
-  if ( ! 'futile.logger' %in% loadedNamespaces() ) {
-    stop("You must initialize with 'logger.setup()' before issuing logger statements.", call.=FALSE)
+  if (! "futile.logger" %in% loadedNamespaces()) {
+    stop(
+      "You must initialize with 'logger.setup()' before issuing logger statements.",
+      call. = FALSE
+    )
   }
 }
 
 
-# ----- Constants -------------------------------------------------------------
+# Constants --------------------------------------------------------------------
 
 # Verbatim values from constants
 #' @docType data
@@ -366,7 +397,7 @@ stopIfNotInitialized <- function() {
 #' @title Log levels
 #' @description Log levels matching those found in \pkg{futile.logger}.
 #' Available levels include:
-#' 
+#'
 #' \code{FATAL ERROR WARN INFO DEBUG TRACE}
 #' @export
 FATAL <- 1L

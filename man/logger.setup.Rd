@@ -8,38 +8,46 @@ logger.setup(traceLog = NULL, debugLog = NULL, infoLog = NULL,
   warnLog = NULL, errorLog = NULL, fatalLog = NULL)
 }
 \arguments{
-\item{traceLog}{File name or full path where \code{logger.trace()} messages will be sent.}
+\item{traceLog}{File name or full path where \code{logger.trace()} messages
+will be sent.}
 
-\item{debugLog}{File name or full path where \code{logger.debug()} messages will be sent.}
+\item{debugLog}{File name or full path where \code{logger.debug()} messages
+will be sent.}
 
-\item{infoLog}{File name or full path where \code{logger.info()} messages will be sent.}
+\item{infoLog}{File name or full path where \code{logger.info()} messages
+will be sent.}
 
-\item{warnLog}{File name or full path where \code{logger.warn()} messages will be sent.}
+\item{warnLog}{File name or full path where \code{logger.warn()} messages
+will be sent.}
 
-\item{errorLog}{File name or full path where \code{logger.error()} messages will be sent.}
+\item{errorLog}{File name or full path where \code{logger.error()} messages
+will be sent.}
 
-\item{fatalLog}{File name or full path where \code{logger.fatal()} messages will be sent.}
+\item{fatalLog}{File name or full path where \code{logger.fatal()} messages
+will be sent.}
 }
 \value{
 No return value.
 }
 \description{
-Good logging allows package developers and users to create log files at different
-levels to track and debug lengthy or complex calculations. "Python-style" logging is intended
-to suggest that users should set up multiple log files for different log severities 
-so that the \code{errorLog} will contain only log messages at or above the \code{ERROR} level while
-a \code{debugLog} will contain log messages at the \code{DEBUG} level as well as all higher
-levels.
+Good logging allows package developers and users to create log files at
+different levels to track and debug lengthy or complex calculations.
+"Python-style" logging is intended to suggest that users should set up
+multiple log files for different log severities so that the \code{errorLog}
+will contain only log messages at or above the \code{ERROR} level while a
+\code{debugLog} will contain log messages at the \code{DEBUG} level as well
+as all higher levels.
 
-Python-style log files are set up with \code{logger.setup()}. Logs can be set up for any
-combination of log levels. Accepting the default \code{NULL} setting for any log file
-simply means that log file will not be created.
+Python-style log files are set up with \code{logger.setup()}. Logs can be set
+up for any combination of log levels. Accepting the default \code{NULL}
+setting for any log file simply means that log file will not be created.
 
-Python-style logging requires the use of \code{logger.debug()} style logging statements as seen
-in the example below.
+Python-style logging requires the use of \code{logger.debug()} style logging
+statements as seen in the example below.
 }
 \note{
-All functionality is built on top of the excellent \pkg{futile.logger} package.
+All functionality is built on top of the excellent \pkg{futile.logger}
+  package.
 }
 \examples{
 \dontrun{
@@ -55,8 +63,10 @@ result <- try(1/"a", silent=TRUE)
 logger.error('error message: \%s', geterrmessage())
 logger.fatal('fatal statement \%s', "THE END")
 }
+
 }
 \seealso{
-\code{\link{logger.trace}} \code{\link{logger.debug}}  \code{\link{logger.info}}
-\code{\link{logger.warn}} \code{\link{logger.error}} \code{\link{logger.fatal}}
+\code{\link{logger.trace}} \code{\link{logger.debug}}
+  \code{\link{logger.info}} \code{\link{logger.warn}}
+  \code{\link{logger.error}} \code{\link{logger.fatal}}
 }

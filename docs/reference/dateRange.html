@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Set console log level — logger.setLevel • MazamaCoreUtils</title>
+<title>Create a POSIXct date range — dateRange • MazamaCoreUtils</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,12 +30,17 @@
 
 
 
-<meta property="og:title" content="Set console log level — logger.setLevel" />
+<meta property="og:title" content="Create a POSIXct date range — dateRange" />
 
-<meta property="og:description" content="By default, the logger threshold is set to FATAL so that the console
-will typically receive no log messages. By setting the level to one of the
-other log levels: TRACE, DEBUG, INFO, WARN, ERROR users can see
-logging messages while running commands at the command line." />
+<meta property="og:description" content="Uses incoming parameters to return a pair of POSIXct
+times in the proper order. This function always rounds to day boundaries.
+Dates can be anything that is understood by 
+lubrdiate::parse_date_time() including either of the following 
+recommended formats:
+
+&quot;YYYYmmdd&quot;
+&quot;YYYY-mm-dd&quot;
+" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -123,52 +128,63 @@ logging messages while running commands at the command line." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Set console log level</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/R/pylogger.R'><code>R/pylogger.R</code></a></small>
-    <div class="hidden name"><code>logger.setLevel.Rd</code></div>
+    <h1>Create a POSIXct date range</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/R/utils-time.R'><code>R/utils-time.R</code></a></small>
+    <div class="hidden name"><code>dateRange.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>By default, the logger threshold is set to <code>FATAL</code> so that the console
-will typically receive no log messages. By setting the level to one of the
-other log levels: <code>TRACE, DEBUG, INFO, WARN, ERROR</code> users can see
-logging messages while running commands at the command line.</p>
+    <p>Uses incoming parameters to return a pair of <code>POSIXct</code>
+times in the proper order. This function always rounds to day boundaries.</p>
+<p>Dates can be anything that is understood by 
+<code>lubrdiate::parse_date_time()</code> including either of the following 
+recommended formats:</p>
+<ul>
+<li><p><code>"YYYYmmdd"</code></p></li>
+<li><p><code>"YYYY-mm-dd"</code></p></li>
+</ul>
     
     </div>
 
-    <pre class="usage"><span class='fu'>logger.setLevel</span>(<span class='no'>level</span>)</pre>
+    <pre class="usage"><span class='fu'>dateRange</span>(<span class='kw'>startdate</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>enddate</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>days</span> <span class='kw'>=</span> <span class='fl'>7</span>,
+  <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"sec"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>level</th>
-      <td><p>Threshold level.</p></td>
+      <th>startdate</th>
+      <td><p>desired start datetime (ISO 8601)</p></td>
+    </tr>
+    <tr>
+      <th>enddate</th>
+      <td><p>desired end datetime (ISO 8601)</p></td>
+    </tr>
+    <tr>
+      <th>days</th>
+      <td><p>number of days of data to include</p></td>
+    </tr>
+    <tr>
+      <th>timezone</th>
+      <td><p>Olson timezone used to interpret dates</p></td>
+    </tr>
+    <tr>
+      <th>unit</th>
+      <td><p>units used to determine enddates final timestep</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>No return value.</p>
+    <p>A vector of two <code>POSIXct</code>s.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>All functionality is built on top of the excellent <span class="pkg">futile.logger</span>
-  package.</p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='logger.setup.html'>logger.setup</a></code></p></div>
+    <p>The ending <code>POSIXct</code> will end one <code>unit</code> before the specified
+<code>enddate</code>.</p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># Set up console logging only</span>
-<span class='fu'><a href='logger.setup.html'>logger.setup</a></span>()
-<span class='fu'>logger.setLevel</span>(<span class='no'>DEBUG</span>)
-<span class='co'># }</span><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -178,11 +194,7 @@ logging messages while running commands at the command line.</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#note">Note</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
   </div>
 </div>

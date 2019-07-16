@@ -36,8 +36,8 @@
 times in the proper order. The first returned time will be midnight of
 the desired starting date. The second returned time will represent the
 &quot;end of the day&quot; of the requested or calcualted enddate.
-Dates can be anything that is understood by 
-lubrdiate::parse_date_time() including either of the following 
+Dates can be anything that is understood by
+lubrdiate::parse_date_time() including either of the following
 recommended formats:
 
 &quot;YYYYmmdd&quot;
@@ -73,7 +73,7 @@ recommended formats:
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.902</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -141,8 +141,8 @@ recommended formats:
 times in the proper order. The first returned time will be midnight of
 the desired starting date. The second returned time will represent the
 "end of the day" of the requested or calcualted <code>enddate</code>.</p>
-<p>Dates can be anything that is understood by 
-<code>lubrdiate::parse_date_time()</code> including either of the following 
+<p>Dates can be anything that is understood by
+<code>lubrdiate::parse_date_time()</code> including either of the following
 recommended formats:</p>
 <ul>
 <li><p><code>"YYYYmmdd"</code></p></li>
@@ -175,7 +175,7 @@ recommended formats:</p>
     </tr>
     <tr>
       <th>unit</th>
-      <td><p>Units used to determine enddates final timestep.</p></td>
+      <td><p>Units used to determine time at end-of-day.</p></td>
     </tr>
     </table>
     
@@ -185,14 +185,14 @@ recommended formats:</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>The second of the returned <code>POSIXct</code>s will end one <code>unit</code> 
-before the specified <code>enddate</code>. Acceptable units are 
+    <p>The second of the returned <code>POSIXct</code>s will end one <code>unit</code>
+before the specified <code>enddate</code>. Acceptable units are
 <code>"day", "hour", "min", "sec"</code>.</p>
-<p>The aim is to quickly calculate full-day date ranges for time series whose 
-values are binned at different units. Thus, if <code>unit = "min"</code>, the 
+<p>The aim is to quickly calculate full-day date ranges for time series whose
+values are binned at different units. Thus, if <code>unit = "min"</code>, the
 returned value associated with <code>enddate</code> will always be at 23:59:00
 in the requested time zone.</p>
-<p>Because the returned values always satisfy full-day date ranges, 
+<p>Because the returned values always satisfy full-day date ranges,
 specifying <code>unit = "day"</code> will cause the returned <code>enddate</code> to
 be associated with 00:00:00 of the following day.</p>
     

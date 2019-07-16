@@ -1,6 +1,7 @@
-# MazamaCoreUtils 0.1.902
+# MazamaCoreUtils 0.2.0
 
  * Moved `futile.logger` from `Depends` to `Imports`.
+ * Version bump.
  
 # MazamaCoreUtils 0.1.901
 

@@ -1,3 +1,7 @@
+# MazamaCoreUtils 0.1.902
+
+ * Moved `futile.logger` from `Depends` to `Imports`.
+ 
 # MazamaCoreUtils 0.1.901
 
  * Add linter

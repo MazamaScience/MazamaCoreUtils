@@ -38,7 +38,7 @@
 #' @importFrom futile.logger appender.console appender.file appender.tee
 #' @importFrom futile.logger flog.appender flog.logger flog.threshold
 #' @importFrom futile.logger flog.debug flog.error flog.fatal flog.info
-#'   flog.trace flog.warn
+#' @importFrom futile.logger flog.trace flog.warn
 #' @export
 #'
 #' @examples

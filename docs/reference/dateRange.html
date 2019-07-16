@@ -33,7 +33,9 @@
 <meta property="og:title" content="Create a POSIXct date range — dateRange" />
 
 <meta property="og:description" content="Uses incoming parameters to return a pair of POSIXct
-times in the proper order. This function always rounds to day boundaries.
+times in the proper order. The first returned time will be midnight of
+the desired starting date. The second returned time will represent the
+&quot;end of the day&quot; of the requested or calcualted enddate.
 Dates can be anything that is understood by 
 lubrdiate::parse_date_time() including either of the following 
 recommended formats:
@@ -71,7 +73,7 @@ recommended formats:
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.901</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.902</span>
       </span>
     </div>
 
@@ -136,7 +138,9 @@ recommended formats:
     <div class="ref-description">
     
     <p>Uses incoming parameters to return a pair of <code>POSIXct</code>
-times in the proper order. This function always rounds to day boundaries.</p>
+times in the proper order. The first returned time will be midnight of
+the desired starting date. The second returned time will represent the
+"end of the day" of the requested or calcualted <code>enddate</code>.</p>
 <p>Dates can be anything that is understood by 
 <code>lubrdiate::parse_date_time()</code> including either of the following 
 recommended formats:</p>
@@ -155,23 +159,23 @@ recommended formats:</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>startdate</th>
-      <td><p>desired start datetime (ISO 8601)</p></td>
+      <td><p>Desired start datetime (ISO 8601).</p></td>
     </tr>
     <tr>
       <th>enddate</th>
-      <td><p>desired end datetime (ISO 8601)</p></td>
+      <td><p>Desired end datetime (ISO 8601).</p></td>
     </tr>
     <tr>
       <th>days</th>
-      <td><p>number of days of data to include</p></td>
+      <td><p>Number of days of data to include.</p></td>
     </tr>
     <tr>
       <th>timezone</th>
-      <td><p>Olson timezone used to interpret dates</p></td>
+      <td><p>Olson timezone used to interpret dates.</p></td>
     </tr>
     <tr>
       <th>unit</th>
-      <td><p>units used to determine enddates final timestep</p></td>
+      <td><p>Units used to determine enddates final timestep.</p></td>
     </tr>
     </table>
     
@@ -181,10 +185,21 @@ recommended formats:</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>The ending <code>POSIXct</code> will end one <code>unit</code> before the specified
-<code>enddate</code>.</p>
+    <p>The second of the returned <code>POSIXct</code>s will end one <code>unit</code> 
+before the specified <code>enddate</code>. Acceptable units are 
+<code>"day", "hour", "min", "sec"</code>.</p>
+<p>The aim is to quickly calculate full-day date ranges for time series whose 
+values are binned at different units. Thus, if <code>unit = "min"</code>, the 
+returned value associated with <code>enddate</code> will always be at 23:59:00
+in the requested time zone.</p>
+<p>Because the returned values always satisfy full-day date ranges, 
+specifying <code>unit = "day"</code> will cause the returned <code>enddate</code> to
+be associated with 00:00:00 of the following day.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>dateRange</span>(<span class='st'>"2019-01-08"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 00:00:00 UTC" "2019-01-14 23:59:59 UTC"</div><div class='input'><span class='fu'>dateRange</span>(<span class='st'>"2019-01-08"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"min"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 00:00:00 UTC" "2019-01-14 23:59:00 UTC"</div><div class='input'><span class='fu'>dateRange</span>(<span class='st'>"2019-01-08"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"hour"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 00:00:00 UTC" "2019-01-14 23:00:00 UTC"</div><div class='input'><span class='fu'>dateRange</span>(<span class='st'>"2019-01-08"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"day"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 UTC" "2019-01-15 UTC"</div><div class='input'><span class='fu'>dateRange</span>(<span class='st'>"2019-01-08"</span>, <span class='st'>"2019-01-11"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 00:00:00 UTC" "2019-01-11 23:59:59 UTC"</div><div class='input'><span class='fu'>dateRange</span>(<span class='kw'>enddate</span> <span class='kw'>=</span> <span class='fl'>20190112</span>, <span class='kw'>days</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+          <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"day"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"America/Los_Angeles"</span>)</div><div class='output co'>#&gt; [1] "2019-01-10 PST" "2019-01-13 PST"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -194,7 +209,9 @@ recommended formats:</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#note">Note</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

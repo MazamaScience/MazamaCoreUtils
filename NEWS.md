@@ -1,3 +1,8 @@
+# MazamaCoreUtils 0.2.1
+
+ * Reorded arguments to `dateRange()`.
+ * `dateRange()` no longer provides a default timezone.
+ 
 # MazamaCoreUtils 0.2.0
 
  * Moved `futile.logger` from `Depends` to `Imports`.

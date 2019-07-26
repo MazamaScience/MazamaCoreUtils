@@ -4,17 +4,17 @@
 \alias{dateRange}
 \title{Create a POSIXct date range}
 \usage{
-dateRange(startdate = NULL, enddate = NULL, days = 7,
-  timezone = "UTC", unit = "sec")
+dateRange(startdate = NULL, enddate = NULL, timezone = NULL,
+  days = 7, unit = "sec")
 }
 \arguments{
 \item{startdate}{Desired start datetime (ISO 8601).}
 
 \item{enddate}{Desired end datetime (ISO 8601).}
 
-\item{days}{Number of days of data to include.}
-
 \item{timezone}{Olson timezone used to interpret dates.}
+
+\item{days}{Number of days of data to include.}
 
 \item{unit}{Units used to determine time at end-of-day.}
 }
@@ -26,6 +26,9 @@ Uses incoming parameters to return a pair of \code{POSIXct}
 times in the proper order. The first returned time will be midnight of
 the desired starting date. The second returned time will represent the
 "end of the day" of the requested or calcualted \code{enddate}.
+
+The required \code{timezone} parameter must be one of those found in
+\code{base::OlsonNames()}.
 
 Dates can be anything that is understood by
 \code{lubrdiate::parse_date_time()} including either of the following
@@ -51,11 +54,11 @@ specifying \code{unit = "day"} will cause the returned \code{enddate} to
 be associated with 00:00:00 of the following day.
 }
 \examples{
-dateRange("2019-01-08")
-dateRange("2019-01-08", unit = "min")
-dateRange("2019-01-08", unit = "hour")
-dateRange("2019-01-08", unit = "day")
-dateRange("2019-01-08", "2019-01-11")
+dateRange("2019-01-08", timezone = "UTC")
+dateRange("2019-01-08", unit = "min", timezone = "UTC")
+dateRange("2019-01-08", unit = "hour", timezone = "UTC")
+dateRange("2019-01-08", unit = "day", timezone = "UTC")
+dateRange("2019-01-08", "2019-01-11", timezone = "UTC")
 dateRange(enddate = 20190112, days = 3,
           unit = "day", timezone = "America/Los_Angeles")
 }

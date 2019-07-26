@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
       </span>
     </div>
 
@@ -231,7 +231,7 @@ result &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocu
   <span class="kw"><a href="../reference/stopOnError.html">stopOnError</a></span>(result)
   
 }, <span class="dt">silent =</span> <span class="ot">FALSE</span>)
-<span class="co">#&gt; TRACE [2019-07-16 13:54:17] class(userInput) = numeric</span>
+<span class="co">#&gt; TRACE [2019-07-26 10:17:58] class(userInput) = numeric</span>
 
 <span class="co"># Continue despite any errors</span>
   
@@ -243,8 +243,8 @@ result &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocu
   }, <span class="dt">silent=</span><span class="ot">TRUE</span>)
   <span class="kw"><a href="../reference/stopOnError.html">stopOnError</a></span>(result)
 }, <span class="dt">silent =</span> <span class="ot">FALSE</span>)
-<span class="co">#&gt; TRACE [2019-07-16 13:54:17] class(userInput) = character</span>
-<span class="co">#&gt; ERROR [2019-07-16 13:54:17] Error in log(x) : non-numeric argument to mathematical function</span>
+<span class="co">#&gt; TRACE [2019-07-26 10:17:58] class(userInput) = character</span>
+<span class="co">#&gt; ERROR [2019-07-26 10:17:58] Error in log(x) : non-numeric argument to mathematical function</span>
 <span class="co">#&gt; Error : Error in log(x) : non-numeric argument to mathematical function</span>
 
 <span class="co"># Continue despite any errors</span>
@@ -256,8 +256,8 @@ result &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocu
   }, <span class="dt">silent=</span><span class="ot">TRUE</span>)
   <span class="kw"><a href="../reference/stopOnError.html">stopOnError</a></span>(result, <span class="st">"Unable to process user input"</span>)
 }, <span class="dt">silent =</span> <span class="ot">FALSE</span>)
-<span class="co">#&gt; TRACE [2019-07-16 13:54:17] class(userInput) = character</span>
-<span class="co">#&gt; ERROR [2019-07-16 13:54:17] Unable to process user input</span>
+<span class="co">#&gt; TRACE [2019-07-26 10:17:58] class(userInput) = character</span>
+<span class="co">#&gt; ERROR [2019-07-26 10:17:58] Unable to process user input</span>
 <span class="co">#&gt; Error : Unable to process user input</span>
 
 <span class="co"># Script completes with errors handled as they occurred</span></code></pre></div>

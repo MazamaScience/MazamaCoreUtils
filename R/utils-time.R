@@ -62,6 +62,9 @@ dateRange <- function(
   if ( is.null(timezone) )
     stop("Required parameter 'timezone' is missing.")
 
+  if ( !timezone %in% base::OlsonNames() )
+    stop(paste0("Timezone '", timezone, "' is not recognized."))
+
   # ----- Determine starttime and endtime --------------------------------------
 
   if ( stringr::str_detect(unit, "^day") ) {

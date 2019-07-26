@@ -2,6 +2,8 @@
 
  * Reorded arguments to `dateRange()`.
  * `dateRange()` no longer provides a default timezone.
+ * `dateRange()` no longer alters `POSIXct` inputs
+ * `dateRange()` now has stricter argument checking
  
 # MazamaCoreUtils 0.2.0
 

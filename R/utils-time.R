@@ -44,7 +44,7 @@
 #' When \code{startdate} or \code{enddate} are already \code{POSIXct} values,
 #' they are converted to the timezone specified by \code{timezone} without
 #' altering the physical instant in time the input represents. This is different
-#' from the behavior of \code{\link[lubridate]{parese_date_time}} (which powers
+#' from the behavior of \code{\link[lubridate]{parse_date_time}} (which powers
 #' this function), which will force \code{POSIXct} inputs into a new timezone,
 #' altering the physical moment of time the input represents.
 #'
@@ -74,9 +74,6 @@ dateRange <- function(
   if ( !timezone %in% base::OlsonNames() )
     stop(paste0("Timezone '", timezone, "' is not recognized."))
 
-  if ( !unit %in% c("day", "hour", "min", "sec") )
-    stop("`unit` must be one of: 'day', 'hour', 'min', 'sec'.")
-
   if ( !is.numeric(days) || length(days) > 1 || days < 1 )
     stop("`days` must be a single positive number.")
 
@@ -91,6 +88,8 @@ dateRange <- function(
     daySecs <- 60 * 60 * 24 - 60
   } else if ( stringr::str_detect(unit, "^sec") ) {
     daySecs <- 60 * 60 * 24 - 1
+  } else {
+    stop("'unit' must be one of: 'day', 'hour', 'min', 'sec'.")
   }
 
 

@@ -8,35 +8,45 @@
 #' @param days Number of days of data to include.
 #' @param unit Units used to determine time at end-of-day.
 #'
-#' @description Uses incoming parameters to return a pair of \code{POSIXct}
-#' times in the proper order. The first returned time will be midnight of
-#' the desired starting date. The second returned time will represent the
-#' "end of the day" of the requested or calcualted \code{enddate}.
+#' @description
+#' Uses incoming parameters to return a pair of \code{POSIXct} times in the
+#' proper order. The first returned time will be midnight of the desired
+#' starting date. The second returned time will represent the "end of the day"
+#' of the requested or calcualted \code{enddate}.
 #'
 #' The required \code{timezone} parameter must be one of those found in
-#' \code{base::OlsonNames()}.
+#' \code{\link[base]{OlsonNames}}.
 #'
 #' Dates can be anything that is understood by
 #' \code{lubrdiate::parse_date_time()} including either of the following
 #' recommended formats:
 #'
 #' \itemize{
-#' \item{\code{"YYYYmmdd"}}
-#' \item{\code{"YYYY-mm-dd"}}
+#'   \item{\code{"YYYYmmdd"}}
+#'   \item{\code{"YYYY-mm-dd"}}
 #' }
 #'
-#' @note The second of the returned \code{POSIXct}s will end one \code{unit}
-#' before the specified \code{enddate}. Acceptable units are
-#' \code{"day", "hour", "min", "sec"}.
+#' @section End-of-Day Units:
+#' The second of the returned \code{POSIXct}s will end one \code{unit} before
+#' the specified \code{enddate}. Acceptable units are \code{"day", "hour",
+#' "min", "sec"}.
 #'
 #' The aim is to quickly calculate full-day date ranges for time series whose
 #' values are binned at different units. Thus, if \code{unit = "min"}, the
 #' returned value associated with \code{enddate} will always be at 23:59:00
 #' in the requested time zone.
 #'
-#' @note Because the returned values always satisfy full-day date ranges,
-#' specifying \code{unit = "day"} will cause the returned \code{enddate} to
-#' be associated with 00:00:00 of the following day.
+#' Because the returned values always satisfy full-day date ranges, specifying
+#' \code{unit = "day"} will cause the returned \code{enddate} to be associated
+#' with 00:00:00 of the following day.
+#'
+#' @section POSIXct inputs:
+#' When \code{startdate} or \code{enddate} are already \code{POSIXct} values,
+#' they are converted to the timezone specified by \code{timezone} without
+#' altering the physical instant in time the input represents. This is different
+#' from the behavior of \code{\link[lubridate]{parese_date_time}} (which powers
+#' this function), which will force \code{POSIXct} inputs into a new timezone,
+#' altering the physical moment of time the input represents.
 #'
 #' @return A vector of two \code{POSIXct}s.
 #'
@@ -48,7 +58,6 @@
 #' dateRange("2019-01-08", "2019-01-11", timezone = "UTC")
 #' dateRange(enddate = 20190112, days = 3,
 #'           unit = "day", timezone = "America/Los_Angeles")
-
 dateRange <- function(
   startdate = NULL,
   enddate = NULL,
@@ -67,6 +76,9 @@ dateRange <- function(
 
   if ( !unit %in% c("day", "hour", "min", "sec") )
     stop("`unit` must be one of: 'day', 'hour', 'min', 'sec'.")
+
+  if ( !is.numeric(days) || length(days) > 1 || days < 1 )
+    stop("`days` must be a single positive number.")
 
 
   # Handle end-of-day unit -----------------------------------------------------

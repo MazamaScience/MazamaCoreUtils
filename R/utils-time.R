@@ -57,7 +57,7 @@ dateRange <- function(
   unit = "sec"
 ) {
 
-  # ----- Validate parameters --------------------------------------------------
+  # Validate parameters --------------------------------------------------------
 
   if ( is.null(timezone) )
     stop("Required parameter 'timezone' is missing.")
@@ -65,19 +65,42 @@ dateRange <- function(
   if ( !timezone %in% base::OlsonNames() )
     stop(paste0("Timezone '", timezone, "' is not recognized."))
 
-  # ----- Determine starttime and endtime --------------------------------------
+  if ( !unit %in% c("day", "hour", "min", "sec") )
+    stop("`unit` must be one of: 'day', 'hour', 'min', 'sec'.")
+
+
+  # Handle end-of-day unit -----------------------------------------------------
 
   if ( stringr::str_detect(unit, "^day") ) {
     daySecs <- 60 * 60 * 24
   } else if ( stringr::str_detect(unit, "^hour") ) {
     daySecs <- 60 * 60 * 24 - 3600
-  } else if ( stringr::str_detect(unit, "^min") ){
+  } else if ( stringr::str_detect(unit, "^min") ) {
     daySecs <- 60 * 60 * 24 - 60
   } else if ( stringr::str_detect(unit, "^sec") ) {
     daySecs <- 60 * 60 * 24 - 1
   }
 
-  orders <- c("Ymd","YmdH","YmdHM","YmdHMS")
+
+  # Determine start and end times ----------------------------------------------
+
+
+  # * Prepare POSIXct inputs ---------------------------------------------------
+
+  ## NOTE on hadling POSIXct inputs:
+  #  When given a POSIXct time `lubridate::parse_date_time()` forces the time
+  #  into the timezone given to `lubridate::parse_date_time()`. This alters the
+  #  physical instant in time the original POSIXct represents, so we must
+  #  properly convert a POSIXct start or end date to the proper timezone before
+  #  passing it to `lubridate::parse_date_time()`
+
+  if ( lubridate::is.POSIXct(startdate) ) startdate <- lubridate::with_tz(timezone)
+  if ( lubridate::is.POSIXct(enddate) ) enddate <- lubridate::with_tz(timezone)
+
+
+  # * Parse inputs -------------------------------------------------------------
+
+  orders <- c("Ymd", "YmdH", "YmdHM", "YmdHMS")
 
   if ( !is.null(startdate) && !is.null(enddate) ) {
 
@@ -109,7 +132,7 @@ dateRange <- function(
       starttime <-
         endtime %>%
         lubridate::floor_date(unit = "day") -      # beginning of day
-        lubridate::ddays(days-1)                   # any extra days
+        lubridate::ddays(days - 1)                 # any extra days
     }
 
   } else if ( !is.null(startdate) && is.null(enddate) ) {
@@ -124,13 +147,13 @@ dateRange <- function(
       starttime %>%
       lubridate::floor_date(unit = "day") +
       lubridate::dseconds(daySecs) +             # end of day
-      lubridate::ddays(days-1)                   # any extra days
+      lubridate::ddays(days - 1)                 # any extra days
 
   } else {
 
     # Both missing:  use (now - days), now
     endtime <-
-      lubridate::now(timezone) %>%
+      lubridate::now(tzone = timezone) %>%
       lubridate::floor_date(unit = "day" )
 
     starttime <-
@@ -140,12 +163,14 @@ dateRange <- function(
 
   }
 
-  # Define tlim
+
+  # Order output time limits ---------------------------------------------------
+
   if ( starttime < endtime ) {
-    tlim <- c(starttime,endtime)
+    tlim <- c(starttime, endtime)
   } else {
     # just in case
-    tlim <- c(endtime,starttime)
+    tlim <- c(endtime, starttime)
   }
 
   return(tlim)

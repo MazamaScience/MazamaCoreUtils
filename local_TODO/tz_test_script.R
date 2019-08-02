@@ -18,7 +18,7 @@ outer_function <- function(param2 = NULL) {
 
 
   print(
-    strftime(lubridate::floor_date(param2, "day"), tz = "UTC")
+    strftime(x = lubridate::floor_date(param2, "day"), tz = "UTC")
   )
 
 

@@ -24,12 +24,16 @@ Imports:
     futile.logger,
     lubridate,
     stringr,
-    magrittr
+    magrittr,
+    purrr,
+    tibble,
+    rlang (>= 0.1.2)
 Suggests:
     knitr,
     markdown,
     testthat,
-    rmarkdown
+    rmarkdown,
+    roxygen2
 Encoding: UTF-8
 VignetteBuilder: knitr
 LazyData: true

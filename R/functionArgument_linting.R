@@ -1,9 +1,76 @@
+#' @title Lint a source file's function arguments
+#'
+#' @description
+#' This function parses an R Script file, grouping function calls and the named
+#' arguments passed to those functions. Then, based on a set of rules, it is
+#' determined if functions of interest have specific named arguments specified.
+#'
+#' @param filePath Path to a file, given as a length one character vector.
+#' @param dirPath Path to a directory, given as a length one character vector.
+#' @param rules A named list where the name of each element is a function name,
+#'   and the value is a character vector of the named argument to check for. All
+#'   arguments must be specified for a function to "pass".
+#'
+#' @return A \code{\link[tibble]{tibble}} detailing the results of the lint.
+#'
+#' @section Linting Output:
+#' The output of the function argument linter is a tibble with the following
+#' columns:
+#'
+#' \describe{
+#'   \item{file_path}{path to the source file}
+#'   \item{line_number}{Line of the source file the function is on}
+#'   \item{column_number}{Column of the source file the function starts at}
+#'   \item{function_name}{The name of the function}
+#'   \item{named_args}{A vector of the named arguments passed to the function}
+#'   \item{includes_required}{True iff the function specifies all of the named
+#'     arguments required by the given rules}
+#' }
+#'
+#' @section Limitations:
+#' This function is only able to test for named arguments passed to a function.
+#' For example, it would report that \code{foo(x = bar, "baz")} has specified
+#' the named argument \code{x}, but not that \code{bar} was the value of the
+#' argument, or that \code{"baz"} had been passed as an unnamed argument.
+#'
+#' @name lintFunctionArgs
+#' @aliases lintFunctionArgs_file lintFunctionArgs_directory
+#'
+#' @examples
+#' \dontrun{
+#' # Example rule list for checking
+#' exRules <- list(
+#'   "fn_one" = "x",
+#'   "fn_two" = c("foo", "bar")
+#' )
+#'
+#' # Example of using included timezone argument linter
+#' lintFunctionArgs_file(
+#'   "local_test/timezone_lint_test_script.R",
+#'   MazamaCoreUtils::timezoneLintRules
+#' )
+#' }
+NULL
 
-lintFunctionArgs_file <- function(path, rules) {
+#' @rdname lintFunctionArgs
+#' @export
+lintFunctionArgs_file <- function(filePath, rules) {
 
-  # Regularize input --------------------------------------------------------
+  # Validate input ----------------------------------------------------------
 
-  normFilePath <- normalizePath(path)
+  if (!is.list(rules) && is.null(names(rules))) {
+    stop("rules must be a named list.")
+  }
+
+  if (!is.character(filePath) && length(filePath) == 1) {
+    stop("filePath must be a length 1 character vector.")
+  }
+
+  normFilePath <- normalizePath(filePath)
+
+  if (!utils::file_test("-f", normFilePath)) {
+    stop("filePath must point to a file, not a directory.")
+  }
 
 
   # Parse file --------------------------------------------------------------
@@ -26,7 +93,7 @@ lintFunctionArgs_file <- function(path, rules) {
   functionArgs <- parsedData %>%
     dplyr::filter(.data$token == "SYMBOL_SUB") %>%
     dplyr::group_by(.data$parent) %>%
-    dplyr::summarise(named_arguments = list(.data$text)) %>%
+    dplyr::summarise(named_args = list(.data$text)) %>%
     dplyr::rename(id = .data$parent)
 
   # Pair function calls with their arguments
@@ -45,35 +112,48 @@ lintFunctionArgs_file <- function(path, rules) {
 
   # Check function arguments ------------------------------------------------
 
-  argCheck <- functionCalls %>%
+  results <- functionCalls %>%
     dplyr::filter(.data$function_name %in% names(rules)) %>%
     dplyr::mutate(
-      has_arg = purrr::map2_lgl(
-        .data$named_arguments, .data$function_name,
+      includes_required = purrr::map2_lgl(
+        .data$named_args, .data$function_name,
         ~purrr::has_element(.x, rules[[.y]])
-      )
-    )
+      ),
+      file_path = normFilePath
+    ) %>%
+    dplyr::select(.data$file_path, dplyr::everything())
 
-  return(argCheck)
+  return(results)
 
 }
 
 
+#' @rdname lintFunctionArgs
+#' @export
+lintFunctionArgs_directory <- function(dirPath = "./R", rules) {
 
-lintFunctionArgs_directory <- function(path = "./R", rules) {
+  # Validate input ----------------------------------------------------------
 
-  # Regularize input --------------------------------------------------------
+  if (!is.list(rules) && is.null(names(rules))) {
+    stop("rules must be a named list.")
+  }
 
-  filePaths <- path %>%
-    normalizePath() %>%
-    list.files(pattern = "\\.R$", full.names = TRUE, recursive = TRUE) %>%
-    purrr::set_names()
+  if (!is.character(dirPath) && length(dirPath) == 1) {
+    stop("dirPath must be a length 1 character vector.")
+  }
+
+  normDirPath <- normalizePath(dirPath)
+
+  if (!utils::file_test("-d", normDirPath)) {
+    stop("filePath must point to a directory, not a file.")
+  }
 
 
   # Lint files --------------------------------------------------------------
 
-  results <- filePaths %>%
-    purrr::map_dfr(lintFunctionArgs_file, rules, .id = "file_path")
+  results <- normDirPath %>%
+    list.files(pattern = "\\.R$", full.names = TRUE, recursive = TRUE) %>%
+    purrr::map_dfr(lintFunctionArgs_file, rules)
 
   return(results)
 

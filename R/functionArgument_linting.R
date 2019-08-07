@@ -58,11 +58,11 @@ lintFunctionArgs_file <- function(filePath, rules) {
 
   # Validate input ----------------------------------------------------------
 
-  if (!is.list(rules) && is.null(names(rules))) {
+  if (!is.list(rules) || is.null(names(rules))) {
     stop("rules must be a named list.")
   }
 
-  if (!is.character(filePath) && length(filePath) == 1) {
+  if (!is.character(filePath) || length(filePath) != 1) {
     stop("filePath must be a length 1 character vector.")
   }
 

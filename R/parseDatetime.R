@@ -27,7 +27,7 @@
 #'
 #' @param datetime vector of character or integer datetimes in Ymd[HMS] format
 #'   (or POSIXct).
-#' @param timezone Olson timezone at the location of interest (default "UTC").
+#' @param timezone Olson timezone at the location of interest.
 #' @param expectAll Logical value determining if the function should fail if
 #'   any elements fail to parse (default \code{FALSE}).
 #'
@@ -62,22 +62,31 @@
 #' }
 #'
 
-parseDatetime <- function(datetime, timezone = "UTC", expectAll = FALSE) {
+parseDatetime <- function(datetime, timezone, expectAll = FALSE) {
 
-# check if POSIXct --------------------------------------------------------
 
-  if (lubridate::is.POSIXct(datetime)) {
+  # Validate input ----------------------------------------------------------
+
+  if (!timezone %in% base::OlsonNames())
+    stop(paste0("timezone '", timezone, "' is not recognized."))
+
+  if (!is.logical(expectAll) || length(expectAll) != 1)
+    stop("expectAll must be a logical value of length one.")
+
+
+  # Return early if already POSIXct -----------------------------------------
+
+  if (lubridate::is.POSIXct(datetime))
     return(lubridate::with_tz(datetime, tzone = timezone))
-  }
 
 
-# parse datetimes ---------------------------------------------------------
+  # Parse datetimes ---------------------------------------------------------
 
   orders <- c("Ymd", "YmdH", "YmdHM", "YmdHMS")
   parsedDatetime <- lubridate::parse_date_time(datetime, orders, tz = timezone)
 
 
-# error handling ----------------------------------------------------------
+  # Handle results ----------------------------------------------------------
 
   if (all(is.na(parsedDatetime))) {
     stop("No datetimes could be parsed.")

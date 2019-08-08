@@ -54,26 +54,35 @@ NULL
 
 #' @rdname lintFunctionArgs
 #' @export
-lintFunctionArgs_file <- function(filePath, rules) {
+lintFunctionArgs_file <- function(
+  filePath = NULL,
+  rules = NULL
+) {
 
-  # Validate input ----------------------------------------------------------
+  # Validate input ------------------------------------------------------------
 
-  if (!is.list(rules) || is.null(names(rules))) {
+  if ( is.null(filePath) )
+    stop("Required parameter 'filePath' is missing.")
+
+  if ( is.null(rules) )
+    stop("Required parameter 'rules' is missing.")
+
+  if ( !is.list(rules) || is.null(names(rules)) ) {
     stop("rules must be a named list.")
   }
 
-  if (!is.character(filePath) || length(filePath) != 1) {
+  if ( !is.character(filePath) || length(filePath) != 1 ) {
     stop("filePath must be a length 1 character vector.")
   }
 
   normFilePath <- normalizePath(filePath)
 
-  if (!utils::file_test("-f", normFilePath)) {
+  if ( !utils::file_test("-f", normFilePath) ) {
     stop("filePath must point to a file, not a directory.")
   }
 
 
-  # Parse file --------------------------------------------------------------
+  # Parse file ----------------------------------------------------------------
 
   parsedData <-
     normFilePath %>%
@@ -85,19 +94,22 @@ lintFunctionArgs_file <- function(filePath, rules) {
   # Collect functions and arguments -----------------------------------------
 
   # Given IDs as names, this vector outputs the IDs' parent IDs
-  lookupParent <- parsedData %>%
+  lookupParent <-
+    parsedData %>%
     dplyr::select(.data$id, .data$parent) %>%
     tibble::deframe()
 
   # Group function arguments by which function they belong to
-  functionArgs <- parsedData %>%
+  functionArgs <-
+    parsedData %>%
     dplyr::filter(.data$token == "SYMBOL_SUB") %>%
     dplyr::group_by(.data$parent) %>%
     dplyr::summarise(named_args = list(.data$text)) %>%
     dplyr::rename(id = .data$parent)
 
   # Pair function calls with their arguments
-  functionCalls <- parsedData %>%
+  functionCalls <-
+    parsedData %>%
     dplyr::mutate(lookup_pid = lookupParent[as.character(.data$parent)]) %>%
     dplyr::filter(.data$token == "SYMBOL_FUNCTION_CALL") %>%
     dplyr::select(
@@ -112,7 +124,8 @@ lintFunctionArgs_file <- function(filePath, rules) {
 
   # Check function arguments ------------------------------------------------
 
-  results <- functionCalls %>%
+  results <-
+    functionCalls %>%
     dplyr::filter(.data$function_name %in% names(rules)) %>%
     dplyr::mutate(
       includes_required = purrr::map2_lgl(
@@ -130,26 +143,29 @@ lintFunctionArgs_file <- function(filePath, rules) {
 
 #' @rdname lintFunctionArgs
 #' @export
-lintFunctionArgs_directory <- function(dirPath = "./R", rules) {
+lintFunctionArgs_directory <- function(
+  dirPath = "./R",
+  rules = NULL
+) {
 
-  # Validate input ----------------------------------------------------------
+  # Validate input -------------------------------------------------------------
 
-  if (!is.list(rules) && is.null(names(rules))) {
+  if ( is.null(rules) )
+    stop("Required parameter 'rules' is missing.")
+
+  if ( !is.list(rules) && is.null(names(rules)) )
     stop("rules must be a named list.")
-  }
 
-  if (!is.character(dirPath) && length(dirPath) == 1) {
+  if ( !is.character(dirPath) && length(dirPath) == 1 )
     stop("dirPath must be a length 1 character vector.")
-  }
 
   normDirPath <- normalizePath(dirPath)
 
-  if (!utils::file_test("-d", normDirPath)) {
+  if ( !utils::file_test("-d", normDirPath) )
     stop("filePath must point to a directory, not a file.")
-  }
 
 
-  # Lint files --------------------------------------------------------------
+  # Lint files -----------------------------------------------------------------
 
   results <- normDirPath %>%
     list.files(pattern = "\\.R$", full.names = TRUE, recursive = TRUE) %>%

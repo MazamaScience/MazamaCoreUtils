@@ -1,4 +1,4 @@
-#' @title Parse Datetime Strings
+#' @title Parse datetime strings
 #'
 #' @description
 #' Transforms numeric and string representations of Ymd[HMS] datetimes to
@@ -49,28 +49,40 @@
 #'
 #' @examples
 #' starttime <- parseDatetime(2015080718, timezone = "America/Los_Angeles")
-#' datetimes <- parseDatetime(c("20181014 12", "20181015 12", "20181016 12"))
+#' datetimes <- parseDatetime(
+#'   c("20181014 12", "20181015 12", "20181016 12"),
+#'   timezone = "America/New_York"
+#' )
 #'
 #' \dontrun{
 #' badInput <- c("20181013", NA, "20181015", "181016", "10172018")
 #'
 #' # This will return a vector with the date that were able to parse
-#' parseDatetime(badInput, expectAll = FALSE)
+#' parseDatetime(badInput, timezone = "UTC", expectAll = FALSE)
 #'
 #' # This will return an error, since some non-NA indices didn't parse
-#' parseDatetime(badInput, expectAll = TRUE)
+#' parseDatetime(badInput, timezone = "UTC", expectAll = TRUE)
 #' }
 #'
 
-parseDatetime <- function(datetime, timezone, expectAll = FALSE) {
+parseDatetime <- function(
+  datetime = NULL,
+  timezone = NULL,
+  expectAll = FALSE
+) {
 
+  # Validate parameters --------------------------------------------------------
 
-  # Validate input ----------------------------------------------------------
+  if ( is.null(datetime) )
+    stop("Required parameter 'datetime' is missing.")
 
-  if (!timezone %in% base::OlsonNames())
+  if ( is.null(timezone) )
+    stop("Required parameter 'timezone' is missing.")
+
+  if ( !timezone %in% base::OlsonNames() )
     stop(paste0("timezone '", timezone, "' is not recognized."))
 
-  if (!is.logical(expectAll) || length(expectAll) != 1)
+  if ( !is.logical(expectAll) || length(expectAll) != 1 )
     stop("expectAll must be a logical value of length one.")
 
 
@@ -88,11 +100,11 @@ parseDatetime <- function(datetime, timezone, expectAll = FALSE) {
 
   # Handle results ----------------------------------------------------------
 
-  if (all(is.na(parsedDatetime))) {
+  if ( all(is.na(parsedDatetime)) ) {
     stop("No datetimes could be parsed.")
   }
 
-  if (expectAll) {
+  if ( expectAll ) {
 
     ## NAs that appear in the parsed datetimes and not in the original datetimes
     #  are datetimes that failed to parse (ie, not originally NA).

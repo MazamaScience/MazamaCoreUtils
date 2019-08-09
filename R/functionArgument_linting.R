@@ -153,10 +153,10 @@ lintFunctionArgs_directory <- function(
   if ( is.null(rules) )
     stop("Required parameter 'rules' is missing.")
 
-  if ( !is.list(rules) && is.null(names(rules)) )
+  if ( !is.list(rules) || is.null(names(rules)) )
     stop("rules must be a named list.")
 
-  if ( !is.character(dirPath) && length(dirPath) == 1 )
+  if ( !is.character(dirPath) || length(dirPath) != 1 )
     stop("dirPath must be a length 1 character vector.")
 
   normDirPath <- normalizePath(dirPath)

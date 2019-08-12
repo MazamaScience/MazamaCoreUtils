@@ -1,3 +1,9 @@
+test_that("dateRange() requires explicit timezone", {
+
+  expect_error(dateRange(timezone = NULL))
+
+})
+
 test_that("Output is a two element POSIXct vector", {
 
 
@@ -62,19 +68,74 @@ test_that("POSIXct inputs retain their point-in-time", {
   startTime <- ISOdatetime(2019, 08, 01, 2, 15, 45, tz = "America/Los_Angeles")
   endTime <- ISOdatetime(2019, 08, 7, 20, 30, 40, tz = "America/Los_Angeles")
 
+  startTimeString <- strftime(startTime, format = "%Y%m%d%H%M%S", tz = "America/Los_Angeles")
+  endTimeString <- strftime(endTime, format = "%Y%m%d%H%M%S", tz = "America/Los_Angeles")
+
+  expectedStartTime_UTC <- startTime %>%
+    lubridate::with_tz(tzone = "UTC") %>%
+    lubridate::floor_date(unit = "day")
+
+  expectedEndTime_UTC <- endTime %>%
+    lubridate::with_tz(tzone = "UTC") %>%
+    lubridate::ceiling_date(unit = "day") -
+    lubridate::dseconds(1)
+
+
   # Test with POSIXct inputs for start/end
+  tlim <- dateRange(startdate = startTime, enddate = endTime, timezone = "UTC", unit = "sec")
+
+  expect_identical(tlim[1], expectedStartTime_UTC)
+  expect_identical(tlim[2], expectedEndTime_UTC)
 
 
   # Test with POSIXct input for start
+  tlim <- dateRange(startdate = startTime, enddate = endTimeString, timezone = "UTC", unit = "sec")
+
+  expect_identical(tlim[1], expectedStartTime_UTC)
 
 
   # Test with POSIXct input for end
+  tlim <- dateRange(startdate = startTimeString, enddate = endTime, timezone = "UTC", unit = "sec")
 
+  expect_identical(tlim[2], expectedEndTime_UTC)
+
+})
+
+
+test_that("Non-POSIXct inputs work as expected", {
+
+  startTime <- ISOdatetime(2019, 08, 01, 2, 15, 45, tz = "America/Los_Angeles")
+  endTime <- ISOdatetime(2019, 08, 7, 20, 30, 40, tz = "America/Los_Angeles")
+
+  startTime_string <- strftime(startTime, format = "%Y-%m-%d %H:%M:%S", tz = "America/Los_Angeles")
+  starTime_numeric <- strftime(startTime, format = "%Y%m%d%H%M%S", tz = "America/Los_Angeles") %>% as.numeric()
+
+  endTime_string <- strftime(endTime, format = "%Y-%m-%d %H:%M:%S", tz = "America/Los_Angeles")
+  endTime_numeric <- strftime(endTime, format = "%Y%m%d%H%M%S", tz = "America/Los_Angeles") %>% as.numeric()
+
+  tlim_posixct <- dateRange(startdate = startTime, enddate = endTime, timezone = "America/Los_Angeles")
+  tlim_string <- dateRange(startdate = startTime_string, enddate = endTime_string, timezone = "America/Los_Angeles")
+  tlim_numeric <- dateRange(startdate = starTime_numeric, enddate = endTime_numeric, timezone = "America/Los_Angeles")
+
+  expect_identical(tlim_posixct, tlim_string)
+  expect_identical(tlim_posixct, tlim_numeric)
 
 })
 
 
 test_that("End-of-Day unit works as expected", {
 
+  startTime <- ISOdatetime(2019, 08, 01, 2, 15, 45, tz = "America/Los_Angeles")
+  endTime <- ISOdatetime(2019, 08, 7, 20, 30, 40, tz = "America/Los_Angeles")
+
+  tlim_sec <- dateRange(startdate = startTime, enddate = endTime, timezone = "UTC", unit = "sec")
+  tlim_min <- dateRange(startdate = startTime, enddate = endTime, timezone = "UTC", unit = "min")
+  tlim_hour <- dateRange(startdate = startTime, enddate = endTime, timezone = "UTC", unit = "hour")
+  tlim_day <- dateRange(startdate = startTime, enddate = endTime, timezone = "UTC", unit = "day")
+
+  expect_identical(strftime(tlim_sec[2], format = "%H%M%S", tz = "UTC"), "235959")
+  expect_identical(strftime(tlim_min[2], format = "%H%M%S", tz = "UTC"), "235900")
+  expect_identical(strftime(tlim_hour[2], format = "%H%M%S", tz = "UTC"), "230000")
+  expect_identical(strftime(tlim_day[2], format = "%H%M%S", tz = "UTC"), "000000")
 
 })

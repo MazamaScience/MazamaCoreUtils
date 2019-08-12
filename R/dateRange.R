@@ -119,14 +119,22 @@ dateRange <- function(
   if ( !is.null(startdate) && !is.null(enddate) ) {
 
     # Both found:  use startdate, enddate
+
+    # handle ordering
+    enddate <- lubridate::parse_date_time(enddate, orders = orders, tz = timezone)
+    startdate <- lubridate::parse_date_time(startdate, orders = orders, tz = timezone)
+
+    timeInputs <- sort(c(enddate, startdate))
+
+
     endtime <-
-      enddate %>%
+      timeInputs[2] %>%
       lubridate::parse_date_time(orders = orders, tz = timezone) %>%
       lubridate::floor_date(unit = "day") %>%
       `+`(lubridate::dseconds(daySecs))
 
     starttime <-
-      startdate %>%
+      timeInputs[1] %>%
       lubridate::parse_date_time(orders = orders, tz = timezone) %>%
       lubridate::floor_date(unit = "day")
 

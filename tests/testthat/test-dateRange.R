@@ -77,8 +77,8 @@ test_that("POSIXct inputs retain their point-in-time", {
 
   expectedEndTime_UTC <- endTime %>%
     lubridate::with_tz(tzone = "UTC") %>%
-    lubridate::ceiling_date(unit = "day") -
-    lubridate::dseconds(1)
+    lubridate::ceiling_date(unit = "day") %>%
+    `-`(lubridate::dseconds(1))
 
 
   # Test with POSIXct inputs for start/end

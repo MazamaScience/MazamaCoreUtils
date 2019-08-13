@@ -22,18 +22,12 @@
 #'   \item{\code{"YYYY-mm-dd HH:MM:SS"}}
 #' }
 #'
-#' @section POSIXct inputs:
-#' When \code{starttime} or \code{endtime} are already \code{POSIXct} values,
-#' they are converted to the timezone specified by \code{timezone} without
-#' altering the physical instant in time the input represents. This is different
-#' from the behavior of \code{\link[lubridate]{parse_date_time}} (which powers
-#' this function), which will force \code{POSIXct} inputs into a new timezone,
-#' altering the physical moment of time the input represents.
+#' @inheritSection dateRange POSIXct inputs
 #'
 #' @return A vector of two \code{POSIXct}s.
 #'
 #' @examples
-#' timeRange("2019-01-08 10:12:15", "20190109102030, timezone = "UTC")
+#' timeRange("2019-01-08 10:12:15", 20190109102030, timezone = "UTC")
 timeRange <- function(
   starttime = NULL,
   endtime = NULL,
@@ -44,13 +38,13 @@ timeRange <- function(
 
   if ( is.null(starttime) )
     stop("Required parameter 'starttime' is missing.")
-  
+
   if ( is.null(endtime) )
     stop("Required parameter 'endtime' is missing.")
-  
+
   if ( is.null(timezone) )
     stop("Required parameter 'timezone' is missing.")
-  
+
   if ( !timezone %in% base::OlsonNames() )
     stop(paste0("Timezone '", timezone, "' is not recognized."))
 
@@ -74,14 +68,9 @@ timeRange <- function(
 
   orders <- c("Ymd", "YmdH", "YmdHM", "YmdHMS")
 
-  endtime <-
-    endtime %>%
-    lubridate::parse_date_time(orders = orders, tz = timezone)
-  
-  starttime <-
-    starttime %>%
-    lubridate::parse_date_time(orders = orders, tz = timezone)
-  
+  endtime <- lubridate::parse_date_time(endtime, orders = orders, tz = timezone)
+  starttime <- lubridate::parse_date_time(starttime, orders = orders, tz = timezone)
+
   # Order output time limits ---------------------------------------------------
 
   if ( starttime < endtime ) {

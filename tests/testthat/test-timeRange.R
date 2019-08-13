@@ -39,8 +39,10 @@ test_that("First element in output is less than the second", {
   endTime <- ISOdatetime(2019, 08, 7, 20, 30, 40, tz = "America/Los_Angeles")
 
   tlim <- timeRange(starttime = startTime, endtime = endTime, timezone = "America/Los_Angeles")
+  tlim_rev <- timeRange(starttime = endTime, endtime = startTime, timezone = "America/Los_Angeles")
 
   expect_lt(tlim[1], tlim[2])
+  expect_lt(tlim_rev[1], tlim_rev[2])
 
 })
 

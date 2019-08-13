@@ -55,10 +55,12 @@ test_that("First element in output is less than the second", {
   endTime <- ISOdatetime(2019, 08, 7, 20, 30, 40, tz = "America/Los_Angeles")
 
   tlim <- dateRange(startdate = startTime, enddate = endTime, timezone = "America/Los_Angeles")
-  tlim_now <- dateRange(startdate = startTime, enddate = endTime, timezone = "America/Los_Angeles")
+  tlim_now <- dateRange(timezone = "America/Los_Angeles")
+  tlim_rev <- dateRange(startdate = endTime, enddate = startTime, timezone = "America/Los_Angeles")
 
   expect_lt(tlim[1], tlim[2])
   expect_lt(tlim_now[1], tlim_now[2])
+  expect_lt(tlim_rev[1], tlim_rev[2])
 
 })
 
@@ -128,6 +130,7 @@ test_that("End-of-Day unit works as expected", {
   startTime <- ISOdatetime(2019, 08, 01, 2, 15, 45, tz = "America/Los_Angeles")
   endTime <- ISOdatetime(2019, 08, 7, 20, 30, 40, tz = "America/Los_Angeles")
 
+  # Standard input
   tlim_sec <- dateRange(startdate = startTime, enddate = endTime, timezone = "UTC", unit = "sec")
   tlim_min <- dateRange(startdate = startTime, enddate = endTime, timezone = "UTC", unit = "min")
   tlim_hour <- dateRange(startdate = startTime, enddate = endTime, timezone = "UTC", unit = "hour")
@@ -137,5 +140,10 @@ test_that("End-of-Day unit works as expected", {
   expect_identical(strftime(tlim_min[2], format = "%H%M%S", tz = "UTC"), "235900")
   expect_identical(strftime(tlim_hour[2], format = "%H%M%S", tz = "UTC"), "230000")
   expect_identical(strftime(tlim_day[2], format = "%H%M%S", tz = "UTC"), "000000")
+
+  # Reversed input
+  rev_tlim <- dateRange(startdate = endTime, enddate = startTime, timezone = "UTC", unit = "sec")
+
+  expect_identical(strftime(rev_tlim[2], format = "%H%M%S", tz = "UTC"), "235959")
 
 })

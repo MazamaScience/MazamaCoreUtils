@@ -34,7 +34,7 @@ recommended formats:
 }
 \section{POSIXct inputs}{
 
-When \code{starttime} or \code{endtime} are already \code{POSIXct} values,
+When \code{startdate} or \code{enddate} are already \code{POSIXct} values,
 they are converted to the timezone specified by \code{timezone} without
 altering the physical instant in time the input represents. This is different
 from the behavior of \code{\link[lubridate]{parse_date_time}} (which powers
@@ -42,3 +42,6 @@ this function), which will force \code{POSIXct} inputs into a new timezone,
 altering the physical moment of time the input represents.
 }
 
+\examples{
+timeRange("2019-01-08 10:12:15", 20190109102030, timezone = "UTC")
+}

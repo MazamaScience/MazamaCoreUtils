@@ -12,7 +12,7 @@ dateRange(startdate = NULL, enddate = NULL, timezone = NULL,
 
 \item{enddate}{Desired end datetime (ISO 8601).}
 
-\item{timezone}{Olson timezone used to interpret dates.}
+\item{timezone}{Olson timezone used to interpret dates (required).}
 
 \item{days}{Number of days of data to include.}
 
@@ -31,19 +31,32 @@ The required \code{timezone} parameter must be one of those found in
 \code{\link[base]{OlsonNames}}.
 
 Dates can be anything that is understood by
-\code{lubrdiate::parse_date_time()} including either of the following
-recommended formats:
+\code{lubrdiate::parse_date_time()} using the \code{Ymd[HMS]} orders. This
+includes:
 
 \itemize{
   \item{\code{"YYYYmmdd"}}
+  \item{\code{"YYYYmmddHHMMSS"}}
   \item{\code{"YYYY-mm-dd"}}
+  \item{\code{"YYYY-mm-dd H"}}
+  \item{\code{"YYYY-mm-dd H:M"}}
+  \item{\code{"YYYY-mm-dd H:M:S"}}
 }
 }
+\section{Default Arguments}{
+
+In the case when either \code{startdate} or \code{enddate} is missing, it is
+created from the non-missing values plus/minus \code{days}. If both
+\code{startdate} and \code{enddate} are misssing, \code{enddate} is set to
+\code{\link[lubridate]{now}} (with the given \code{timezone}), and then
+\code{startdate} is calculated using \code{enddate - days}.
+}
+
 \section{End-of-Day Units}{
 
 The second of the returned \code{POSIXct}s will end one \code{unit} before
-the specified \code{enddate}. Acceptable units are \code{"day", "hour",
-"min", "sec"}.
+the end of the specified \code{enddate}. Acceptable units are \code{"day",
+"hour", "min", "sec"}.
 
 The aim is to quickly calculate full-day date ranges for time series whose
 values are binned at different units. Thus, if \code{unit = "min"}, the

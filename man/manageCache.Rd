@@ -26,12 +26,12 @@ Invisibly returns the number of files removed.
 If \code{cacheDir} takes up more than \code{maxCacheSize}
 megabytes on disk, files will be removed in order of access time by
 default. Only files matching \code{extensions} are eligible for removal.
-Files can also be removed in order of change time with \code{sortBy='ctime'}  
+Files can also be removed in order of change time with \code{sortBy='ctime'}
 or modification time with \code{sortBy='mtime'}.
 
 The \code{maxFileAge} parameter can also be used to remove files that haven't
-been modified in a certain number of days. Fractional days are allowed. This 
-removal happens without regard to the size of the cache and is useful for 
+been modified in a certain number of days. Fractional days are allowed. This
+removal happens without regard to the size of the cache and is useful for
 removing out-of-date data.
 
 It is important to understand precisely what these timestamps
@@ -40,7 +40,7 @@ represent:
 \item{\code{atime} -- File access time: updated whenever a file is opened.}
 \item{\code{ctime} -- File change time: updated whenever a file's metadata
 changes e.g. name, permission, ownership.}
-\item{\code{mtime} -- file modification time: updated whenever a file's 
+\item{\code{mtime} -- file modification time: updated whenever a file's
 contents change.}
 }
 }

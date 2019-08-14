@@ -207,45 +207,45 @@ One of <code>atime|ctime|mtime</code>.</p></td>
 <span class='kw'>for</span> (<span class='no'>file</span> <span class='kw'>in</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>list.files</a></span>(<span class='no'>CACHE_DIR</span>, <span class='kw'>full.names</span><span class='kw'>=</span><span class='fl'>TRUE</span>)) {
   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/file.info'>file.info</a></span>(<span class='no'>file</span>)[,<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>6</span>)])
 }</div><div class='output co'>#&gt;                                                                       size
-#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpWcosRA/m1.csv 405687
+#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpX4VGEw/m1.csv 405687
 #&gt;                                                                                   atime
-#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpWcosRA/m1.csv 2019-08-14 08:33:22
+#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpX4VGEw/m1.csv 2019-08-14 08:49:37
 #&gt;                                                                       size
-#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpWcosRA/m2.csv 405687
+#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpX4VGEw/m2.csv 405687
 #&gt;                                                                                   atime
-#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpWcosRA/m2.csv 2019-08-14 08:33:22
+#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpX4VGEw/m2.csv 2019-08-14 08:49:37
 #&gt;                                                                       size
-#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpWcosRA/m3.csv 405687
+#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpX4VGEw/m3.csv 405687
 #&gt;                                                                                   atime
-#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpWcosRA/m3.csv 2019-08-14 08:33:22
+#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpX4VGEw/m3.csv 2019-08-14 08:49:37
 #&gt;                                                                       size
-#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpWcosRA/m4.csv 405687
+#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpX4VGEw/m4.csv 405687
 #&gt;                                                                                   atime
-#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpWcosRA/m4.csv 2019-08-14 08:33:22</div><div class='input'>
+#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpX4VGEw/m4.csv 2019-08-14 08:49:37</div><div class='input'>
 <span class='co'># Remove files based on access time until we get under 1 MB</span>
 <span class='fu'>manageCache</span>(<span class='no'>CACHE_DIR</span>, <span class='kw'>extensions</span><span class='kw'>=</span><span class='st'>'csv'</span>, <span class='kw'>maxCacheSize</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>sortBy</span><span class='kw'>=</span><span class='st'>'atime'</span>)
 <span class='kw'>for</span> (<span class='no'>file</span> <span class='kw'>in</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>list.files</a></span>(<span class='no'>CACHE_DIR</span>, <span class='kw'>full.names</span><span class='kw'>=</span><span class='fl'>TRUE</span>)) {
   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/file.info'>file.info</a></span>(<span class='no'>file</span>)[,<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>6</span>)])
 }</div><div class='output co'>#&gt;                                                                       size
-#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpWcosRA/m1.csv 405687
+#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpX4VGEw/m1.csv 405687
 #&gt;                                                                                   atime
-#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpWcosRA/m1.csv 2019-08-14 08:33:22
+#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpX4VGEw/m1.csv 2019-08-14 08:49:37
 #&gt;                                                                       size
-#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpWcosRA/m2.csv 405687
+#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpX4VGEw/m2.csv 405687
 #&gt;                                                                                   atime
-#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpWcosRA/m2.csv 2019-08-14 08:33:22</div><div class='input'>
+#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpX4VGEw/m2.csv 2019-08-14 08:49:37</div><div class='input'>
 <span class='co'># Or remove files based on modification time</span>
 <span class='fu'>manageCache</span>(<span class='no'>CACHE_DIR</span>, <span class='kw'>extensions</span><span class='kw'>=</span><span class='st'>'csv'</span>, <span class='kw'>maxCacheSize</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>sortBy</span><span class='kw'>=</span><span class='st'>'mtime'</span>)
 <span class='kw'>for</span> (<span class='no'>file</span> <span class='kw'>in</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list.files'>list.files</a></span>(<span class='no'>CACHE_DIR</span>, <span class='kw'>full.names</span><span class='kw'>=</span><span class='fl'>TRUE</span>)) {
   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/file.info'>file.info</a></span>(<span class='no'>file</span>)[,<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>6</span>)])
 }</div><div class='output co'>#&gt;                                                                       size
-#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpWcosRA/m1.csv 405687
+#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpX4VGEw/m1.csv 405687
 #&gt;                                                                                   atime
-#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpWcosRA/m1.csv 2019-08-14 08:33:22
+#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpX4VGEw/m1.csv 2019-08-14 08:49:37
 #&gt;                                                                       size
-#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpWcosRA/m2.csv 405687
+#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpX4VGEw/m2.csv 405687
 #&gt;                                                                                   atime
-#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpWcosRA/m2.csv 2019-08-14 08:33:22</div></pre>
+#&gt; /var/folders/_6/qkfk93h155b3_2jkw_000d200000gn/T//RtmpX4VGEw/m2.csv 2019-08-14 08:49:37</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

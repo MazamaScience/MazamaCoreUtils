@@ -1,12 +1,4 @@
-#' @export
-#'
 #' @title Create a POSIXct date range
-#'
-#' @param startdate Desired start datetime (ISO 8601).
-#' @param enddate Desired end datetime (ISO 8601).
-#' @param timezone Olson timezone used to interpret dates.
-#' @param days Number of days of data to include.
-#' @param unit Units used to determine time at end-of-day.
 #'
 #' @description
 #' Uses incoming parameters to return a pair of \code{POSIXct} times in the
@@ -18,18 +10,37 @@
 #' \code{\link[base]{OlsonNames}}.
 #'
 #' Dates can be anything that is understood by
-#' \code{lubrdiate::parse_date_time()} including either of the following
-#' recommended formats:
+#' \code{lubrdiate::parse_date_time()} using the \code{Ymd[HMS]} orders. This
+#' includes:
 #'
 #' \itemize{
 #'   \item{\code{"YYYYmmdd"}}
+#'   \item{\code{"YYYYmmddHHMMSS"}}
 #'   \item{\code{"YYYY-mm-dd"}}
+#'   \item{\code{"YYYY-mm-dd H"}}
+#'   \item{\code{"YYYY-mm-dd H:M"}}
+#'   \item{\code{"YYYY-mm-dd H:M:S"}}
 #' }
+#'
+#' @param startdate Desired start datetime (ISO 8601).
+#' @param enddate Desired end datetime (ISO 8601).
+#' @param timezone Olson timezone used to interpret dates (required).
+#' @param days Number of days of data to include.
+#' @param unit Units used to determine time at end-of-day.
+#'
+#' @return A vector of two \code{POSIXct}s.
+#'
+#' @section Default Arguments:
+#' In the case when either \code{startdate} or \code{enddate} is missing, it is
+#' created from the non-missing values plus/minus \code{days}. If both
+#' \code{startdate} and \code{enddate} are misssing, \code{enddate} is set to
+#' \code{\link[lubridate]{now}} (with the given \code{timezone}), and then
+#' \code{startdate} is calculated using \code{enddate - days}.
 #'
 #' @section End-of-Day Units:
 #' The second of the returned \code{POSIXct}s will end one \code{unit} before
-#' the specified \code{enddate}. Acceptable units are \code{"day", "hour",
-#' "min", "sec"}.
+#' the end of the specified \code{enddate}. Acceptable units are \code{"day",
+#' "hour", "min", "sec"}.
 #'
 #' The aim is to quickly calculate full-day date ranges for time series whose
 #' values are binned at different units. Thus, if \code{unit = "min"}, the
@@ -48,7 +59,7 @@
 #' this function), which will force \code{POSIXct} inputs into a new timezone,
 #' altering the physical moment of time the input represents.
 #'
-#' @return A vector of two \code{POSIXct}s.
+#' @export
 #'
 #' @examples
 #' dateRange("2019-01-08", timezone = "UTC")
@@ -77,24 +88,29 @@ dateRange <- function(
   if ( !is.numeric(days) || length(days) > 1 || days < 1 )
     stop("`days` must be a single positive number.")
 
+  if ( !is.null(startdate) && length(startdate) != 1 )
+    stop("startdate must be of length one, if specified.")
+
+  if ( !is.null(enddate) && length(enddate) != 1 )
+    stop("enddate must be of length one, if specified.")
+
 
   # Handle end-of-day unit -----------------------------------------------------
 
   if ( stringr::str_detect(unit, "^day") ) {
-    daySecs <- 60 * 60 * 24
+    endUnitAdjust <- lubridate::days(0)
   } else if ( stringr::str_detect(unit, "^hour") ) {
-    daySecs <- 60 * 60 * 24 - 3600
+    endUnitAdjust <- lubridate::hours(1)
   } else if ( stringr::str_detect(unit, "^min") ) {
-    daySecs <- 60 * 60 * 24 - 60
+    endUnitAdjust <- lubridate::minutes(1)
   } else if ( stringr::str_detect(unit, "^sec") ) {
-    daySecs <- 60 * 60 * 24 - 1
+    endUnitAdjust <- lubridate::seconds(1)
   } else {
     stop("'unit' must be one of: 'day', 'hour', 'min', 'sec'.")
   }
 
 
   # Determine start and end times ----------------------------------------------
-
 
   # * Prepare POSIXct inputs ---------------------------------------------------
 
@@ -118,83 +134,68 @@ dateRange <- function(
 
   if ( !is.null(startdate) && !is.null(enddate) ) {
 
-    # Both found:  use startdate, enddate
+    # ** Both found: use startdate, enddate ------------------------------------
 
     # handle ordering
-    enddate <- lubridate::parse_date_time(enddate, orders = orders, tz = timezone)
-    startdate <- lubridate::parse_date_time(startdate, orders = orders, tz = timezone)
+    timeInputs <- sort(c(
+      lubridate::parse_date_time(startdate, orders = orders, tz = timezone),
+      lubridate::parse_date_time(enddate, orders = orders, tz = timezone)
+    ))
 
-    timeInputs <- sort(c(enddate, startdate))
-
+    starttime <- lubridate::floor_date(timeInputs[1], unit = "day")
 
     endtime <-
       timeInputs[2] %>%
-      lubridate::parse_date_time(orders = orders, tz = timezone) %>%
-      lubridate::floor_date(unit = "day") %>%
-      `+`(lubridate::dseconds(daySecs))
+      lubridate::ceiling_date(unit = "day") %>%
+      `-`(endUnitAdjust)
 
-    starttime <-
-      timeInputs[1] %>%
-      lubridate::parse_date_time(orders = orders, tz = timezone) %>%
-      lubridate::floor_date(unit = "day")
-
-  } else if ( is.null(startdate) && !is.null(enddate) ) {
-
-    # Missing startdate:  use (enddate - days), enddate
-    endtime <-
-      enddate %>%
-      lubridate::parse_date_time(orders = orders, tz = timezone) %>%
-      lubridate::floor_date(unit = "day") %>%
-      `+`(lubridate::dseconds(daySecs))               # end of day
-
-    # Special case for "day" because enddate moves to 00:00:00 of next day
-    if ( unit == "day" ) {
-      starttime <- endtime - lubridate::ddays(days)
-    } else {
-      starttime <-
-        endtime %>%
-        lubridate::floor_date(unit = "day") %>%       # beginning of day
-        `-`(lubridate::ddays(days - 1))               # any extra days
-    }
 
   } else if ( !is.null(startdate) && is.null(enddate) ) {
 
-    # Missing enddate:  use startdate, (startdate + days)
+  # ** Missing enddate: use startdate, (startdate + days) ----------------------
+
     starttime <-
       startdate %>%
       lubridate::parse_date_time(orders = orders, tz = timezone) %>%
       lubridate::floor_date(unit = "day")
 
+    endtime <- starttime + lubridate::days(days) - endUnitAdjust
+
+
+  } else if ( is.null(startdate) && !is.null(enddate) ) {
+
+    # ** Missing startdate: use (enddate - days), enddate ----------------------
+
+    ## NOTE:
+    #  Don't account for end unit adjustments until after calculating the start
+    #  time from the end time, in order to make the math for subtracting the
+    #  correct amount of time from the end time simpler.
+
     endtime <-
-      starttime %>%
-      lubridate::floor_date(unit = "day") %>%
-      `+`(lubridate::dseconds(daySecs)) %>%           # end of day
-      `+`(lubridate::ddays(days - 1))                 # any extra days
+      enddate %>%
+      lubridate::parse_date_time(orders = orders, tz = timezone) %>%
+      lubridate::ceiling_date(unit = "day")
+
+    starttime <- endtime - lubridate::days(days)
+    endtime <- endtime - endUnitAdjust
+
 
   } else {
 
-    # Both missing:  use (now - days), now
+    # ** Both missing: use (now - days), now -----------------------------------
+
     endtime <-
       lubridate::now(tzone = timezone) %>%
-      lubridate::floor_date(unit = "day" )
+      lubridate::ceiling_date(unit = "day")
 
-    starttime <-
-      endtime %>%
-      lubridate::floor_date(unit = "day") %>%
-      `-`(lubridate::ddays(days))
+    starttime <- endtime - lubridate::days(days)
+    endtime <- endtime - endUnitAdjust
 
   }
 
 
-  # Order output time limits ---------------------------------------------------
+  # Return tlim ----------------------------------------------------------------
 
-  if ( starttime < endtime ) {
-    tlim <- c(starttime, endtime)
-  } else {
-    # just in case
-    tlim <- c(endtime, starttime)
-  }
-
-  return(tlim)
+  return(c(starttime, endtime))
 
 }

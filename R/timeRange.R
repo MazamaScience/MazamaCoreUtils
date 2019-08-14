@@ -68,18 +68,13 @@ timeRange <- function(
 
   orders <- c("Ymd", "YmdH", "YmdHM", "YmdHMS")
 
-  endtime <- lubridate::parse_date_time(endtime, orders = orders, tz = timezone)
-  starttime <- lubridate::parse_date_time(starttime, orders = orders, tz = timezone)
+  timeInputs <-
+    c(starttime, endtime) %>%
+    lubridate::parse_date_time(orders = orders, tz = timezone)
+
 
   # Order output time limits ---------------------------------------------------
 
-  if ( starttime < endtime ) {
-    tlim <- c(starttime, endtime)
-  } else {
-    # just in case
-    tlim <- c(endtime, starttime)
-  }
-
-  return(tlim)
+  return(sort(timeInputs))
 
 }

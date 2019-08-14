@@ -147,3 +147,49 @@ test_that("End-of-Day unit works as expected", {
   expect_identical(strftime(rev_tlim[2], format = "%H%M%S", tz = "UTC"), "235959")
 
 })
+
+
+test_that("Default arguments work as expected", {
+
+  startTime <- ISOdatetime(2019, 08, 1, 2, 15, 45, tz = "America/Los_Angeles")
+  endTime <- ISOdatetime(2019, 08, 7, 20, 30, 40, tz = "America/Los_Angeles")
+
+  numDays <- 7
+
+  expectedStart <- lubridate::floor_date(startTime, unit = "day")
+  expectedEnd <- lubridate::ceiling_date(endTime, unit = "day")
+
+  expect_identical(
+    dateRange(
+      startdate = startTime, enddate = NULL,
+      timezone = "America/Los_Angeles", unit = "day"
+    ),
+    c(expectedStart, expectedEnd)
+  )
+
+  expect_identical(
+    dateRange(
+      startdate = NULL, enddate = endTime,
+      timezone = "America/Los_Angeles", unit = "day"
+    ),
+    c(expectedStart, expectedEnd)
+  )
+
+  expect_identical(
+    dateRange(
+      startdate = NULL, enddate = NULL,
+      timezone = "America/Los_Angeles", unit = "day"
+    ),
+    c(
+      lubridate::now(tzone = "America/Los_Angeles") %>%
+        lubridate::ceiling_date(unit = "day") %>%
+        `-`(lubridate::days(numDays)),
+      lubridate::now(tzone = "America/Los_Angeles") %>%
+        lubridate::ceiling_date(unit = "day")
+    )
+  )
+
+
+
+
+})

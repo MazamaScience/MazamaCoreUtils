@@ -122,10 +122,10 @@ dateRange <- function(
   #  passing it to `lubridate::parse_date_time()`
 
   if ( lubridate::is.POSIXct(startdate) )
-    startdate <- lubridate::with_tz(startdate, timezone)
+    startdate <- lubridate::with_tz(startdate, tzone = timezone)
 
   if ( lubridate::is.POSIXct(enddate) )
-    enddate <- lubridate::with_tz(enddate, timezone)
+    enddate <- lubridate::with_tz(enddate, tzone = timezone)
 
 
   # * Parse inputs -------------------------------------------------------------

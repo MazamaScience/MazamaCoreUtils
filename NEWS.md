@@ -29,7 +29,6 @@ parsing time ranges instead of finding date ranges.
 
 As part of this consolidation, more unit tests were added to the package.
 
-
 # MazamaCoreUtils 0.2.1
 
  * Reordered arguments to `dateRange()`.

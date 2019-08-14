@@ -89,7 +89,7 @@ manageCache <- function(cacheDir,
   if ( is.null(maxFileAge) ) {
     ageRemovalCount <- 0
   } else {
-    expiration <- lubridate::now() - lubridate::ddays(maxFileAge)
+    expiration <- lubridate::now(tzone = "UTC") - lubridate::ddays(maxFileAge)
     removalDF <- dplyr::filter(cacheDF, cacheDF$mtime < expiration)
     ageRemovalCount <- nrow(removalDF)
     if ( ageRemovalCount > 0 ) {

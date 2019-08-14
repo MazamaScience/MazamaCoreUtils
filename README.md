@@ -7,7 +7,7 @@
 ```
 A suite of utility functions providing functionality commonly
 needed for production level projects such as logging, error handling,
-and cache management.
+cache management and date parsing.
 ```
 
 ## Background
@@ -17,11 +17,12 @@ work building R-based web services.
 
 The main goal of this package is to create an internally standardized set of
 functions that we can use in various systems that are being run
-operationally.  Areas of functionality supported by this package include:
+operationally. Areas of functionality supported by this package include:
 
  * python style logging
  * simple error messaging
  * cache management
+ * date parsing
  
  
 ## Installation

@@ -10,7 +10,9 @@
 #' @name initializeLogging
 #' @export
 #'
-initializeLogging <- function(logDir= NULL) {
+initializeLogging <- function(
+  logDir = NULL
+) {
 
   if (is.null(logDir)) {
     stop("Required parameter 'logDir' is missing.", call. = FALSE)
@@ -18,6 +20,7 @@ initializeLogging <- function(logDir= NULL) {
 
   result <- try({
     # Copy and old log files
+    # NOTE:  Intentionally use host system timezone
     timestamp <- strftime(lubridate::now(), "%Y-%m-%dT%H:%M:%S")
     for (logLevel in c("TRACE", "DEBUG", "INFO", "ERROR")) {
       oldFile <- file.path(logDir, paste0(logLevel, ".log"))

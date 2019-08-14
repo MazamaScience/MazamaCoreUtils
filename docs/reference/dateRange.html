@@ -39,11 +39,15 @@ of the requested or calcualted enddate.
 The required timezone parameter must be one of those found in
 OlsonNames.
 Dates can be anything that is understood by
-lubrdiate::parse_date_time() including either of the following
-recommended formats:
+lubrdiate::parse_date_time() using the Ymd[HMS] orders. This
+includes:
 
 &quot;YYYYmmdd&quot;
+&quot;YYYYmmddHHMMSS&quot;
 &quot;YYYY-mm-dd&quot;
+&quot;YYYY-mm-dd H&quot;
+&quot;YYYY-mm-dd H:M&quot;
+&quot;YYYY-mm-dd H:M:S&quot;
 " />
 <meta name="twitter:card" content="summary" />
 
@@ -75,7 +79,7 @@ recommended formats:
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -133,7 +137,7 @@ recommended formats:
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create a POSIXct date range</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/R/utils-time.R'><code>R/utils-time.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/R/dateRange.R'><code>R/dateRange.R</code></a></small>
     <div class="hidden name"><code>dateRange.Rd</code></div>
     </div>
 
@@ -146,11 +150,15 @@ of the requested or calcualted <code>enddate</code>.</p>
 <p>The required <code>timezone</code> parameter must be one of those found in
 <code><a href='https://www.rdocumentation.org/packages/base/topics/timezones'>OlsonNames</a></code>.</p>
 <p>Dates can be anything that is understood by
-<code>lubrdiate::parse_date_time()</code> including either of the following
-recommended formats:</p>
+<code>lubrdiate::parse_date_time()</code> using the <code>Ymd[HMS]</code> orders. This
+includes:</p>
 <ul>
 <li><p><code>"YYYYmmdd"</code></p></li>
+<li><p><code>"YYYYmmddHHMMSS"</code></p></li>
 <li><p><code>"YYYY-mm-dd"</code></p></li>
+<li><p><code>"YYYY-mm-dd H"</code></p></li>
+<li><p><code>"YYYY-mm-dd H:M"</code></p></li>
+<li><p><code>"YYYY-mm-dd H:M:S"</code></p></li>
 </ul>
     
     </div>
@@ -171,7 +179,7 @@ recommended formats:</p>
     </tr>
     <tr>
       <th>timezone</th>
-      <td><p>Olson timezone used to interpret dates.</p></td>
+      <td><p>Olson timezone used to interpret dates (required).</p></td>
     </tr>
     <tr>
       <th>days</th>
@@ -187,12 +195,21 @@ recommended formats:</p>
 
     <p>A vector of two <code>POSIXct</code>s.</p>
     
+    <h2 class="hasAnchor" id="default-arguments"><a class="anchor" href="#default-arguments"></a>Default Arguments</h2>
+
+    
+    <p>In the case when either <code>startdate</code> or <code>enddate</code> is missing, it is
+created from the non-missing values plus/minus <code>days</code>. If both
+<code>startdate</code> and <code>enddate</code> are misssing, <code>enddate</code> is set to
+<code><a href='http://lubridate.tidyverse.org/reference/now.html'>now</a></code> (with the given <code>timezone</code>), and then
+<code>startdate</code> is calculated using <code>enddate - days</code>.</p>
+    
     <h2 class="hasAnchor" id="end-of-day-units"><a class="anchor" href="#end-of-day-units"></a>End-of-Day Units</h2>
 
     
     <p>The second of the returned <code>POSIXct</code>s will end one <code>unit</code> before
-the specified <code>enddate</code>. Acceptable units are <code>"day", "hour",
-"min", "sec"</code>.</p>
+the end of the specified <code>enddate</code>. Acceptable units are <code>"day",
+"hour", "min", "sec"</code>.</p>
 <p>The aim is to quickly calculate full-day date ranges for time series whose
 values are binned at different units. Thus, if <code>unit = "min"</code>, the
 returned value associated with <code>enddate</code> will always be at 23:59:00
@@ -207,14 +224,14 @@ with 00:00:00 of the following day.</p>
     <p>When <code>startdate</code> or <code>enddate</code> are already <code>POSIXct</code> values,
 they are converted to the timezone specified by <code>timezone</code> without
 altering the physical instant in time the input represents. This is different
-from the behavior of <code><a href='https://www.rdocumentation.org/packages/lubridate/topics/parse_date_time'>parse_date_time</a></code> (which powers
+from the behavior of <code><a href='http://lubridate.tidyverse.org/reference/parse_date_time.html'>parse_date_time</a></code> (which powers
 this function), which will force <code>POSIXct</code> inputs into a new timezone,
 altering the physical moment of time the input represents.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>dateRange</span>(<span class='st'>"2019-01-08"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 00:00:00 UTC" "2019-01-14 23:59:59 UTC"</div><div class='input'><span class='fu'>dateRange</span>(<span class='st'>"2019-01-08"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"min"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 00:00:00 UTC" "2019-01-14 23:59:00 UTC"</div><div class='input'><span class='fu'>dateRange</span>(<span class='st'>"2019-01-08"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"hour"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 00:00:00 UTC" "2019-01-14 23:00:00 UTC"</div><div class='input'><span class='fu'>dateRange</span>(<span class='st'>"2019-01-08"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"day"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 UTC" "2019-01-15 UTC"</div><div class='input'><span class='fu'>dateRange</span>(<span class='st'>"2019-01-08"</span>, <span class='st'>"2019-01-11"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 00:00:00 UTC" "2019-01-11 23:59:59 UTC"</div><div class='input'><span class='fu'>dateRange</span>(<span class='kw'>enddate</span> <span class='kw'>=</span> <span class='fl'>20190112</span>, <span class='kw'>days</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-          <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"day"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"America/Los_Angeles"</span>)</div><div class='output co'>#&gt; [1] "2019-01-10 PST" "2019-01-13 PST"</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>dateRange</span>(<span class='st'>"2019-01-08"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 00:00:00 UTC" "2019-01-14 23:59:59 UTC"</div><div class='input'><span class='fu'>dateRange</span>(<span class='st'>"2019-01-08"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"min"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 00:00:00 UTC" "2019-01-14 23:59:00 UTC"</div><div class='input'><span class='fu'>dateRange</span>(<span class='st'>"2019-01-08"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"hour"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 00:00:00 UTC" "2019-01-14 23:00:00 UTC"</div><div class='input'><span class='fu'>dateRange</span>(<span class='st'>"2019-01-08"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"day"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 UTC" "2019-01-15 UTC"</div><div class='input'><span class='fu'>dateRange</span>(<span class='st'>"2019-01-08"</span>, <span class='st'>"2019-01-11"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 00:00:00 UTC" "2019-01-10 23:59:59 UTC"</div><div class='input'><span class='fu'>dateRange</span>(<span class='kw'>enddate</span> <span class='kw'>=</span> <span class='fl'>20190112</span>, <span class='kw'>days</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+          <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"day"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"America/Los_Angeles"</span>)</div><div class='output co'>#&gt; [1] "2019-01-09 PST" "2019-01-12 PST"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -222,6 +239,8 @@ altering the physical moment of time the input represents.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#default-arguments">Default Arguments</a></li>
 
       <li><a href="#end-of-day-units">End-of-Day Units</a></li>
 

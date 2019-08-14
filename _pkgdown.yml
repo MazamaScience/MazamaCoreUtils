@@ -4,9 +4,42 @@ pkgdown_sha: ~
 articles:
   - title: "Working with MazamaCoreUtils"
     desc: >
-      Background and examples for successfully working with the 
+      Background and examples for successfully working with the
       MazamaCoreUtils package.
     contents:
     - cache-management
     - error-handling
     - logging
+reference:
+- title: Time Utilities
+  desc: >
+    Functions for working with datetimes
+  contents:
+  - '`dateRange`'
+  - '`timeRange`'
+  - '`parseDatetime`'
+- title: Logging Utilities
+  desc: >
+    Logging utilities for MazamaScience projects
+  contents:
+  - '`initializeLogging`'
+  - '`logLevels`'
+  - '`logger.debug`'
+  - '`logger.error`'
+  - '`logger.fatal`'
+  - '`logger.info`'
+  - '`logger.setLevel`'
+  - '`logger.setup`'
+  - '`logger.trace`'
+  - '`logger.warn`'
+- title: Linting Utilities
+  desc: >
+    Linting utilites for internal MazamaScience development
+  contents:
+  - '`lintFunctionArgs`'
+  - '`timezoneLintRules`'
+- title: Other Utilites
+  desc: ~
+  contents:
+    - '`manageCache`'
+    - '`stopOnError`'

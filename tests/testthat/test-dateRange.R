@@ -189,7 +189,4 @@ test_that("Default arguments work as expected", {
     )
   )
 
-
-
-
 })

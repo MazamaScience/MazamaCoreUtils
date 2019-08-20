@@ -35,7 +35,15 @@
 <meta property="og:description" content="Uses incoming parameters to return a pair of POSIXct times in the
 proper order. The first returned time will be midnight of the desired
 starting date. The second returned time will represent the &quot;end of the day&quot;
-of the requested or calcualted enddate.
+of the requested or calculated enddate boundary.
+So, to get 24 hours of data staring on Jan 01, 2019 you would specify:
+
+&amp;gt; MazamaCoreUtils::dateRange(20190101, 2190102, timezone = &quot;UTC&quot;)
+[1] &quot;2019-01-01 00:00:00 UTC&quot; &quot;2019-01-01 23:59:59 UTC&quot;
+" />
+
+<meta property="og:description" content="Note that the returned end date will be one unit prior to the start
+of the requested enddate.
 The required timezone parameter must be one of those found in
 OlsonNames.
 Dates can be anything that is understood by
@@ -79,7 +87,7 @@ includes:
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
       </span>
     </div>
 
@@ -149,7 +157,15 @@ includes:
     <p>Uses incoming parameters to return a pair of <code>POSIXct</code> times in the
 proper order. The first returned time will be midnight of the desired
 starting date. The second returned time will represent the "end of the day"
-of the requested or calcualted <code>enddate</code>.</p>
+of the requested or calculated <code>enddate</code> boundary.</p>
+<p>So, to get 24 hours of data staring on Jan 01, 2019 you would specify:</p>
+<pre>
+&gt; MazamaCoreUtils::dateRange(20190101, 2190102, timezone = "UTC")
+[1] "2019-01-01 00:00:00 UTC" "2019-01-01 23:59:59 UTC"
+</pre>
+
+    <p>Note that the returned end date will be one <code>unit</code> prior to the start
+of the requested <code>enddate</code>.</p>
 <p>The required <code>timezone</code> parameter must be one of those found in
 <code><a href='https://www.rdocumentation.org/packages/base/topics/timezones'>OlsonNames</a></code>.</p>
 <p>Dates can be anything that is understood by
@@ -204,22 +220,19 @@ includes:</p>
     <p>In the case when either <code>startdate</code> or <code>enddate</code> is missing, it is
 created from the non-missing values plus/minus <code>days</code>. If both
 <code>startdate</code> and <code>enddate</code> are misssing, <code>enddate</code> is set to
-<code><a href='https://www.rdocumentation.org/packages/lubridate/topics/now'>now</a></code> (with the given <code>timezone</code>), and then
+<code><a href='http://lubridate.tidyverse.org/reference/now.html'>now</a></code> (with the given <code>timezone</code>), and then
 <code>startdate</code> is calculated using <code>enddate - days</code>.</p>
     
     <h2 class="hasAnchor" id="end-of-day-units"><a class="anchor" href="#end-of-day-units"></a>End-of-Day Units</h2>
 
     
     <p>The second of the returned <code>POSIXct</code>s will end one <code>unit</code> before
-the end of the specified <code>enddate</code>. Acceptable units are <code>"day",
+the specified <code>enddate</code>. Acceptable units are <code>"day",
 "hour", "min", "sec"</code>.</p>
 <p>The aim is to quickly calculate full-day date ranges for time series whose
 values are binned at different units. Thus, if <code>unit = "min"</code>, the
 returned value associated with <code>enddate</code> will always be at 23:59:00
 in the requested time zone.</p>
-<p>Because the returned values always satisfy full-day date ranges, specifying
-<code>unit = "day"</code> will cause the returned <code>enddate</code> to be associated
-with 00:00:00 of the following day.</p>
     
     <h2 class="hasAnchor" id="posixct-inputs"><a class="anchor" href="#posixct-inputs"></a>POSIXct inputs</h2>
 

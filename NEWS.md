@@ -1,3 +1,7 @@
+# MazamaCoreUtils 0.3.2
+
+* Improved documentation for `enddate` in `dateRange().
+
 # MazamaCoreUtils 0.3.1
 
 * Tweak for CRAN.

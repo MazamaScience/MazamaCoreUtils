@@ -4,7 +4,17 @@
 #' Uses incoming parameters to return a pair of \code{POSIXct} times in the
 #' proper order. The first returned time will be midnight of the desired
 #' starting date. The second returned time will represent the "end of the day"
-#' of the requested or calcualted \code{enddate}.
+#' of the requested or calculated \code{enddate} boundary.
+#'
+#' So, to get 24 hours of data staring on Jan 01, 2019 you would specify:
+#'
+#' \preformatted{
+#' > MazamaCoreUtils::dateRange(20190101, 2190102, timezone = "UTC")
+#' [1] "2019-01-01 00:00:00 UTC" "2019-01-01 23:59:59 UTC"
+#' }
+#'
+#' Note that the returned end date will be one \code{unit} prior to the start
+#' of the requested \code{enddate}.
 #'
 #' The required \code{timezone} parameter must be one of those found in
 #' \code{\link[base]{OlsonNames}}.
@@ -39,17 +49,13 @@
 #'
 #' @section End-of-Day Units:
 #' The second of the returned \code{POSIXct}s will end one \code{unit} before
-#' the end of the specified \code{enddate}. Acceptable units are \code{"day",
+#' the specified \code{enddate}. Acceptable units are \code{"day",
 #' "hour", "min", "sec"}.
 #'
 #' The aim is to quickly calculate full-day date ranges for time series whose
 #' values are binned at different units. Thus, if \code{unit = "min"}, the
 #' returned value associated with \code{enddate} will always be at 23:59:00
 #' in the requested time zone.
-#'
-#' Because the returned values always satisfy full-day date ranges, specifying
-#' \code{unit = "day"} will cause the returned \code{enddate} to be associated
-#' with 00:00:00 of the following day.
 #'
 #' @section POSIXct inputs:
 #' When \code{startdate} or \code{enddate} are already \code{POSIXct} values,

@@ -6,5 +6,4 @@
 #' @keywords internal
 #' @aliases .data
 #' @importFrom rlang .data
-#' @usage .data
 NULL

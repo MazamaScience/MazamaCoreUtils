@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
       </span>
     </div>
 
@@ -84,6 +84,9 @@
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/cache-management.html">Cache Managment</a>
+    </li>
+    <li>
+      <a href="../articles/date-parsing.html">Date Parsing</a>
     </li>
     <li>
       <a href="../articles/error-handling.html">Error Handling</a>
@@ -121,6 +124,17 @@
       <small>Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="mazamacoreutils-0-3-1" class="section level1">
+<h1 class="page-header">
+<a href="#mazamacoreutils-0-3-1" class="anchor"></a>MazamaCoreUtils 0.3.1<small> Unreleased </small>
+</h1>
+<ul>
+<li>Tweak for CRAN.</li>
+<li>Renamed <code>lintFunctionArgs_directory()</code> to <code><a href="../reference/lintFunctionArgs.html">lintFunctionArgs_dir()</a></code>.</li>
+<li>Added <code>fullPath</code> argument to linting funcitons.</li>
+<li>Added <code>date-parsing</code> vignette.</li>
+</ul>
+</div>
     <div id="mazamacoreutils-0-3-0" class="section level1">
 <h1 class="page-header">
 <a href="#mazamacoreutils-0-3-0" class="anchor"></a>MazamaCoreUtils 0.3.0<small> Unreleased </small>
@@ -131,7 +145,7 @@
 <a href="#new-functions" class="anchor"></a>New functions</h2>
 <ul>
 <li><code><a href="../reference/lintFunctionArgs.html">lintFunctionArgs_file()</a></code></li>
-<li><code><a href="../reference/lintFunctionArgs.html">lintFunctionArgs_directory()</a></code></li>
+<li><code>lintFunctionArgs_directory()</code></li>
 <li><code><a href="../reference/timeRange.html">timeRange()</a></code></li>
 <li><code><a href="../reference/parseDatetime.html">parseDatetime()</a></code></li>
 </ul>
@@ -139,7 +153,7 @@
 <div id="function-argument-linting" class="section level2">
 <h2 class="hasAnchor">
 <a href="#function-argument-linting" class="anchor"></a>Function Argument Linting</h2>
-<p>In order to ensure that we are working with timezones consistently, the functions <code><a href="../reference/lintFunctionArgs.html">lintFunctionArgs_file()</a></code> and <code><a href="../reference/lintFunctionArgs.html">lintFunctionArgs_directory()</a></code> were created to parse <strong>R</strong> source files and determine if certain functions contained specific named arguments, based on a set of rules. A set of rules, <code>timezoneLintRules</code>, was created to check that all functions that accept a timezone have that argument explicitly fill, avoiding inconsistent default behavior.</p>
+<p>In order to ensure that we are working with timezones consistently, the functions <code><a href="../reference/lintFunctionArgs.html">lintFunctionArgs_file()</a></code> and <code>lintFunctionArgs_directory()</code> were created to parse <strong>R</strong> source files and determine if certain functions contained specific named arguments, based on a set of rules. A set of rules, <code>timezoneLintRules</code>, was created to check that all functions that accept a timezone have that argument explicitly fill, avoiding inconsistent default behavior.</p>
 </div>
 <div id="consolidating-time-utility-functions" class="section level2">
 <h2 class="hasAnchor">
@@ -231,6 +245,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#mazamacoreutils-0-3-1">0.3.1</a></li>
         <li><a href="#mazamacoreutils-0-3-0">0.3.0</a></li>
         <li><a href="#mazamacoreutils-0-2-1">0.2.1</a></li>
         <li><a href="#mazamacoreutils-0-2-0">0.2.0</a></li>

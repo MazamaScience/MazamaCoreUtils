@@ -1,3 +1,10 @@
+# MazamaCoreUtils 0.3.1
+
+* Tweak for CRAN.
+* Renamed `lintFunctionArgs_directory()` to `lintFunctionArgs_dir()`.
+* Added `fullPath` argument to linting funcitons.
+* Added `date-parsing` vignette.
+
 # MazamaCoreUtils 0.3.0
 
 This version focuses on enhancing the time utility capabilities of

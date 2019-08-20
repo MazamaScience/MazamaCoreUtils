@@ -4,9 +4,6 @@
 \alias{tidyeval-data}
 \alias{.data}
 \title{Data pronoun for tidy evaluation}
-\usage{
-.data
-}
 \description{
 See \code{rlang::\link[rlang]{.data}} for details.
 }

@@ -10,6 +10,7 @@
 #' @param rules A named list where the name of each element is a function name,
 #'   and the value is a character vector of the named argument to check for. All
 #'   arguments must be specified for a function to "pass".
+#' @param fullPath Logical specifying whether to display absolute paths.
 #'
 #' @return A \code{\link[tibble]{tibble}} detailing the results of the lint.
 #'
@@ -34,7 +35,7 @@
 #' argument, or that \code{"baz"} had been passed as an unnamed argument.
 #'
 #' @name lintFunctionArgs
-#' @aliases lintFunctionArgs_file lintFunctionArgs_directory
+#' @aliases lintFunctionArgs_file lintFunctionArgs_dir
 #'
 #' @examples
 #' \dontrun{
@@ -56,7 +57,8 @@ NULL
 #' @export
 lintFunctionArgs_file <- function(
   filePath = NULL,
-  rules = NULL
+  rules = NULL,
+  fullPath = FALSE
 ) {
 
   # Validate input ------------------------------------------------------------
@@ -124,6 +126,8 @@ lintFunctionArgs_file <- function(
 
   # Check function arguments ------------------------------------------------
 
+  if ( !fullPath ) fileString <- basename(normFilePath)
+
   results <-
     functionCalls %>%
     dplyr::filter(.data$function_name %in% names(rules)) %>%
@@ -132,9 +136,9 @@ lintFunctionArgs_file <- function(
         .data$named_args, .data$function_name,
         ~purrr::has_element(.x, rules[[.y]])
       ),
-      file_path = normFilePath
+      file = fileString
     ) %>%
-    dplyr::select(.data$file_path, dplyr::everything())
+    dplyr::select(.data$file, dplyr::everything())
 
   return(results)
 
@@ -143,9 +147,10 @@ lintFunctionArgs_file <- function(
 
 #' @rdname lintFunctionArgs
 #' @export
-lintFunctionArgs_directory <- function(
+lintFunctionArgs_dir <- function(
   dirPath = "./R",
-  rules = NULL
+  rules = NULL,
+  fullPath = FALSE
 ) {
 
   # Validate input -------------------------------------------------------------
@@ -169,7 +174,7 @@ lintFunctionArgs_directory <- function(
 
   results <- normDirPath %>%
     list.files(pattern = "\\.R$", full.names = TRUE, recursive = TRUE) %>%
-    purrr::map_dfr(lintFunctionArgs_file, rules)
+    purrr::map_dfr(lintFunctionArgs_file, rules, fullPath)
 
   return(results)
 

@@ -3,12 +3,13 @@
 \name{lintFunctionArgs}
 \alias{lintFunctionArgs}
 \alias{lintFunctionArgs_file}
-\alias{lintFunctionArgs_directory}
+\alias{lintFunctionArgs_dir}
 \title{Lint a source file's function arguments}
 \usage{
-lintFunctionArgs_file(filePath = NULL, rules = NULL)
+lintFunctionArgs_file(filePath = NULL, rules = NULL,
+  fullPath = FALSE)
 
-lintFunctionArgs_directory(dirPath = "./R", rules = NULL)
+lintFunctionArgs_dir(dirPath = "./R", rules = NULL, fullPath = FALSE)
 }
 \arguments{
 \item{filePath}{Path to a file, given as a length one character vector.}
@@ -16,6 +17,8 @@ lintFunctionArgs_directory(dirPath = "./R", rules = NULL)
 \item{rules}{A named list where the name of each element is a function name,
 and the value is a character vector of the named argument to check for. All
 arguments must be specified for a function to "pass".}
+
+\item{fullPath}{Logical specifying whether to display absolute paths.}
 
 \item{dirPath}{Path to a directory, given as a length one character vector.}
 }

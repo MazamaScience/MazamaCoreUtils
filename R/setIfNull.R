@@ -51,7 +51,7 @@
 #'
 #'
 #' # This function can be useful for adding elements to a list
-#' testList <- ("a" = 1, "b" = "baz", "c" = "4")
+#' testList <- list("a" = 1, "b" = "baz", "c" = "4")
 #'
 #' testList$a <- setIfNull(testList$a, 0)
 #' testList$b <- setIfNull(testList$c, 0)

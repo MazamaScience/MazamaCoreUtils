@@ -13,8 +13,9 @@
 #' Not all coercions are possible, however, and if the function encounters one
 #' of these (ex: \code{setIfNull("foo", 5)}) the function will fail.
 #'
-#' @param target Variable to test if \code{NULL}
-#' @param default Variable to return if \code{target} is \code{NULL}
+#' @param target Object to test if \code{NULL} (must be length 1).
+#' @param default Object to return if \code{target} is \code{NULL} (must be
+#'   length one).
 #'
 #' @return If \code{target} is not \code{NULL}, then \code{target} coerced to
 #'   the type of \code{default}. Otherwise, \code{default} is returned.
@@ -76,48 +77,45 @@ setIfNull <- function(target, default) {
   #  With no default arguments specified, the function will fail if any argument
   #  is missing.
 
+  # TODO: Handle target input or length > 1 (must handle NAs better)
+  if (length(target) > 1)
+    stop("target must be of length one.")
 
-  # Set default and possibly convert type --------------------------------------
+  if (length(default) > 1)
+    stop("default must be of length one.")
+
+
+  # Set default and possibly coerce type ---------------------------------------
 
   if (is.null(target)) {
 
     result <- default
 
+  } else if (typeof(target) == typeof(default)) {
+
+    result <- target
+
   } else {
 
-    # Set up possible coercions
-    if (is.character(default)) {
-      conversionFunc <- function(x) as.character(x)
-    } else if (is.integer(default)) {
-      conversionFunc <- function(x) as.integer(x)
-    } else if (is.double(default)) {
-      conversionFunc <- function(x) as.double(x)
-    } else if (is.complex(default)) {
-      conversionFunc <- function(x) as.complex(x)
-    } else if (is.logical(default)) {
-      conversionFunc <- function(x) as.logical(x)
-    } else if (is.list(default)) {
-      conversionFunc <- function(x) as.list(x)
-    } else {
+    validTypes <- c("character", "integer", "double", "complex", "logical", "list")
+
+    if (!typeof(default) %in% validTypes)
       stop("argument 'default' is not of a supported type.")
-    }
+
+    # Get appropriate coercion function
+    conversionFunc <- get(paste0("as.", typeof(default)), envir = baseenv())
 
     # Suppress warning about NAs when unable to coerce types
     result <- suppressWarnings(conversionFunc(target))
 
+    # If the target can't be coerced to the type of the defult, NA is produced.
+    if (is.na(result))
+      stop(paste0(
+        "Could not convert target ", typeof(target), " `", target, "` ",
+        "to output ", typeof(default), " `", default, "`."
+      ))
+
   }
-
-
-  # Test conversion result -----------------------------------------------------
-
-
-  # If the target can't be coerced to the type of the defult, NA is produced.
-
-  if (is.na(result))
-    stop(paste0(
-      "Could not convert target ", typeof(target), " `", target, "` ",
-      "to output ", typeof(default), " `", default, "`."
-    ))
 
 
   # Return result --------------------------------------------------------------

@@ -1,3 +1,22 @@
+# MazamaCoreUtils 0.4.0
+
+This version adds new convenience functions for dealing with `NULL` values
+in pipeline flow control.
+
+## New functions
+
+ * `setIfNull()`
+ * `stopIfNull()`
+
+## Dealing with NULL values
+
+In a lot of the data pipelines we build (web services, packages, etc.), we need
+to deal with the possibility of `NULL` inputs. Setting a default value or
+throwing an error are two of the most common ways `NUll` values are dealt with.
+While the code to handle this is straightforward to write, is verbose and
+repetitive. `setIfNull()` and `stopIfNull()` are designed to abstract away
+boilerplate code, allowing use to focus on more important things.
+
 # MazamaCoreUtils 0.3.2
 
 * Improved documentation for `enddate` in `dateRange().
@@ -6,7 +25,7 @@
 
 * Tweak for CRAN.
 * Renamed `lintFunctionArgs_directory()` to `lintFunctionArgs_dir()`.
-* Added `fullPath` argument to linting funcitons.
+* Added `fullPath` argument to linting functions.
 * Added `date-parsing` vignette.
 
 # MazamaCoreUtils 0.3.0

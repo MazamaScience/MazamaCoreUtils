@@ -8,6 +8,7 @@ articles:
       MazamaCoreUtils package.
     contents:
     - cache-management
+    - date-parsing
     - error-handling
     - logging
 reference:
@@ -38,6 +39,12 @@ reference:
   contents:
   - '`lintFunctionArgs`'
   - '`timezoneLintRules`'
+- title: Working with `NULL` values
+  desc: >
+    Convenience functions for working with `NULL` values
+  contents:
+  - '`setIfNull`'
+  - '`stopIfNull`'
 - title: Other Utilites
   desc: ~
   contents:

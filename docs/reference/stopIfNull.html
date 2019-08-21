@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a POSIXct time range — timeRange • MazamaCoreUtils</title>
+<title>Stop if an object is NULL — stopIfNull • MazamaCoreUtils</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,19 +30,10 @@
 
 
 
-<meta property="og:title" content="Create a POSIXct time range — timeRange" />
+<meta property="og:title" content="Stop if an object is NULL — stopIfNull" />
 
-<meta property="og:description" content="Uses incoming parameters to return a pair of POSIXct times in the
-proper order.
-The required timezone parameter must be one of those found in
-OlsonNames.
-Dates can be anything that is understood by
-lubrdiate::parse_date_time() including either of the following
-recommended formats:
-
-&quot;YYYYmmddHH[MMSS]&quot;
-&quot;YYYY-mm-dd HH:MM:SS&quot;
-" />
+<meta property="og:description" content="This is a convenience function for testing if an object is NULL, and
+providing a custom error message if it is." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -133,63 +124,50 @@ recommended formats:
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a POSIXct time range</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/R/timeRange.R'><code>R/timeRange.R</code></a></small>
-    <div class="hidden name"><code>timeRange.Rd</code></div>
+    <h1>Stop if an object is NULL</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/R/stopIfNull.R'><code>R/stopIfNull.R</code></a></small>
+    <div class="hidden name"><code>stopIfNull.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Uses incoming parameters to return a pair of <code>POSIXct</code> times in the
-proper order.</p>
-<p>The required <code>timezone</code> parameter must be one of those found in
-<code><a href='https://www.rdocumentation.org/packages/base/topics/timezones'>OlsonNames</a></code>.</p>
-<p>Dates can be anything that is understood by
-<code>lubrdiate::parse_date_time()</code> including either of the following
-recommended formats:</p>
-<ul>
-<li><p><code>"YYYYmmddHH[MMSS]"</code></p></li>
-<li><p><code>"YYYY-mm-dd HH:MM:SS"</code></p></li>
-</ul>
+    <p>This is a convenience function for testing if an object is <code>NULL</code>, and
+providing a custom error message if it is.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>timeRange</span>(<span class='kw'>starttime</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>endtime</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>stopIfNull</span>(<span class='no'>target</span>, <span class='kw'>msg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>starttime</th>
-      <td><p>Desired start datetime (ISO 8601).</p></td>
+      <th>target</th>
+      <td><p>Object to test if <code>NULL</code>.</p></td>
     </tr>
     <tr>
-      <th>endtime</th>
-      <td><p>Desired end datetime (ISO 8601).</p></td>
-    </tr>
-    <tr>
-      <th>timezone</th>
-      <td><p>Olson timezone used to interpret dates.</p></td>
+      <th>msg</th>
+      <td><p>Optional custom message to display when <code>target</code> is
+<code>NULL</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A vector of two <code>POSIXct</code>s.</p>
-    
-    <h2 class="hasAnchor" id="posixct-inputs"><a class="anchor" href="#posixct-inputs"></a>POSIXct inputs</h2>
-
-    
-    <p>When <code>startdate</code> or <code>enddate</code> are already <code>POSIXct</code> values,
-they are converted to the timezone specified by <code>timezone</code> without
-altering the physical instant in time the input represents. This is different
-from the behavior of <code><a href='http://lubridate.tidyverse.org/reference/parse_date_time.html'>parse_date_time</a></code> (which powers
-this function), which will force <code>POSIXct</code> inputs into a new timezone,
-altering the physical moment of time the input represents.</p>
+    <p>If <code>target</code> is not <code>NULL</code>, <code>target</code> is returned
+  invisibly.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>timeRange</span>(<span class='st'>"2019-01-08 10:12:15"</span>, <span class='fl'>20190109102030</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 10:12:15 UTC" "2019-01-09 10:20:30 UTC"</div></pre>
+    <pre class="examples"><div class='input'>
+<span class='co'># Return input invisibly if not NULL</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>stopIfNull</span>(<span class='fl'>5</span>, <span class='kw'>msg</span> <span class='kw'>=</span> <span class='st'>"Custom message"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] 5</div><div class='input'>
+</div><span class='co'># NOT RUN {</span>
+<span class='no'>testVar</span> <span class='kw'>&lt;-</span> <span class='kw'>NULL</span>
+<span class='fu'>stopIfNull</span>(<span class='no'>testVar</span>)
+<span class='fu'>stopIfNull</span>(<span class='no'>testVar</span>, <span class='kw'>msg</span> <span class='kw'>=</span> <span class='st'>"This is NULL"</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -197,8 +175,6 @@ altering the physical moment of time the input represents.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#posixct-inputs">POSIXct inputs</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

@@ -26,9 +26,23 @@ providing a custom error message if it is.
 x <- stopIfNull(5, msg = "Custom message")
 print(x)
 
+# This can be useful when building pipelines
+y <- 1:10
+y_mean <-
+  y \%>\%
+  stopIfNull() \%>\%
+  mean()
+
 \dontrun{
 testVar <- NULL
 stopIfNull(testVar)
 stopIfNull(testVar, msg = "This is NULL")
+
+# Make a failing pipeline
+z <- NULL
+z_mean <-
+  z \%>\%
+  stopIfNull("This has failed.") \%>\%
+  mean()
 }
 }

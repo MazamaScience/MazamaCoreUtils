@@ -163,10 +163,22 @@ providing a custom error message if it is.</p>
 <span class='co'># Return input invisibly if not NULL</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>stopIfNull</span>(<span class='fl'>5</span>, <span class='kw'>msg</span> <span class='kw'>=</span> <span class='st'>"Custom message"</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] 5</div><div class='input'>
-</div><span class='co'># NOT RUN {</span>
+<span class='co'># This can be useful when building pipelines</span>
+<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>:<span class='fl'>10</span>
+<span class='no'>y_mean</span> <span class='kw'>&lt;-</span>
+  <span class='no'>y</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>stopIfNull</span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>()</div><span class='co'># NOT RUN {</span>
 <span class='no'>testVar</span> <span class='kw'>&lt;-</span> <span class='kw'>NULL</span>
 <span class='fu'>stopIfNull</span>(<span class='no'>testVar</span>)
 <span class='fu'>stopIfNull</span>(<span class='no'>testVar</span>, <span class='kw'>msg</span> <span class='kw'>=</span> <span class='st'>"This is NULL"</span>)
+
+<span class='co'># Make a failing pipeline</span>
+<span class='no'>z</span> <span class='kw'>&lt;-</span> <span class='kw'>NULL</span>
+<span class='no'>z_mean</span> <span class='kw'>&lt;-</span>
+  <span class='no'>z</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>stopIfNull</span>(<span class='st'>"This has failed."</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></span>()
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

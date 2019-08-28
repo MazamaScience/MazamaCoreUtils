@@ -16,12 +16,12 @@ Issues a \code{stop()} with an appropriate error message.
 }
 \description{
 When writing R code to be used in production systems that work
-with user supplied input, it is important to enclose chunks of code inside 
-of a \code{try()} block. It is equally important to generate error log 
+with user supplied input, it is important to enclose chunks of code inside
+of a \code{try()} block. It is equally important to generate error log
 messages that can be found and understood during an autopsy when something
 fails
 
-At Mazama Science we have our own internal standard for how to do error 
+At Mazama Science we have our own internal standard for how to do error
 handling in a manner that allows us to quickly navigate to the source of
 errors in a production system.
 

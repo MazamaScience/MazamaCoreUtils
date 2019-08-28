@@ -42,19 +42,21 @@ stopIfNull <- function(target, msg = NULL) {
 
   # Return early if not NULL ---------------------------------------------------
 
-  if (!is.null(target))
+  if ( !is.null(target) )
     return(invisible(target))
 
 
   # Build error message --------------------------------------------------------
 
-  if (is.null(msg)) {
+  if ( is.null(msg) ) {
 
-    msg <- paste0("'", deparse(substitute(target)), "' must not be NULL.")
+    msg <- paste0("argument '",
+                  deparse(substitute(target)),
+                  "' must not be NULL.")
 
   } else if (!is.character(msg) || length(msg) != 1) {
 
-    stop("msg must be a length one character string.")
+    stop("msg must be a character string of length one.")
 
   }
 

@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
       </span>
     </div>
 
@@ -124,6 +124,23 @@
       <small>Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="mazamacoreutils-0-3-4" class="section level1">
+<h1 class="page-header">
+<a href="#mazamacoreutils-0-3-4" class="anchor"></a>MazamaCoreUtils 0.3.4<small> Unreleased </small>
+</h1>
+<p>Various improvements after usage in an operational setting:</p>
+<ul>
+<li>
+<code>timezoneLintRules</code> includes more date related functions.</li>
+<li>Added <code>quiet</code> argument to <code>parseDateTime()</code>.</li>
+<li>
+<code><a href="../reference/timeRange.html">timeRange()</a></code> function now accepts <code>unit</code> and <code>ceilingEnd</code> arguments.</li>
+<li>
+<code><a href="../reference/dateRange.html">dateRange()</a></code> function now accepts <code>ceilingEnd</code> argument.</li>
+<li>More unit tests for dates and times.</li>
+</ul>
+<p>The <code>ceilingEnd</code> argument addresses the ambiguity of a phrase like: “August 1-8”. With <code>ceilingEnd = FALSE</code> (default) this pharse means “through the beginning of Aug 8”. With <code>ceilingEnd = TRUE</code> it means “through the end of Aug 8”.</p>
+</div>
     <div id="mazamacoreutils-0-3-3" class="section level1">
 <h1 class="page-header">
 <a href="#mazamacoreutils-0-3-3" class="anchor"></a>MazamaCoreUtils 0.3.3<small> Unreleased </small>
@@ -272,6 +289,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#mazamacoreutils-0-3-4">0.3.4</a></li>
         <li><a href="#mazamacoreutils-0-3-3">0.3.3</a></li>
         <li><a href="#mazamacoreutils-0-3-2">0.3.2</a></li>
         <li><a href="#mazamacoreutils-0-3-1">0.3.1</a></li>

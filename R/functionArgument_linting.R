@@ -63,11 +63,8 @@ lintFunctionArgs_file <- function(
 
   # Validate input ------------------------------------------------------------
 
-  if ( is.null(filePath) )
-    stop("Required parameter 'filePath' is missing.")
-
-  if ( is.null(rules) )
-    stop("Required parameter 'rules' is missing.")
+  stopIfNull(filePath)
+  stopIfNull(rules)
 
   if ( !is.list(rules) || is.null(names(rules)) ) {
     stop("rules must be a named list.")
@@ -155,8 +152,7 @@ lintFunctionArgs_dir <- function(
 
   # Validate input -------------------------------------------------------------
 
-  if ( is.null(rules) )
-    stop("Required parameter 'rules' is missing.")
+  stopIfNull(rules)
 
   if ( !is.list(rules) || is.null(names(rules)) )
     stop("rules must be a named list.")

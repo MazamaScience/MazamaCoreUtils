@@ -8,7 +8,7 @@ test_that("Output is a two element POSIXct vector", {
 
 
   startTime <- ISOdatetime(2019, 08, 01, 2, 15, 45, tz = "America/Los_Angeles")
-  endTime <- ISOdatetime(2019, 08, 7, 20, 30, 40, tz = "America/Los_Angeles")
+  endTime <- ISOdatetime(2019, 08, 08, 20, 30, 40, tz = "America/Los_Angeles")
 
   tlim <- dateRange(startdate = startTime, enddate = endTime, timezone = "America/Los_Angeles")
 
@@ -21,7 +21,7 @@ test_that("Output is a two element POSIXct vector", {
 test_that("Output has the correct timezone", {
 
   startTime <- ISOdatetime(2019, 08, 01, 2, 15, 45, tz = "America/Los_Angeles")
-  endTime <- ISOdatetime(2019, 08, 7, 20, 30, 40, tz = "America/Los_Angeles")
+  endTime <- ISOdatetime(2019, 08, 08, 20, 30, 40, tz = "America/Los_Angeles")
 
   tlim_LA <- dateRange(startdate = startTime, enddate = endTime, timezone = "America/Los_Angeles")
   tlim_UTC <- dateRange(startdate = startTime, enddate = endTime, timezone = "UTC")
@@ -35,7 +35,7 @@ test_that("Output has the correct timezone", {
 test_that("Equivalent inputs create the same output", {
 
   startTime <- ISOdatetime(2019, 08, 01, 2, 15, 45, tz = "America/Los_Angeles")
-  endTime <- ISOdatetime(2019, 08, 7, 20, 30, 40, tz = "America/Los_Angeles")
+  endTime <- ISOdatetime(2019, 08, 08, 20, 30, 40, tz = "America/Los_Angeles")
   dayCount <- 7
 
   tlim_startEnd <- dateRange(startdate = startTime, enddate = endTime, timezone = "America/Los_Angeles")
@@ -52,7 +52,7 @@ test_that("Equivalent inputs create the same output", {
 test_that("First element in output is less than the second", {
 
   startTime <- ISOdatetime(2019, 08, 01, 2, 15, 45, tz = "America/Los_Angeles")
-  endTime <- ISOdatetime(2019, 08, 7, 20, 30, 40, tz = "America/Los_Angeles")
+  endTime <- ISOdatetime(2019, 08, 08, 20, 30, 40, tz = "America/Los_Angeles")
 
   tlim <- dateRange(startdate = startTime, enddate = endTime, timezone = "America/Los_Angeles")
   tlim_now <- dateRange(timezone = "America/Los_Angeles")
@@ -68,18 +68,20 @@ test_that("First element in output is less than the second", {
 test_that("POSIXct inputs retain their point-in-time", {
 
   startTime <- ISOdatetime(2019, 08, 01, 2, 15, 45, tz = "America/Los_Angeles")
-  endTime <- ISOdatetime(2019, 08, 7, 20, 30, 40, tz = "America/Los_Angeles")
+  endTime <- ISOdatetime(2019, 08, 08, 20, 30, 40, tz = "America/Los_Angeles")
 
   startTimeString <- strftime(startTime, format = "%Y%m%d%H%M%S", tz = "America/Los_Angeles")
   endTimeString <- strftime(endTime, format = "%Y%m%d%H%M%S", tz = "America/Los_Angeles")
 
-  expectedStartTime_UTC <- startTime %>%
+  expectedStartTime_UTC <-
+    startTime %>%
     lubridate::with_tz(tzone = "UTC") %>%
     lubridate::floor_date(unit = "day")
 
-  expectedEndTime_UTC <- endTime %>%
+  expectedEndTime_UTC <-
+    endTime %>%
     lubridate::with_tz(tzone = "UTC") %>%
-    lubridate::ceiling_date(unit = "day") %>%
+    lubridate::floor_date(unit = "day") %>%
     `-`(lubridate::dseconds(1))
 
 
@@ -107,7 +109,7 @@ test_that("POSIXct inputs retain their point-in-time", {
 test_that("Non-POSIXct inputs work as expected", {
 
   startTime <- ISOdatetime(2019, 08, 01, 2, 15, 45, tz = "America/Los_Angeles")
-  endTime <- ISOdatetime(2019, 08, 7, 20, 30, 40, tz = "America/Los_Angeles")
+  endTime <- ISOdatetime(2019, 08, 08, 20, 30, 40, tz = "America/Los_Angeles")
 
   startTime_string <- strftime(startTime, format = "%Y-%m-%d %H:%M:%S", tz = "America/Los_Angeles")
   starTime_numeric <- strftime(startTime, format = "%Y%m%d%H%M%S", tz = "America/Los_Angeles") %>% as.numeric()
@@ -128,7 +130,7 @@ test_that("Non-POSIXct inputs work as expected", {
 test_that("End-of-Day unit works as expected", {
 
   startTime <- ISOdatetime(2019, 08, 01, 2, 15, 45, tz = "America/Los_Angeles")
-  endTime <- ISOdatetime(2019, 08, 7, 20, 30, 40, tz = "America/Los_Angeles")
+  endTime <- ISOdatetime(2019, 08, 08, 20, 30, 40, tz = "America/Los_Angeles")
 
   # Standard input
   tlim_sec <- dateRange(startdate = startTime, enddate = endTime, timezone = "UTC", unit = "sec")
@@ -152,12 +154,12 @@ test_that("End-of-Day unit works as expected", {
 test_that("Default arguments work as expected", {
 
   startTime <- ISOdatetime(2019, 08, 1, 2, 15, 45, tz = "America/Los_Angeles")
-  endTime <- ISOdatetime(2019, 08, 7, 20, 30, 40, tz = "America/Los_Angeles")
+  endTime <- ISOdatetime(2019, 08, 08, 20, 30, 40, tz = "America/Los_Angeles")
 
   numDays <- 7
 
   expectedStart <- lubridate::floor_date(startTime, unit = "day")
-  expectedEnd <- lubridate::ceiling_date(endTime, unit = "day")
+  expectedEnd <- lubridate::floor_date(endTime, unit = "day")
 
   expect_identical(
     dateRange(
@@ -182,11 +184,52 @@ test_that("Default arguments work as expected", {
     ),
     c(
       lubridate::now(tzone = "America/Los_Angeles") %>%
-        lubridate::ceiling_date(unit = "day") %>%
+        lubridate::floor_date(unit = "day") %>%
         `-`(lubridate::days(numDays)),
       lubridate::now(tzone = "America/Los_Angeles") %>%
-        lubridate::ceiling_date(unit = "day")
+        lubridate::floor_date(unit = "day")
     )
   )
 
 })
+
+test_that("unit and ceilingEnd arguments work", {
+
+  startTime <- ISOdatetime(2019, 08, 01, 2, 15, 45, tz = "America/Los_Angeles")
+  endTime <- ISOdatetime(2019, 08, 08, 20, 30, 40, tz = "America/Los_Angeles")
+
+  startDate <- ISOdatetime(2019, 08, 01, 00, 00, 00, tz = "America/Los_Angeles")
+  endDate <- ISOdatetime(2019, 08, 7, 23, 59, 59, tz = "America/Los_Angeles")
+
+  startMin <- ISOdatetime(2019, 08, 01, 00, 00, 00, tz = "America/Los_Angeles")
+  startHour <- ISOdatetime(2019, 08, 01, 00, 00, 00, tz = "America/Los_Angeles")
+  startDay <- ISOdatetime(2019, 08, 01, 00, 00, 00, tz = "America/Los_Angeles")
+
+  endMin <- ISOdatetime(2019, 08, 7, 23, 59, 00, tz = "America/Los_Angeles")
+  endHour <- ISOdatetime(2019, 08, 7, 23, 00, 00, tz = "America/Los_Angeles")
+  endDay <- ISOdatetime(2019, 08, 8, 00, 00, 00, tz = "America/Los_Angeles")
+
+  endMinCeil <- ISOdatetime(2019, 08, 08, 23, 59, 00, tz = "America/Los_Angeles")
+  endHourCeil <- ISOdatetime(2019, 08, 08, 23, 00, 00, tz = "America/Los_Angeles")
+  endDayCeil <- ISOdatetime(2019, 08, 09, 00, 00, 00, tz = "America/Los_Angeles")
+
+  tlim <- dateRange(startTime, endTime, timezone = "America/Los_Angeles")
+
+  tlimMin <- dateRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "min")
+  tlimHour <- dateRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "hour")
+  tlimDay <- dateRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "day")
+
+  tlimMinCeil <- dateRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "min", ceilingEnd = TRUE)
+  tlimHourCeil <- dateRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "hour", ceilingEnd = TRUE)
+  tlimDayCeil <- dateRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "day", ceilingEnd = TRUE)
+
+  expect_identical(tlim, c(startDate, endDate))
+  expect_identical(tlimMin, c(startMin, endMin))
+  expect_identical(tlimHour, c(startHour, endHour))
+  expect_identical(tlimDay, c(startDay, endDay))
+  expect_identical(tlimMinCeil, c(startMin, endMinCeil))
+  expect_identical(tlimHourCeil, c(startHour, endHourCeil))
+  expect_identical(tlimDayCeil, c(startDay, endDayCeil))
+
+})
+

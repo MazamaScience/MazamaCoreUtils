@@ -4,7 +4,7 @@ test_that("Stop on all NA output", {
 
   expect_error(
     parseDatetime(input),
-    "Required parameter 'timezone' is missing."
+    "argument 'timezone' must not be NULL."
   )
 
   expect_error(
@@ -41,3 +41,4 @@ test_that("Fail on some NA outputs when ExpectAll is true", {
   )
 
 })
+

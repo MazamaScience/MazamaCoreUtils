@@ -30,6 +30,8 @@
 #' @param timezone Olson timezone at the location of interest.
 #' @param expectAll Logical value determining if the function should fail if
 #'   any elements fail to parse (default \code{FALSE}).
+#' @param quiet Logical value passed on to \code{lubridate::parse_date_time} to
+#'   optionally suppress warning messages.
 #'
 #' @return A vector of POSIXct datetimes.
 #'
@@ -68,16 +70,16 @@
 parseDatetime <- function(
   datetime = NULL,
   timezone = NULL,
-  expectAll = FALSE
+  expectAll = FALSE,
+  quiet = TRUE
 ) {
 
   # Validate parameters --------------------------------------------------------
 
-  if ( is.null(datetime) )
-    stop("Required parameter 'datetime' is missing.")
-
-  if ( is.null(timezone) )
-    stop("Required parameter 'timezone' is missing.")
+  stopIfNull(datetime)
+  stopIfNull(timezone)
+  stopIfNull(expectAll)
+  stopIfNull(quiet)
 
   if ( !timezone %in% base::OlsonNames() )
     stop(paste0("timezone '", timezone, "' is not recognized."))
@@ -95,7 +97,10 @@ parseDatetime <- function(
   # Parse datetimes ---------------------------------------------------------
 
   orders <- c("Ymd", "YmdH", "YmdHM", "YmdHMS")
-  parsedDatetime <- lubridate::parse_date_time(datetime, orders, tz = timezone)
+  parsedDatetime <- lubridate::parse_date_time(datetime,
+                                               orders,
+                                               tz = timezone,
+                                               quiet = quiet)
 
 
   # Handle results ----------------------------------------------------------

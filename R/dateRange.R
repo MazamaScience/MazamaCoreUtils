@@ -6,15 +6,30 @@
 #' starting date. The second returned time will represent the "end of the day"
 #' of the requested or calculated \code{enddate} boundary.
 #'
+#' Note that the returned end date will be one \code{unit} prior to the start
+#' of the requested \code{enddate} unless \code{ceilingEnd = TRUE} in
+#' which case the entire \code{enddate} will be included up to the last
+#' \code{unit}.
+#'
+#' The \code{ceilingEnd" argument addresses the ambiguity of a phrase like:
+#' "August 1-8". With \code{ceilingEnd = FALSE} (default) this pharse means
+#' "through the beginning of Aug 8". With \code{ceilingEnd = TRUE} it means
+#' "through the end of Aug 8".
+#'
 #' So, to get 24 hours of data staring on Jan 01, 2019 you would specify:
 #'
 #' \preformatted{
-#' > MazamaCoreUtils::dateRange(20190101, 2190102, timezone = "UTC")
+#' > MazamaCoreUtils::dateRange(20190101, 20190102, timezone = "UTC")
 #' [1] "2019-01-01 00:00:00 UTC" "2019-01-01 23:59:59 UTC"
 #' }
 #'
-#' Note that the returned end date will be one \code{unit} prior to the start
-#' of the requested \code{enddate}.
+#' or
+#'
+#' \preformatted{
+#' > MazamaCoreUtils::dateRange(20190101, 20190101,
+#'                              timezone = "UTC", ceilingEnd = TRUE)
+#' [1] "2019-01-01 00:00:00 UTC" "2019-01-01 23:59:59 UTC"
+#' }
 #'
 #' The required \code{timezone} parameter must be one of those found in
 #' \code{\link[base]{OlsonNames}}.
@@ -35,8 +50,11 @@
 #' @param startdate Desired start datetime (ISO 8601).
 #' @param enddate Desired end datetime (ISO 8601).
 #' @param timezone Olson timezone used to interpret dates (required).
-#' @param days Number of days of data to include.
 #' @param unit Units used to determine time at end-of-day.
+#' @param ceilingEnd Logical instruction to apply
+#'   \code{\link[lubridate]{ceiling_date}} to the \code{enddate} rather than
+#'   \code{\link[lubridate]{floor_date}}
+#' @param days Number of days of data to include.
 #'
 #' @return A vector of two \code{POSIXct}s.
 #'
@@ -79,14 +97,16 @@ dateRange <- function(
   startdate = NULL,
   enddate = NULL,
   timezone = NULL,
-  days = 7,
-  unit = "sec"
+  unit = "sec",
+  ceilingEnd = FALSE,
+  days = 7
 ) {
 
   # Validate parameters --------------------------------------------------------
 
-  if ( is.null(timezone) )
-    stop("Required parameter 'timezone' is missing.")
+  stopIfNull(timezone)
+  stopIfNull(unit)
+  stopIfNull(ceilingEnd)
 
   if ( !timezone %in% base::OlsonNames() )
     stop(paste0("Timezone '", timezone, "' is not recognized."))
@@ -115,46 +135,27 @@ dateRange <- function(
     stop("'unit' must be one of: 'day', 'hour', 'min', 'sec'.")
   }
 
-
   # Determine start and end times ----------------------------------------------
 
-  # * Prepare POSIXct inputs ---------------------------------------------------
-
-  ## NOTE on hadling POSIXct inputs:
-  #  When given a POSIXct time `lubridate::parse_date_time()` forces the time
-  #  into the timezone given to `lubridate::parse_date_time()`. This alters the
-  #  physical instant in time the original POSIXct represents, so we must
-  #  properly convert a POSIXct start or end date to the proper timezone before
-  #  passing it to `lubridate::parse_date_time()`
-
-  if ( lubridate::is.POSIXct(startdate) )
-    startdate <- lubridate::with_tz(startdate, tzone = timezone)
-
-  if ( lubridate::is.POSIXct(enddate) )
-    enddate <- lubridate::with_tz(enddate, tzone = timezone)
-
-
-  # * Parse inputs -------------------------------------------------------------
-
-  orders <- c("Ymd", "YmdH", "YmdHM", "YmdHMS")
+  # NOTE:  Always assume floor_date for both start- and enddate and take
+  # NOTE:  care of ceilingEnd as the very last step
 
   if ( !is.null(startdate) && !is.null(enddate) ) {
 
     # ** Both found: use startdate, enddate ------------------------------------
 
-    # handle ordering
-    timeInputs <- sort(c(
-      lubridate::parse_date_time(startdate, orders = orders, tz = timezone),
-      lubridate::parse_date_time(enddate, orders = orders, tz = timezone)
-    ))
+    # Handle parsing and ordering
+    timeInput <- timeRange(startdate, enddate, timezone = timezone)
 
-    starttime <- lubridate::floor_date(timeInputs[1], unit = "day")
+    starttime <-
+      timeInput[1] %>%
+      lubridate::floor_date(unit = "day")
 
     endtime <-
-      timeInputs[2] %>%
-      lubridate::ceiling_date(unit = "day") %>%
-      `-`(endUnitAdjust)
+      timeInput[2] %>%
+      lubridate::floor_date(unit = "day")
 
+    endtime <- endtime - endUnitAdjust
 
   } else if ( !is.null(startdate) && is.null(enddate) ) {
 
@@ -162,7 +163,7 @@ dateRange <- function(
 
     starttime <-
       startdate %>%
-      lubridate::parse_date_time(orders = orders, tz = timezone) %>%
+      parseDatetime(timezone = timezone) %>%
       lubridate::floor_date(unit = "day")
 
     endtime <- starttime + lubridate::days(days) - endUnitAdjust
@@ -179,8 +180,8 @@ dateRange <- function(
 
     endtime <-
       enddate %>%
-      lubridate::parse_date_time(orders = orders, tz = timezone) %>%
-      lubridate::ceiling_date(unit = "day")
+      parseDatetime(timezone = timezone) %>%
+      lubridate::floor_date(unit = "day")
 
     starttime <- endtime - lubridate::days(days)
     endtime <- endtime - endUnitAdjust
@@ -192,11 +193,16 @@ dateRange <- function(
 
     endtime <-
       lubridate::now(tzone = timezone) %>%
-      lubridate::ceiling_date(unit = "day")
+      lubridate::floor_date(unit = "day")
 
     starttime <- endtime - lubridate::days(days)
     endtime <- endtime - endUnitAdjust
 
+  }
+
+  # Adjust for ceilingEnd
+  if ( ceilingEnd ) {
+    endtime <- endtime + lubridate::ddays(1)
   }
 
 

@@ -14,9 +14,7 @@ initializeLogging <- function(
   logDir = NULL
 ) {
 
-  if (is.null(logDir)) {
-    stop("Required parameter 'logDir' is missing.", call. = FALSE)
-  }
+  stopIfNull(logDir)
 
   result <- try({
     # Copy and old log files

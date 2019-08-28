@@ -5,7 +5,7 @@
 \title{Create a POSIXct date range}
 \usage{
 dateRange(startdate = NULL, enddate = NULL, timezone = NULL,
-  days = 7, unit = "sec")
+  unit = "sec", ceilingEnd = FALSE, days = 7)
 }
 \arguments{
 \item{startdate}{Desired start datetime (ISO 8601).}
@@ -14,44 +14,19 @@ dateRange(startdate = NULL, enddate = NULL, timezone = NULL,
 
 \item{timezone}{Olson timezone used to interpret dates (required).}
 
-\item{days}{Number of days of data to include.}
-
 \item{unit}{Units used to determine time at end-of-day.}
+
+\item{ceilingEnd}{Logical instruction to apply
+\code{\link[lubridate]{ceiling_date}} to the \code{enddate} rather than
+\code{\link[lubridate]{floor_date}}}
+
+\item{days}{Number of days of data to include.}
 }
 \value{
 A vector of two \code{POSIXct}s.
 }
 \description{
-Uses incoming parameters to return a pair of \code{POSIXct} times in the
-proper order. The first returned time will be midnight of the desired
-starting date. The second returned time will represent the "end of the day"
-of the requested or calculated \code{enddate} boundary.
-
-So, to get 24 hours of data staring on Jan 01, 2019 you would specify:
-
-\preformatted{
-> MazamaCoreUtils::dateRange(20190101, 2190102, timezone = "UTC")
-[1] "2019-01-01 00:00:00 UTC" "2019-01-01 23:59:59 UTC"
-}
-
-Note that the returned end date will be one \code{unit} prior to the start
-of the requested \code{enddate}.
-
-The required \code{timezone} parameter must be one of those found in
-\code{\link[base]{OlsonNames}}.
-
-Dates can be anything that is understood by
-\code{lubrdiate::parse_date_time()} using the \code{Ymd[HMS]} orders. This
-includes:
-
-\itemize{
-  \item{\code{"YYYYmmdd"}}
-  \item{\code{"YYYYmmddHHMMSS"}}
-  \item{\code{"YYYY-mm-dd"}}
-  \item{\code{"YYYY-mm-dd H"}}
-  \item{\code{"YYYY-mm-dd H:M"}}
-  \item{\code{"YYYY-mm-dd H:M:S"}}
-}
+Create a POSIXct date range
 }
 \section{Default Arguments}{
 

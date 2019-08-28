@@ -33,7 +33,10 @@
 <meta property="og:title" content="Create a POSIXct time range — timeRange" />
 
 <meta property="og:description" content="Uses incoming parameters to return a pair of POSIXct times in the
-proper order.
+proper order. Both start and end times will have lubridate::floor_date()
+applied to get the nearest unit unless ceilingEnd = TRUE in
+which case the end time will will have lubridate::ceiling_date()
+applied.
 The required timezone parameter must be one of those found in
 OlsonNames.
 Dates can be anything that is understood by
@@ -73,7 +76,7 @@ recommended formats:
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
       </span>
     </div>
 
@@ -141,7 +144,10 @@ recommended formats:
     <div class="ref-description">
     
     <p>Uses incoming parameters to return a pair of <code>POSIXct</code> times in the
-proper order.</p>
+proper order. Both start and end times will have <code><a href='http://lubridate.tidyverse.org/reference/round_date.html'>lubridate::floor_date()</a></code>
+applied to get the nearest <code>unit</code> unless <code>ceilingEnd = TRUE</code> in
+which case the end time will will have <code><a href='http://lubridate.tidyverse.org/reference/round_date.html'>lubridate::ceiling_date()</a></code>
+applied.</p>
 <p>The required <code>timezone</code> parameter must be one of those found in
 <code><a href='https://www.rdocumentation.org/packages/base/topics/timezones'>OlsonNames</a></code>.</p>
 <p>Dates can be anything that is understood by
@@ -154,7 +160,8 @@ recommended formats:</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>timeRange</span>(<span class='kw'>starttime</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>endtime</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>timeRange</span>(<span class='kw'>starttime</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>endtime</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"sec"</span>, <span class='kw'>ceilingEnd</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -170,6 +177,16 @@ recommended formats:</p>
     <tr>
       <th>timezone</th>
       <td><p>Olson timezone used to interpret dates.</p></td>
+    </tr>
+    <tr>
+      <th>unit</th>
+      <td><p>Units used to determine time at end-of-day.</p></td>
+    </tr>
+    <tr>
+      <th>ceilingEnd</th>
+      <td><p>Logical instruction to apply
+<code><a href='http://lubridate.tidyverse.org/reference/round_date.html'>ceiling_date</a></code> to the <code>enddate</code> rather than
+<code><a href='http://lubridate.tidyverse.org/reference/round_date.html'>floor_date</a></code></p></td>
     </tr>
     </table>
     

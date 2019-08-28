@@ -23,6 +23,7 @@ operationally. Areas of functionality supported by this package include:
  * simple error messaging
  * cache management
  * date parsing
+ * source code linting
  
  
 ## Installation

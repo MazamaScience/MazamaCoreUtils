@@ -1,3 +1,17 @@
+# MazamaCoreUtils 0.3.4
+
+Various improvements after usage in an operational setting:
+
+* `timezoneLintRules` includes more date related functions.
+* Added `quiet` argument to `parseDateTime()`.
+* `timeRange()` function now accepts `unit` and `ceilingEnd` arguments.
+* `dateRange()` function now accepts `ceilingEnd` argument.
+* More unit tests for dates and times.
+
+The `ceilingEnd` argument addresses the ambiguity of a phrase like:
+"August 1-8". With `ceilingEnd = FALSE` (default) this pharse means "through the
+beginning of Aug 8". With `ceilingEnd = TRUE` it means "through the end of Aug 8".
+
 # MazamaCoreUtils 0.3.3
 
 This version adds new convenience functions for dealing with `NULL` values

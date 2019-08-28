@@ -32,31 +32,7 @@
 
 <meta property="og:title" content="Create a POSIXct date range — dateRange" />
 
-<meta property="og:description" content="Uses incoming parameters to return a pair of POSIXct times in the
-proper order. The first returned time will be midnight of the desired
-starting date. The second returned time will represent the &quot;end of the day&quot;
-of the requested or calculated enddate boundary.
-So, to get 24 hours of data staring on Jan 01, 2019 you would specify:
-
-&amp;gt; MazamaCoreUtils::dateRange(20190101, 2190102, timezone = &quot;UTC&quot;)
-[1] &quot;2019-01-01 00:00:00 UTC&quot; &quot;2019-01-01 23:59:59 UTC&quot;
-" />
-
-<meta property="og:description" content="Note that the returned end date will be one unit prior to the start
-of the requested enddate.
-The required timezone parameter must be one of those found in
-OlsonNames.
-Dates can be anything that is understood by
-lubrdiate::parse_date_time() using the Ymd[HMS] orders. This
-includes:
-
-&quot;YYYYmmdd&quot;
-&quot;YYYYmmddHHMMSS&quot;
-&quot;YYYY-mm-dd&quot;
-&quot;YYYY-mm-dd H&quot;
-&quot;YYYY-mm-dd H:M&quot;
-&quot;YYYY-mm-dd H:M:S&quot;
-" />
+<meta property="og:description" content="Create a POSIXct date range" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -87,7 +63,7 @@ includes:
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
       </span>
     </div>
 
@@ -154,36 +130,12 @@ includes:
 
     <div class="ref-description">
     
-    <p>Uses incoming parameters to return a pair of <code>POSIXct</code> times in the
-proper order. The first returned time will be midnight of the desired
-starting date. The second returned time will represent the "end of the day"
-of the requested or calculated <code>enddate</code> boundary.</p>
-<p>So, to get 24 hours of data staring on Jan 01, 2019 you would specify:</p>
-<pre>
-&gt; MazamaCoreUtils::dateRange(20190101, 2190102, timezone = "UTC")
-[1] "2019-01-01 00:00:00 UTC" "2019-01-01 23:59:59 UTC"
-</pre>
-
-    <p>Note that the returned end date will be one <code>unit</code> prior to the start
-of the requested <code>enddate</code>.</p>
-<p>The required <code>timezone</code> parameter must be one of those found in
-<code><a href='https://www.rdocumentation.org/packages/base/topics/timezones'>OlsonNames</a></code>.</p>
-<p>Dates can be anything that is understood by
-<code>lubrdiate::parse_date_time()</code> using the <code>Ymd[HMS]</code> orders. This
-includes:</p>
-<ul>
-<li><p><code>"YYYYmmdd"</code></p></li>
-<li><p><code>"YYYYmmddHHMMSS"</code></p></li>
-<li><p><code>"YYYY-mm-dd"</code></p></li>
-<li><p><code>"YYYY-mm-dd H"</code></p></li>
-<li><p><code>"YYYY-mm-dd H:M"</code></p></li>
-<li><p><code>"YYYY-mm-dd H:M:S"</code></p></li>
-</ul>
+    <p>Create a POSIXct date range</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>dateRange</span>(<span class='kw'>startdate</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>enddate</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>days</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"sec"</span>)</pre>
+  <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"sec"</span>, <span class='kw'>ceilingEnd</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>days</span> <span class='kw'>=</span> <span class='fl'>7</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -201,12 +153,18 @@ includes:</p>
       <td><p>Olson timezone used to interpret dates (required).</p></td>
     </tr>
     <tr>
-      <th>days</th>
-      <td><p>Number of days of data to include.</p></td>
-    </tr>
-    <tr>
       <th>unit</th>
       <td><p>Units used to determine time at end-of-day.</p></td>
+    </tr>
+    <tr>
+      <th>ceilingEnd</th>
+      <td><p>Logical instruction to apply
+<code><a href='http://lubridate.tidyverse.org/reference/round_date.html'>ceiling_date</a></code> to the <code>enddate</code> rather than
+<code><a href='http://lubridate.tidyverse.org/reference/round_date.html'>floor_date</a></code></p></td>
+    </tr>
+    <tr>
+      <th>days</th>
+      <td><p>Number of days of data to include.</p></td>
     </tr>
     </table>
     

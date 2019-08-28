@@ -9,7 +9,7 @@ test_that("Output is a two element POSIXct vector", {
 
 
   startTime <- ISOdatetime(2019, 08, 01, 2, 15, 45, tz = "America/Los_Angeles")
-  endTime <- ISOdatetime(2019, 08, 7, 20, 30, 40, tz = "America/Los_Angeles")
+  endTime <- ISOdatetime(2019, 08, 8, 20, 30, 40, tz = "America/Los_Angeles")
 
   tlim <- timeRange(starttime = startTime, endtime = endTime, timezone = "America/Los_Angeles")
 
@@ -22,7 +22,7 @@ test_that("Output is a two element POSIXct vector", {
 test_that("Output has the correct timezone", {
 
   startTime <- ISOdatetime(2019, 08, 01, 2, 15, 45, tz = "America/Los_Angeles")
-  endTime <- ISOdatetime(2019, 08, 7, 20, 30, 40, tz = "America/Los_Angeles")
+  endTime <- ISOdatetime(2019, 08, 8, 20, 30, 40, tz = "America/Los_Angeles")
 
   tlim_LA <- timeRange(starttime = startTime, endtime = endTime, timezone = "America/Los_Angeles")
   tlim_UTC <- timeRange(starttime = startTime, endtime = endTime, timezone = "UTC")
@@ -36,7 +36,7 @@ test_that("Output has the correct timezone", {
 test_that("First element in output is less than the second", {
 
   startTime <- ISOdatetime(2019, 08, 01, 2, 15, 45, tz = "America/Los_Angeles")
-  endTime <- ISOdatetime(2019, 08, 7, 20, 30, 40, tz = "America/Los_Angeles")
+  endTime <- ISOdatetime(2019, 08, 8, 20, 30, 40, tz = "America/Los_Angeles")
 
   tlim <- timeRange(starttime = startTime, endtime = endTime, timezone = "America/Los_Angeles")
   tlim_rev <- timeRange(starttime = endTime, endtime = startTime, timezone = "America/Los_Angeles")
@@ -50,7 +50,7 @@ test_that("First element in output is less than the second", {
 test_that("Non-POSIXct inputs work as expected", {
 
   startTime <- ISOdatetime(2019, 08, 01, 2, 15, 45, tz = "America/Los_Angeles")
-  endTime <- ISOdatetime(2019, 08, 7, 20, 30, 40, tz = "America/Los_Angeles")
+  endTime <- ISOdatetime(2019, 08, 8, 20, 30, 40, tz = "America/Los_Angeles")
 
   startTime_string <- strftime(startTime, format = "%Y-%m-%d %H:%M:%S", tz = "America/Los_Angeles")
   starTime_numeric <- strftime(startTime, format = "%Y%m%d%H%M%S", tz = "America/Los_Angeles") %>% as.numeric()
@@ -66,3 +66,43 @@ test_that("Non-POSIXct inputs work as expected", {
   expect_identical(tlim_posixct, tlim_numeric)
 
 })
+
+
+test_that("unit and ceilingEnd arguments work", {
+
+  startTime <- ISOdatetime(2019, 08, 01, 2, 15, 45, tz = "America/Los_Angeles")
+  endTime <- ISOdatetime(2019, 08, 8, 20, 30, 40, tz = "America/Los_Angeles")
+
+  startMin <- ISOdatetime(2019, 08, 01, 2, 15, 00, tz = "America/Los_Angeles")
+  startHour <- ISOdatetime(2019, 08, 01, 2, 00, 00, tz = "America/Los_Angeles")
+  startDay <- ISOdatetime(2019, 08, 01, 00, 00, 00, tz = "America/Los_Angeles")
+
+  endMin <- ISOdatetime(2019, 08, 8, 20, 30, 00, tz = "America/Los_Angeles")
+  endHour <- ISOdatetime(2019, 08, 8, 20, 00, 00, tz = "America/Los_Angeles")
+  endDay <- ISOdatetime(2019, 08, 8, 00, 00, 00, tz = "America/Los_Angeles")
+
+  endMinCeil <- ISOdatetime(2019, 08, 8, 20, 31, 00, tz = "America/Los_Angeles")
+  endHourCeil <- ISOdatetime(2019, 08, 8, 21, 00, 00, tz = "America/Los_Angeles")
+  endDayCeil <- ISOdatetime(2019, 08, 9, 00, 00, 00, tz = "America/Los_Angeles")
+
+  tlim <- timeRange(startTime, endTime, timezone = "America/Los_Angeles")
+
+  tlimMin <- timeRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "min")
+  tlimHour <- timeRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "hour")
+  tlimDay <- timeRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "day")
+
+  tlimMinCeil <- timeRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "min", ceilingEnd = TRUE)
+  tlimHourCeil <- timeRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "hour", ceilingEnd = TRUE)
+  tlimDayCeil <- timeRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "day", ceilingEnd = TRUE)
+
+  expect_identical(tlim, c(startTime, endTime))
+  expect_identical(tlimMin, c(startMin, endMin))
+  expect_identical(tlimHour, c(startHour, endHour))
+  expect_identical(tlimDay, c(startDay, endDay))
+  expect_identical(tlimMinCeil, c(startMin, endMinCeil))
+  expect_identical(tlimHourCeil, c(startHour, endHourCeil))
+  expect_identical(tlimDayCeil, c(startDay, endDayCeil))
+
+})
+
+

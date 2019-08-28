@@ -82,7 +82,7 @@ formats not recognized will be returned as NA." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
       </span>
     </div>
 
@@ -172,7 +172,8 @@ formats not recognized will be returned as <code>NA</code>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>parseDatetime</span>(<span class='kw'>datetime</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>expectAll</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>parseDatetime</span>(<span class='kw'>datetime</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>expectAll</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -190,6 +191,11 @@ formats not recognized will be returned as <code>NA</code>.</p>
       <th>expectAll</th>
       <td><p>Logical value determining if the function should fail if
 any elements fail to parse (default <code>FALSE</code>).</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Logical value passed on to <code><a href='http://lubridate.tidyverse.org/reference/parse_date_time.html'>lubridate::parse_date_time</a></code> to
+optionally suppress warning messages.</p></td>
     </tr>
     </table>
     

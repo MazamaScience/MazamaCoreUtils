@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Timezone linting rules for use with function argument linting — timezoneLintRules • MazamaCoreUtils</title>
+<title>Rules for timezone linting. — timezoneLintRules • MazamaCoreUtils</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,14 @@
 
 
 
-<meta property="og:title" content="Timezone linting rules for use with function argument linting — timezoneLintRules" />
+<meta property="og:title" content="Rules for timezone linting. — timezoneLintRules" />
 
-<meta property="og:description" content="A list mapping functions accepting timezone arguments to the
+<meta property="og:description" content="This set of rules is for use with the
+lintFunctionArgs_~(). functions. It includes all time-related
+functions from the base and lubridate packages that are involved
+with parsing or formatting datetimes and helps check whether the appropriate
+timezone arguments are being explicitly used.
+A list mapping functions accepting timezone arguments to the
   name of the argument accepting the timezone." />
 <meta name="twitter:card" content="summary" />
 
@@ -64,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
       </span>
     </div>
 
@@ -124,24 +129,34 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Timezone linting rules for use with function argument linting</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/R/data.R'><code>R/data.R</code></a></small>
+    <h1>Rules for timezone linting.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/R/MazamaCoreUtils.R'><code>R/MazamaCoreUtils.R</code></a>, <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/R/data.R'><code>R/data.R</code></a></small>
     <div class="hidden name"><code>timezoneLintRules.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>A list mapping functions accepting timezone arguments to the
+    <p>This set of rules is for use with the
+<code>lintFunctionArgs_~()</code>. functions. It includes all time-related
+functions from the <span class="pkg">base</span> and <span class="pkg">lubridate</span> packages that are involved
+with parsing or formatting datetimes and helps check whether the appropriate
+timezone arguments are being explicitly used.</p>
+<p>A list mapping functions accepting timezone arguments to the
   name of the argument accepting the timezone.</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>timezoneLintRules</span></pre>
+    <pre class="usage"><span class='no'>timezoneLintRules</span>
+
+<span class='no'>timezoneLintRules</span></pre>
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A list where the name of an element is a function name, and the
-  value of the element is the name of the argument which accepts a timezone.</p>
+    <p>A list of function = argument pairs.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>timezoneLintRules</p>
     
 
   </div>
@@ -150,6 +165,8 @@
     <ul class="nav nav-pills nav-stacked">
       
       <li><a href="#format">Format</a></li>
+
+      <li><a href="#details">Details</a></li>
           </ul>
 
   </div>

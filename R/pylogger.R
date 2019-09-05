@@ -61,12 +61,14 @@
 #'   \code{\link{logger.error}} \code{\link{logger.fatal}}
 #'
 # Set up logging namespaces
-logger.setup <- function(traceLog = NULL,
-                         debugLog = NULL,
-                         infoLog = NULL,
-                         warnLog = NULL,
-                         errorLog = NULL,
-                         fatalLog = NULL) {
+logger.setup <- function(
+  traceLog = NULL,
+  debugLog = NULL,
+  infoLog = NULL,
+  warnLog = NULL,
+  errorLog = NULL,
+  fatalLog = NULL
+) {
 
   if (! "futile.logger" %in% loadedNamespaces()) {
     requireNamespace("futile.logger", quietly = TRUE)

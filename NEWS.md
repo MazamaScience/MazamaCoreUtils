@@ -1,3 +1,7 @@
+# MazamaCoreUtils 0.3.5
+
+Fully self-consistent package using internal functions wherever possible.
+
 # MazamaCoreUtils 0.3.4
 
 Various improvements after usage in an operational setting:

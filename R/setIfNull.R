@@ -69,7 +69,10 @@
 #' setIfNull("5i", 0+0i)
 #' setIfNull("t", FALSE)
 #' }
-setIfNull <- function(target, default) {
+setIfNull <- function(
+  target,
+  default
+) {
 
   # Validate parameters --------------------------------------------------------
 

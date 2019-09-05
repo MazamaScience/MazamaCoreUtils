@@ -1,6 +1,6 @@
 Type: Package
 Package: MazamaCoreUtils
-Version: 0.3.4
+Version: 0.3.5
 Title: Utility Functions for Production R Code
 Authors@R: c(
     person("Jonathan", "Callahan", email="jonathan.s.callahan@gmail.com", role=c("aut","cre")),

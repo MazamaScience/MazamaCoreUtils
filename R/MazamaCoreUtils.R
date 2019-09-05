@@ -17,8 +17,6 @@
 #' }
 NULL
 
-#' timezoneLintRules
-#'
 #' @export
 #' @docType data
 #' @name timezoneLintRules
@@ -50,5 +48,3 @@ timezoneLintRules <- list(
   "ymd_hm" = "tz",
   "ymd_hms" = "tz"
 )
-
-

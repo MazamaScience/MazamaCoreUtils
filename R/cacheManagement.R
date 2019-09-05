@@ -58,11 +58,20 @@
 #'   print(file.info(file)[,c(1,6)])
 #' }
 
-manageCache <- function(cacheDir,
-                        extensions = c('html','json','pdf','png'),
-                        maxCacheSize = 100,
-                        sortBy = 'atime',
-                        maxFileAge = NULL) {
+manageCache <- function(
+  cacheDir = NULL,
+  extensions = c('html','json','pdf','png'),
+  maxCacheSize = 100,
+  sortBy = 'atime',
+  maxFileAge = NULL
+) {
+
+  # Validate parameters --------------------------------------------------------
+
+  stopIfNull(cacheDir)
+  stopIfNull(extensions)
+  stopIfNull(maxCacheSize)
+  stopIfNull(sortBy)
 
   # Get file info --------------------------------------------------------------
 

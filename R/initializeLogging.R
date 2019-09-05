@@ -14,12 +14,13 @@ initializeLogging <- function(
   logDir = NULL
 ) {
 
+  # Validate parameters
   stopIfNull(logDir)
 
+  # Copy and old log files
   result <- try({
-    # Copy and old log files
-    # NOTE:  Intentionally use host system timezone
-    timestamp <- strftime(lubridate::now(), "%Y-%m-%dT%H:%M:%S")
+    # NOTE:  Intentionally create timestamp in host system timezone
+    timestamp <- strftime(lubridate::now("UTC"), "%Y-%m-%dT%H:%M:%S")
     for (logLevel in c("TRACE", "DEBUG", "INFO", "ERROR")) {
       oldFile <- file.path(logDir, paste0(logLevel, ".log"))
       newFile <- file.path(logDir, paste0(logLevel, ".log.", timestamp))
@@ -30,8 +31,8 @@ initializeLogging <- function(
   }, silent = TRUE)
   stopOnError(result, "Could not rename old log files.")
 
+  # Set up logging
   result <- try({
-    # Set up logging
     logger.setup(traceLog = file.path(logDir, "TRACE.log"),
                  debugLog = file.path(logDir, "DEBUG.log"),
                  infoLog = file.path(logDir, "INFO.log"),

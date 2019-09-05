@@ -38,7 +38,10 @@
 #'   stopIfNull("This has failed.") %>%
 #'   mean()
 #' }
-stopIfNull <- function(target, msg = NULL) {
+stopIfNull <- function(
+  target,
+  msg = NULL
+) {
 
   # Return early if not NULL ---------------------------------------------------
 

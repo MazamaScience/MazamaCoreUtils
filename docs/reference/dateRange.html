@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.6</span>
       </span>
     </div>
 
@@ -202,6 +202,23 @@ from the behavior of <code><a href='http://lubridate.tidyverse.org/reference/par
 this function), which will force <code>POSIXct</code> inputs into a new timezone,
 altering the physical moment of time the input represents.</p>
     
+    <h2 class="hasAnchor" id="parameter-precedence"><a class="anchor" href="#parameter-precedence"></a>Parameter precedence</h2>
+
+    
+    <p>It is possible to supply input paramters that are in conflict. For example:</p>
+<p><code>dateRange("2019-01-01", "2019-01-08", days = 3, timezone = "UTC")</code></p>
+<p>The <code>startdate</code> and <code>enddate</code> parameters would imply a 7-day range
+which is in conflict with <code>days = 3</code>. The following rules resolve
+conflicts of this nature:</p>
+<ol>
+<li><p>When <code>startdate</code> and <code>enddate</code> are both specified, the
+<code>days</code> parameter is ignored.</p></li>
+<li><p>When <code>startdate</code> is missing, the first returned time will depend
+on the combination of <code>enddate</code>, <code>days</code> and <code>ceilingEnd</code>.</p></li>
+<li><p>When <code>enddate</code> is missing, <code>ceillingEnd</code> is ignored and the
+second returned time depends on <code>days</code>.</p></li>
+</ol>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>dateRange</span>(<span class='st'>"2019-01-08"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 00:00:00 UTC" "2019-01-14 23:59:59 UTC"</div><div class='input'><span class='fu'>dateRange</span>(<span class='st'>"2019-01-08"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"min"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 00:00:00 UTC" "2019-01-14 23:59:00 UTC"</div><div class='input'><span class='fu'>dateRange</span>(<span class='st'>"2019-01-08"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"hour"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 00:00:00 UTC" "2019-01-14 23:00:00 UTC"</div><div class='input'><span class='fu'>dateRange</span>(<span class='st'>"2019-01-08"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"day"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 UTC" "2019-01-15 UTC"</div><div class='input'><span class='fu'>dateRange</span>(<span class='st'>"2019-01-08"</span>, <span class='st'>"2019-01-11"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 00:00:00 UTC" "2019-01-10 23:59:59 UTC"</div><div class='input'><span class='fu'>dateRange</span>(<span class='kw'>enddate</span> <span class='kw'>=</span> <span class='fl'>20190112</span>, <span class='kw'>days</span> <span class='kw'>=</span> <span class='fl'>3</span>,
@@ -219,6 +236,8 @@ altering the physical moment of time the input represents.</p>
       <li><a href="#end-of-day-units">End-of-Day Units</a></li>
 
       <li><a href="#posixct-inputs">POSIXct inputs</a></li>
+
+      <li><a href="#parameter-precedence">Parameter precedence</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

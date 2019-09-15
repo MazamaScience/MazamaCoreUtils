@@ -233,3 +233,56 @@ test_that("unit and ceilingEnd arguments work", {
 
 })
 
+test_that("days are honored when start or endtime is missing", {
+
+  startTime <- ISOdatetime(2019, 08, 01, 2, 15, 45, tz = "America/Los_Angeles")
+  endTime <- ISOdatetime(2019, 08, 08, 20, 30, 40, tz = "America/Los_Angeles")
+
+  startDate <- ISOdatetime(2019, 08, 01, 00, 00, 00, tz = "America/Los_Angeles")
+  endDate <- ISOdatetime(2019, 08, 7, 23, 59, 59, tz = "America/Los_Angeles")
+  endDateCeil <- ISOdatetime(2019, 08, 8, 23, 59, 59, tz = "America/Los_Angeles")
+
+  # Normal usage
+  tlim <- dateRange(startTime, endTime,
+                    timezone = "America/Los_Angeles")
+  expect_identical(7, round(as.numeric(difftime(tlim[2], tlim[1], units="days"))))
+
+  # Full end enddate
+  tlim <- dateRange(startTime, endTime, ceilingEnd = TRUE,
+                    timezone = "America/Los_Angeles")
+  expect_identical(8, round(as.numeric(difftime(tlim[2], tlim[1], units="days"))))
+
+  # Ignore days when both start and end are specified
+  tlim <- dateRange(startTime, endTime, days = 5,
+                    timezone = "America/Los_Angeles")
+  expect_identical(7, round(as.numeric(difftime(tlim[2], tlim[1], units="days"))))
+
+  tlim <- dateRange(startTime, endTime, ceilingEnd = TRUE,
+                    timezone = "America/Los_Angeles")
+  expect_identical(8, round(as.numeric(difftime(tlim[2], tlim[1], units="days"))))
+
+  # Honor days when startdate is missing
+  tlim <- dateRange(enddate = endTime, days = 3,
+                    timezone = "America/Los_Angeles")
+  expect_identical(3, round(as.numeric(difftime(tlim[2], tlim[1], units="days"))))
+
+  # Honor both days and ceilingEnd, adjusting starttime
+  tlim <- dateRange(enddate = endTime, ceilingEnd = TRUE, days = 3,
+                    timezone = "America/Los_Angeles")
+  expect_identical(3, round(as.numeric(difftime(tlim[2], tlim[1], units="days"))))
+  expect_identical(endDateCeil, tlim[2])
+
+  # Honor days when enddate is missing
+  tlim <- dateRange(startdate = startTime, days = 3,
+                    timezone = "America/Los_Angeles")
+  expect_identical(3, round(as.numeric(difftime(tlim[2], tlim[1], units="days"))))
+
+  # Honor days but ignore ceilingEnd when enddate is not specified
+  tlim <- dateRange(startdate = startTime, ceilingEnd = TRUE, days = 3,
+                    timezone = "America/Los_Angeles")
+  expect_identical(3, round(as.numeric(difftime(tlim[2], tlim[1], units="days"))))
+
+
+
+})
+

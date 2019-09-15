@@ -59,6 +59,26 @@ this function), which will force \code{POSIXct} inputs into a new timezone,
 altering the physical moment of time the input represents.
 }
 
+\section{Parameter precedence}{
+
+It is possible to supply input paramters that are in conflict. For example:
+
+\code{dateRange("2019-01-01", "2019-01-08", days = 3, timezone = "UTC")}
+
+The \code{startdate} and \code{enddate} parameters would imply a 7-day range
+which is in conflict with \code{days = 3}. The following rules resolve
+conflicts of this nature:
+
+\enumerate{
+\item{When \code{startdate} and \code{enddate} are both specified, the
+\code{days} parameter is ignored.}
+\item{When \code{startdate} is missing, the first returned time will depend
+on the combination of \code{enddate}, \code{days} and \code{ceilingEnd}.}
+\item{When \code{enddate} is missing, \code{ceillingEnd} is ignored and the
+second returned time depends on \code{days}.}
+}
+}
+
 \examples{
 dateRange("2019-01-08", timezone = "UTC")
 dateRange("2019-01-08", unit = "min", timezone = "UTC")

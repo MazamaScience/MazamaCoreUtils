@@ -1,3 +1,8 @@
+# MazamaCoreUtils 0.3.6
+
+More consistency improvements to `dateRange()`. When specified, the `days` 
+parameter now takes precedence over `ceilingEnd` when no `enddate` is specified.
+
 # MazamaCoreUtils 0.3.5
 
 Fully self-consistent package using internal functions wherever possible.

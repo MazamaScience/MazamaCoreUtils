@@ -128,6 +128,45 @@ logger.setup <- function(
 }
 
 
+#' @title Check for initialization loggers
+#'
+#' @description
+#' Returns \code{TRUE} if logging has been initialized. This allows packages
+#' to emit logging statements only if logging has already been set up,
+#' potentially avoiding `futile.log` errors.
+#'
+#' @return \code{TRUE} if logging has already been initialized.
+#'
+#' @name logger.isInitialized
+#' @importFrom futile.logger flog.threshold
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' logger.isInitialized()
+#' logger.setup() # console logging only
+#' logger.isInitialized()
+#' }
+#'
+#' @seealso \code{\link{logger.setup}}
+#' @seealso \code{\link{initializeLogging}}
+#'
+logger.isInitialized <- function() {
+  if ( "futile.logger" %in% loadedNamespaces() ) {
+    if (
+      futile.logger::flog.logger("trace")$threshold == futile.logger::TRACE &&
+      futile.logger::flog.logger("debug")$threshold == futile.logger::DEBUG &&
+      futile.logger::flog.logger("info")$threshold == futile.logger::INFO &&
+      futile.logger::flog.logger("warn")$threshold == futile.logger::WARN &&
+      futile.logger::flog.logger("error")$threshold == futile.logger::ERROR
+    ) {
+      return(TRUE)
+    }
+  }
+  return(FALSE)
+}
+
+
 #' @title Set console log level
 #'
 #' @description

@@ -1,3 +1,7 @@
+# MazamaCoreUtils 0.3.7
+
+* Added `logger.isInitialized()` for programmatic use.
+
 # MazamaCoreUtils 0.3.6
 
 More consistency improvements to `dateRange()`. When specified, the `days` 

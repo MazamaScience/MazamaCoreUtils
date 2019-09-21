@@ -41,3 +41,5 @@ initializeLogging <- function(
   stopOnError(result, "Could not create log files.")
 
 }
+
+

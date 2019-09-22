@@ -17,7 +17,7 @@ potentially avoiding `futile.log` errors.
 \examples{
 \dontrun{
 logger.isInitialized()
-logger.setup() # console logging only
+logger.setup()
 logger.isInitialized()
 }
 

@@ -1,6 +1,9 @@
 # MazamaCoreUtils 0.3.7
 
 * Added `logger.isInitialized()` for programmatic use.
+* `logger.setLevel()` now guarantees that `logger.setup()` has been called,
+fixing a bug that generated multiple output messages when `logger.setLevel()`
+was called before `logger.setup()`.
 
 # MazamaCoreUtils 0.3.6
 

@@ -44,16 +44,20 @@
 #' @examples
 #' \dontrun{
 #' # Only save three log files
-#' logger.setup(debugLog='debug.log', infoLog='info.log', errorLog='error.log')
+#' logger.setup(
+#'   debugLog = "debug.log",
+#'   infoLog = "info.log",
+#'   errorLog = "error.log"
+#' )
 #'
 #' # But allow lot statements at all levels within the code
-#' logger.trace('trace statement #%d', 1)
-#' logger.debug('debug statement')
-#' logger.info('info statement %s %s', "with", "arguments")
-#' logger.warn('warn statement %s', "about to try something dumb")
+#' logger.trace("trace statement #%d", 1)
+#' logger.debug("debug statement")
+#' logger.info("info statement %s %s", "with", "arguments")
+#' logger.warn("warn statement %s", "about to try something dumb")
 #' result <- try(1/"a", silent=TRUE)
-#' logger.error('error message: %s', geterrmessage())
-#' logger.fatal('fatal statement %s', "THE END")
+#' logger.error("error message: %s", geterrmessage())
+#' logger.fatal("fatal statement %s", "THE END")
 #' }
 #'
 #' @seealso \code{\link{logger.trace}} \code{\link{logger.debug}}
@@ -144,7 +148,7 @@ logger.setup <- function(
 #' @examples
 #' \dontrun{
 #' logger.isInitialized()
-#' logger.setup() # console logging only
+#' logger.setup()
 #' logger.isInitialized()
 #' }
 #'
@@ -195,6 +199,9 @@ logger.isInitialized <- function() {
 #' @seealso \code{\link{logger.setup}}
 #'
 logger.setLevel <- function(level) {
+  if ( !logger.isInitialized() ) {
+    logger.setup()
+  }
   invisible(flog.threshold(level))
 }
 
@@ -212,22 +219,26 @@ logger.setLevel <- function(level) {
 #' @examples
 #' \dontrun{
 #' # Only save three log files
-#' logger.setup(debugLog='debug.log', infoLog='info.log', errorLog='error.log')
+#' logger.setup(
+#'   debugLog = "debug.log",
+#'   infoLog = "info.log",
+#'   errorLog = "error.log"
+#' )
 #'
 #' # But allow log statements at all levels within the code
-#' logger.trace('trace statement #%d', 1)
-#' logger.debug('debug statement')
-#' logger.info('info statement %s %s', "with", "arguments")
-#' logger.warn('warn statement %s', "about to try something dumb")
+#' logger.trace("trace statement #%d", 1)
+#' logger.debug("debug statement")
+#' logger.info("info statement %s %s", "with", "arguments")
+#' logger.warn("warn statement %s", "about to try something dumb")
 #' result <- try(1/"a", silent=TRUE)
-#' logger.error('error message: %s', geterrmessage())
-#' logger.fatal('fatal statement %s', "THE END")
+#' logger.error("error message: %s", geterrmessage())
+#' logger.fatal("fatal statement %s", "THE END")
 #' }
 #' @seealso \code{\link{logger.setup}}
 
 # Log at the TRACE level
 logger.trace <- function(msg, ...) {
-  stopIfNotInitialized()
+  .stopIfNotInitilized()
   flog.trace(msg, ..., name = "ROOT")
   flog.trace(msg, ..., name = "trace")
 }
@@ -245,22 +256,26 @@ logger.trace <- function(msg, ...) {
 #' @examples
 #' \dontrun{
 #' # Only save three log files
-#' logger.setup(debugLog='debug.log', infoLog='info.log', errorLog='error.log')
+#' logger.setup(
+#'   debugLog = "debug.log",
+#'   infoLog = "info.log",
+#'   errorLog = "error.log"
+#' )
 #'
 #' # But allow log statements at all levels within the code
-#' logger.trace('trace statement #%d', 1)
-#' logger.debug('debug statement')
-#' logger.info('info statement %s %s', "with", "arguments")
-#' logger.warn('warn statement %s', "about to try something dumb")
+#' logger.trace("trace statement #%d", 1)
+#' logger.debug("debug statement")
+#' logger.info("info statement %s %s", "with", "arguments")
+#' logger.warn("warn statement %s", "about to try something dumb")
 #' result <- try(1/"a", silent=TRUE)
-#' logger.error('error message: %s', geterrmessage())
-#' logger.fatal('fatal statement %s', "THE END")
+#' logger.error("error message: %s", geterrmessage())
+#' logger.fatal("fatal statement %s", "THE END")
 #' }
 #' @seealso \code{\link{logger.setup}}
 
 # Log at the DEBUG level
 logger.debug <- function(msg, ...) {
-  stopIfNotInitialized()
+  .stopIfNotInitilized()
   flog.debug(msg, ..., name = "ROOT")
   flog.debug(msg, ..., name = "trace")
   flog.debug(msg, ..., name = "debug")
@@ -279,22 +294,26 @@ logger.debug <- function(msg, ...) {
 #' @examples
 #' \dontrun{
 #' # Only save three log files
-#' logger.setup(debugLog='debug.log', infoLog='info.log', errorLog='error.log')
+#' logger.setup(
+#'   debugLog = "debug.log",
+#'   infoLog = "info.log",
+#'   errorLog = "error.log"
+#' )
 #'
 #' # But allow log statements at all levels within the code
-#' logger.trace('trace statement #%d', 1)
-#' logger.debug('debug statement')
-#' logger.info('info statement %s %s', "with", "arguments")
-#' logger.warn('warn statement %s', "about to try something dumb")
+#' logger.trace("trace statement #%d", 1)
+#' logger.debug("debug statement")
+#' logger.info("info statement %s %s", "with", "arguments")
+#' logger.warn("warn statement %s", "about to try something dumb")
 #' result <- try(1/"a", silent=TRUE)
-#' logger.error('error message: %s', geterrmessage())
-#' logger.fatal('fatal statement %s', "THE END")
+#' logger.error("error message: %s", geterrmessage())
+#' logger.fatal("fatal statement %s", "THE END")
 #' }
 #' @seealso \code{\link{logger.setup}}
 
 # Log at the INFO level
 logger.info <- function(msg, ...) {
-  stopIfNotInitialized()
+  .stopIfNotInitilized()
   flog.info(msg, ..., name = "ROOT")
   flog.info(msg, ..., name = "trace")
   flog.info(msg, ..., name = "debug")
@@ -314,22 +333,26 @@ logger.info <- function(msg, ...) {
 #' @examples
 #' \dontrun{
 #' # Only save three log files
-#' logger.setup(debugLog='debug.log', infoLog='info.log', errorLog='error.log')
+#' logger.setup(
+#'   debugLog = "debug.log",
+#'   infoLog = "info.log",
+#'   errorLog = "error.log"
+#' )
 #'
 #' # But allow log statements at all levels within the code
-#' logger.trace('trace statement #%d', 1)
-#' logger.debug('debug statement')
-#' logger.info('info statement %s %s', "with", "arguments")
-#' logger.warn('warn statement %s', "about to try something dumb")
+#' logger.trace("trace statement #%d", 1)
+#' logger.debug("debug statement")
+#' logger.info("info statement %s %s", "with", "arguments")
+#' logger.warn("warn statement %s", "about to try something dumb")
 #' result <- try(1/"a", silent=TRUE)
-#' logger.error('error message: %s', geterrmessage())
-#' logger.fatal('fatal statement %s', "THE END")
+#' logger.error("error message: %s", geterrmessage())
+#' logger.fatal("fatal statement %s", "THE END")
 #' }
 #' @seealso \code{\link{logger.setup}}
 
 # Log at the WARN level
 logger.warn <- function(msg, ...) {
-  stopIfNotInitialized()
+  .stopIfNotInitilized()
   flog.warn(msg, ..., name = "ROOT")
   flog.warn(msg, ..., name = "trace")
   flog.warn(msg, ..., name = "debug")
@@ -350,22 +373,26 @@ logger.warn <- function(msg, ...) {
 #' @examples
 #' \dontrun{
 #' # Only save three log files
-#' logger.setup(debugLog='debug.log', infoLog='info.log', errorLog='error.log')
+#' logger.setup(
+#'   debugLog = "debug.log",
+#'   infoLog = "info.log",
+#'   errorLog = "error.log"
+#' )
 #'
 #' # But allow log statements at all levels within the code
-#' logger.trace('trace statement #%d', 1)
-#' logger.debug('debug statement')
-#' logger.info('info statement %s %s', "with", "arguments")
-#' logger.warn('warn statement %s', "about to try something dumb")
+#' logger.trace("trace statement #%d", 1)
+#' logger.debug("debug statement")
+#' logger.info("info statement %s %s", "with", "arguments")
+#' logger.warn("warn statement %s", "about to try something dumb")
 #' result <- try(1/"a", silent=TRUE)
-#' logger.error('error message: %s', geterrmessage())
-#' logger.fatal('fatal statement %s', "THE END")
+#' logger.error("error message: %s", geterrmessage())
+#' logger.fatal("fatal statement %s", "THE END")
 #' }
 #' @seealso \code{\link{logger.setup}}
 
 # Log at the ERROR level
 logger.error <- function(msg, ...) {
-  stopIfNotInitialized()
+  .stopIfNotInitilized()
   flog.error(msg, ..., name = "ROOT")
   flog.error(msg, ..., name = "trace")
   flog.error(msg, ..., name = "debug")
@@ -387,22 +414,26 @@ logger.error <- function(msg, ...) {
 #' @examples
 #' \dontrun{
 #' # Only save three log files
-#' logger.setup(debugLog='debug.log', infoLog='info.log', errorLog='error.log')
+#' logger.setup(
+#'   debugLog = "debug.log",
+#'   infoLog = "info.log",
+#'   errorLog = "error.log"
+#' )
 #'
 #' # But allow log statements at all levels within the code
-#' logger.trace('trace statement #%d', 1)
-#' logger.debug('debug statement')
-#' logger.info('info statement %s %s', "with", "arguments")
-#' logger.warn('warn statement %s', "about to try something dumb")
+#' logger.trace("trace statement #%d", 1)
+#' logger.debug("debug statement")
+#' logger.info("info statement %s %s", "with", "arguments")
+#' logger.warn("warn statement %s", "about to try something dumb")
 #' result <- try(1/"a", silent=TRUE)
-#' logger.error('error message: %s', geterrmessage())
-#' logger.fatal('fatal statement %s', "THE END")
+#' logger.error("error message: %s", geterrmessage())
+#' logger.fatal("fatal statement %s", "THE END")
 #' }
 #' @seealso \code{\link{logger.setup}}
 
 # Log at the fatal level
 logger.fatal <- function(msg, ...) {
-  stopIfNotInitialized()
+  .stopIfNotInitilized()
   flog.fatal(msg, ..., name = "ROOT")
   flog.fatal(msg, ..., name = "trace")
   flog.fatal(msg, ..., name = "debug")
@@ -419,7 +450,7 @@ appender.null <- function() {
 }
 
 # Quick test if futile.logger namespace is loaded
-stopIfNotInitialized <- function() {
+.stopIfNotInitilized <- function() {
   if (! "futile.logger" %in% loadedNamespaces()) {
     stop(
       "You must initialize with 'logger.setup()' before issuing logger statements.",

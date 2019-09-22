@@ -64,7 +64,7 @@ this function will generate ERROR level log statements." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.7</span>
       </span>
     </div>
 
@@ -167,16 +167,20 @@ this function will generate <code>ERROR</code> level log statements.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='co'># Only save three log files</span>
-<span class='fu'><a href='logger.setup.html'>logger.setup</a></span>(<span class='kw'>debugLog</span><span class='kw'>=</span><span class='st'>'debug.log'</span>, <span class='kw'>infoLog</span><span class='kw'>=</span><span class='st'>'info.log'</span>, <span class='kw'>errorLog</span><span class='kw'>=</span><span class='st'>'error.log'</span>)
+<span class='fu'><a href='logger.setup.html'>logger.setup</a></span>(
+  <span class='kw'>debugLog</span> <span class='kw'>=</span> <span class='st'>"debug.log"</span>,
+  <span class='kw'>infoLog</span> <span class='kw'>=</span> <span class='st'>"info.log"</span>,
+  <span class='kw'>errorLog</span> <span class='kw'>=</span> <span class='st'>"error.log"</span>
+)
 
 <span class='co'># But allow log statements at all levels within the code</span>
-<span class='fu'><a href='logger.trace.html'>logger.trace</a></span>(<span class='st'>'trace statement #%d'</span>, <span class='fl'>1</span>)
-<span class='fu'><a href='logger.debug.html'>logger.debug</a></span>(<span class='st'>'debug statement'</span>)
-<span class='fu'><a href='logger.info.html'>logger.info</a></span>(<span class='st'>'info statement %s %s'</span>, <span class='st'>"with"</span>, <span class='st'>"arguments"</span>)
-<span class='fu'><a href='logger.warn.html'>logger.warn</a></span>(<span class='st'>'warn statement %s'</span>, <span class='st'>"about to try something dumb"</span>)
+<span class='fu'><a href='logger.trace.html'>logger.trace</a></span>(<span class='st'>"trace statement #%d"</span>, <span class='fl'>1</span>)
+<span class='fu'><a href='logger.debug.html'>logger.debug</a></span>(<span class='st'>"debug statement"</span>)
+<span class='fu'><a href='logger.info.html'>logger.info</a></span>(<span class='st'>"info statement %s %s"</span>, <span class='st'>"with"</span>, <span class='st'>"arguments"</span>)
+<span class='fu'><a href='logger.warn.html'>logger.warn</a></span>(<span class='st'>"warn statement %s"</span>, <span class='st'>"about to try something dumb"</span>)
 <span class='no'>result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/try'>try</a></span>(<span class='fl'>1</span>/<span class='st'>"a"</span>, <span class='kw'>silent</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-<span class='fu'>logger.error</span>(<span class='st'>'error message: %s'</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/stop'>geterrmessage</a></span>())
-<span class='fu'><a href='logger.fatal.html'>logger.fatal</a></span>(<span class='st'>'fatal statement %s'</span>, <span class='st'>"THE END"</span>)
+<span class='fu'>logger.error</span>(<span class='st'>"error message: %s"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/stop'>geterrmessage</a></span>())
+<span class='fu'><a href='logger.fatal.html'>logger.fatal</a></span>(<span class='st'>"fatal statement %s"</span>, <span class='st'>"THE END"</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

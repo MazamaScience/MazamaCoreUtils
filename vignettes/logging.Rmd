@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 # Logging in Java and Python
 
 Operational systems, by definition, need to work without human input. Systems
-are considered "operational" after they have ben thoroughly tested and shown to
+are considered "operational" after they have been thoroughly tested and shown to
 work properly with a variety of input.
 
 However, no software is perfect and no real-world system operates with 100% 
@@ -82,7 +82,7 @@ This functionality is built on top of the excellent
 
 ## Log Levels
 
-When used properly, logging at different levels lets you to create log files 
+When used properly, logging at different levels lets you create log files 
 that help you quickly navigate to the specific part of your code base that 
 generated an error.
 

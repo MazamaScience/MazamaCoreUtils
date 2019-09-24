@@ -33,7 +33,7 @@ an agency scientist based in Washington, DC, using their laptop to display
 recent airquality data from Los Angeles while at a conference in Tasmania. The 
 data center processing  the data might be in Boudler but the data processing 
 machine  might be set to use UTC. Potential timezones 
-(availabe with `OlsonNames()`) include:
+(availabe with `OlsonNames()`) relavent to this scenario include:
 
 * `America/New_York`
 * `America/Los_Angeles`

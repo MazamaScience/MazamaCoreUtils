@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 # Error Handling in Java and Python
 
 Operational systems, by definition, need to work without human input. Systems
-are considered "operational" after they have ben thoroughly tested and shown to
+are considered "operational" after they have been thoroughly tested and shown to
 work properly with a variety of input.
 
 However, no software is perfect and no real-world system operates with 100% 

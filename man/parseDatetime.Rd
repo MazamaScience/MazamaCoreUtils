@@ -30,11 +30,11 @@ Ymd, YmdH, YmdHM, and YmdHMS formats are understood, where:
 
 \describe{
   \item{Y}{four digit year}
-  \item{m}{decimal number (1-12, 01-12) or english name month (October, oct.)}
-  \item{d}{decimal number day of the month (0-31 or 01-31)}
-  \item{H}{decimal number hours (0-24 or 00-24)}
-  \item{M}{decimal number minutes (0-59 or 00-59)}
-  \item{S}{decimal number seconds (0-61 or 00-61)}
+  \item{m}{month number (1-12, 01-12) or english name month (October, oct.)}
+  \item{d}{day number of the month (0-31 or 01-31)}
+  \item{H}{hour number (0-24 or 00-24)}
+  \item{M}{minute number (0-59 or 00-59)}
+  \item{S}{second number (0-61 or 00-61)}
 }
 
 This allows for mixed inputs. For example, 20181012130900,

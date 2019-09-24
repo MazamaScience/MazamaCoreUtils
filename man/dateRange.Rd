@@ -26,7 +26,51 @@ dateRange(startdate = NULL, enddate = NULL, timezone = NULL,
 A vector of two \code{POSIXct}s.
 }
 \description{
-Create a POSIXct date range
+Uses incoming parameters to return a pair of \code{POSIXct} times in the
+proper order. The first returned time will be midnight of the desired
+starting date. The second returned time will represent the "end of the day"
+of the requested or calculated \code{enddate} boundary.
+
+Note that the returned end date will be one \code{unit} prior to the start
+of the requested \code{enddate} unless \code{ceilingEnd = TRUE} in
+which case the entire \code{enddate} will be included up to the last
+\code{unit}.
+
+The \code{ceilingEnd} argument addresses the ambiguity of a phrase like:
+"August 1-8". With \code{ceilingEnd = FALSE} (default) this pharse means
+"through the beginning of Aug 8". With \code{ceilingEnd = TRUE} it means
+"through the end of Aug 8".
+
+So, to get 24 hours of data staring on Jan 01, 2019 you would specify:
+
+\preformatted{
+> MazamaCoreUtils::dateRange(20190101, 20190102, timezone = "UTC")
+[1] "2019-01-01 00:00:00 UTC" "2019-01-01 23:59:59 UTC"
+}
+
+or
+
+\preformatted{
+> MazamaCoreUtils::dateRange(20190101, 20190101,
+                             timezone = "UTC", ceilingEnd = TRUE)
+[1] "2019-01-01 00:00:00 UTC" "2019-01-01 23:59:59 UTC"
+}
+
+The required \code{timezone} parameter must be one of those found in
+\code{\link[base]{OlsonNames}}.
+
+Dates can be anything that is understood by
+\code{lubrdiate::parse_date_time()} using the \code{Ymd[HMS]} orders. This
+includes:
+
+\itemize{
+  \item{\code{"YYYYmmdd"}}
+  \item{\code{"YYYYmmddHHMMSS"}}
+  \item{\code{"YYYY-mm-dd"}}
+  \item{\code{"YYYY-mm-dd H"}}
+  \item{\code{"YYYY-mm-dd H:M"}}
+  \item{\code{"YYYY-mm-dd H:M:S"}}
+}
 }
 \section{Default Arguments}{
 

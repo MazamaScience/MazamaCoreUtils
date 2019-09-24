@@ -11,7 +11,7 @@
 #' which case the entire \code{enddate} will be included up to the last
 #' \code{unit}.
 #'
-#' The \code{ceilingEnd" argument addresses the ambiguity of a phrase like:
+#' The \code{ceilingEnd} argument addresses the ambiguity of a phrase like:
 #' "August 1-8". With \code{ceilingEnd = FALSE} (default) this pharse means
 #' "through the beginning of Aug 8". With \code{ceilingEnd = TRUE} it means
 #' "through the end of Aug 8".

@@ -1,9 +1,24 @@
+# MazamaCoreUtils 0.3.8
+
+Added a suite of functions to easily run `devtools::check()` with different
+arguments:
+* `check_fastest()`
+* `check_faster()`
+* `check_fast()`
+* `check()`
+* `check_slow()`
+* `check_slower()`
+* `check_slowest()`
+
+* Added more *lubridate* functions to `timezoneLintRules`.
+
 # MazamaCoreUtils 0.3.7
 
 * Added `logger.isInitialized()` for programmatic use.
 * `logger.setLevel()` now guarantees that `logger.setup()` has been called,
 fixing a bug that generated multiple output messages when `logger.setLevel()`
 was called before `logger.setup()`.
+* Added more *lubridate* functions to `timezoneLintRules`.
 
 # MazamaCoreUtils 0.3.6
 

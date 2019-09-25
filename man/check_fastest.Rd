@@ -2,18 +2,26 @@
 % Please edit documentation in R/devtools_check.R
 \name{check_fastest}
 \alias{check_fastest}
-\title{Check without building vignettes, examples or tests}
+\title{Package check without building vignettes, examples or tests}
 \usage{
 check_fastest(pkg = ".")
 }
 \arguments{
-\item{pkg}{description, can be path or package name. See as.package() for
-more information}
+\item{pkg}{passed to \code{devtools::check()}}
 }
 \value{
 No return.
 }
 \description{
 Runs devtools::check() with appropriate arguments to avoid
-documentation rebuild, vignettes, examples and tests.
+building or checking documentation, vignettes, examples and tests.
+This is a wrapper for:
+
+\preformatted{
+devtools::check(
+  build_args = c("--no-build-vignettes", "--no-manual"),
+  args = c("--ignore-vignettes", "--no-manual",
+           "--no-examples", "--no-tests")
+)
+}
 }

@@ -7,13 +7,11 @@
 check_slower(pkg = ".")
 }
 \arguments{
-\item{pkg}{description, can be path or package name. See as.package() for
-more information}
+\item{pkg}{passed to \code{devtools::check()}}
 }
 \value{
 No return.
 }
 \description{
-Runs devtools::check() with appropriate arguments to run
-donttest{} and dontrun{} examples
+Check and run donttest{} and dontrun{} examples
 }

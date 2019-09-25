@@ -7,14 +7,18 @@
 check_slowest(pkg = ".")
 }
 \arguments{
-\item{pkg}{description, can be path or package name. See as.package() for
-more information}
+\item{pkg}{passed to \code{devtools::check()}}
 }
 \value{
 No return.
 }
 \description{
-Runs devtools::check() with appropriate arguments to run
-donttest{} and dontrun{} examples, maximum testing with things like
---use-valgrind
+Runs devtools::check() with maximal testing options.
+This is a wrapper for:
+
+\preformatted{
+devtools::check(
+  args = c("--run-donttest", "--run-dontrun", "--use-gct")
+)
+}
 }

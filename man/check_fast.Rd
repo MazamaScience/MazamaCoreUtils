@@ -2,13 +2,12 @@
 % Please edit documentation in R/devtools_check.R
 \name{check_fast}
 \alias{check_fast}
-\title{Check without building vignettes}
+\title{Package check without building vignettes}
 \usage{
 check_fast(pkg = ".")
 }
 \arguments{
-\item{pkg}{description, can be path or package name. See as.package() for
-more information}
+\item{pkg}{passed to \code{devtools::check()}}
 }
 \value{
 No return.
@@ -16,4 +15,12 @@ No return.
 \description{
 Runs devtools::check() with appropriate arguments to avoid
 building or checking vignettes.
+This is a wrapper for:
+
+\preformatted{
+devtools::check(
+  build_args = c("--no-build-vignettes"),
+  args = c("--ignore-vignettes")
+)
+}
 }

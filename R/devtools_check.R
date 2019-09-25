@@ -1,12 +1,44 @@
 #' @export
 #'
-#' @title Check without building vignettes
+#' @title Package check
+#'
+#' @description Runs devtools::check() with no additional arguments.
+#' This is a wrapper for:
+#'
+#' \preformatted{
+#' devtools::check()
+#' }
+#'
+#' @param pkg passed to \code{devtools::check()}
+#'
+#' @return No return.
+
+check <- function(
+  pkg = "."
+) {
+
+  devtools::check(
+    pkg = pkg
+  )
+
+}
+
+#' @export
+#'
+#' @title Package check without building vignettes
 #'
 #' @description Runs devtools::check() with appropriate arguments to avoid
 #' building or checking vignettes.
+#' This is a wrapper for:
 #'
-#' @param pkg description, can be path or package name. See as.package() for
-#'  more information
+#' \preformatted{
+#' devtools::check(
+#'   build_args = c("--no-build-vignettes"),
+#'   args = c("--ignore-vignettes")
+#' )
+#' }
+#'
+#' @param pkg passed to \code{devtools::check()}
 #'
 #' @return No return.
 
@@ -17,20 +49,27 @@ check_fast <- function(
   devtools::check(
     pkg = pkg,
     build_args = c("--no-build-vignettes"),
-    args = c('--ignore-vignettes')
+    args = c("--ignore-vignettes")
   )
 
 }
 
 #' @export
 #'
-#' @title Check without building vignettes or examples
+#' @title Package check without building vignettes or examples
 #'
 #' @description Runs devtools::check() with appropriate arguments to avoid
 #' building or checking vignettes or examples.
+#' This is a wrapper for:
 #'
-#' @param pkg description, can be path or package name. See as.package() for
-#'  more information
+#' \preformatted{
+#' devtools::check(
+#'   build_args = c("--no-build-vignettes"),
+#'   args = c("--ignore-vignettes", "--no-examples")
+#' )
+#' }
+#'
+#' @param pkg passed to \code{devtools::check()}
 #'
 #' @return No return.
 
@@ -41,20 +80,28 @@ check_faster <- function(
   devtools::check(
     pkg = pkg,
     build_args = c("--no-build-vignettes"),
-    args = c('--ignore-vignettes', '--no-examples')
+    args = c("--ignore-vignettes", "--no-examples")
   )
 
 }
 
 #' @export
 #'
-#' @title Check without building vignettes, examples or tests
+#' @title Package check without building vignettes, examples or tests
 #'
 #' @description Runs devtools::check() with appropriate arguments to avoid
-#' documentation rebuild, vignettes, examples and tests.
+#' building or checking documentation, vignettes, examples and tests.
+#' This is a wrapper for:
 #'
-#' @param pkg description, can be path or package name. See as.package() for
-#'  more information
+#' \preformatted{
+#' devtools::check(
+#'   build_args = c("--no-build-vignettes", "--no-manual"),
+#'   args = c("--ignore-vignettes", "--no-manual",
+#'            "--no-examples", "--no-tests")
+#' )
+#' }
+#'
+#' @param pkg passed to \code{devtools::check()}
 #'
 #' @return No return.
 
@@ -64,8 +111,9 @@ check_fastest <- function(
 
   devtools::check(
     pkg = pkg,
-    build_args = c('--no-build-vignettes'),
-    args = c('--ignore-vignettes','--no-tests', '--no-examples', '--no-manual')
+    build_args = c("--no-build-vignettes", "--no-manual"),
+    args = c("--ignore-vignettes", "--no-manual",
+             "--no-tests", "--no-examples")
   )
 
 }
@@ -75,10 +123,16 @@ check_fastest <- function(
 #' @title Check and run donttest{} examples
 #'
 #' @description Runs devtools::check() with appropriate arguments to run
-#' donttest{} examples
+#' \code{donttest{...}} examples
+#' This is a wrapper for:
 #'
-#' @param pkg description, can be path or package name. See as.package() for
-#'  more information
+#' \preformatted{
+#' devtools::check(
+#'   args = c("--run-donttest")
+#' )
+#' }
+#'
+#' @param pkg passed to \code{devtools::check()}
 #'
 #' @return No return.
 
@@ -88,7 +142,7 @@ check_slow <- function(
 
   devtools::check(
     pkg = pkg,
-    args = c('--run-donttest')
+    args = c("--run-donttest")
   )
 
 }
@@ -98,10 +152,16 @@ check_slow <- function(
 #' @title Check and run donttest{} and dontrun{} examples
 #'
 #' @description Runs devtools::check() with appropriate arguments to run
-#' donttest{} and dontrun{} examples
+#' \code{donttest{...} and \code{dontrun{..}} examples
+#' This is a wrapper for:
 #'
-#' @param pkg description, can be path or package name. See as.package() for
-#'  more information
+#' \preformatted{
+#' devtools::check(
+#'   args = c("--run-donttest", "--run-dontrun")
+#' )
+#' }
+#'
+#' @param pkg passed to \code{devtools::check()}
 #'
 #' @return No return.
 
@@ -111,7 +171,7 @@ check_slower <- function(
 
   devtools::check(
     pkg = pkg,
-    args = c('--run-donttest', '--run-dontrun')
+    args = c("--run-donttest", "--run-dontrun")
   )
 
 }
@@ -120,12 +180,16 @@ check_slower <- function(
 #'
 #' @title Check and run donttest{} and dontrun{} examples, max testing
 #'
-#' @description Runs devtools::check() with appropriate arguments to run
-#' donttest{} and dontrun{} examples, maximum testing with things like
-#' --use-valgrind
+#' @description Runs devtools::check() with maximal testing options.
+#' This is a wrapper for:
 #'
-#' @param pkg description, can be path or package name. See as.package() for
-#'  more information
+#' \preformatted{
+#' devtools::check(
+#'   args = c("--run-donttest", "--run-dontrun", "--use-gct")
+#' )
+#' }
+#'
+#' @param pkg passed to \code{devtools::check()}
 #'
 #' @return No return.
 
@@ -135,7 +199,7 @@ check_slowest <- function(
 
   devtools::check(
     pkg = pkg,
-    args = c('--run-donttest', '--run-dontrun', '--use-valgrind')
+    args = c("--run-donttest", "--run-dontrun", "--use-gct")
   )
 
 }

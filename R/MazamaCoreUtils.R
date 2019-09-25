@@ -42,7 +42,7 @@ timezoneLintRules <- list(
   # lubridate functions
   "as_datetime" = "tz",
   "date_decimal" = "tz",
-  "fast_strptime" = "tz"
+  "fast_strptime" = "tz",
   "force_tz" = "tzone",
   "force_tzs" = "tzone_out",
   "interval" = "tzone",
@@ -50,6 +50,7 @@ timezoneLintRules <- list(
   "make_datetime" = "tz",
   "now" = "tzone",
   "parse_date_time" = "tz",
+  "parse_date_time2" = "tz",
   "today" = "tzone",
   "with_tz" = "tzone",
   "ymd" = "tz",

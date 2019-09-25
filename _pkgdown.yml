@@ -39,7 +39,18 @@ reference:
   contents:
   - '`lintFunctionArgs`'
   - '`timezoneLintRules`'
-- title: Working with `NULL` values
+- title: Package Checking Utilities
+  desc: >
+    Wrapper functions to run `devtools::check()` with arguments
+  contents:
+  - '`check`'
+  - '`check_fast`'
+  - '`check_faster`'
+  - '`check_fastest`'
+  - '`check_slow`'
+  - '`check_slower`'
+  - '`check_slowest`'
+- title: Working with NULL values
   desc: >
     Convenience functions for working with `NULL` values
   contents:

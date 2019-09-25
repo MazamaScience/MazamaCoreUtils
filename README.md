@@ -13,7 +13,7 @@ cache management and date parsing.
 ## Background
 
 The MazamaCoreUtils package was created by MazamaScience to regularize our
-work building R-based web services.
+work building R packages and R-based web services.
 
 The main goal of this package is to create an internally standardized set of
 functions that we can use in various systems that are being run

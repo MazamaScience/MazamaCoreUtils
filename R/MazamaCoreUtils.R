@@ -40,8 +40,17 @@ timezoneLintRules <- list(
   "Sys.Date" = "DEPRECATED",
   "Sys.time" = "DEPRECATED",
   # lubridate functions
+  "as_datetime" = "tz",
+  "date_decimal" = "tz",
+  "fast_strptime" = "tz"
+  "force_tz" = "tzone",
+  "force_tzs" = "tzone_out",
+  "interval" = "tzone",
+  "local_time" = "tz",
+  "make_datetime" = "tz",
   "now" = "tzone",
   "parse_date_time" = "tz",
+  "today" = "tzone",
   "with_tz" = "tzone",
   "ymd" = "tz",
   "ymd_h" = "tz",

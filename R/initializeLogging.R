@@ -20,7 +20,7 @@ initializeLogging <- function(
   # Copy and old log files
   result <- try({
     # NOTE:  Intentionally create timestamp in host system timezone
-    timestamp <- strftime(lubridate::now("UTC"), "%Y-%m-%dT%H:%M:%S")
+    timestamp <- strftime(lubridate::now(tzone = "UTC"), "%Y-%m-%dT%H:%M:%S")
     for (logLevel in c("TRACE", "DEBUG", "INFO", "ERROR")) {
       oldFile <- file.path(logDir, paste0(logLevel, ".log"))
       newFile <- file.path(logDir, paste0(logLevel, ".log.", timestamp))

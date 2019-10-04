@@ -89,7 +89,7 @@ formats not recognized will be returned as NA." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.9</span>
       </span>
     </div>
 
@@ -179,7 +179,7 @@ formats not recognized will be returned as <code>NA</code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>parseDatetime</span>(<span class='kw'>datetime</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>expectAll</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>julian</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -197,6 +197,11 @@ formats not recognized will be returned as <code>NA</code>.</p>
       <th>expectAll</th>
       <td><p>Logical value determining if the function should fail if
 any elements fail to parse (default <code>FALSE</code>).</p></td>
+    </tr>
+    <tr>
+      <th>julian</th>
+      <td><p>Logical value determining whether <code>datetime</code> should be
+interpreted as a Julian date with day of year as a decimal number.</p></td>
     </tr>
     <tr>
       <th>quiet</th>

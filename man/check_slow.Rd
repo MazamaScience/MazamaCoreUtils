@@ -2,7 +2,7 @@
 % Please edit documentation in R/devtools_check.R
 \name{check_slow}
 \alias{check_slow}
-\title{Check and run donttest{} examples}
+\title{Check and run donttest examples}
 \usage{
 check_slow(pkg = ".")
 }
@@ -14,7 +14,7 @@ No return.
 }
 \description{
 Runs devtools::check() with appropriate arguments to run
-\code{donttest{...}} examples
+\code{donttest{...}} examples.
 This is a wrapper for:
 
 \preformatted{

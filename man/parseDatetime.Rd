@@ -5,7 +5,7 @@
 \title{Parse datetime strings}
 \usage{
 parseDatetime(datetime = NULL, timezone = NULL, expectAll = FALSE,
-  quiet = TRUE)
+  julian = FALSE, quiet = TRUE)
 }
 \arguments{
 \item{datetime}{vector of character or integer datetimes in Ymd[HMS] format
@@ -15,6 +15,9 @@ parseDatetime(datetime = NULL, timezone = NULL, expectAll = FALSE,
 
 \item{expectAll}{Logical value determining if the function should fail if
 any elements fail to parse (default \code{FALSE}).}
+
+\item{julian}{Logical value determining whether \code{datetime} should be
+interpreted as a Julian date with day of year as a decimal number.}
 
 \item{quiet}{Logical value passed on to \code{lubridate::parse_date_time} to
 optionally suppress warning messages.}

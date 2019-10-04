@@ -42,3 +42,19 @@ test_that("Fail on some NA outputs when ExpectAll is true", {
 
 })
 
+test_that("Fractional Julian days are supported", {
+
+  # To support of strings found in NASA GOES filenames
+  input <- c(2019249182609, 20192491826095, 201924918260951, 2019249182609513)
+  output <- c("2019-09-06 18:26:09.000", "2019-09-06 18:26:09.500",
+              "2019-09-06 18:26:09.509", "2019-09-06 18:26:09.513")
+
+  datetime <- parseDatetime(input, timezone = "UTC", julian = TRUE)
+
+  expect_equal(
+    strftime(datetime, "%Y-%m-%d %H:%M:%OS3", tz = "UTC"),
+    output
+  )
+
+})
+

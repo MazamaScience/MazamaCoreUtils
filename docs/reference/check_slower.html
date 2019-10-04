@@ -36,7 +36,15 @@
 
 
 <meta property="og:title" content="Check and run donttest and dontrun examples — check_slower" />
-<meta property="og:description" content="Check and run donttest and dontrun examples" />
+<meta property="og:description" content="Runs devtools::check() with appropriate arguments to run
+donttest{...} and dontrun{..} examples.
+This is a wrapper for:
+
+devtools::check(
+  args = c(&quot;--run-donttest&quot;, &quot;--run-dontrun&quot;)
+)
+
+" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -69,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.9</span>
       </span>
     </div>
 
@@ -135,7 +143,15 @@
     </div>
 
     <div class="ref-description">
-    <p>Check and run donttest and dontrun examples</p>
+    <p>Runs devtools::check() with appropriate arguments to run
+<code>donttest{...}</code> and <code>dontrun{..}</code> examples.
+This is a wrapper for:</p>
+<pre>
+devtools::check(
+  args = c("--run-donttest", "--run-dontrun")
+)
+</pre>
+
     </div>
 
     <pre class="usage"><span class='fu'>check_slower</span>(<span class='kw'>pkg</span> <span class='kw'>=</span> <span class='st'>"."</span>)</pre>

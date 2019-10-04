@@ -120,10 +120,10 @@ check_fastest <- function(
 
 #' @export
 #'
-#' @title Check and run donttest{} examples
+#' @title Check and run donttest examples
 #'
 #' @description Runs devtools::check() with appropriate arguments to run
-#' \code{donttest{...}} examples
+#' \code{donttest{...}} examples.
 #' This is a wrapper for:
 #'
 #' \preformatted{
@@ -149,10 +149,10 @@ check_slow <- function(
 
 #' @export
 #'
-#' @title Check and run donttest{} and dontrun{} examples
+#' @title Check and run donttest and dontrun examples
 #'
 #' @description Runs devtools::check() with appropriate arguments to run
-#' \code{donttest{...} and \code{dontrun{..}} examples
+#' \code{donttest{...}} and \code{dontrun{..}} examples.
 #' This is a wrapper for:
 #'
 #' \preformatted{

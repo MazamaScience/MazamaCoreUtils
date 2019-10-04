@@ -2,7 +2,7 @@
 % Please edit documentation in R/devtools_check.R
 \name{check_slower}
 \alias{check_slower}
-\title{Check and run donttest{} and dontrun{} examples}
+\title{Check and run donttest and dontrun examples}
 \usage{
 check_slower(pkg = ".")
 }
@@ -13,5 +13,13 @@ check_slower(pkg = ".")
 No return.
 }
 \description{
-Check and run donttest{} and dontrun{} examples
+Runs devtools::check() with appropriate arguments to run
+\code{donttest{...}} and \code{dontrun{..}} examples.
+This is a wrapper for:
+
+\preformatted{
+devtools::check(
+  args = c("--run-donttest", "--run-dontrun")
+)
+}
 }

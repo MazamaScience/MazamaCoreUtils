@@ -29,7 +29,7 @@ A vector of POSIXct datetimes.
 Transforms numeric and string representations of Ymd[HMS] datetimes to
 \code{POSIXct} format.
 
-Ymd, YmdH, YmdHM, and YmdHMS formats are understood, where:
+Y, Ym, Ymd, YmdH, YmdHM, and YmdHMS formats are understood, where:
 
 \describe{
   \item{Y}{four digit year}

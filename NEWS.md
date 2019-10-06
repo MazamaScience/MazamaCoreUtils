@@ -1,3 +1,7 @@
+# MazamaCoreUtils 0.3.10
+
+* `parseDatetime()` now supports YYYY and YYYYmm formats.
+
 # MazamaCoreUtils 0.3.9
 
 * Added `julian` argument to `parseDatetime()` to support Julian day formats.

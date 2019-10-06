@@ -4,7 +4,7 @@
 #' Transforms numeric and string representations of Ymd[HMS] datetimes to
 #' \code{POSIXct} format.
 #'
-#' Ymd, YmdH, YmdHM, and YmdHMS formats are understood, where:
+#' Y, Ym, Ymd, YmdH, YmdHM, and YmdHMS formats are understood, where:
 #'
 #' \describe{
 #'   \item{Y}{four digit year}
@@ -125,7 +125,7 @@ parseDatetime <- function(
 
   } else {
 
-    orders <- c("Ymd", "YmdH", "YmdHM", "YmdHMS")
+    orders <- c("Y", "Ym", "Ymd", "YmdH", "YmdHM", "YmdHMS")
     parsedDatetime <- lubridate::parse_date_time(datetime,
                                                  orders,
                                                  tz = timezone,

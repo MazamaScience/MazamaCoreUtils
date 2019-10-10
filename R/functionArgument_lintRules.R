@@ -18,8 +18,8 @@ timezoneLintRules <- list(
   "ISOdatetime" = "tz",
   "strftime" = "tz",
   "strptime" = "tz",
-  "Sys.Date" = "DEPRECATED",
-  "Sys.time" = "DEPRECATED",
+  "Sys.Date" = "DEPRECATED", # Please don't use this function!
+  "Sys.time" = "DEPRECATED", # Please don't use this function!
   # lubridate functions
   "as_datetime" = "tz",
   "date_decimal" = "tz",
@@ -37,5 +37,9 @@ timezoneLintRules <- list(
   "ymd" = "tz",
   "ymd_h" = "tz",
   "ymd_hm" = "tz",
-  "ymd_hms" = "tz"
+  "ymd_hms" = "tz",
+  # MazamaCoreUtils functions
+  "dateRange" = "timezone",
+  "timeRange" = "timezone",
+  "parseDatetime" = "timzeone"
 )

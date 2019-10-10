@@ -1,3 +1,7 @@
+# MazamaCoreUtils 0.3.11
+
+* Added this package's own date parsing functions to `timezoneLintrules`.
+
 # MazamaCoreUtils 0.3.10
 
 * `parseDatetime()` now supports YYYY and YYYYmm formats.

@@ -41,5 +41,5 @@ timezoneLintRules <- list(
   # MazamaCoreUtils functions
   "dateRange" = "timezone",
   "timeRange" = "timezone",
-  "parseDatetime" = "timzeone"
+  "parseDatetime" = "timezone"
 )

@@ -12,7 +12,7 @@ timeRange(starttime = NULL, endtime = NULL, timezone = NULL,
 
 \item{endtime}{Desired end datetime (ISO 8601).}
 
-\item{timezone}{Olson timezone used to interpret dates.}
+\item{timezone}{Olson timezone used to interpret dates (required).}
 
 \item{unit}{Units used to determine time at end-of-day.}
 

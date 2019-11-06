@@ -7,9 +7,9 @@
 #' @param dataDir Local directory containing data files.
 #' @return A data object.
 #'
-#' @description Loads pre-generated .rda files from a URL or a local
+#' @description Loads pre-generated R binary files from a URL or a local
 #' directory. This function is intended to be called by other \code{~_load()}
-#' functions and can remove internet latencies when local versions of daata are
+#' functions and can remove internet latencies when local versions of data are
 #' available.
 #'
 #' For this reason, specification of \code{dataDir} always takes precedence over
@@ -48,7 +48,7 @@ loadDataFile <- function(
       }, silent = TRUE)
 
       if ( "try-error" %in% class(result) ) {
-        stop(paste0("Data file could not be loaded from: ", filepath), call.=FALSE)
+        stop(paste0("Data file could not be loaded from: ", filepath))
       } else {
         loadedData <- get(objectName)
       }
@@ -66,7 +66,7 @@ loadDataFile <- function(
       close(conn)
 
       if ( "try-error" %in% class(result) ) {
-        stop(paste0("Data file could not be loaded from: ", filepath), call.=FALSE)
+        stop(paste0("Data file could not be loaded from: ", filepath))
       } else {
         loadedData <- get(objectName)
       }
@@ -80,7 +80,7 @@ loadDataFile <- function(
   # NOTE:  Failures should be handled above but just in case.
 
   if ( "try-error" %in% class(result) ) {
-    stop(paste0("Data file could not be loaded from: ", filepath), call.=FALSE)
+    stop(paste0("Data file could not be loaded from: ", filepath))
   }
 
   # ----- Return ---------------------------------------------------------------

@@ -4,7 +4,7 @@
 \name{MazamaCoreUtils}
 \alias{MazamaCoreUtils}
 \alias{MazamaCoreUtils-package}
-\title{Mazama Science utility functions for building operational systems.}
+\title{Utility Functions for Production R Code}
 \description{
 The MazamaCoreUtils package was created by MazamaScience to
 regularize our work building R-based web services.

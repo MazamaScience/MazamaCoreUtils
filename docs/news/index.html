@@ -67,7 +67,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -131,6 +131,22 @@
       <small>Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="mazamacoreutils-0-4-0" class="section level1">
+<h1 class="page-header">
+<a href="#mazamacoreutils-0-4-0" class="anchor"></a>MazamaCoreUtils 0.4.0<small> Unreleased </small>
+</h1>
+<p>This version address a few issues encountered while using 0.3.11 in production.</p>
+<ul>
+<li>New <code><a href="../reference/timeStamp.html">timeStamp()</a></code> function creates character timestamps useful for labeling.</li>
+<li>New <code><a href="../reference/dateSequence.html">dateSequence()</a></code> function generates a sequence of <code>POSIXct</code> values that align with midnight local time even through the switch to/from daylight savings.</li>
+<li>New <code><a href="../reference/loadDataFile.html">loadDataFile()</a></code> function supports loading data from local directories or URLs.</li>
+<li>Added year-only support to <code><a href="../reference/parseDatetime.html">parseDatetime()</a></code> when parsing julian dates.</li>
+<li>Renamed <code>parsDatetime()</code> argument <code>julian</code> to <code>isJulian</code>.</li>
+<li>
+<code><a href="../reference/stopIfNull.html">stopIfNull()</a></code> and <code><a href="../reference/setIfNull.html">setIfNull()</a></code> now issue <code><a href="https://rdrr.io/r/base/stop.html">stop(...)</a></code> messages with <code>call. = TRUE</code> so that the stack information bubbles up.</li>
+<li>Now exporting <code><a href="https://rdrr.io/pkg/futile.logger/man/flog.logger.html">futile.logger::flog.logger()</a></code> to avoid downstream complaints.</li>
+</ul>
+</div>
     <div id="mazamacoreutils-0-3-11" class="section level1">
 <h1 class="page-header">
 <a href="#mazamacoreutils-0-3-11" class="anchor"></a>MazamaCoreUtils 0.3.11<small> Unreleased </small>
@@ -360,6 +376,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#mazamacoreutils-0-4-0">0.4.0</a></li>
         <li><a href="#mazamacoreutils-0-3-11">0.3.11</a></li>
         <li><a href="#mazamacoreutils-0-3-10">0.3.10</a></li>
         <li><a href="#mazamacoreutils-0-3-9">0.3.9</a></li>

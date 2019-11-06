@@ -89,7 +89,7 @@ formats not recognized will be returned as NA." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -179,19 +179,19 @@ formats not recognized will be returned as <code>NA</code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>parseDatetime</span>(<span class='kw'>datetime</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>expectAll</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>julian</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>isJulian</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>datetime</th>
-      <td><p>vector of character or integer datetimes in Ymd[HMS] format
+      <td><p>Vector of character or integer datetimes in Ymd[HMS] format
 (or POSIXct).</p></td>
     </tr>
     <tr>
       <th>timezone</th>
-      <td><p>Olson timezone at the location of interest.</p></td>
+      <td><p>Olson timezone used to interpret dates (required).</p></td>
     </tr>
     <tr>
       <th>expectAll</th>
@@ -199,7 +199,7 @@ formats not recognized will be returned as <code>NA</code>.</p>
 any elements fail to parse (default <code>FALSE</code>).</p></td>
     </tr>
     <tr>
-      <th>julian</th>
+      <th>isJulian</th>
       <td><p>Logical value determining whether <code>datetime</code> should be
 interpreted as a Julian date with day of year as a decimal number.</p></td>
     </tr>
@@ -232,19 +232,25 @@ account for.</p>
     <div class='dont-index'><p><code><a href='http://lubridate.tidyverse.org/reference/parse_date_time.html'>parse_date_time</a></code> for implementation details.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>starttime</span> <span class='kw'>&lt;-</span> <span class='fu'>parseDatetime</span>(<span class='fl'>2015080718</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"America/Los_Angeles"</span>)
-<span class='no'>datetimes</span> <span class='kw'>&lt;-</span> <span class='fu'>parseDatetime</span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"20181014 12"</span>, <span class='st'>"20181015 12"</span>, <span class='st'>"20181016 12"</span>),
+    <pre class="examples"><div class='input'><span class='co'># All y[md-hms] formats are accepted</span>
+<span class='fu'>parseDatetime</span>(<span class='fl'>2018</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"America/Los_Angeles"</span>)</div><div class='output co'>#&gt; [1] "2018-01-01 PST"</div><div class='input'><span class='fu'>parseDatetime</span>(<span class='fl'>201808</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"America/Los_Angeles"</span>)</div><div class='output co'>#&gt; [1] "2018-08-01 PDT"</div><div class='input'><span class='fu'>parseDatetime</span>(<span class='fl'>20180807</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"America/Los_Angeles"</span>)</div><div class='output co'>#&gt; [1] "2018-08-07 PDT"</div><div class='input'><span class='fu'>parseDatetime</span>(<span class='fl'>2018080718</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"America/Los_Angeles"</span>)</div><div class='output co'>#&gt; [1] "2018-08-07 18:00:00 PDT"</div><div class='input'><span class='fu'>parseDatetime</span>(<span class='fl'>201808071812</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"America/Los_Angeles"</span>)</div><div class='output co'>#&gt; [1] "2018-08-07 18:12:00 PDT"</div><div class='input'><span class='fu'>parseDatetime</span>(<span class='fl'>20180807181215</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"America/Los_Angeles"</span>)</div><div class='output co'>#&gt; [1] "2018-08-07 18:12:15 PDT"</div><div class='input'><span class='fu'>parseDatetime</span>(<span class='st'>"2018-08-07 18:12:15"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"America/Los_Angeles"</span>)</div><div class='output co'>#&gt; [1] "2018-08-07 18:12:15 PDT"</div><div class='input'>
+<span class='co'># Julian days are accepeted</span>
+<span class='fu'>parseDatetime</span>(<span class='fl'>2018219181215</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"America/Los_Angeles"</span>,
+              <span class='kw'>isJulian</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "2018-08-07 18:12:15 PDT"</div><div class='input'>
+<span class='co'># Vector dates are accepted and daylight savings is respected</span>
+<span class='fu'>parseDatetime</span>(
+  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"2018-10-24 12:00"</span>, <span class='st'>"2018-10-31 12:00"</span>,
+    <span class='st'>"2018-11-07 12:00"</span>, <span class='st'>"2018-11-08 12:00"</span>),
   <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"America/New_York"</span>
-)
-
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+)</div><div class='output co'>#&gt; [1] "2018-10-24 12:00:00 EDT" "2018-10-31 12:00:00 EDT"
+#&gt; [3] "2018-11-07 12:00:00 EST" "2018-11-08 12:00:00 EST"</div><div class='input'>
 <span class='no'>badInput</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"20181013"</span>, <span class='fl'>NA</span>, <span class='st'>"20181015"</span>, <span class='st'>"181016"</span>, <span class='st'>"10172018"</span>)
 
-<span class='co'># This will return a vector with the date that were able to parse</span>
-<span class='fu'>parseDatetime</span>(<span class='no'>badInput</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>, <span class='kw'>expectAll</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># This will return an error, since some non-NA indices didn't parse</span>
+<span class='co'># Return a vector with \code{NA} for dates that could not be parsed</span>
+<span class='fu'>parseDatetime</span>(<span class='no'>badInput</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>, <span class='kw'>expectAll</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] "2018-10-13 UTC" NA               "2018-10-15 UTC" NA              
+#&gt; [5] NA              </div><div class='input'>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># Fail if any dates cannot be parsed</span>
 <span class='fu'>parseDatetime</span>(<span class='no'>badInput</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>, <span class='kw'>expectAll</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 }</div></pre>
   </div>

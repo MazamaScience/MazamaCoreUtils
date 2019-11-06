@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a POSIXct date range — dateRange • MazamaCoreUtils</title>
+<title>Create a POSIXct date sequence — dateSequence • MazamaCoreUtils</title>
 
 
 <!-- jquery -->
@@ -35,32 +35,15 @@
 
 
 
-<meta property="og:title" content="Create a POSIXct date range — dateRange" />
-<meta property="og:description" content="Uses incoming parameters to return a pair of POSIXct times in the
-proper order. The first returned time will be midnight of the desired
-starting date. The second returned time will represent the &quot;end of the day&quot;
-of the requested or calculated enddate boundary.
-Note that the returned end date will be one unit prior to the start
-of the requested enddate unless ceilingEnd = TRUE in
-which case the entire enddate will be included up to the last
-unit.
+<meta property="og:title" content="Create a POSIXct date sequence — dateSequence" />
+<meta property="og:description" content="Uses incoming parameters to return a seqeunce of POSIXct times at
+local midnight in the specified timezone. The first returned time will
+be midnight of the requested startdate. The final returned time will
+be midnight (at the beginning) of the requested enddate.
 The ceilingEnd argument addresses the ambiguity of a phrase like:
 &quot;August 1-8&quot;. With ceilingEnd = FALSE (default) this pharse means
 &quot;through the beginning of Aug 8&quot;. With ceilingEnd = TRUE it means
 &quot;through the end of Aug 8&quot;.
-So, to get 24 hours of data staring on Jan 01, 2019 you would specify:
-
-&amp;gt; MazamaCoreUtils::dateRange(20190101, 20190102, timezone = &quot;UTC&quot;)
-[1] &quot;2019-01-01 00:00:00 UTC&quot; &quot;2019-01-01 23:59:59 UTC&quot;
-
-
-or
-
-&amp;gt; MazamaCoreUtils::dateRange(20190101, 20190101,
-                             timezone = &quot;UTC&quot;, ceilingEnd = TRUE)
-[1] &quot;2019-01-01 00:00:00 UTC&quot; &quot;2019-01-01 23:59:59 UTC&quot;
-
-
 The required timezone parameter must be one of those found in
 OlsonNames.
 Dates can be anything that is understood by
@@ -74,7 +57,8 @@ includes:
 &quot;YYYY-mm-dd H:M&quot;
 &quot;YYYY-mm-dd H:M:S&quot;
 
-" />
+
+All hour-minute-second information is removed after parsing." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -167,37 +151,20 @@ includes:
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a POSIXct date range</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/R/dateRange.R'><code>R/dateRange.R</code></a></small>
-    <div class="hidden name"><code>dateRange.Rd</code></div>
+    <h1>Create a POSIXct date sequence</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/R/dateSequence.R'><code>R/dateSequence.R</code></a></small>
+    <div class="hidden name"><code>dateSequence.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Uses incoming parameters to return a pair of <code>POSIXct</code> times in the
-proper order. The first returned time will be midnight of the desired
-starting date. The second returned time will represent the "end of the day"
-of the requested or calculated <code>enddate</code> boundary.</p>
-<p>Note that the returned end date will be one <code>unit</code> prior to the start
-of the requested <code>enddate</code> unless <code>ceilingEnd = TRUE</code> in
-which case the entire <code>enddate</code> will be included up to the last
-<code>unit</code>.</p>
+    <p>Uses incoming parameters to return a seqeunce of <code>POSIXct</code> times at
+local midnight in the specified <code>timezone</code>. The first returned time will
+be midnight of the requested <code>startdate</code>. The final returned time will
+be midnight (<em>at the beginning</em>) of the requested <code>enddate</code>.</p>
 <p>The <code>ceilingEnd</code> argument addresses the ambiguity of a phrase like:
 "August 1-8". With <code>ceilingEnd = FALSE</code> (default) this pharse means
 "through the beginning of Aug 8". With <code>ceilingEnd = TRUE</code> it means
 "through the end of Aug 8".</p>
-<p>So, to get 24 hours of data staring on Jan 01, 2019 you would specify:</p>
-<pre>
-&gt; MazamaCoreUtils::dateRange(20190101, 20190102, timezone = "UTC")
-[1] "2019-01-01 00:00:00 UTC" "2019-01-01 23:59:59 UTC"
-</pre>
-
-<p>or</p>
-<pre>
-&gt; MazamaCoreUtils::dateRange(20190101, 20190101,
-                             timezone = "UTC", ceilingEnd = TRUE)
-[1] "2019-01-01 00:00:00 UTC" "2019-01-01 23:59:59 UTC"
-</pre>
-
 <p>The required <code>timezone</code> parameter must be one of those found in
 <code><a href='https://rdrr.io/r/base/timezones.html'>OlsonNames</a></code>.</p>
 <p>Dates can be anything that is understood by
@@ -212,10 +179,11 @@ includes:</p>
 <li><p><code>"YYYY-mm-dd H:M:S"</code></p></li>
 </ul>
 
+<p>All hour-minute-second information is removed after parsing.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dateRange</span>(<span class='kw'>startdate</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>enddate</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"sec"</span>, <span class='kw'>ceilingEnd</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>days</span> <span class='kw'>=</span> <span class='fl'>7</span>)</pre>
+    <pre class="usage"><span class='fu'>dateSequence</span>(<span class='kw'>startdate</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>enddate</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>ceilingEnd</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -233,86 +201,61 @@ includes:</p>
       <td><p>Olson timezone used to interpret dates (required).</p></td>
     </tr>
     <tr>
-      <th>unit</th>
-      <td><p>Units used to determine time at end-of-day.</p></td>
-    </tr>
-    <tr>
       <th>ceilingEnd</th>
       <td><p>Logical instruction to apply
 <code><a href='http://lubridate.tidyverse.org/reference/round_date.html'>ceiling_date</a></code> to the <code>enddate</code> rather than
 <code><a href='http://lubridate.tidyverse.org/reference/round_date.html'>floor_date</a></code></p></td>
     </tr>
-    <tr>
-      <th>days</th>
-      <td><p>Number of days of data to include.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A vector of two <code>POSIXct</code>s.</p>
-    <h2 class="hasAnchor" id="default-arguments"><a class="anchor" href="#default-arguments"></a>Default Arguments</h2>
+    <p>A vector of <code>POSIXct</code>s at midnight local time.</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    
-
-<p>In the case when either <code>startdate</code> or <code>enddate</code> is missing, it is
-created from the non-missing values plus/minus <code>days</code>. If both
-<code>startdate</code> and <code>enddate</code> are misssing, <code>enddate</code> is set to
-<code><a href='http://lubridate.tidyverse.org/reference/now.html'>now</a></code> (with the given <code>timezone</code>), and then
-<code>startdate</code> is calculated using <code>enddate - days</code>.</p>
-    <h2 class="hasAnchor" id="end-of-day-units"><a class="anchor" href="#end-of-day-units"></a>End-of-Day Units</h2>
-
-    
-
-<p>The second of the returned <code>POSIXct</code>s will end one <code>unit</code> before
-the specified <code>enddate</code>. Acceptable units are <code>"day",
-"hour", "min", "sec"</code>.</p>
-<p>The aim is to quickly calculate full-day date ranges for time series whose
-values are binned at different units. Thus, if <code>unit = "min"</code>, the
-returned value associated with <code>enddate</code> will always be at 23:59:00
-in the requested time zone.</p>
+    <p>The main utility of this function is that it respects "clock time" and
+returns times associated with midnight regardless of daylight savings. This
+is in contrast to `seq.Date(from, to, by = "day")` which creates a sequence
+of datetimes always separated by 24 hours.</p>
     <h2 class="hasAnchor" id="posixct-inputs"><a class="anchor" href="#posixct-inputs"></a>POSIXct inputs</h2>
 
     
 
 <p>When <code>startdate</code> or <code>enddate</code> are already <code>POSIXct</code> values,
 they are converted to the timezone specified by <code>timezone</code> without
-altering the physical instant in time the input represents. This is different
-from the behavior of <code><a href='http://lubridate.tidyverse.org/reference/parse_date_time.html'>parse_date_time</a></code> (which powers
-this function), which will force <code>POSIXct</code> inputs into a new timezone,
-altering the physical moment of time the input represents.</p>
-    <h2 class="hasAnchor" id="parameter-precedence"><a class="anchor" href="#parameter-precedence"></a>Parameter precedence</h2>
-
-    
-
-<p>It is possible to supply input paramters that are in conflict. For example:</p>
-<p><code>dateRange("2019-01-01", "2019-01-08", days = 3, timezone = "UTC")</code></p>
-<p>The <code>startdate</code> and <code>enddate</code> parameters would imply a 7-day range
-which is in conflict with <code>days = 3</code>. The following rules resolve
-conflicts of this nature:</p>
-<ol>
-<li><p>When <code>startdate</code> and <code>enddate</code> are both specified, the
-<code>days</code> parameter is ignored.</p></li>
-<li><p>When <code>startdate</code> is missing, the first returned time will depend
-on the combination of <code>enddate</code>, <code>days</code> and <code>ceilingEnd</code>.</p></li>
-<li><p>When <code>enddate</code> is missing, <code>ceillingEnd</code> is ignored and the
-second returned time depends on <code>days</code>.</p></li>
-</ol>
-
+altering the physical instant in time the input represents. Only after
+conversion are they floored to midnight local time</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>dateRange</span>(<span class='st'>"2019-01-08"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 00:00:00 UTC" "2019-01-14 23:59:59 UTC"</div><div class='input'><span class='fu'>dateRange</span>(<span class='st'>"2019-01-08"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"min"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 00:00:00 UTC" "2019-01-14 23:59:00 UTC"</div><div class='input'><span class='fu'>dateRange</span>(<span class='st'>"2019-01-08"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"hour"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 00:00:00 UTC" "2019-01-14 23:00:00 UTC"</div><div class='input'><span class='fu'>dateRange</span>(<span class='st'>"2019-01-08"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"day"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 UTC" "2019-01-15 UTC"</div><div class='input'><span class='fu'>dateRange</span>(<span class='st'>"2019-01-08"</span>, <span class='st'>"2019-01-11"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 00:00:00 UTC" "2019-01-10 23:59:59 UTC"</div><div class='input'><span class='fu'>dateRange</span>(<span class='kw'>enddate</span> <span class='kw'>=</span> <span class='fl'>20190112</span>, <span class='kw'>days</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-          <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"day"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"America/Los_Angeles"</span>)</div><div class='output co'>#&gt; [1] "2019-01-09 PST" "2019-01-12 PST"</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>dateSequence</span>(<span class='st'>"2019-11-01"</span>, <span class='st'>"2019-11-08"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"America/Los_Angeles"</span>)</div><div class='output co'>#&gt; [1] "2019-11-01 PDT" "2019-11-02 PDT" "2019-11-03 PDT" "2019-11-04 PST"
+#&gt; [5] "2019-11-05 PST" "2019-11-06 PST" "2019-11-07 PST" "2019-11-08 PST"</div><div class='input'><span class='fu'>dateSequence</span>(<span class='st'>"2019-11-01"</span>, <span class='st'>"2019-11-07"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"America/Los_Angeles"</span>,
+             <span class='kw'>ceilingEnd</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "2019-11-01 PDT" "2019-11-02 PDT" "2019-11-03 PDT" "2019-11-04 PST"
+#&gt; [5] "2019-11-05 PST" "2019-11-06 PST" "2019-11-07 PST" "2019-11-08 PST"</div><div class='input'>
+<span class='co'># Observe the handling of daylight savings</span>
+<span class='no'>datetime</span> <span class='kw'>&lt;-</span> <span class='fu'>dateSequence</span>(<span class='st'>"2019-11-01"</span>, <span class='st'>"2019-11-08"</span>,
+                         <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"America/Los_Angeles"</span>)
+
+<span class='no'>datetime</span></div><div class='output co'>#&gt; [1] "2019-11-01 PDT" "2019-11-02 PDT" "2019-11-03 PDT" "2019-11-04 PST"
+#&gt; [5] "2019-11-05 PST" "2019-11-06 PST" "2019-11-07 PST" "2019-11-08 PST"</div><div class='input'><span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/with_tz.html'>with_tz</a></span>(<span class='no'>datetime</span>, <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2019-11-01 07:00:00 UTC" "2019-11-02 07:00:00 UTC"
+#&gt; [3] "2019-11-03 07:00:00 UTC" "2019-11-04 08:00:00 UTC"
+#&gt; [5] "2019-11-05 08:00:00 UTC" "2019-11-06 08:00:00 UTC"
+#&gt; [7] "2019-11-07 08:00:00 UTC" "2019-11-08 08:00:00 UTC"</div><div class='input'>
+<span class='co'># Passing in POSIXct values preserves the instant in time before flooring --</span>
+<span class='co'>#   midnight Tokyo time is the day before in UTC</span>
+<span class='no'>jst</span> <span class='kw'>&lt;-</span> <span class='fu'>dateSequence</span>(<span class='fl'>20190307</span>, <span class='fl'>20190315</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"Asia/Tokyo"</span>)
+<span class='no'>jst</span></div><div class='output co'>#&gt; [1] "2019-03-07 JST" "2019-03-08 JST" "2019-03-09 JST" "2019-03-10 JST"
+#&gt; [5] "2019-03-11 JST" "2019-03-12 JST" "2019-03-13 JST" "2019-03-14 JST"
+#&gt; [9] "2019-03-15 JST"</div><div class='input'><span class='fu'>dateSequence</span>(<span class='no'>jst</span>[<span class='fl'>1</span>], <span class='no'>jst</span>[<span class='fl'>7</span>], <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2019-03-06 UTC" "2019-03-07 UTC" "2019-03-08 UTC" "2019-03-09 UTC"
+#&gt; [5] "2019-03-10 UTC" "2019-03-11 UTC" "2019-03-12 UTC"</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#default-arguments">Default Arguments</a></li>
-      <li><a href="#end-of-day-units">End-of-Day Units</a></li>
+      <li><a href="#note">Note</a></li>
       <li><a href="#posixct-inputs">POSIXct inputs</a></li>
-      <li><a href="#parameter-precedence">Parameter precedence</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

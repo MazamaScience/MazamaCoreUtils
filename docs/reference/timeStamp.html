@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a POSIXct time range — timeRange • MazamaCoreUtils</title>
+<title>Character representation of a POSIXct — timeStamp • MazamaCoreUtils</title>
 
 
 <!-- jquery -->
@@ -35,7 +35,7 @@
 
 
 
-<meta property="og:title" content="Create a POSIXct time range — timeRange" />
+<meta property="og:title" content="Character representation of a POSIXct — timeStamp" />
 <meta property="og:description" content="Uses incoming parameters to return a pair of POSIXct times in the
 proper order. Both start and end times will have lubridate::floor_date()
 applied to get the nearest unit unless ceilingEnd = TRUE in
@@ -43,14 +43,26 @@ which case the end time will will have lubridate::ceiling_date()
 applied.
 The required timezone parameter must be one of those found in
 OlsonNames.
-Dates can be anything that is understood by
-lubrdiate::parse_date_time() including either of the following
-recommended formats:
+Formatting output is are affected by both style:
 
-&quot;YYYYmmddHH[MMSS]&quot;
-&quot;YYYY-mm-dd HH:MM:SS&quot;
+&quot;ymdhms&quot;
+&quot;julian&quot;
+&quot;clock&quot;
 
-" />
+
+and unit which determines the temporal precision of the generated
+representation:
+
+&quot;year&quot;
+&quot;month&quot;
+&quot;day&quot;
+&quot;hour&quot;
+&quot;min&quot;
+&quot;sec&quot;
+
+
+If `style == &quot;julian&quot;` &amp;amp;&amp;amp; `unit = &quot;month&quot;``, the timestamp will contain the
+Julian day associated with the beginning of the month." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -143,9 +155,9 @@ recommended formats:
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a POSIXct time range</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/R/timeRange.R'><code>R/timeRange.R</code></a></small>
-    <div class="hidden name"><code>timeRange.Rd</code></div>
+    <h1>Character representation of a POSIXct</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/R/timeStamp.R'><code>R/timeStamp.R</code></a></small>
+    <div class="hidden name"><code>timeStamp.Rd</code></div>
     </div>
 
     <div class="ref-description">
@@ -156,49 +168,56 @@ which case the end time will will have <code><a href='http://lubridate.tidyverse
 applied.</p>
 <p>The required <code>timezone</code> parameter must be one of those found in
 <code><a href='https://rdrr.io/r/base/timezones.html'>OlsonNames</a></code>.</p>
-<p>Dates can be anything that is understood by
-<code>lubrdiate::parse_date_time()</code> including either of the following
-recommended formats:</p>
+<p>Formatting output is are affected by both <code>style</code>:</p>
 <ul>
-<li><p><code>"YYYYmmddHH[MMSS]"</code></p></li>
-<li><p><code>"YYYY-mm-dd HH:MM:SS"</code></p></li>
+<li><p><code>"ymdhms"</code></p></li>
+<li><p><code>"julian"</code></p></li>
+<li><p><code>"clock"</code></p></li>
 </ul>
 
+<p>and <code>unit</code> which determines the temporal precision of the generated
+representation:</p>
+<ul>
+<li><p><code>"year"</code></p></li>
+<li><p><code>"month"</code></p></li>
+<li><p><code>"day"</code></p></li>
+<li><p><code>"hour"</code></p></li>
+<li><p><code>"min"</code></p></li>
+<li><p><code>"sec"</code></p></li>
+</ul>
+
+<p>If `style == "julian"` &amp;&amp; `unit = "month"``, the timestamp will contain the
+Julian day associated with the beginning of the month.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>timeRange</span>(<span class='kw'>starttime</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>endtime</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"sec"</span>, <span class='kw'>ceilingEnd</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>timeStamp</span>(<span class='kw'>datetime</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"sec"</span>,
+  <span class='kw'>style</span> <span class='kw'>=</span> <span class='st'>"ymdhms"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>starttime</th>
-      <td><p>Desired start datetime (ISO 8601).</p></td>
-    </tr>
-    <tr>
-      <th>endtime</th>
-      <td><p>Desired end datetime (ISO 8601).</p></td>
+      <th>datetime</th>
+      <td><p>Vector of character or integer datetimes in Ymd[HMS] format
+(or POSIXct).</p></td>
     </tr>
     <tr>
       <th>timezone</th>
-      <td><p>Olson timezone used to interpret dates (required).</p></td>
+      <td><p>Olson timezone used to interpret incoming dates (required).</p></td>
     </tr>
     <tr>
       <th>unit</th>
-      <td><p>Units used to determine time at end-of-day.</p></td>
+      <td><p>Units used to determine precision of generated time stamps.</p></td>
     </tr>
     <tr>
-      <th>ceilingEnd</th>
-      <td><p>Logical instruction to apply
-<code><a href='http://lubridate.tidyverse.org/reference/round_date.html'>ceiling_date</a></code> to the <code>enddate</code> rather than
-<code><a href='http://lubridate.tidyverse.org/reference/round_date.html'>floor_date</a></code></p></td>
+      <th>style</th>
+      <td><p>Style of representation, Default = "ymdhms".</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A vector of two <code>POSIXct</code>s.</p>
+    <p>A vector of time stamps.</p>
     <h2 class="hasAnchor" id="posixct-inputs"><a class="anchor" href="#posixct-inputs"></a>POSIXct inputs</h2>
 
     
@@ -211,7 +230,10 @@ this function), which will force <code>POSIXct</code> inputs into a new timezone
 altering the physical moment of time the input represents.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>timeRange</span>(<span class='st'>"2019-01-08 10:12:15"</span>, <span class='fl'>20190109102030</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08 10:12:15 UTC" "2019-01-09 10:20:30 UTC"</div></pre>
+    <pre class="examples"><div class='input'><span class='no'>datetime</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='parseDatetime.html'>parseDatetime</a></span>(<span class='st'>"2019-01-08 12:30:15"</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='st'>"UTC"</span>)
+
+<span class='fu'>timeStamp</span>(<span class='no'>datetime</span>, <span class='st'>"UTC"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"year"</span>)</div><div class='output co'>#&gt; [1] "2019"</div><div class='input'><span class='fu'>timeStamp</span>(<span class='no'>datetime</span>, <span class='st'>"UTC"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"month"</span>)</div><div class='output co'>#&gt; [1] "201901"</div><div class='input'><span class='fu'>timeStamp</span>(<span class='no'>datetime</span>, <span class='st'>"UTC"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"month"</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='st'>"julian"</span>)</div><div class='output co'>#&gt; [1] "2019001"</div><div class='input'><span class='fu'>timeStamp</span>(<span class='no'>datetime</span>, <span class='st'>"UTC"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"day"</span>)</div><div class='output co'>#&gt; [1] "20190108"</div><div class='input'><span class='fu'>timeStamp</span>(<span class='no'>datetime</span>, <span class='st'>"UTC"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"day"</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='st'>"julian"</span>)</div><div class='output co'>#&gt; [1] "2019008"</div><div class='input'><span class='fu'>timeStamp</span>(<span class='no'>datetime</span>, <span class='st'>"UTC"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"hour"</span>)</div><div class='output co'>#&gt; [1] "2019010812"</div><div class='input'><span class='fu'>timeStamp</span>(<span class='no'>datetime</span>, <span class='st'>"UTC"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"min"</span>)</div><div class='output co'>#&gt; [1] "201901081230"</div><div class='input'><span class='fu'>timeStamp</span>(<span class='no'>datetime</span>, <span class='st'>"UTC"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"sec"</span>)</div><div class='output co'>#&gt; [1] "20190108123015"</div><div class='input'><span class='fu'>timeStamp</span>(<span class='no'>datetime</span>, <span class='st'>"UTC"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"sec"</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='st'>"julian"</span>)</div><div class='output co'>#&gt; [1] "2019008123015"</div><div class='input'><span class='fu'>timeStamp</span>(<span class='no'>datetime</span>, <span class='st'>"UTC"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"sec"</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='st'>"clock"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08T12:30:15"</div><div class='input'><span class='fu'>timeStamp</span>(<span class='no'>datetime</span>, <span class='st'>"America/Los_Angeles"</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"sec"</span>, <span class='kw'>style</span> <span class='kw'>=</span> <span class='st'>"clock"</span>)</div><div class='output co'>#&gt; [1] "2019-01-08T04:30:15"</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

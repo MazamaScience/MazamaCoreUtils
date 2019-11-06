@@ -66,6 +66,6 @@ stopIfNull <- function(
 
   # Stop -----------------------------------------------------------------------
 
-  stop(msg, call. = FALSE)
+  stop(msg)
 
 }

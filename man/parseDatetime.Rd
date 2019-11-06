@@ -5,18 +5,18 @@
 \title{Parse datetime strings}
 \usage{
 parseDatetime(datetime = NULL, timezone = NULL, expectAll = FALSE,
-  julian = FALSE, quiet = TRUE)
+  isJulian = FALSE, quiet = TRUE)
 }
 \arguments{
-\item{datetime}{vector of character or integer datetimes in Ymd[HMS] format
+\item{datetime}{Vector of character or integer datetimes in Ymd[HMS] format
 (or POSIXct).}
 
-\item{timezone}{Olson timezone at the location of interest.}
+\item{timezone}{Olson timezone used to interpret dates (required).}
 
 \item{expectAll}{Logical value determining if the function should fail if
 any elements fail to parse (default \code{FALSE}).}
 
-\item{julian}{Logical value determining whether \code{datetime} should be
+\item{isJulian}{Logical value determining whether \code{datetime} should be
 interpreted as a Julian date with day of year as a decimal number.}
 
 \item{quiet}{Logical value passed on to \code{lubridate::parse_date_time} to
@@ -65,19 +65,33 @@ account for.
 }
 
 \examples{
-starttime <- parseDatetime(2015080718, timezone = "America/Los_Angeles")
-datetimes <- parseDatetime(
-  c("20181014 12", "20181015 12", "20181016 12"),
+# All y[md-hms] formats are accepted
+parseDatetime(2018, timezone = "America/Los_Angeles")
+parseDatetime(201808, timezone = "America/Los_Angeles")
+parseDatetime(20180807, timezone = "America/Los_Angeles")
+parseDatetime(2018080718, timezone = "America/Los_Angeles")
+parseDatetime(201808071812, timezone = "America/Los_Angeles")
+parseDatetime(20180807181215, timezone = "America/Los_Angeles")
+parseDatetime("2018-08-07 18:12:15", timezone = "America/Los_Angeles")
+
+# Julian days are accepeted
+parseDatetime(2018219181215, timezone = "America/Los_Angeles",
+              isJulian = TRUE)
+
+# Vector dates are accepted and daylight savings is respected
+parseDatetime(
+  c("2018-10-24 12:00", "2018-10-31 12:00",
+    "2018-11-07 12:00", "2018-11-08 12:00"),
   timezone = "America/New_York"
 )
 
-\dontrun{
 badInput <- c("20181013", NA, "20181015", "181016", "10172018")
 
-# This will return a vector with the date that were able to parse
+# Return a vector with \\code{NA} for dates that could not be parsed
 parseDatetime(badInput, timezone = "UTC", expectAll = FALSE)
 
-# This will return an error, since some non-NA indices didn't parse
+\dontrun{
+# Fail if any dates cannot be parsed
 parseDatetime(badInput, timezone = "UTC", expectAll = TRUE)
 }
 

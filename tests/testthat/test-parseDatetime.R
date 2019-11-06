@@ -49,7 +49,7 @@ test_that("Fractional Julian days are supported", {
   output <- c("2019-09-06 18:26:09.000", "2019-09-06 18:26:09.500",
               "2019-09-06 18:26:09.509", "2019-09-06 18:26:09.513")
 
-  datetime <- parseDatetime(input, timezone = "UTC", julian = TRUE)
+  datetime <- parseDatetime(input, timezone = "UTC", isJulian = TRUE)
 
   expect_equal(
     strftime(datetime, "%Y-%m-%d %H:%M:%OS3", tz = "UTC"),
@@ -65,6 +65,21 @@ test_that("All orders from Y to YmdHMS are supported", {
               "2018-10-16 12:00:00", "2018-10-16 12:15:00", "2018-10-16 12:15:30")
 
   datetime <- parseDatetime(input, timezone = "UTC")
+
+  expect_equal(
+    strftime(datetime, "%Y-%m-%d %H:%M:%S", tz = "UTC"),
+    output
+  )
+
+})
+
+test_that("All orders from Y to YjHMS are supported for isJulian = TRUE", {
+
+  input <- c(2018, 2018289, 201828912, 20182891215, 2018289121530)
+  output <- c("2018-01-01 00:00:00", "2018-10-16 00:00:00",
+              "2018-10-16 12:00:00", "2018-10-16 12:15:00", "2018-10-16 12:15:30")
+
+  datetime <- parseDatetime(input, isJulian = TRUE, timezone = "UTC")
 
   expect_equal(
     strftime(datetime, "%Y-%m-%d %H:%M:%S", tz = "UTC"),

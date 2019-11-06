@@ -1,3 +1,19 @@
+# MazamaCoreUtils 0.4.0
+
+This version address a few issues encountered while using 0.3.11 in production.
+
+* New `timeStamp()` function creates character timestamps useful for labeling.
+* New `dateSequence()` function generates a sequence of `POSIXct` values that 
+align with midnight local time even through the switch to/from daylight
+savings.
+* New `loadDataFile()` function supports loading data from local directories or 
+URLs.
+* Added year-only support to `parseDatetime()` when parsing julian dates.
+* Renamed `parsDatetime()` argument `julian` to `isJulian`.
+* `stopIfNull()` and `setIfNull()` now issue `stop(...)` messages with 
+`call. = TRUE` so that the stack information bubbles up.
+* Now exporting `futile.logger::flog.logger()` to avoid downstream complaints.
+
 # MazamaCoreUtils 0.3.11
 
 * Added this package's own date parsing functions to `timezoneLintrules`.

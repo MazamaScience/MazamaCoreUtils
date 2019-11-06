@@ -28,4 +28,5 @@ test_that("initializeLogging() creates files", {
     file.path(logDir, "INFO.log"),
     file.path(logDir, "ERROR.log")
   )
+
 })

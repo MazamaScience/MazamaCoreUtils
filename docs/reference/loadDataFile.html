@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Set console log level — logger.setLevel • MazamaCoreUtils</title>
+<title>Load data from URL or local file — loadDataFile • MazamaCoreUtils</title>
 
 
 <!-- jquery -->
@@ -35,11 +35,13 @@
 
 
 
-<meta property="og:title" content="Set console log level — logger.setLevel" />
-<meta property="og:description" content="By default, the logger threshold is set to FATAL so that the console
-will typically receive no log messages. By setting the level to one of the
-other log levels: TRACE, DEBUG, INFO, WARN, ERROR users can see
-logging messages while running commands at the command line." />
+<meta property="og:title" content="Load data from URL or local file — loadDataFile" />
+<meta property="og:description" content="Loads pre-generated R binary files from a URL or a local
+directory. This function is intended to be called by other ~_load()
+functions and can remove internet latencies when local versions of data are
+available.
+For this reason, specification of dataDir always takes precedence over
+dataUrl." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -132,55 +134,49 @@ logging messages while running commands at the command line." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Set console log level</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/R/pylogger.R'><code>R/pylogger.R</code></a></small>
-    <div class="hidden name"><code>logger.setLevel.Rd</code></div>
+    <h1>Load data from URL or local file</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/R/loadDataFile.R'><code>R/loadDataFile.R</code></a></small>
+    <div class="hidden name"><code>loadDataFile.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>By default, the logger threshold is set to <code>FATAL</code> so that the console
-will typically receive no log messages. By setting the level to one of the
-other log levels: <code>TRACE, DEBUG, INFO, WARN, ERROR</code> users can see
-logging messages while running commands at the command line.</p>
+    <p>Loads pre-generated R binary files from a URL or a local
+directory. This function is intended to be called by other <code>~_load()</code>
+functions and can remove internet latencies when local versions of data are
+available.</p>
+<p>For this reason, specification of <code>dataDir</code> always takes precedence over
+<code>dataUrl</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>logger.setLevel</span>(<span class='no'>level</span>)</pre>
+    <pre class="usage"><span class='fu'>loadDataFile</span>(<span class='kw'>filename</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dataUrl</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dataDir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>level</th>
-      <td><p>Threshold level.</p></td>
+      <th>filename</th>
+      <td><p>Name of the data file to be loaded.</p></td>
+    </tr>
+    <tr>
+      <th>dataUrl</th>
+      <td><p>Remote URL directory for data files.</p></td>
+    </tr>
+    <tr>
+      <th>dataDir</th>
+      <td><p>Local directory containing data files.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>No return value.</p>
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+    <p>A data object.</p>
 
-    <p>All functionality is built on top of the excellent <span class="pkg">futile.logger</span>
-  package.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='logger.setup.html'>logger.setup</a></code></p></div>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'># Set up console logging only</span>
-<span class='fu'><a href='logger.setup.html'>logger.setup</a></span>()
-<span class='fu'>logger.setLevel</span>(<span class='no'>DEBUG</span>)
-}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#note">Note</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

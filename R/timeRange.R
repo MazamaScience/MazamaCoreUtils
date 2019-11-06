@@ -4,7 +4,7 @@
 #'
 #' @param starttime Desired start datetime (ISO 8601).
 #' @param endtime Desired end datetime (ISO 8601).
-#' @param timezone Olson timezone used to interpret dates.
+#' @param timezone Olson timezone used to interpret dates (required).
 #' @param unit Units used to determine time at end-of-day.
 #' @param ceilingEnd Logical instruction to apply
 #'   \code{\link[lubridate]{ceiling_date}} to the \code{enddate} rather than

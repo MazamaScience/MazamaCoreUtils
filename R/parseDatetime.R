@@ -85,6 +85,9 @@ parseDatetime <- function(
   stopIfNull(julian)
   stopIfNull(quiet)
 
+  if ( !is.character(timezone) || length(timezone) > 1 )
+    stop(paste0("argument 'timezone' must be a character string of length one"))
+
   if ( !timezone %in% base::OlsonNames() )
     stop(paste0("timezone '", timezone, "' is not recognized."))
 

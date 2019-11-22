@@ -1,3 +1,7 @@
+# MazamaCoreUtils 0.4.1
+
+* Fixed improper handling of single day date ranges in `dateRange()`.
+
 # MazamaCoreUtils 0.4.0
 
 This version address a few issues encountered while using 0.3.11 in production.

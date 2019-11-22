@@ -282,7 +282,19 @@ test_that("days are honored when start or endtime is missing", {
                     timezone = "America/Los_Angeles")
   expect_identical(3, round(as.numeric(difftime(tlim[2], tlim[1], units="days"))))
 
+})
 
+test_that("Single day ranges are handled propery", {
+
+  startTime <- ISOdatetime(2019, 08, 01, 00, 00, 00, tz = "America/Los_Angeles")
+  endTime <- ISOdatetime(2019, 08, 01, 23, 59, 59, tz = "America/Los_Angeles")
+
+  tlim <- dateRange(startdate = startTime, enddate = endTime, timezone = "America/Los_Angeles")
+
+  expect_identical(
+    c(startTime, endTime),
+    tlim
+  )
 
 })
 

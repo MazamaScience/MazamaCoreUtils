@@ -31,44 +31,56 @@ loadDataFile <- function(
 
   # ----- Load the data --------------------------------------------------------
 
-  # Always check for dataDir first
-  if (
-    !is.null(dataDir) &&
-    !is.na(dataDir) &&
-    dir.exists(path.expand(dataDir))
-  ) {
+  result <- try({
 
-    # Load from a file
-    filepath <- file.path(path.expand(dataDir), filename)
+    # Always check for dataDir first
+    if (
+      !is.null(dataDir) &&
+      !is.na(dataDir) &&
+      dir.exists(path.expand(dataDir))
+    ) {
 
-    result <- try({
-      objectName <- load(filepath)
-    }, silent = TRUE)
+      # Load from a file
+      filepath <- file.path(path.expand(dataDir), filename)
 
-    if ( "try-error" %in% class(result) ) {
-      stop(paste0("Data file could not be loaded from: ", filepath))
+      result <- try({
+        objectName <- load(filepath)
+      }, silent = TRUE)
+
+      if ( "try-error" %in% class(result) ) {
+        stop(paste0("Data file could not be loaded from: ", filepath))
+      } else {
+        loadedData <- get(objectName)
+      }
+
     } else {
-      loadedData <- get(objectName)
+
+      # Load from a URL
+      filepath <- paste0(dataUrl, '/', filename)
+
+      # Define a 'connection' object so we can close it no matter what happens
+      conn <- url(filepath)
+      result <- try({
+        objectName <- load(conn)
+      }, silent = TRUE )
+      close(conn)
+
+      if ( "try-error" %in% class(result) ) {
+        stop(paste0("Data file could not be loaded from: ", filepath))
+      } else {
+        loadedData <- get(objectName)
+      }
+
     }
 
-  } else {
+  }, silent = TRUE)
 
-    # Load from a URL
-    filepath <- paste0(dataUrl, '/', filename)
+  # ----- Handle errors --------------------------------------------------------
 
-    # Define a 'connection' object so we can close it no matter what happens
-    conn <- url(filepath)
-    result <- try({
-      objectName <- load(conn)
-    }, silent = TRUE )
-    close(conn)
+  # NOTE:  Failures should be handled above but just in case.
 
-    if ( "try-error" %in% class(result) ) {
-      stop(paste0("Data file could not be loaded from: ", filepath))
-    } else {
-      loadedData <- get(objectName)
-    }
-
+  if ( "try-error" %in% class(result) ) {
+    stop(paste0("Data file could not be loaded from: ", filepath))
   }
 
   # ----- Return ---------------------------------------------------------------

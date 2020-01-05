@@ -3,7 +3,6 @@
 \docType{package}
 \name{MazamaCoreUtils}
 \alias{MazamaCoreUtils}
-\alias{MazamaCoreUtils-package}
 \title{Utility Functions for Production R Code}
 \description{
 The MazamaCoreUtils package was created by MazamaScience to

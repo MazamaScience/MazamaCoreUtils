@@ -68,7 +68,7 @@ test_that("Non-POSIXct inputs work as expected", {
 })
 
 
-test_that("unit and ceilingEnd arguments work", {
+test_that("unit, ceilingStart and ceilingEnd arguments work", {
 
   startTime <- ISOdatetime(2019, 08, 01, 2, 15, 45, tz = "America/Los_Angeles")
   endTime <- ISOdatetime(2019, 08, 8, 20, 30, 40, tz = "America/Los_Angeles")
@@ -76,6 +76,10 @@ test_that("unit and ceilingEnd arguments work", {
   startMin <- ISOdatetime(2019, 08, 01, 2, 15, 00, tz = "America/Los_Angeles")
   startHour <- ISOdatetime(2019, 08, 01, 2, 00, 00, tz = "America/Los_Angeles")
   startDay <- ISOdatetime(2019, 08, 01, 00, 00, 00, tz = "America/Los_Angeles")
+
+  startMinCeil <- ISOdatetime(2019, 08, 01, 2, 16, 00, tz = "America/Los_Angeles")
+  startHourCeil <- ISOdatetime(2019, 08, 01, 3, 00, 00, tz = "America/Los_Angeles")
+  startDayCeil <- ISOdatetime(2019, 08, 02, 00, 00, 00, tz = "America/Los_Angeles")
 
   endMin <- ISOdatetime(2019, 08, 8, 20, 30, 00, tz = "America/Los_Angeles")
   endHour <- ISOdatetime(2019, 08, 8, 20, 00, 00, tz = "America/Los_Angeles")
@@ -91,17 +95,17 @@ test_that("unit and ceilingEnd arguments work", {
   tlimHour <- timeRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "hour")
   tlimDay <- timeRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "day")
 
-  tlimMinCeil <- timeRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "min", ceilingEnd = TRUE)
-  tlimHourCeil <- timeRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "hour", ceilingEnd = TRUE)
-  tlimDayCeil <- timeRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "day", ceilingEnd = TRUE)
+  tlimMinCeil <- timeRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "min", ceilingStart = TRUE, ceilingEnd = TRUE)
+  tlimHourCeil <- timeRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "hour", ceilingStart = TRUE, ceilingEnd = TRUE)
+  tlimDayCeil <- timeRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "day", ceilingStart = TRUE, ceilingEnd = TRUE)
 
   expect_identical(tlim, c(startTime, endTime))
   expect_identical(tlimMin, c(startMin, endMin))
   expect_identical(tlimHour, c(startHour, endHour))
   expect_identical(tlimDay, c(startDay, endDay))
-  expect_identical(tlimMinCeil, c(startMin, endMinCeil))
-  expect_identical(tlimHourCeil, c(startHour, endHourCeil))
-  expect_identical(tlimDayCeil, c(startDay, endDayCeil))
+  expect_identical(tlimMinCeil, c(startMinCeil, endMinCeil))
+  expect_identical(tlimHourCeil, c(startHourCeil, endHourCeil))
+  expect_identical(tlimDayCeil, c(startDayCeil, endDayCeil))
 
 })
 

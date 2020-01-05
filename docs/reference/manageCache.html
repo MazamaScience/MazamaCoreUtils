@@ -86,7 +86,7 @@ contents change.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
       </span>
     </div>
 
@@ -172,8 +172,13 @@ contents change.</p></li>
 
     </div>
 
-    <pre class="usage"><span class='fu'>manageCache</span>(<span class='kw'>cacheDir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>extensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"html"</span>, <span class='st'>"json"</span>, <span class='st'>"pdf"</span>,
-  <span class='st'>"png"</span>), <span class='kw'>maxCacheSize</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>sortBy</span> <span class='kw'>=</span> <span class='st'>"atime"</span>, <span class='kw'>maxFileAge</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>manageCache</span>(
+  <span class='kw'>cacheDir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>extensions</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"html"</span>, <span class='st'>"json"</span>, <span class='st'>"pdf"</span>, <span class='st'>"png"</span>),
+  <span class='kw'>maxCacheSize</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+  <span class='kw'>sortBy</span> <span class='kw'>=</span> <span class='st'>"atime"</span>,
+  <span class='kw'>maxFileAge</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -215,81 +220,81 @@ One of <code>atime|ctime|mtime</code>.</p></td>
 <span class='kw'>for</span> (<span class='no'>file</span> <span class='kw'>in</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span>(<span class='no'>CACHE_DIR</span>, <span class='kw'>full.names</span><span class='kw'>=</span><span class='fl'>TRUE</span>)) {
   <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/file.info.html'>file.info</a></span>(<span class='no'>file</span>)[,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>6</span>)])
 }</div><div class='output co'>#&gt;                                                                                   size
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/filebd0113c62b1b.so 16140
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/filef94f497a6b15.so 16140
 #&gt;                                                                                                atime
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/filebd0113c62b1b.so 2019-11-22 12:18:40
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/filef94f497a6b15.so 2020-01-05 10:31:42
 #&gt;                                                                                               size
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/libloc_213_722ad5f9e07c7fe1.rds 18361
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/libloc_213_722ad5f9e07c7fe1.rds 18460
 #&gt;                                                                                                            atime
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/libloc_213_722ad5f9e07c7fe1.rds 2019-11-22 12:18:50
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/libloc_213_722ad5f9e07c7fe1.rds 2020-01-05 10:31:45
 #&gt;                                                                                              size
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/libloc_243_7fb804ee98d3be6e.rds  449
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/libloc_243_51126df0326f9d11.rds  449
 #&gt;                                                                                                            atime
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/libloc_243_7fb804ee98d3be6e.rds 2019-11-22 12:18:50
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/libloc_243_51126df0326f9d11.rds 2020-01-05 10:31:45
 #&gt;                                                                       size
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/m1.csv 405687
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/m1.csv 405687
 #&gt;                                                                                   atime
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/m1.csv 2019-11-22 12:18:50
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/m1.csv 2020-01-05 10:31:49
 #&gt;                                                                       size
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/m2.csv 405687
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/m2.csv 405687
 #&gt;                                                                                   atime
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/m2.csv 2019-11-22 12:18:50
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/m2.csv 2020-01-05 10:31:49
 #&gt;                                                                       size
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/m3.csv 405687
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/m3.csv 405687
 #&gt;                                                                                   atime
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/m3.csv 2019-11-22 12:18:50
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/m3.csv 2020-01-05 10:31:49
 #&gt;                                                                       size
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/m4.csv 405687
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/m4.csv 405687
 #&gt;                                                                                   atime
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/m4.csv 2019-11-22 12:18:50</div><div class='input'>
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/m4.csv 2020-01-05 10:31:49</div><div class='input'>
 <span class='co'># Remove files based on access time until we get under 1 MB</span>
 <span class='fu'>manageCache</span>(<span class='no'>CACHE_DIR</span>, <span class='kw'>extensions</span><span class='kw'>=</span><span class='st'>'csv'</span>, <span class='kw'>maxCacheSize</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>sortBy</span><span class='kw'>=</span><span class='st'>'atime'</span>)
 <span class='kw'>for</span> (<span class='no'>file</span> <span class='kw'>in</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span>(<span class='no'>CACHE_DIR</span>, <span class='kw'>full.names</span><span class='kw'>=</span><span class='fl'>TRUE</span>)) {
   <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/file.info.html'>file.info</a></span>(<span class='no'>file</span>)[,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>6</span>)])
 }</div><div class='output co'>#&gt;                                                                                   size
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/filebd0113c62b1b.so 16140
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/filef94f497a6b15.so 16140
 #&gt;                                                                                                atime
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/filebd0113c62b1b.so 2019-11-22 12:18:40
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/filef94f497a6b15.so 2020-01-05 10:31:42
 #&gt;                                                                                               size
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/libloc_213_722ad5f9e07c7fe1.rds 18361
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/libloc_213_722ad5f9e07c7fe1.rds 18460
 #&gt;                                                                                                            atime
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/libloc_213_722ad5f9e07c7fe1.rds 2019-11-22 12:18:50
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/libloc_213_722ad5f9e07c7fe1.rds 2020-01-05 10:31:45
 #&gt;                                                                                              size
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/libloc_243_7fb804ee98d3be6e.rds  449
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/libloc_243_51126df0326f9d11.rds  449
 #&gt;                                                                                                            atime
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/libloc_243_7fb804ee98d3be6e.rds 2019-11-22 12:18:50
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/libloc_243_51126df0326f9d11.rds 2020-01-05 10:31:45
 #&gt;                                                                       size
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/m1.csv 405687
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/m3.csv 405687
 #&gt;                                                                                   atime
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/m1.csv 2019-11-22 12:18:50
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/m3.csv 2020-01-05 10:31:49
 #&gt;                                                                       size
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/m2.csv 405687
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/m4.csv 405687
 #&gt;                                                                                   atime
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/m2.csv 2019-11-22 12:18:50</div><div class='input'>
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/m4.csv 2020-01-05 10:31:49</div><div class='input'>
 <span class='co'># Or remove files based on modification time</span>
 <span class='fu'>manageCache</span>(<span class='no'>CACHE_DIR</span>, <span class='kw'>extensions</span><span class='kw'>=</span><span class='st'>'csv'</span>, <span class='kw'>maxCacheSize</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>sortBy</span><span class='kw'>=</span><span class='st'>'mtime'</span>)
 <span class='kw'>for</span> (<span class='no'>file</span> <span class='kw'>in</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span>(<span class='no'>CACHE_DIR</span>, <span class='kw'>full.names</span><span class='kw'>=</span><span class='fl'>TRUE</span>)) {
   <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/file.info.html'>file.info</a></span>(<span class='no'>file</span>)[,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>6</span>)])
 }</div><div class='output co'>#&gt;                                                                                   size
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/filebd0113c62b1b.so 16140
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/filef94f497a6b15.so 16140
 #&gt;                                                                                                atime
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/filebd0113c62b1b.so 2019-11-22 12:18:40
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/filef94f497a6b15.so 2020-01-05 10:31:42
 #&gt;                                                                                               size
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/libloc_213_722ad5f9e07c7fe1.rds 18361
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/libloc_213_722ad5f9e07c7fe1.rds 18460
 #&gt;                                                                                                            atime
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/libloc_213_722ad5f9e07c7fe1.rds 2019-11-22 12:18:50
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/libloc_213_722ad5f9e07c7fe1.rds 2020-01-05 10:31:45
 #&gt;                                                                                              size
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/libloc_243_7fb804ee98d3be6e.rds  449
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/libloc_243_51126df0326f9d11.rds  449
 #&gt;                                                                                                            atime
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/libloc_243_7fb804ee98d3be6e.rds 2019-11-22 12:18:50
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/libloc_243_51126df0326f9d11.rds 2020-01-05 10:31:45
 #&gt;                                                                       size
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/m1.csv 405687
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/m3.csv 405687
 #&gt;                                                                                   atime
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/m1.csv 2019-11-22 12:18:50
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/m3.csv 2020-01-05 10:31:49
 #&gt;                                                                       size
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/m2.csv 405687
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/m4.csv 405687
 #&gt;                                                                                   atime
-#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpXFPTkL/m2.csv 2019-11-22 12:18:50</div></pre>
+#&gt; /var/folders/vd/zpgw5sv92ngdx11k5dzqz5800000gn/T//RtmpERyfYD/m4.csv 2020-01-05 10:31:49</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

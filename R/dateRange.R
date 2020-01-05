@@ -51,6 +51,9 @@
 #' @param enddate Desired end datetime (ISO 8601).
 #' @param timezone Olson timezone used to interpret dates (required).
 #' @param unit Units used to determine time at end-of-day.
+#' @param ceilingStart Logical instruction to apply
+#'   \code{\link[lubridate]{ceiling_date}} to the \code{startdate} rather than
+#'   \code{\link[lubridate]{floor_date}}
 #' @param ceilingEnd Logical instruction to apply
 #'   \code{\link[lubridate]{ceiling_date}} to the \code{enddate} rather than
 #'   \code{\link[lubridate]{floor_date}}
@@ -95,10 +98,11 @@
 #' \enumerate{
 #' \item{When \code{startdate} and \code{enddate} are both specified, the
 #' \code{days} parameter is ignored.}
-#' \item{When \code{startdate} is missing, the first returned time will depend
-#' on the combination of \code{enddate}, \code{days} and \code{ceilingEnd}.}
-#' \item{When \code{enddate} is missing, \code{ceillingEnd} is ignored and the
-#' second returned time depends on \code{days}.}
+#' \item{When \code{startdate} is missing, \code{ceilingStart} is ignored and
+#' the first returned time will depend on the combination of \code{enddate},
+#' \code{days} and \code{ceilingEnd}.}
+#' \item{When \code{enddate} is missing, \code{ceilingEnd} is ignored and the
+#' second returned time depends on \code{ceilingStart} and \code{days}.}
 #' }
 #'
 #' @export
@@ -116,6 +120,7 @@ dateRange <- function(
   enddate = NULL,
   timezone = NULL,
   unit = "sec",
+  ceilingStart = FALSE,
   ceilingEnd = FALSE,
   days = 7
 ) {
@@ -165,9 +170,15 @@ dateRange <- function(
     # Handle parsing and ordering
     timeInput <- timeRange(startdate, enddate, timezone = timezone)
 
-    starttime <-
-      timeInput[1] %>%
-      lubridate::floor_date(unit = "day")
+    if ( ceilingStart ) {
+      starttime <-
+        timeInput[1] %>%
+        lubridate::ceiling_date(unit = "day")
+    } else {
+      starttime <-
+        timeInput[1] %>%
+        lubridate::floor_date(unit = "day")
+    }
 
     endtime <-
       timeInput[2] %>%
@@ -191,10 +202,17 @@ dateRange <- function(
 
   # ** Missing enddate: use startdate, (startdate + days) ----------------------
 
-    starttime <-
-      startdate %>%
-      parseDatetime(timezone = timezone) %>%
-      lubridate::floor_date(unit = "day")
+    if ( ceilingStart ) {
+      starttime <-
+        startdate %>%
+        parseDatetime(timezone = timezone) %>%
+        lubridate::ceiling_date(unit = "day")
+    } else {
+      starttime <-
+        startdate %>%
+        parseDatetime(timezone = timezone) %>%
+        lubridate::floor_date(unit = "day")
+    }
 
     endtime <- starttime + lubridate::days(days)
 
@@ -215,6 +233,8 @@ dateRange <- function(
       endtime <- endtime + lubridate::ddays(1)
     }
 
+    # Ignore ceilingStart
+
     starttime <- endtime - lubridate::days(days)
 
     endtime <- endtime - endUnitAdjust
@@ -231,6 +251,8 @@ dateRange <- function(
     if ( ceilingEnd ) {
       endtime <- endtime + lubridate::ddays(1)
     }
+
+    # Ignore ceilingStart
 
     starttime <- endtime - lubridate::days(days)
 

@@ -6,6 +6,9 @@
 #' @param endtime Desired end datetime (ISO 8601).
 #' @param timezone Olson timezone used to interpret dates (required).
 #' @param unit Units used to determine time at end-of-day.
+#' @param ceilingStart Logical instruction to apply
+#'   \code{\link[lubridate]{ceiling_date}} to the \code{startdate} rather than
+#'   \code{\link[lubridate]{floor_date}}
 #' @param ceilingEnd Logical instruction to apply
 #'   \code{\link[lubridate]{ceiling_date}} to the \code{enddate} rather than
 #'   \code{\link[lubridate]{floor_date}}
@@ -13,9 +16,9 @@
 #' @description
 #' Uses incoming parameters to return a pair of \code{POSIXct} times in the
 #' proper order. Both start and end times will have \code{lubridate::floor_date()}
-#' applied to get the nearest \code{unit} unless \code{ceilingEnd = TRUE} in
-#' which case the end time will will have \code{lubridate::ceiling_date()}
-#' applied.
+#' applied to get the nearest \code{unit}. This can be modified by specifying
+#' \code{ceilingStart = TRUE} or \code{ceilingEnd = TRUE} in which case
+#' \code{lubridate::ceiling_date()} will be applied.
 #'
 #' The required \code{timezone} parameter must be one of those found in
 #' \code{\link[base]{OlsonNames}}.
@@ -40,6 +43,7 @@ timeRange <- function(
   endtime = NULL,
   timezone = NULL,
   unit = "sec",
+  ceilingStart = FALSE,
   ceilingEnd = FALSE
 ) {
 
@@ -64,7 +68,12 @@ timeRange <- function(
   timeRange <- sort(c(starttime, endtime))
 
   # Floor/Ceiling to nearest unit
-  timeRange[1] <- lubridate::floor_date(timeRange[1], unit = unit)
+  if ( ceilingStart ) {
+    timeRange[1] <- lubridate::ceiling_date(timeRange[1], unit = unit)
+  } else {
+    timeRange[1] <- lubridate::floor_date(timeRange[1], unit = unit)
+  }
+
   if ( ceilingEnd ) {
     timeRange[2] <- lubridate::ceiling_date(timeRange[2], unit = unit)
   } else {

@@ -193,7 +193,7 @@ test_that("Default arguments work as expected", {
 
 })
 
-test_that("unit and ceilingEnd arguments work", {
+test_that("unit, ceilingStart and ceilingEnd arguments work", {
 
   startTime <- ISOdatetime(2019, 08, 01, 2, 15, 45, tz = "America/Los_Angeles")
   endTime <- ISOdatetime(2019, 08, 08, 20, 30, 40, tz = "America/Los_Angeles")
@@ -201,9 +201,14 @@ test_that("unit and ceilingEnd arguments work", {
   startDate <- ISOdatetime(2019, 08, 01, 00, 00, 00, tz = "America/Los_Angeles")
   endDate <- ISOdatetime(2019, 08, 7, 23, 59, 59, tz = "America/Los_Angeles")
 
+  # NOTE:  start always begins at midnight regarless of unit
   startMin <- ISOdatetime(2019, 08, 01, 00, 00, 00, tz = "America/Los_Angeles")
   startHour <- ISOdatetime(2019, 08, 01, 00, 00, 00, tz = "America/Los_Angeles")
   startDay <- ISOdatetime(2019, 08, 01, 00, 00, 00, tz = "America/Los_Angeles")
+
+  startMinCeil <- ISOdatetime(2019, 08, 02, 00, 00, 00, tz = "America/Los_Angeles")
+  startHourCeil <- ISOdatetime(2019, 08, 02, 00, 00, 00, tz = "America/Los_Angeles")
+  startDayCeil <- ISOdatetime(2019, 08, 02, 00, 00, 00, tz = "America/Los_Angeles")
 
   endMin <- ISOdatetime(2019, 08, 7, 23, 59, 00, tz = "America/Los_Angeles")
   endHour <- ISOdatetime(2019, 08, 7, 23, 00, 00, tz = "America/Los_Angeles")
@@ -219,17 +224,17 @@ test_that("unit and ceilingEnd arguments work", {
   tlimHour <- dateRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "hour")
   tlimDay <- dateRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "day")
 
-  tlimMinCeil <- dateRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "min", ceilingEnd = TRUE)
-  tlimHourCeil <- dateRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "hour", ceilingEnd = TRUE)
-  tlimDayCeil <- dateRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "day", ceilingEnd = TRUE)
+  tlimMinCeil <- dateRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "min", ceilingStart = TRUE, ceilingEnd = TRUE)
+  tlimHourCeil <- dateRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "hour", ceilingStart = TRUE, ceilingEnd = TRUE)
+  tlimDayCeil <- dateRange(startTime, endTime, timezone = "America/Los_Angeles", unit = "day", ceilingStart = TRUE, ceilingEnd = TRUE)
 
   expect_identical(tlim, c(startDate, endDate))
   expect_identical(tlimMin, c(startMin, endMin))
   expect_identical(tlimHour, c(startHour, endHour))
   expect_identical(tlimDay, c(startDay, endDay))
-  expect_identical(tlimMinCeil, c(startMin, endMinCeil))
-  expect_identical(tlimHourCeil, c(startHour, endHourCeil))
-  expect_identical(tlimDayCeil, c(startDay, endDayCeil))
+  expect_identical(tlimMinCeil, c(startMinCeil, endMinCeil))
+  expect_identical(tlimHourCeil, c(startHourCeil, endHourCeil))
+  expect_identical(tlimDayCeil, c(startDayCeil, endDayCeil))
 
 })
 

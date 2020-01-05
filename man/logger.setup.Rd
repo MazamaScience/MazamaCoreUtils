@@ -4,8 +4,14 @@
 \alias{logger.setup}
 \title{Set up python-style logging}
 \usage{
-logger.setup(traceLog = NULL, debugLog = NULL, infoLog = NULL,
-  warnLog = NULL, errorLog = NULL, fatalLog = NULL)
+logger.setup(
+  traceLog = NULL,
+  debugLog = NULL,
+  infoLog = NULL,
+  warnLog = NULL,
+  errorLog = NULL,
+  fatalLog = NULL
+)
 }
 \arguments{
 \item{traceLog}{File name or full path where \code{logger.trace()} messages

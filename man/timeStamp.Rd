@@ -4,8 +4,7 @@
 \alias{timeStamp}
 \title{Character representation of a POSIXct}
 \usage{
-timeStamp(datetime = NULL, timezone = NULL, unit = "sec",
-  style = "ymdhms")
+timeStamp(datetime = NULL, timezone = NULL, unit = "sec", style = "ymdhms")
 }
 \arguments{
 \item{datetime}{Vector of character or integer datetimes in Ymd[HMS] format

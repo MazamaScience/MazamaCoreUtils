@@ -4,8 +4,15 @@
 \alias{dateRange}
 \title{Create a POSIXct date range}
 \usage{
-dateRange(startdate = NULL, enddate = NULL, timezone = NULL,
-  unit = "sec", ceilingEnd = FALSE, days = 7)
+dateRange(
+  startdate = NULL,
+  enddate = NULL,
+  timezone = NULL,
+  unit = "sec",
+  ceilingStart = FALSE,
+  ceilingEnd = FALSE,
+  days = 7
+)
 }
 \arguments{
 \item{startdate}{Desired start datetime (ISO 8601).}
@@ -15,6 +22,10 @@ dateRange(startdate = NULL, enddate = NULL, timezone = NULL,
 \item{timezone}{Olson timezone used to interpret dates (required).}
 
 \item{unit}{Units used to determine time at end-of-day.}
+
+\item{ceilingStart}{Logical instruction to apply
+\code{\link[lubridate]{ceiling_date}} to the \code{startdate} rather than
+\code{\link[lubridate]{floor_date}}}
 
 \item{ceilingEnd}{Logical instruction to apply
 \code{\link[lubridate]{ceiling_date}} to the \code{enddate} rather than
@@ -116,10 +127,11 @@ conflicts of this nature:
 \enumerate{
 \item{When \code{startdate} and \code{enddate} are both specified, the
 \code{days} parameter is ignored.}
-\item{When \code{startdate} is missing, the first returned time will depend
-on the combination of \code{enddate}, \code{days} and \code{ceilingEnd}.}
-\item{When \code{enddate} is missing, \code{ceillingEnd} is ignored and the
-second returned time depends on \code{days}.}
+\item{When \code{startdate} is missing, \code{ceilingStart} is ignored and
+the first returned time will depend on the combination of \code{enddate},
+\code{days} and \code{ceilingEnd}.}
+\item{When \code{enddate} is missing, \code{ceilingEnd} is ignored and the
+second returned time depends on \code{ceilingStart} and \code{days}.}
 }
 }
 

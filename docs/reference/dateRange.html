@@ -107,7 +107,7 @@ includes:
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
       </span>
     </div>
 
@@ -214,8 +214,15 @@ includes:</p>
 
     </div>
 
-    <pre class="usage"><span class='fu'>dateRange</span>(<span class='kw'>startdate</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>enddate</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"sec"</span>, <span class='kw'>ceilingEnd</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>days</span> <span class='kw'>=</span> <span class='fl'>7</span>)</pre>
+    <pre class="usage"><span class='fu'>dateRange</span>(
+  <span class='kw'>startdate</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>enddate</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>timezone</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>"sec"</span>,
+  <span class='kw'>ceilingStart</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>ceilingEnd</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>days</span> <span class='kw'>=</span> <span class='fl'>7</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -235,6 +242,12 @@ includes:</p>
     <tr>
       <th>unit</th>
       <td><p>Units used to determine time at end-of-day.</p></td>
+    </tr>
+    <tr>
+      <th>ceilingStart</th>
+      <td><p>Logical instruction to apply
+<code><a href='http://lubridate.tidyverse.org/reference/round_date.html'>ceiling_date</a></code> to the <code>startdate</code> rather than
+<code><a href='http://lubridate.tidyverse.org/reference/round_date.html'>floor_date</a></code></p></td>
     </tr>
     <tr>
       <th>ceilingEnd</th>
@@ -293,10 +306,11 @@ conflicts of this nature:</p>
 <ol>
 <li><p>When <code>startdate</code> and <code>enddate</code> are both specified, the
 <code>days</code> parameter is ignored.</p></li>
-<li><p>When <code>startdate</code> is missing, the first returned time will depend
-on the combination of <code>enddate</code>, <code>days</code> and <code>ceilingEnd</code>.</p></li>
-<li><p>When <code>enddate</code> is missing, <code>ceillingEnd</code> is ignored and the
-second returned time depends on <code>days</code>.</p></li>
+<li><p>When <code>startdate</code> is missing, <code>ceilingStart</code> is ignored and
+the first returned time will depend on the combination of <code>enddate</code>,
+<code>days</code> and <code>ceilingEnd</code>.</p></li>
+<li><p>When <code>enddate</code> is missing, <code>ceilingEnd</code> is ignored and the
+second returned time depends on <code>ceilingStart</code> and <code>days</code>.</p></li>
 </ol>
 
 

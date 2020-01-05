@@ -6,8 +6,7 @@
 \alias{lintFunctionArgs_dir}
 \title{Lint a source file's function arguments}
 \usage{
-lintFunctionArgs_file(filePath = NULL, rules = NULL,
-  fullPath = FALSE)
+lintFunctionArgs_file(filePath = NULL, rules = NULL, fullPath = FALSE)
 
 lintFunctionArgs_dir(dirPath = "./R", rules = NULL, fullPath = FALSE)
 }

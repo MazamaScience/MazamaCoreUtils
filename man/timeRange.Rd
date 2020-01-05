@@ -4,8 +4,14 @@
 \alias{timeRange}
 \title{Create a POSIXct time range}
 \usage{
-timeRange(starttime = NULL, endtime = NULL, timezone = NULL,
-  unit = "sec", ceilingEnd = FALSE)
+timeRange(
+  starttime = NULL,
+  endtime = NULL,
+  timezone = NULL,
+  unit = "sec",
+  ceilingStart = FALSE,
+  ceilingEnd = FALSE
+)
 }
 \arguments{
 \item{starttime}{Desired start datetime (ISO 8601).}
@@ -15,6 +21,10 @@ timeRange(starttime = NULL, endtime = NULL, timezone = NULL,
 \item{timezone}{Olson timezone used to interpret dates (required).}
 
 \item{unit}{Units used to determine time at end-of-day.}
+
+\item{ceilingStart}{Logical instruction to apply
+\code{\link[lubridate]{ceiling_date}} to the \code{startdate} rather than
+\code{\link[lubridate]{floor_date}}}
 
 \item{ceilingEnd}{Logical instruction to apply
 \code{\link[lubridate]{ceiling_date}} to the \code{enddate} rather than
@@ -26,9 +36,9 @@ A vector of two \code{POSIXct}s.
 \description{
 Uses incoming parameters to return a pair of \code{POSIXct} times in the
 proper order. Both start and end times will have \code{lubridate::floor_date()}
-applied to get the nearest \code{unit} unless \code{ceilingEnd = TRUE} in
-which case the end time will will have \code{lubridate::ceiling_date()}
-applied.
+applied to get the nearest \code{unit}. This can be modified by specifying
+\code{ceilingStart = TRUE} or \code{ceilingEnd = TRUE} in which case
+\code{lubridate::ceiling_date()} will be applied.
 
 The required \code{timezone} parameter must be one of those found in
 \code{\link[base]{OlsonNames}}.

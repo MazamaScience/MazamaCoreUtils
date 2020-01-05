@@ -4,8 +4,13 @@
 \alias{parseDatetime}
 \title{Parse datetime strings}
 \usage{
-parseDatetime(datetime = NULL, timezone = NULL, expectAll = FALSE,
-  isJulian = FALSE, quiet = TRUE)
+parseDatetime(
+  datetime = NULL,
+  timezone = NULL,
+  expectAll = FALSE,
+  isJulian = FALSE,
+  quiet = TRUE
+)
 }
 \arguments{
 \item{datetime}{Vector of character or integer datetimes in Ymd[HMS] format
@@ -87,7 +92,7 @@ parseDatetime(
 
 badInput <- c("20181013", NA, "20181015", "181016", "10172018")
 
-# Return a vector with \\code{NA} for dates that could not be parsed
+# Return a vector with \code{NA} for dates that could not be parsed
 parseDatetime(badInput, timezone = "UTC", expectAll = FALSE)
 
 \dontrun{

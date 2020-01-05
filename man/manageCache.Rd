@@ -4,8 +4,13 @@
 \alias{manageCache}
 \title{Manage the size of a cache}
 \usage{
-manageCache(cacheDir = NULL, extensions = c("html", "json", "pdf",
-  "png"), maxCacheSize = 100, sortBy = "atime", maxFileAge = NULL)
+manageCache(
+  cacheDir = NULL,
+  extensions = c("html", "json", "pdf", "png"),
+  maxCacheSize = 100,
+  sortBy = "atime",
+  maxFileAge = NULL
+)
 }
 \arguments{
 \item{cacheDir}{Location of cache directory.}

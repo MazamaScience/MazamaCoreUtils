@@ -1,3 +1,8 @@
+# MazamaCoreUtils 0.4.2
+
+* Fixed error messaging in `loadDataFile()`.
+* Added `ceilingStart` argument to `dateRange()` and `timeRange()`.
+
 # MazamaCoreUtils 0.4.1
 
 * Fixed improper handling of single day date ranges in `dateRange()`.

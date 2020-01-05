@@ -4,8 +4,12 @@
 \alias{dateSequence}
 \title{Create a POSIXct date sequence}
 \usage{
-dateSequence(startdate = NULL, enddate = NULL, timezone = NULL,
-  ceilingEnd = FALSE)
+dateSequence(
+  startdate = NULL,
+  enddate = NULL,
+  timezone = NULL,
+  ceilingEnd = FALSE
+)
 }
 \arguments{
 \item{startdate}{Desired start datetime (ISO 8601).}

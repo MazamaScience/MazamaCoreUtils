@@ -5,7 +5,7 @@ test_that("manageCache() tests sortBy values", {
   expect_error({
     removedCount <- manageCache(
       tempdir(),
-      extensions = ".MazamaWebUtils-test",
+      extensions = ".MazamaCoreUtils-test",
       maxCacheSize = oneByte,
       sortBy = "a"
     )
@@ -14,7 +14,7 @@ test_that("manageCache() tests sortBy values", {
   expect_error({
     removedCount <- manageCache(
       tempdir(),
-      extensions = ".MazamaWebUtils-test",
+      extensions = ".MazamaCoreUtils-test",
       maxCacheSize = oneByte,
       sortBy = "atime"
     )
@@ -29,12 +29,12 @@ test_that("manageCache() doesn't remove files when maxCacheSize is big", {
   count <- 4
 
   for ( i in 1:count ) {
-    write.csv(iris, tempfile(fileext = ".MazamaWebUtils-test"))
+    write.csv(iris, tempfile(fileext = ".MazamaCoreUtils-test"))
   }
 
   removedCount <- manageCache(
     tempdir(),
-    extensions = ".MazamaWebUtils-test",
+    extensions = ".MazamaCoreUtils-test",
     maxCacheSize = oneTByte
   )
 
@@ -43,7 +43,7 @@ test_that("manageCache() doesn't remove files when maxCacheSize is big", {
   # cleanup
   file.remove(list.files(
     tempdir(),
-    pattern = ".MazamaWebUtils-test",
+    pattern = ".MazamaCoreUtils-test",
     full.names = TRUE
   ))
 
@@ -56,12 +56,12 @@ test_that("manageCache() removes files when maxCacheSize is small", {
   oneByte <- 1e-6
 
   for ( i in 1:count ) {
-    write.csv(iris, tempfile(fileext = ".MazamaWebUtils-test"))
+    write.csv(iris, tempfile(fileext = ".MazamaCoreUtils-test"))
   }
 
   removedCount <- manageCache(
     tempdir(),
-    extensions = ".MazamaWebUtils-test",
+    extensions = ".MazamaCoreUtils-test",
     maxCacheSize = oneByte
   )
 

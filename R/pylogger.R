@@ -39,6 +39,7 @@
 #' @importFrom futile.logger flog.appender flog.logger flog.threshold
 #' @importFrom futile.logger flog.debug flog.error flog.fatal flog.info
 #' @importFrom futile.logger flog.trace flog.warn
+#' @importFrom futile.logger flog.layout
 #' @export
 #'
 #' @examples

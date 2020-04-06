@@ -4,7 +4,9 @@
 \name{timezoneLintRules}
 \alias{timezoneLintRules}
 \title{Rules for timezone linting.}
-\format{A list of function = argument pairs.}
+\format{
+A list of function = argument pairs.
+}
 \usage{
 timezoneLintRules
 }

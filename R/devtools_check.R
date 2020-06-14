@@ -27,7 +27,7 @@
 #' \code{check_()} \tab | \code{args = c()}\cr
 #' \code{check_fast()} \tab | \code{args = c("--ignore-vignettes")}\cr
 #'  \tab | \code{build_args = c("--no-build-vignettes")}\cr
-#' \code{check_fastest()} \tab | \code{args = c("--ignore-vignettes", "--no-examples")}\cr
+#' \code{check_faster()} \tab | \code{args = c("--ignore-vignettes", "--no-examples")}\cr
 #'  \tab | \code{build_args = c("--no-build-vignettes", "--no-examples")}\cr
 #' \code{check_fastest()} \tab | \code{args = c("--ignore-vignettes", "--no-examples", "--no-manual", "--no-tests")}\cr
 #'  \tab | \code{build_args = c("--no-build-vignettes", "--no-manual")}\cr

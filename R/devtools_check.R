@@ -7,7 +7,7 @@
 #'
 #' @return No return.
 #'
-#' @description When multiple devlopers are working on a package, it is
+#' @description When multiple developers are working on a package, it is
 #' crucially important that they check their code changes \emph{often}.  After
 #' merging changes from multiple developers it is equally important to check the
 #' package \emph{thoroughly}.

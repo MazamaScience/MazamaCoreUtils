@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Initialize standard log files — initializeLogging • MazamaCoreUtils</title>
+<title>Run package checks — packageCheck • MazamaCoreUtils</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,15 @@
 
 
 
-<meta property="og:title" content="Initialize standard log files — initializeLogging" />
-<meta property="og:description" content="Convenience function that wraps logging initialization steps common to Mazama
-Science web services." />
+<meta property="og:title" content="Run package checks — packageCheck" />
+<meta property="og:description" content="When multiple developers are working on a package, it is
+crucially important that they check their code changes often.  After
+merging changes from multiple developers it is equally important to check the
+package thoroughly.
+The problem is that frequent checks should be quick or developers won't do
+them while thorough checks are, by nature, slow.
+Our solution is to provide shorthand functions that wrap
+devtools::check() and pass it a variety of different arguments." />
 
 
 
@@ -115,27 +121,68 @@ Science web services." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Initialize standard log files</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/R/initializeLogging.R'><code>R/initializeLogging.R</code></a></small>
-    <div class="hidden name"><code>initializeLogging.Rd</code></div>
+    <h1>Run package checks</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/R/devtools_check.R'><code>R/devtools_check.R</code></a></small>
+    <div class="hidden name"><code>packageCheck.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Convenience function that wraps logging initialization steps common to Mazama
-Science web services.</p>
+    <p>When multiple developers are working on a package, it is
+crucially important that they check their code changes <em>often</em>.  After
+merging changes from multiple developers it is equally important to check the
+package <em>thoroughly</em>.</p>
+<p>The problem is that frequent checks should be quick or developers won't do
+them while thorough checks are, by nature, slow.</p>
+<p>Our solution is to provide shorthand functions that wrap
+<code><a href='https://devtools.r-lib.org//reference/check.html'>devtools::check()</a></code> and pass it a variety of different arguments.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>initializeLogging</span>(<span class='kw'>logDir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>check</span>(<span class='kw'>pkg</span> <span class='kw'>=</span> <span class='st'>"."</span>)
+
+<span class='fu'>check_fast</span>(<span class='kw'>pkg</span> <span class='kw'>=</span> <span class='st'>"."</span>)
+
+<span class='fu'>check_faster</span>(<span class='kw'>pkg</span> <span class='kw'>=</span> <span class='st'>"."</span>)
+
+<span class='fu'>check_fastest</span>(<span class='kw'>pkg</span> <span class='kw'>=</span> <span class='st'>"."</span>)
+
+<span class='fu'>check_slow</span>(<span class='kw'>pkg</span> <span class='kw'>=</span> <span class='st'>"."</span>)
+
+<span class='fu'>check_slower</span>(<span class='kw'>pkg</span> <span class='kw'>=</span> <span class='st'>"."</span>)
+
+<span class='fu'>check_slowest</span>(<span class='kw'>pkg</span> <span class='kw'>=</span> <span class='st'>"."</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>logDir</th>
-      <td><p>Directory in which to write log files.</p></td>
+      <th>pkg</th>
+      <td><p>Package location passed to <code><a href='https://devtools.r-lib.org//reference/check.html'>devtools::check()</a></code>.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>No return.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The table below describes the <code>args</code> passed:</p>
+<table class='table'>
+<tr><td><code>check_slowest()</code></td><td>| <code>args = c("--run-donttest", "--run-dontrun", "--use-gct")</code></td></tr>
+<tr><td><code>check_slower()</code></td><td>| <code>args = c("--run-donttest", "--run-dontrun")</code></td></tr>
+<tr><td><code>check_slow()</code></td><td>| <code>args = c("--run-donttest")</code></td></tr>
+<tr><td><code>check_()</code></td><td>| <code>args = c()</code></td></tr>
+<tr><td><code>check_fast()</code></td><td>| <code>args = c("--ignore-vignettes")</code></td></tr>
+<tr><td></td><td>| <code>build_args = c("--no-build-vignettes")</code></td></tr>
+<tr><td><code>check_faster()</code></td><td>| <code>args = c("--ignore-vignettes", "--no-examples")</code></td></tr>
+<tr><td></td><td>| <code>build_args = c("--no-build-vignettes", "--no-examples")</code></td></tr>
+<tr><td><code>check_fastest()</code></td><td>| <code>args = c("--ignore-vignettes", "--no-examples", "--no-manual", "--no-tests")</code></td></tr>
+<tr><td></td><td>| <code>build_args = c("--no-build-vignettes", "--no-manual")</code></td></tr>
+</table>
+
+
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='https://devtools.r-lib.org//reference/check.html'>check</a></code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

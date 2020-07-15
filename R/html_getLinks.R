@@ -1,5 +1,7 @@
 #' @name html_getLinks
 #'
+#' @importFrom rlang .data
+#'
 #' @title Find all links in an html page
 #'
 #' @param url URL or file path of an html page.
@@ -51,9 +53,6 @@ html_getLinks <- function(
   }, silent = TRUE)
   stopOnError(result)
 
-  urlText <- urlText[!is.na(urlText)]
-  urlLinks <- urlLinks[!is.na(urlLinks)]
-
   df <- data.frame(linkName = urlText, linkUrl = urlLinks)
 
   # ----- Filter URLs -------------------------------------------------
@@ -61,11 +60,14 @@ html_getLinks <- function(
   df <-
     df %>%
 
+    # Remove NA values
+    dplyr::filter(!is.na(.data$linkUrl) & !is.na(.data$linkName)) %>%
+
     # Remove Apache indexing
     dplyr::filter(stringr::str_detect(df$linkUrl, "^?C=.;O=.*", negate = TRUE)) %>%
 
     # Format URLs beginning with //
-    dplyr::mutate(linkUrl = linkUrl %>% stringr::str_replace(stringr::regex("^//"), ""))
+    dplyr::mutate(linkUrl = stringr::str_replace(.data$linkUrl, stringr::regex("^//"), ""))
 
 
   # ----- Handle relative URLs -------------------------------------------------
@@ -78,7 +80,7 @@ html_getLinks <- function(
     df <-
       df %>%
 
-      dplyr::mutate(linkUrl = linkUrl %>% stringr::str_replace(stringr::regex("^(?!http|www).*"), file.path(url, df$linkUrl)))
+      dplyr::mutate(linkUrl = stringr::str_replace(.data$linkUrl, stringr::regex("^(?!http|www).*"), file.path(url, df$linkUrl)))
   }
   # ----- Return ---------------------------------------------------------------
 

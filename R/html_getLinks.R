@@ -4,6 +4,7 @@
 #'
 #' @param url URL or file path of an html page.
 #' @param relative Logical instruction to return relative URLs.
+#'
 #' @return A dataframe with \code{linkName} and/or \code{linkUrl} columns.
 #'
 #' @description Parses an html page to extract all \code{<a href="...">...</a>}
@@ -34,32 +35,26 @@ html_getLinks <- function(
 
   MazamaCoreUtils::stopIfNull(url)
 
-  # Remove ending /
-  if (str_sub(url, -1) == "/") {
-    url <- str_sub(url, 0, -2)
-  }
-
   # ----- Extract the links ----------------------------------------------------
 
   result <- try({
 
-    urlXML <- xml2::read_html(url)
-    url_text <-
-      urlXML %>%
-      xml2::xml_find_all("//a[@href]") %>%
+    urlAttributes <- xml2::read_html(url) %>% xml2::xml_find_all("//a[@href]")
+
+    urlText <-
+      urlAttributes %>%
       xml2::xml_text()
-    url_links <-
-      urlXML %>%
-      xml2::xml_find_all("//a") %>%
+    urlLinks <-
+      urlAttributes %>%
       xml2::xml_attr("href")
 
   }, silent = TRUE)
   stopOnError(result)
 
-  url_text <- url_text[!is.na(url_text)]
-  url_links <- url_links[!is.na(url_links)]
+  urlText <- urlText[!is.na(urlText)]
+  urlLinks <- urlLinks[!is.na(urlLinks)]
 
-  df <- data.frame(linkName = url_text, linkUrl = url_links)
+  df <- data.frame(linkName = urlText, linkUrl = urlLinks)
 
   # ----- Filter URLs -------------------------------------------------
 
@@ -67,19 +62,23 @@ html_getLinks <- function(
     df %>%
 
     # Remove Apache indexing
-    dplyr::filter(stringr::str_detect(linkUrl, "^?C=.;O=.*", negate = TRUE)) %>%
+    dplyr::filter(stringr::str_detect(df$linkUrl, "^?C=.;O=.*", negate = TRUE)) %>%
 
-    # Replace URLs beginning with //
-    dplyr::mutate(linkUrl = linkUrl %>% stringr::str_replace(regex("^//"), ""))
+    # Format URLs beginning with //
+    dplyr::mutate(linkUrl = linkUrl %>% stringr::str_replace(stringr::regex("^//"), ""))
 
 
   # ----- Handle relative URLs -------------------------------------------------
 
   if (!relative) {
+    # Remove ending /
+    if (stringr::str_sub(url, -1) == "/")
+      url <- stringr::str_sub(url, 0, -2)
+    # Append URL to records not beginning with http or www
     df <-
       df %>%
-      # Append URL to records not beginning with http or www
-      dplyr::mutate(linkUrl = linkUrl %>% stringr::str_replace(regex("^(?!http|www).*"), file.path(url, linkUrl)))
+
+      dplyr::mutate(linkUrl = linkUrl %>% stringr::str_replace(stringr::regex("^(?!http|www).*"), file.path(url, df$linkUrl)))
   }
   # ----- Return ---------------------------------------------------------------
 
@@ -99,7 +98,7 @@ html_getLinkNames <- function(
   # ----- Extract the link text ------------------------------------------------
 
   linkData <- html_getLinks(url, relative)
-  linkNames <- dplyr::pull(linkData, linkName)
+  linkNames <- dplyr::pull(linkData, "linkName")
 
   # ----- Return ---------------------------------------------------------------
 
@@ -119,7 +118,7 @@ html_getLinkUrls <- function(
   # ----- Extract the link text ------------------------------------------------
 
   linkData <- html_getLinks(url, relative)
-  linkUrls <- dplyr::pull(linkData, linkUrl)
+  linkUrls <- dplyr::pull(linkData, "linkUrl")
 
   # ----- Return ---------------------------------------------------------------
 

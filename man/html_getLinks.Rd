@@ -10,7 +10,7 @@ html_getLinks(url = NULL)
 \item{url}{URL or file path of an html page.}
 }
 \value{
-A dataframe with \code{linkName} and \code{linkUrl} columns.
+A dataframe with \code{linkName} and/or \code{linkUrl} columns.
 }
 \description{
 Parses an html page to extract all \code{<a href="...">...</a>}
@@ -21,13 +21,11 @@ This is especially useful for extracting data from an index page that shows
 the contents of a web accessible directory.
 }
 \examples{
-\donttest{
-library(MazamaCoreUtils)
-
 # US Census 2019 shapefiles
 dataLinks <- html_getLinks("https://www2.census.gov/geo/tiger/GENZ2019/shp/")
 
 dataLinks \%>\%
   dplyr::filter(stringr::str_detect(linkName, "us_county"))
-}
+head(dataLinks, 10)
+
 }

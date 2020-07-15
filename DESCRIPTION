@@ -4,10 +4,12 @@ Version: 0.4.3
 Title: Utility Functions for Production R Code
 Authors@R: c(
     person("Jonathan", "Callahan", email="jonathan.s.callahan@gmail.com", role=c("aut","cre")),
+    person("Eli", "Grosman", email="eligrosman1@gmail.com", role=c("aut")),
     person("Spencer", "Pease", email="spencerpease618@gmail.com", role=c("aut")),
     person("Thomas", "Bergamaschi", email="tbergama@gmail.com", role=c("aut"))
     )
 Author: Jonathan Callahan [aut, cre],
+    Eli Grosman [aut],
     Spencer Pease [aut],
     Thomas Bergamaschi [aut] 
 Maintainer: Jonathan Callahan <jonathan.s.callahan@gmail.com>
@@ -28,7 +30,8 @@ Imports:
     magrittr,
     purrr,
     tibble,
-    rlang (>= 0.1.2)
+    rlang (>= 0.1.2),
+    xml2
 Suggests:
     knitr,
     markdown,

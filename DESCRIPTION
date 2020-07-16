@@ -31,7 +31,8 @@ Imports:
     purrr,
     tibble,
     rlang (>= 0.1.2),
-    xml2
+    xml2,
+    rvest
 Suggests:
     knitr,
     markdown,

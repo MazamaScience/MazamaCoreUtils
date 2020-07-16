@@ -21,7 +21,7 @@
 #' # US Census 2019 shapefiles
 #' dataLinks <- html_getLinks("https://www2.census.gov/geo/tiger/GENZ2019/shp/")
 #'
-#' dataLinks %>%
+#' dataLinks <- dataLinks %>%
 #'   dplyr::filter(stringr::str_detect(linkName, "us_county"))
 #' head(dataLinks, 10)
 #'

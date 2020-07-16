@@ -4,10 +4,12 @@
 \alias{html_getLinks}
 \title{Find all links in an html page}
 \usage{
-html_getLinks(url = NULL)
+html_getLinks(url = NULL, relative = TRUE)
 }
 \arguments{
 \item{url}{URL or file path of an html page.}
+
+\item{relative}{Logical instruction to return relative URLs.}
 }
 \value{
 A dataframe with \code{linkName} and/or \code{linkUrl} columns.
@@ -15,7 +17,8 @@ A dataframe with \code{linkName} and/or \code{linkUrl} columns.
 \description{
 Parses an html page to extract all \code{<a href="...">...</a>}
 links and return them in a dataframe where \code{linkName} is the human
-readable name and \code{linkUrl} is the \code{href} portion.
+readable name and \code{linkUrl} is the \code{href} portion. By default this
+function will return relative URLs.
 
 This is especially useful for extracting data from an index page that shows
 the contents of a web accessible directory.
@@ -24,7 +27,7 @@ the contents of a web accessible directory.
 # US Census 2019 shapefiles
 dataLinks <- html_getLinks("https://www2.census.gov/geo/tiger/GENZ2019/shp/")
 
-dataLinks \%>\%
+dataLinks <- dataLinks \%>\%
   dplyr::filter(stringr::str_detect(linkName, "us_county"))
 head(dataLinks, 10)
 

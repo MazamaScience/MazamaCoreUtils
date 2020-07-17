@@ -1,4 +1,4 @@
-# MazamaCoreUtils 0.4.3
+# MazamaCoreUtils 0.4.4
 
 * Now exporting `futile.logger::flog.layout()` to avoid downstream complaints.
 * Updated documentation for `check_~()` functions.

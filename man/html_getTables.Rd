@@ -20,7 +20,6 @@ can be extracted as a dataframe by passing the index of the table in addition
 to the url to \code{html_getTable()}.
 }
 \examples{
-\dontrun{
 # Wikipedia's list of timezones
 url <- "http://en.wikipedia.org/wiki/List_of_tz_database_time_zones"
 
@@ -28,10 +27,10 @@ url <- "http://en.wikipedia.org/wiki/List_of_tz_database_time_zones"
 tables <- html_getTables(url)
 
 # Extract the first table
-firstTable <- html_getTable(url, index = 1)
+# NOTE: Analogous to firstTable <- html_getTable(url, index = 1)
+firstTable <- tables[[1]]
 
 head(firstTable)
 nrow(firstTable)
-}
 
 }

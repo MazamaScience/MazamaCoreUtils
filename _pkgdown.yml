@@ -56,6 +56,12 @@ reference:
   contents:
   - '`setIfNull`'
   - '`stopIfNull`'
+- title: HTML Utilities
+  desc: >
+    Functions for parsing web documents
+  contents:
+  - '`html_getLinks`'
+  - '`html_getTables`'
 - title: Other Utilites
   desc: ~
   contents:

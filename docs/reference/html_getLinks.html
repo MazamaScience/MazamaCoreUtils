@@ -42,7 +42,8 @@
 <meta property="og:title" content="Find all links in an html page — html_getLinks" />
 <meta property="og:description" content="Parses an html page to extract all &amp;lt;a href=&quot;...&quot;&amp;gt;...&amp;lt;/a&amp;gt;
 links and return them in a dataframe where linkName is the human
-readable name and linkUrl is the href portion.
+readable name and linkUrl is the href portion. By default this
+function will return relative URLs.
 This is especially useful for extracting data from an index page that shows
 the contents of a web accessible directory." />
 
@@ -126,12 +127,13 @@ the contents of a web accessible directory." />
     <div class="ref-description">
     <p>Parses an html page to extract all <code>&lt;a href="..."&gt;...&lt;/a&gt;</code>
 links and return them in a dataframe where <code>linkName</code> is the human
-readable name and <code>linkUrl</code> is the <code>href</code> portion.</p>
+readable name and <code>linkUrl</code> is the <code>href</code> portion. By default this
+function will return relative URLs.</p>
 <p>This is especially useful for extracting data from an index page that shows
 the contents of a web accessible directory.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>html_getLinks</span>(<span class='kw'>url</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>html_getLinks</span>(<span class='kw'>url</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -140,20 +142,34 @@ the contents of a web accessible directory.</p>
       <th>url</th>
       <td><p>URL or file path of an html page.</p></td>
     </tr>
+    <tr>
+      <th>relative</th>
+      <td><p>Logical instruction to return relative URLs.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A dataframe with <code>linkName</code> and <code>linkUrl</code> columns.</p>
+    <p>A dataframe with <code>linkName</code> and/or <code>linkUrl</code> columns.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>MazamaCoreUtils</span>)
+    <pre class="examples"><div class='input'><span class='co'># US Census 2019 shapefiles</span>
+<span class='no'>dataLinks</span> <span class='kw'>&lt;-</span> <span class='fu'>html_getLinks</span>(<span class='st'>"https://www2.census.gov/geo/tiger/GENZ2019/shp/"</span>)
 
-<span class='co'># US Census 2019 shapefiles</span>
-<span class='no'>dataLinks</span> <span class='kw'>&lt;-</span> <span class='fu'>html_getLinks</span>(<span class='st'>"https://www2.census.gov/geo/tiger/GENZ2019/shp/"</span>)</div><div class='output co'>#&gt; <span class='error'>Error: 'getLinkUrls' is not an exported object from 'namespace:MazamaCoreUtils'</span></div><div class='input'>
-<span class='no'>dataLinks</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='kw pkg'>stringr</span><span class='kw ns'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_detect.html'>str_detect</a></span>(<span class='no'>linkName</span>, <span class='st'>"us_county"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in eval(lhs, parent, parent): object 'dataLinks' not found</span></div><div class='input'># }
+<span class='no'>dataLinks</span> <span class='kw'>&lt;-</span> <span class='no'>dataLinks</span> <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='kw pkg'>stringr</span><span class='kw ns'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_detect.html'>str_detect</a></span>(<span class='no'>linkName</span>, <span class='st'>"us_county"</span>))
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>dataLinks</span>, <span class='fl'>10</span>)</div><div class='output co'>#&gt;                                  linkName
+#&gt; 1                cb_2019_us_county_5m.zip
+#&gt; 2               cb_2019_us_county_20m.zip
+#&gt; 3              cb_2019_us_county_500k.zip
+#&gt; 4 cb_2019_us_county_within_cd116_500k.zip
+#&gt; 5    cb_2019_us_county_within_ua_500k.zip
+#&gt;                                   linkUrl
+#&gt; 1                cb_2019_us_county_5m.zip
+#&gt; 2               cb_2019_us_county_20m.zip
+#&gt; 3              cb_2019_us_county_500k.zip
+#&gt; 4 cb_2019_us_county_within_cd116_500k.zip
+#&gt; 5    cb_2019_us_county_within_ua_500k.zip</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -166,7 +182,7 @@ the contents of a web accessible directory.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Jonathan Callahan, Spencer Pease, Thomas Bergamaschi.</p>
+  <p>Developed by Jonathan Callahan, Eli Grosman, Spencer Pease, Thomas Bergamaschi.</p>
 </div>
 
 <div class="pkgdown">

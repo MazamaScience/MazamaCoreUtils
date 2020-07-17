@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Error message translator — stopOnError • MazamaCoreUtils</title>
+<title>Find all tables in an html page — html_getTables • MazamaCoreUtils</title>
 
 
 <!-- jquery -->
@@ -39,16 +39,12 @@
 
 
 
-<meta property="og:title" content="Error message translator — stopOnError" />
-<meta property="og:description" content="When writing R code to be used in production systems that work
-with user supplied input, it is important to enclose chunks of code inside
-of a try() block. It is equally important to generate error log
-messages that can be found and understood during an autopsy when something
-fails
-At Mazama Science we have our own internal standard for how to do error
-handling in a manner that allows us to quickly navigate to the source of
-errors in a production system.
-The example section contains a snippet showing how we use this function." />
+<meta property="og:title" content="Find all tables in an html page — html_getTables" />
+<meta property="og:description" content="Parses an html page to extract all &amp;lt;table&amp;gt; elements and
+return them in a list of dataframes representing each table. The columns and
+rows of these dataframes are that of the table it represents. A single table
+can be extracted as a dataframe by passing the index of the table in addition
+to the url to html_getTable()." />
 
 
 
@@ -122,68 +118,67 @@ The example section contains a snippet showing how we use this function." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Error message translator</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/R/errorHandling.R'><code>R/errorHandling.R</code></a></small>
-    <div class="hidden name"><code>stopOnError.Rd</code></div>
+    <h1>Find all tables in an html page</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/R/html_getTables.R'><code>R/html_getTables.R</code></a></small>
+    <div class="hidden name"><code>html_getTables.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>When writing R code to be used in production systems that work
-with user supplied input, it is important to enclose chunks of code inside
-of a <code><a href='https://rdrr.io/r/base/try.html'>try()</a></code> block. It is equally important to generate error log
-messages that can be found and understood during an autopsy when something
-fails</p>
-<p>At Mazama Science we have our own internal standard for how to do error
-handling in a manner that allows us to quickly navigate to the source of
-errors in a production system.</p>
-<p>The example section contains a snippet showing how we use this function.</p>
+    <p>Parses an html page to extract all <code>&lt;table&gt;</code> elements and
+return them in a list of dataframes representing each table. The columns and
+rows of these dataframes are that of the table it represents. A single table
+can be extracted as a dataframe by passing the index of the table in addition
+to the url to <code>html_getTable()</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>stopOnError</span>(<span class='no'>result</span>, <span class='kw'>err_msg</span> <span class='kw'>=</span> <span class='st'>""</span>)</pre>
+    <pre class="usage"><span class='fu'>html_getTables</span>(<span class='kw'>url</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>result</th>
-      <td><p>Return from a <code><a href='https://rdrr.io/r/base/try.html'>try()</a></code> block.</p></td>
-    </tr>
-    <tr>
-      <th>err_msg</th>
-      <td><p>Custom error message.</p></td>
+      <th>url</th>
+      <td><p>URL or file path of an html page.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Issues a <code><a href='https://rdrr.io/r/base/stop.html'>stop()</a></code> with an appropriate error message.</p>
+    <p>A list of dataframes representing each table on a html page.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='logger.setup.html'>logger.setup</a></span>()
+    <pre class="examples"><div class='input'><span class='co'># Wikipedia's list of timezones</span>
+<span class='no'>url</span> <span class='kw'>&lt;-</span> <span class='st'>"http://en.wikipedia.org/wiki/List_of_tz_database_time_zones"</span>
 
-<span class='co'># Arbitrarily deep in the stack we might have:</span>
-<span class='no'>myFunc</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) {
-  <span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>x</span>)
-}
+<span class='co'># Extract tables</span>
+<span class='no'>tables</span> <span class='kw'>&lt;-</span> <span class='fu'>html_getTables</span>(<span class='no'>url</span>)
 
-<span class='no'>userInput</span> <span class='kw'>&lt;-</span> <span class='fl'>10</span>
-<span class='no'>result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/try.html'>try</a></span>({
-  <span class='fu'>myFunc</span>(<span class='kw'>x</span><span class='kw'>=</span><span class='no'>userInput</span>)
-}, <span class='kw'>silent</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-<span class='fu'>stopOnError</span>(<span class='no'>result</span>)
+<span class='co'># Extract the first table</span>
+<span class='co'># NOTE: Analogous to html_getTable(url, index = 1)</span>
+<span class='no'>firstTable</span> <span class='kw'>&lt;-</span> <span class='no'>tables</span><span class='kw'>[[</span><span class='fl'>1</span>]]
 
-<span class='no'>userInput</span> <span class='kw'>&lt;-</span> <span class='st'>"ten"</span>
-<span class='no'>result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/try.html'>try</a></span>({
-  <span class='fu'>myFunc</span>(<span class='kw'>x</span><span class='kw'>=</span><span class='no'>userInput</span>)
-}, <span class='kw'>silent</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-<span class='fu'>stopOnError</span>(<span class='no'>result</span>)
-
-<span class='no'>result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/try.html'>try</a></span>({
-  <span class='fu'>myFunc</span>(<span class='kw'>x</span><span class='kw'>=</span><span class='no'>userInput</span>)
-}, <span class='kw'>silent</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-<span class='fu'>stopOnError</span>(<span class='no'>result</span>, <span class='st'>"Unable to process user input"</span>)
-}</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>firstTable</span>)</div><div class='output co'>#&gt;   Country code Latitude, longitude ±DDMM(SS)±DDDMM(SS)   TZ database name
+#&gt; 1           CI                             +0519−00402     Africa/Abidjan
+#&gt; 2           GH                             +0533−00013       Africa/Accra
+#&gt; 3           ET                             +0902+03842 Africa/Addis_Ababa
+#&gt; 4           DZ                             +3647+00303     Africa/Algiers
+#&gt; 5           ER                             +1520+03853      Africa/Asmara
+#&gt; 6           ML                             +1239−00800      Africa/Bamako
+#&gt;   Portion of country covered    Status UTC offset ±hh:mm UTC DST offset ±hh:mm
+#&gt; 1                            Canonical            +00:00                +00:00
+#&gt; 2                            Canonical            +00:00                +00:00
+#&gt; 3                                Alias            +03:00                +03:00
+#&gt; 4                            Canonical            +01:00                +01:00
+#&gt; 5                                Alias            +03:00                +03:00
+#&gt; 6                                Alias            +00:00                +00:00
+#&gt;                    Notes
+#&gt; 1                       
+#&gt; 2                       
+#&gt; 3 Link to Africa/Nairobi
+#&gt; 4                       
+#&gt; 5 Link to Africa/Nairobi
+#&gt; 6 Link to Africa/Abidjan</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>firstTable</span>)</div><div class='output co'>#&gt; [1] 591</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -205,53 +205,53 @@ One of <code>atime|ctime|mtime</code>.</p></td>
 <span class='kw'>for</span> (<span class='no'>file</span> <span class='kw'>in</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span>(<span class='no'>CACHE_DIR</span>, <span class='kw'>full.names</span><span class='kw'>=</span><span class='fl'>TRUE</span>)) {
   <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/file.info.html'>file.info</a></span>(<span class='no'>file</span>)[,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>6</span>)])
 }</div><div class='output co'>#&gt;                                      size               atime
-#&gt; /tmp/RtmpNk6PFj/filef429187dab08.so 40176 2020-07-13 11:09:33
+#&gt; /tmp/RtmpS6jRDk/file77eb21f3a4cb.so 40176 2020-07-17 12:05:24
 #&gt;                                                 size               atime
-#&gt; /tmp/RtmpNk6PFj/libloc_169_8f48fc7d1db1bb3e.rds 1187 2020-07-13 11:09:35
+#&gt; /tmp/RtmpS6jRDk/libloc_169_8f48fc7d1db1bb3e.rds 1187 2020-07-17 12:05:26
 #&gt;                                                 size               atime
-#&gt; /tmp/RtmpNk6PFj/libloc_191_95cefe9e287f5a95.rds  417 2020-07-13 11:09:35
+#&gt; /tmp/RtmpS6jRDk/libloc_191_614480267f370c6d.rds  426 2020-07-17 12:05:26
 #&gt;                                                 size               atime
-#&gt; /tmp/RtmpNk6PFj/libloc_194_c6cabecd9151e425.rds 7134 2020-07-13 11:09:35
+#&gt; /tmp/RtmpS6jRDk/libloc_194_c6cabecd9151e425.rds 7134 2020-07-17 12:05:26
 #&gt;                          size               atime
-#&gt; /tmp/RtmpNk6PFj/m1.csv 405687 2020-07-13 11:09:37
+#&gt; /tmp/RtmpS6jRDk/m1.csv 405687 2020-07-17 12:05:31
 #&gt;                          size               atime
-#&gt; /tmp/RtmpNk6PFj/m2.csv 405687 2020-07-13 11:09:37
+#&gt; /tmp/RtmpS6jRDk/m2.csv 405687 2020-07-17 12:05:31
 #&gt;                          size               atime
-#&gt; /tmp/RtmpNk6PFj/m3.csv 405687 2020-07-13 11:09:37
+#&gt; /tmp/RtmpS6jRDk/m3.csv 405687 2020-07-17 12:05:31
 #&gt;                          size               atime
-#&gt; /tmp/RtmpNk6PFj/m4.csv 405687 2020-07-13 11:09:38</div><div class='input'>
+#&gt; /tmp/RtmpS6jRDk/m4.csv 405687 2020-07-17 12:05:31</div><div class='input'>
 <span class='co'># Remove files based on access time until we get under 1 MB</span>
 <span class='fu'>manageCache</span>(<span class='no'>CACHE_DIR</span>, <span class='kw'>extensions</span><span class='kw'>=</span><span class='st'>'csv'</span>, <span class='kw'>maxCacheSize</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>sortBy</span><span class='kw'>=</span><span class='st'>'atime'</span>)
 <span class='kw'>for</span> (<span class='no'>file</span> <span class='kw'>in</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span>(<span class='no'>CACHE_DIR</span>, <span class='kw'>full.names</span><span class='kw'>=</span><span class='fl'>TRUE</span>)) {
   <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/file.info.html'>file.info</a></span>(<span class='no'>file</span>)[,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>6</span>)])
 }</div><div class='output co'>#&gt;                                      size               atime
-#&gt; /tmp/RtmpNk6PFj/filef429187dab08.so 40176 2020-07-13 11:09:33
+#&gt; /tmp/RtmpS6jRDk/file77eb21f3a4cb.so 40176 2020-07-17 12:05:24
 #&gt;                                                 size               atime
-#&gt; /tmp/RtmpNk6PFj/libloc_169_8f48fc7d1db1bb3e.rds 1187 2020-07-13 11:09:35
+#&gt; /tmp/RtmpS6jRDk/libloc_169_8f48fc7d1db1bb3e.rds 1187 2020-07-17 12:05:26
 #&gt;                                                 size               atime
-#&gt; /tmp/RtmpNk6PFj/libloc_191_95cefe9e287f5a95.rds  417 2020-07-13 11:09:35
+#&gt; /tmp/RtmpS6jRDk/libloc_191_614480267f370c6d.rds  426 2020-07-17 12:05:26
 #&gt;                                                 size               atime
-#&gt; /tmp/RtmpNk6PFj/libloc_194_c6cabecd9151e425.rds 7134 2020-07-13 11:09:35
+#&gt; /tmp/RtmpS6jRDk/libloc_194_c6cabecd9151e425.rds 7134 2020-07-17 12:05:26
 #&gt;                          size               atime
-#&gt; /tmp/RtmpNk6PFj/m3.csv 405687 2020-07-13 11:09:37
+#&gt; /tmp/RtmpS6jRDk/m3.csv 405687 2020-07-17 12:05:31
 #&gt;                          size               atime
-#&gt; /tmp/RtmpNk6PFj/m4.csv 405687 2020-07-13 11:09:38</div><div class='input'>
+#&gt; /tmp/RtmpS6jRDk/m4.csv 405687 2020-07-17 12:05:31</div><div class='input'>
 <span class='co'># Or remove files based on modification time</span>
 <span class='fu'>manageCache</span>(<span class='no'>CACHE_DIR</span>, <span class='kw'>extensions</span><span class='kw'>=</span><span class='st'>'csv'</span>, <span class='kw'>maxCacheSize</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>sortBy</span><span class='kw'>=</span><span class='st'>'mtime'</span>)
 <span class='kw'>for</span> (<span class='no'>file</span> <span class='kw'>in</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span>(<span class='no'>CACHE_DIR</span>, <span class='kw'>full.names</span><span class='kw'>=</span><span class='fl'>TRUE</span>)) {
   <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/file.info.html'>file.info</a></span>(<span class='no'>file</span>)[,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>6</span>)])
 }</div><div class='output co'>#&gt;                                      size               atime
-#&gt; /tmp/RtmpNk6PFj/filef429187dab08.so 40176 2020-07-13 11:09:33
+#&gt; /tmp/RtmpS6jRDk/file77eb21f3a4cb.so 40176 2020-07-17 12:05:24
 #&gt;                                                 size               atime
-#&gt; /tmp/RtmpNk6PFj/libloc_169_8f48fc7d1db1bb3e.rds 1187 2020-07-13 11:09:35
+#&gt; /tmp/RtmpS6jRDk/libloc_169_8f48fc7d1db1bb3e.rds 1187 2020-07-17 12:05:26
 #&gt;                                                 size               atime
-#&gt; /tmp/RtmpNk6PFj/libloc_191_95cefe9e287f5a95.rds  417 2020-07-13 11:09:35
+#&gt; /tmp/RtmpS6jRDk/libloc_191_614480267f370c6d.rds  426 2020-07-17 12:05:26
 #&gt;                                                 size               atime
-#&gt; /tmp/RtmpNk6PFj/libloc_194_c6cabecd9151e425.rds 7134 2020-07-13 11:09:35
+#&gt; /tmp/RtmpS6jRDk/libloc_194_c6cabecd9151e425.rds 7134 2020-07-17 12:05:26
 #&gt;                          size               atime
-#&gt; /tmp/RtmpNk6PFj/m3.csv 405687 2020-07-13 11:09:37
+#&gt; /tmp/RtmpS6jRDk/m3.csv 405687 2020-07-17 12:05:31
 #&gt;                          size               atime
-#&gt; /tmp/RtmpNk6PFj/m4.csv 405687 2020-07-13 11:09:38</div></pre>
+#&gt; /tmp/RtmpS6jRDk/m4.csv 405687 2020-07-17 12:05:31</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -263,7 +263,7 @@ One of <code>atime|ctime|mtime</code>.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Jonathan Callahan, Spencer Pease, Thomas Bergamaschi.</p>
+  <p>Developed by Jonathan Callahan, Eli Grosman, Spencer Pease, Thomas Bergamaschi.</p>
 </div>
 
 <div class="pkgdown">

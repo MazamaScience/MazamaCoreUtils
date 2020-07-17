@@ -2,9 +2,15 @@
 % Please edit documentation in R/html_getLinks.R
 \name{html_getLinks}
 \alias{html_getLinks}
+\alias{html_getLinkNames}
+\alias{html_getLinkUrls}
 \title{Find all links in an html page}
 \usage{
 html_getLinks(url = NULL, relative = TRUE)
+
+html_getLinkNames(url = NULL)
+
+html_getLinkUrls(url = NULL, relative = TRUE)
 }
 \arguments{
 \item{url}{URL or file path of an html page.}
@@ -22,8 +28,13 @@ function will return relative URLs.
 
 This is especially useful for extracting data from an index page that shows
 the contents of a web accessible directory.
+
+Wrapper functions \code{html_getLinkNames()} and \code{html_getLinkUrls()}
+return the appropriate columns as vectors.
 }
 \examples{
+library(MazamaCoreUtils)
+
 # US Census 2019 shapefiles
 dataLinks <- html_getLinks("https://www2.census.gov/geo/tiger/GENZ2019/shp/")
 

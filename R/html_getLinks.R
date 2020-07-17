@@ -17,7 +17,12 @@
 #' This is especially useful for extracting data from an index page that shows
 #' the contents of a web accessible directory.
 #'
+#' Wrapper functions \code{html_getLinkNames()} and \code{html_getLinkUrls()}
+#' return the appropriate columns as vectors.
+#'
 #' @examples
+#' library(MazamaCoreUtils)
+#'
 #' # US Census 2019 shapefiles
 #' dataLinks <- html_getLinks("https://www2.census.gov/geo/tiger/GENZ2019/shp/")
 #'
@@ -37,6 +42,9 @@ html_getLinks <- function(
 
   MazamaCoreUtils::stopIfNull(url)
 
+  if ( !is.logical(relative) )
+    relative <- TRUE
+
   # ----- Extract the links ----------------------------------------------------
 
   result <- try({
@@ -46,6 +54,7 @@ html_getLinks <- function(
     urlText <-
       urlAttributes %>%
       xml2::xml_text()
+
     urlLinks <-
       urlAttributes %>%
       xml2::xml_attr("href")
@@ -53,7 +62,7 @@ html_getLinks <- function(
   }, silent = TRUE)
   stopOnError(result)
 
-  df <- data.frame(linkName = urlText, linkUrl = urlLinks)
+  df <- dplyr::tibble(linkName = urlText, linkUrl = urlLinks)
 
   # ----- Filter URLs -------------------------------------------------
 
@@ -64,7 +73,10 @@ html_getLinks <- function(
     dplyr::filter(!is.na(.data$linkUrl) & !is.na(.data$linkName)) %>%
 
     # Remove Apache indexing
-    dplyr::filter(stringr::str_detect(df$linkUrl, "^?C=.;O=.*", negate = TRUE)) %>%
+    dplyr::filter(stringr::str_detect(.data$linkUrl, "^?C=.;O=.*", negate = TRUE)) %>%
+
+    # Remove "Parent Directory"
+    dplyr::filter(stringr::str_detect(.data$linkName, "Parent Directory", negate = TRUE)) %>%
 
     # Format URLs beginning with //
     dplyr::mutate(linkUrl = stringr::str_replace(.data$linkUrl, stringr::regex("^//"), ""))
@@ -72,25 +84,28 @@ html_getLinks <- function(
 
   # ----- Handle relative URLs -------------------------------------------------
 
-  if (!relative) {
+  if ( !relative ) {
     # Remove ending /
-    if (stringr::str_sub(url, -1) == "/")
+    if ( stringr::str_sub(url, -1) == "/" )
       url <- stringr::str_sub(url, 0, -2)
+
     # Append URL to records not beginning with http or www
     df <-
       df %>%
-
       dplyr::mutate(linkUrl = stringr::str_replace(.data$linkUrl, stringr::regex("^(?!http|www).*"), file.path(url, df$linkUrl)))
   }
+
   # ----- Return ---------------------------------------------------------------
 
   return(df)
 
 }
 
+#' @rdname html_getLinks
+#' @param url URL or file path of an html page.
+#' @export
 html_getLinkNames <- function(
-  url = NULL,
-  relative = TRUE
+  url = NULL
 ) {
 
   # ----- Validate parameters --------------------------------------------------
@@ -99,8 +114,9 @@ html_getLinkNames <- function(
 
   # ----- Extract the link text ------------------------------------------------
 
-  linkData <- html_getLinks(url, relative)
-  linkNames <- dplyr::pull(linkData, "linkName")
+  linkNames <-
+    html_getLinks(url) %>%
+    dplyr::pull("linkName")
 
   # ----- Return ---------------------------------------------------------------
 
@@ -108,6 +124,10 @@ html_getLinkNames <- function(
 
 }
 
+#' @rdname html_getLinks
+#' @param url URL or file path of an html page.
+#' @param relative Logical instruction to return relative URLs.
+#' @export
 html_getLinkUrls <- function(
   url = NULL,
   relative = TRUE
@@ -119,8 +139,9 @@ html_getLinkUrls <- function(
 
   # ----- Extract the link text ------------------------------------------------
 
-  linkData <- html_getLinks(url, relative)
-  linkUrls <- dplyr::pull(linkData, "linkUrl")
+  linkUrls <-
+    html_getLinks(url, relative) %>%
+    dplyr::pull("linkUrl")
 
   # ----- Return ---------------------------------------------------------------
 

@@ -2,12 +2,17 @@
 % Please edit documentation in R/html_getTables.R
 \name{html_getTables}
 \alias{html_getTables}
+\alias{html_getTable}
 \title{Find all tables in an html page}
 \usage{
 html_getTables(url = NULL)
+
+html_getTable(url = NULL, index = 1)
 }
 \arguments{
 \item{url}{URL or file path of an html page.}
+
+\item{index}{Index identifying which table to to return.}
 }
 \value{
 A list of dataframes representing each table on a html page.
@@ -20,6 +25,8 @@ can be extracted as a dataframe by passing the index of the table in addition
 to the url to \code{html_getTable()}.
 }
 \examples{
+library(MazamaCoreUtils)
+
 # Wikipedia's list of timezones
 url <- "http://en.wikipedia.org/wiki/List_of_tz_database_time_zones"
 

@@ -15,6 +15,8 @@
 #' to the url to \code{html_getTable()}.
 #'
 #' @examples
+#' library(MazamaCoreUtils)
+#'
 #' # Wikipedia's list of timezones
 #' url <- "http://en.wikipedia.org/wiki/List_of_tz_database_time_zones"
 #'
@@ -48,6 +50,7 @@ html_getTables <- function(
 
     # Get a list of tables in the document
     tables <- rvest::html_nodes(urlXML, "table")
+
     # Make this list human-readable
     tables_clean <- rvest::html_table(tables, fill = TRUE)
 
@@ -60,6 +63,10 @@ html_getTables <- function(
 
 }
 
+#' @rdname html_getTables
+#' @param url URL or file path of an html page.
+#' @param index Index identifying which table to to return.
+#' @export
 html_getTable <- function(
   url = NULL,
   index = 1
@@ -68,6 +75,9 @@ html_getTable <- function(
   # ----- Validate parameters --------------------------------------------------
 
   MazamaCoreUtils::stopIfNull(url)
+
+  if ( !is.integer(index) || integer < 1 )
+    index <- 1
 
   # ----- Extract the table ----------------------------------------------------
 

@@ -1,5 +1,9 @@
 # MazamaCoreUtils 0.4.4
 
+* Added new `html_getLinks()` and `html_getTables()` functions.
+
+# MazamaCoreUtils 0.4.3
+
 * Now exporting `futile.logger::flog.layout()` to avoid downstream complaints.
 * Updated documentation for `check_~()` functions.
 

@@ -5,6 +5,8 @@
 #' @title Find all tables in an html page
 #'
 #' @param url URL or file path of an html page.
+#' @param header Use first row as header? If NA, will use first row if it
+#' consists of <th> tags.
 #'
 #' @return A list of dataframes representing each table on a html page.
 #'
@@ -34,7 +36,8 @@
 #' @export
 
 html_getTables <- function(
-  url = NULL
+  url = NULL,
+  header = NA
 ) {
 
   # ----- Validate parameters --------------------------------------------------
@@ -49,10 +52,16 @@ html_getTables <- function(
     urlXML <- xml2::read_html(url)
 
     # Get a list of tables in the document
-    tables <- rvest::html_nodes(urlXML, "table")
+    tableNodes <- rvest::html_nodes(urlXML, css = "table")
 
     # Make this list human-readable
-    tables_clean <- rvest::html_table(tables, fill = TRUE)
+    tables_clean <- rvest::html_table(
+      tableNodes,
+      header = header,        # use first row as header
+      trim = TRUE,            # remove leading/trailing white space
+      fill = TRUE,            # NA fill rows with fewer than max columns
+      dec = "."
+    )
 
   }, silent = TRUE)
   stopOnError(result)
@@ -65,10 +74,13 @@ html_getTables <- function(
 
 #' @rdname html_getTables
 #' @param url URL or file path of an html page.
+#' @param header Use first row as header? If NA, will use first row if it
+#' consists of <th> tags.
 #' @param index Index identifying which table to to return.
 #' @export
 html_getTable <- function(
   url = NULL,
+  header = NA,
   index = 1
 ) {
 
@@ -84,7 +96,7 @@ html_getTable <- function(
   result <- try({
 
     # Get a list of tables in this document
-    tables <- html_getTables(url)
+    tables <- html_getTables(url, header = header)
 
     returnTable <- tables[[index]]
 

@@ -1,5 +1,5 @@
 ---
-title: "Cache Managment"
+title: "Cache Management"
 author: "Thomas Bergamaschi"
 date: "2018-10-18"
 output: rmarkdown::html_vignette

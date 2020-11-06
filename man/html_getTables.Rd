@@ -5,12 +5,15 @@
 \alias{html_getTable}
 \title{Find all tables in an html page}
 \usage{
-html_getTables(url = NULL)
+html_getTables(url = NULL, header = NA)
 
-html_getTable(url = NULL, index = 1)
+html_getTable(url = NULL, header = NA, index = 1)
 }
 \arguments{
 \item{url}{URL or file path of an html page.}
+
+\item{header}{Use first row as header? If NA, will use first row if it
+consists of <th> tags.}
 
 \item{index}{Index identifying which table to to return.}
 }

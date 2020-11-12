@@ -21,16 +21,18 @@
 #' @details The table below describes the \code{args} passed:
 #'
 #' \tabular{rl}{
-#' \code{check_slowest()} \tab | \code{args = c("--run-donttest", "--run-dontrun", "--use-gct")}\cr
-#' \code{check_slower()} \tab | \code{args = c("--run-donttest", "--run-dontrun")}\cr
-#' \code{check_slow()} \tab | \code{args = c("--run-donttest")}\cr
+#' \code{check_slowest()} \tab | \code{run_dont_test = TRUE} \cr
+#' \tab | \code{args = c("--run-dontrun", "--use-gct")}\cr
+#' \code{check_slower()} \tab | \code{run_dont_test = TRUE} \cr
+#' \tab | \code{args = c("--run-dontrun")}\cr
+#' \code{check_slow()} \tab | \code{run_dont_test = TRUE}\cr
 #' \code{check_()} \tab | \code{args = c()}\cr
 #' \code{check_fast()} \tab | \code{args = c("--ignore-vignettes")}\cr
 #'  \tab | \code{build_args = c("--no-build-vignettes")}\cr
 #' \code{check_faster()} \tab | \code{args = c("--ignore-vignettes", "--no-examples")}\cr
 #'  \tab | \code{build_args = c("--no-build-vignettes", "--no-examples")}\cr
-#' \code{check_fastest()} \tab | \code{args = c("--ignore-vignettes", "--no-examples", "--no-manual", "--no-tests")}\cr
-#'  \tab | \code{build_args = c("--no-build-vignettes", "--no-manual")}\cr
+#' \code{check_fastest()} \tab | \code{manual = FALSE} \cr \tab | \code{args = c("--ignore-vignettes", "--no-examples", "--no-tests")}\cr
+#'  \tab | \code{build_args = c("--no-build-vignettes")}\cr
 #' }
 #'
 #'
@@ -90,9 +92,10 @@ check_fastest <- function(
 
   devtools::check(
     pkg = pkg,
-    build_args = c("--no-build-vignettes", "--no-manual"),
-    args = c("--ignore-vignettes", "--no-manual",
-             "--no-tests", "--no-examples")
+    manual = FALSE,
+    build_args = c("--no-build-vignettes"),
+    args = c("--ignore-vignettes", "--no-tests",
+             "--no-examples")
   )
 
 }
@@ -105,7 +108,7 @@ check_slow <- function(
 
   devtools::check(
     pkg = pkg,
-    args = c("--run-donttest")
+    run_dont_test = TRUE
   )
 
 }
@@ -118,7 +121,8 @@ check_slower <- function(
 
   devtools::check(
     pkg = pkg,
-    args = c("--run-donttest", "--run-dontrun")
+    run_dont_test = TRUE,
+    args = c("--run-dontrun")
   )
 
 }
@@ -131,7 +135,8 @@ check_slowest <- function(
 
   devtools::check(
     pkg = pkg,
-    args = c("--run-donttest", "--run-dontrun", "--use-gct")
+    run_dont_test = TRUE,
+    args = c("--run-dontrun", "--use-gct")
   )
 
 }

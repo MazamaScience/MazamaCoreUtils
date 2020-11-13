@@ -79,7 +79,7 @@ devtools::check() and pass it a variety of different arguments." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.6</span>
       </span>
     </div>
 
@@ -165,18 +165,26 @@ them while thorough checks are, by nature, slow.</p>
     <p>No return.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The table below describes the <code>args</code> passed:</p>
+    <p>The table below describes the <code>args</code> passed to
+<code><a href='https://devtools.r-lib.org//reference/check.html'>devtools::check()</a></code>:</p>
 <table class='table'>
-<tr><td><code>check_slowest()</code></td><td>| <code>args = c("--run-donttest", "--run-dontrun", "--use-gct")</code></td></tr>
-<tr><td><code>check_slower()</code></td><td>| <code>args = c("--run-donttest", "--run-dontrun")</code></td></tr>
-<tr><td><code>check_slow()</code></td><td>| <code>args = c("--run-donttest")</code></td></tr>
-<tr><td><code>check_()</code></td><td>| <code>args = c()</code></td></tr>
-<tr><td><code>check_fast()</code></td><td>| <code>args = c("--ignore-vignettes")</code></td></tr>
+<tr><td><code>check_slowest()</code></td><td>| <code>manual = TRUE, run_dont_test = TRUE</code></td></tr>
+<tr><td></td><td>| <code>args = c("--run-dontrun", "--use-gct")</code></td></tr>
+<tr><td><code>check_slower()</code></td><td>| <code>manual = TRUE, run_dont_test = TRUE</code></td></tr>
+<tr><td></td><td>| <code>args = c("--run-dontrun")</code></td></tr>
+<tr><td><code>check_slow()</code></td><td>| <code>manual = TRUE, run_dont_test = TRUE</code></td></tr>
+<tr><td></td><td>| <code>args = c()</code></td></tr>
+<tr><td><code>check()</code></td><td>| <code>manual = FALSE, run_dont_test = FALSE</code></td></tr>
+<tr><td></td><td>| <code>args = c()</code></td></tr>
+<tr><td><code>check_fast()</code></td><td>| <code>manual = FALSE, run_dont_test = FALSE</code></td></tr>
 <tr><td></td><td>| <code>build_args = c("--no-build-vignettes")</code></td></tr>
-<tr><td><code>check_faster()</code></td><td>| <code>args = c("--ignore-vignettes", "--no-examples")</code></td></tr>
-<tr><td></td><td>| <code>build_args = c("--no-build-vignettes", "--no-examples")</code></td></tr>
-<tr><td><code>check_fastest()</code></td><td>| <code>args = c("--ignore-vignettes", "--no-examples", "--no-manual", "--no-tests")</code></td></tr>
-<tr><td></td><td>| <code>build_args = c("--no-build-vignettes", "--no-manual")</code></td></tr>
+<tr><td></td><td>| <code>args = c("--ignore-vignettes")</code></td></tr>
+<tr><td><code>check_faster()</code></td><td>| <code>manual = FALSE, run_dont_test = FALSE</code></td></tr>
+<tr><td></td><td>| <code>build_args = c("--no-build-vignettes")</code></td></tr>
+<tr><td></td><td>| <code>args = c("--ignore-vignettes", "--no-examples")</code></td></tr>
+<tr><td><code>check_fastest()</code></td><td>| <code>manual = FALSE, run_dont_test = FALSE</code></td></tr>
+<tr><td></td><td>| <code>build_args = c("--no-build-vignettes")</code></td></tr>
+<tr><td></td><td>| <code>args = c("--ignore-vignettes", "--no-examples", "--no-tests")</code></td></tr>
 </table>
 
 

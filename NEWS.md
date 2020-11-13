@@ -1,3 +1,8 @@
+# MazamaCoreUtils 0.4.6
+
+* Updated `check_~()` functions to use `devtools::check()` `manual` and 
+`run_dont_test` arguments.
+
 # MazamaCoreUtils 0.4.5
 
 * Added `header` option to `html_getLinks()` and `html_getTables()` functions.

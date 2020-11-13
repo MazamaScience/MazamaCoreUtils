@@ -44,21 +44,27 @@ Our solution is to provide shorthand functions that wrap
 \code{devtools::check()} and pass it a variety of different arguments.
 }
 \details{
-The table below describes the \code{args} passed:
+The table below describes the \code{args} passed to
+\code{devtools::check()}:
 
 \tabular{rl}{
-\code{check_slowest()} \tab | \code{run_dont_test = TRUE} \cr
+\code{check_slowest()} \tab | \code{manual = TRUE, run_dont_test = TRUE} \cr
 \tab | \code{args = c("--run-dontrun", "--use-gct")}\cr
-\code{check_slower()} \tab | \code{run_dont_test = TRUE} \cr
+\code{check_slower()} \tab | \code{manual = TRUE, run_dont_test = TRUE} \cr
 \tab | \code{args = c("--run-dontrun")}\cr
-\code{check_slow()} \tab | \code{run_dont_test = TRUE}\cr
-\code{check_()} \tab | \code{args = c()}\cr
-\code{check_fast()} \tab | \code{args = c("--ignore-vignettes")}\cr
- \tab | \code{build_args = c("--no-build-vignettes")}\cr
-\code{check_faster()} \tab | \code{args = c("--ignore-vignettes", "--no-examples")}\cr
- \tab | \code{build_args = c("--no-build-vignettes", "--no-examples")}\cr
-\code{check_fastest()} \tab | \code{manual = FALSE} \cr \tab | \code{args = c("--ignore-vignettes", "--no-examples", "--no-tests")}\cr
- \tab | \code{build_args = c("--no-build-vignettes")}\cr
+\code{check_slow()} \tab | \code{manual = TRUE, run_dont_test = TRUE}\cr
+\tab | \code{args = c()}\cr
+\code{check()} \tab | \code{manual = FALSE, run_dont_test = FALSE} \cr
+\tab | \code{args = c()}\cr
+\code{check_fast()} \tab | \code{manual = FALSE, run_dont_test = FALSE} \cr
+\tab | \code{build_args = c("--no-build-vignettes")}\cr
+\tab | \code{args = c("--ignore-vignettes")}\cr
+\code{check_faster()} \tab | \code{manual = FALSE, run_dont_test = FALSE} \cr
+\tab | \code{build_args = c("--no-build-vignettes")}\cr
+\tab | \code{args = c("--ignore-vignettes", "--no-examples")}\cr
+\code{check_fastest()} \tab | \code{manual = FALSE, run_dont_test = FALSE} \cr
+\tab | \code{build_args = c("--no-build-vignettes")}\cr
+\tab | \code{args = c("--ignore-vignettes", "--no-examples", "--no-tests")}\cr
 }
 }
 \seealso{

@@ -1,3 +1,7 @@
+# MazamaCoreUtils 0.4.7
+
+* Updated `html_getTable()` to not disregard the `index` parameter.
+
 # MazamaCoreUtils 0.4.6
 
 * Updated `check_~()` functions to use `devtools::check()` `manual` and 

@@ -88,7 +88,8 @@ html_getTable <- function(
 
   MazamaCoreUtils::stopIfNull(url)
 
-  if ( !is.integer(index) || integer < 1 )
+  index <- as.integer(index)
+  if ( index < 1 )
     index <- 1
 
   # ----- Extract the table ----------------------------------------------------

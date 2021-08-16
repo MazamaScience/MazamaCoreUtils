@@ -1,3 +1,7 @@
+# MazamaCoreUtils 0.4.8
+
+* Renamed default branch from 'master' to 'main'.
+
 # MazamaCoreUtils 0.4.7
 
 * Updated `html_getTable()` to not disregard the `index` parameter.

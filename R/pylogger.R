@@ -135,7 +135,7 @@ logger.setup <- function(
 }
 
 
-#' @title Check for initialization loggers
+#' @title Check for initialization of loggers
 #'
 #' @description
 #' Returns \code{TRUE} if logging has been initialized. This allows packages

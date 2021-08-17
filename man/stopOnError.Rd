@@ -54,5 +54,6 @@ result <- try({
   myFunc(x=userInput)
 }, silent=TRUE)
 stopOnError(result, "Unable to process user input")
+
 }
 }

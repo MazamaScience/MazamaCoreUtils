@@ -2,7 +2,7 @@
 % Please edit documentation in R/pylogger.R
 \name{logger.isInitialized}
 \alias{logger.isInitialized}
-\title{Check for initialization loggers}
+\title{Check for initialization of loggers}
 \usage{
 logger.isInitialized()
 }

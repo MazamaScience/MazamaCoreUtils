@@ -25,7 +25,7 @@ work properly with a variety of input.
 However, no software is perfect and no real-world system operates with 100% 
 availability or 100% consistent input. Things occasionally go wrong -- perhaps
 intermittently. In a situation with occasional failures it is vitally important
-to have good logging information for forensic analyis.
+to have good logging information for forensic analysis.
 
 Other languages used in operational settings support logging at different levels
 of information density. The code to write out logs at these different levels
@@ -108,8 +108,8 @@ complete.
 
 ### WARN
 
-`WARN` log statements imply that something unexpected happend but that R code is
-able to complete, perhaps with unpredicatble results. An appropriate use would
+`WARN` log statements imply that something unexpected happened but that R code is
+able to complete, perhaps with unpredictable results. An appropriate use would
 be after testing the response of an internet request. R code may be able to
 trap and handle a failed request but should comment on the failure in the logs.
 

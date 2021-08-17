@@ -94,7 +94,7 @@ All hour-minute-second information is removed after parsing." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8</span>
       </span>
     </div>
 
@@ -102,7 +102,7 @@ All hour-minute-second information is removed after parsing." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -119,7 +119,7 @@ All hour-minute-second information is removed after parsing." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/MazamaScience/MazamaCoreUtils/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -216,7 +216,9 @@ altering the physical instant in time the input represents. Only after
 conversion are they floored to midnight local time</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>dateSequence</span><span class='op'>(</span><span class='st'>"2019-11-01"</span>, <span class='st'>"2019-11-08"</span>, timezone <span class='op'>=</span> <span class='st'>"America/Los_Angeles"</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/MazamaScience/MazamaCoreUtils'>MazamaCoreUtils</a></span><span class='op'>)</span>
+
+<span class='fu'>dateSequence</span><span class='op'>(</span><span class='st'>"2019-11-01"</span>, <span class='st'>"2019-11-08"</span>, timezone <span class='op'>=</span> <span class='st'>"America/Los_Angeles"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "2019-11-01 PDT" "2019-11-02 PDT" "2019-11-03 PDT" "2019-11-04 PST"
 #&gt; [5] "2019-11-05 PST" "2019-11-06 PST" "2019-11-07 PST" "2019-11-08 PST"</div><div class='input'><span class='fu'>dateSequence</span><span class='op'>(</span><span class='st'>"2019-11-01"</span>, <span class='st'>"2019-11-07"</span>, timezone <span class='op'>=</span> <span class='st'>"America/Los_Angeles"</span>,
              ceilingEnd <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>

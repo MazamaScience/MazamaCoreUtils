@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8</span>
       </span>
     </div>
 
@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -56,7 +56,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/MazamaScience/MazamaCoreUtils/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -70,8 +70,7 @@
 
       
 
-      </header><script src="logging_files/header-attrs-2.5/header-attrs.js"></script><link href="logging_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="logging_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="logging_files/header-attrs-2.10/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Logging</h1>
@@ -90,7 +89,7 @@
 <h1 class="hasAnchor">
 <a href="#logging-in-java-and-python" class="anchor"></a>Logging in Java and Python</h1>
 <p>Operational systems, by definition, need to work without human input. Systems are considered “operational” after they have been thoroughly tested and shown to work properly with a variety of input.</p>
-<p>However, no software is perfect and no real-world system operates with 100% availability or 100% consistent input. Things occasionally go wrong – perhaps intermittently. In a situation with occasional failures it is vitally important to have good logging information for forensic analyis.</p>
+<p>However, no software is perfect and no real-world system operates with 100% availability or 100% consistent input. Things occasionally go wrong – perhaps intermittently. In a situation with occasional failures it is vitally important to have good logging information for forensic analysis.</p>
 <p>Other languages used in operational settings support logging at different levels of information density. The code to write out logs at these different levels looks very similar in java and python:</p>
 <p><strong>java</strong></p>
 <pre><code>import org.apache.commons.logging.Log;
@@ -147,7 +146,7 @@ logger.trace("TRACE level message")</a></code></pre>
 <div id="warn" class="section level3">
 <h3 class="hasAnchor">
 <a href="#warn" class="anchor"></a>WARN</h3>
-<p><code>WARN</code> log statements imply that something unexpected happend but that R code is able to complete, perhaps with unpredicatble results. An appropriate use would be after testing the response of an internet request. R code may be able to trap and handle a failed request but should comment on the failure in the logs.</p>
+<p><code>WARN</code> log statements imply that something unexpected happened but that R code is able to complete, perhaps with unpredictable results. An appropriate use would be after testing the response of an internet request. R code may be able to trap and handle a failed request but should comment on the failure in the logs.</p>
 </div>
 <div id="info" class="section level3">
 <h3 class="hasAnchor">
@@ -222,31 +221,31 @@ logger.trace("TRACE level message")</a></code></pre>
 <div id="error-log" class="section level2">
 <h2 class="hasAnchor">
 <a href="#error-log" class="anchor"></a>ERROR.log</h2>
-<pre><code>#&gt; ERROR [2020-11-24 11:20:22] NO ERRORS</code></pre>
+<pre><code>#&gt; ERROR [2021-08-17 12:26:26] NO ERRORS</code></pre>
 </div>
 <div id="info-log" class="section level2">
 <h2 class="hasAnchor">
 <a href="#info-log" class="anchor"></a>INFO.log</h2>
-<pre><code>#&gt; INFO [2020-11-24 11:20:22] Begin loggingExample ...
-#&gt; WARN [2020-11-24 11:20:22] Oops: object 'flog.layout' not found
-#&gt; ERROR [2020-11-24 11:20:22] NO ERRORS
-#&gt; INFO [2020-11-24 11:20:22] Successfully completed loggingExample
-#&gt; INFO [2020-11-24 11:20:22] 
+<pre><code>#&gt; INFO [2021-08-17 12:26:26] Begin loggingExample ...
+#&gt; WARN [2021-08-17 12:26:26] Oops: object 'flog.layout' not found
+#&gt; ERROR [2021-08-17 12:26:26] NO ERRORS
+#&gt; INFO [2021-08-17 12:26:26] Successfully completed loggingExample
+#&gt; INFO [2021-08-17 12:26:26] 
 #&gt; =============== THE END ===============</code></pre>
 </div>
 <div id="trace-log" class="section level2">
 <h2 class="hasAnchor">
 <a href="#trace-log" class="anchor"></a>TRACE.log</h2>
-<pre><code>#&gt; INFO [2020-11-24 11:20:22] Begin loggingExample ...
-#&gt; TRACE [2020-11-24 11:20:22] Working on: Sepal.Length
-#&gt; TRACE [2020-11-24 11:20:22] Working on: Sepal.Width
-#&gt; TRACE [2020-11-24 11:20:22] Working on: Petal.Length
-#&gt; TRACE [2020-11-24 11:20:22] Working on: Petal.Width
-#&gt; TRACE [2020-11-24 11:20:22] Working on: Species
-#&gt; WARN [2020-11-24 11:20:22] Oops: object 'flog.layout' not found
-#&gt; ERROR [2020-11-24 11:20:22] NO ERRORS
-#&gt; INFO [2020-11-24 11:20:22] Successfully completed loggingExample
-#&gt; INFO [2020-11-24 11:20:22] 
+<pre><code>#&gt; INFO [2021-08-17 12:26:26] Begin loggingExample ...
+#&gt; TRACE [2021-08-17 12:26:26] Working on: Sepal.Length
+#&gt; TRACE [2021-08-17 12:26:26] Working on: Sepal.Width
+#&gt; TRACE [2021-08-17 12:26:26] Working on: Petal.Length
+#&gt; TRACE [2021-08-17 12:26:26] Working on: Petal.Width
+#&gt; TRACE [2021-08-17 12:26:26] Working on: Species
+#&gt; WARN [2021-08-17 12:26:26] Oops: object 'flog.layout' not found
+#&gt; ERROR [2021-08-17 12:26:26] NO ERRORS
+#&gt; INFO [2021-08-17 12:26:26] Successfully completed loggingExample
+#&gt; INFO [2021-08-17 12:26:26] 
 #&gt; =============== THE END ===============</code></pre>
 </div>
 </div>

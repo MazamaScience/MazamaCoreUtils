@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8</span>
       </span>
     </div>
 
@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -56,7 +56,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/MazamaScience/MazamaCoreUtils/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -70,8 +70,7 @@
 
       
 
-      </header><script src="error-handling_files/header-attrs-2.5/header-attrs.js"></script><link href="error-handling_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="error-handling_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="error-handling_files/header-attrs-2.10/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Error Handling</h1>
@@ -220,7 +219,7 @@ stopOnError(result)</code></pre>
   <span class="fu"><a href="../reference/stopOnError.html">stopOnError</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>
   
 <span class="op">}</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; TRACE [2020-11-24 11:20:21] class(userInput) = numeric</span>
+<span class="co">#&gt; TRACE [2021-08-17 12:26:25] class(userInput) = numeric</span>
 
 <span class="co"># Continue despite any errors</span>
   
@@ -232,8 +231,8 @@ stopOnError(result)</code></pre>
   <span class="op">}</span>, silent<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
   <span class="fu"><a href="../reference/stopOnError.html">stopOnError</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>
 <span class="op">}</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; TRACE [2020-11-24 11:20:21] class(userInput) = character</span>
-<span class="co">#&gt; ERROR [2020-11-24 11:20:21] Error in log(x) : non-numeric argument to mathematical function</span>
+<span class="co">#&gt; TRACE [2021-08-17 12:26:25] class(userInput) = character</span>
+<span class="co">#&gt; ERROR [2021-08-17 12:26:25] Error in log(x) : non-numeric argument to mathematical function</span>
 <span class="co">#&gt; Error : Error in log(x) : non-numeric argument to mathematical function</span>
 
 <span class="co"># Continue despite any errors</span>
@@ -245,8 +244,8 @@ stopOnError(result)</code></pre>
   <span class="op">}</span>, silent<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
   <span class="fu"><a href="../reference/stopOnError.html">stopOnError</a></span><span class="op">(</span><span class="va">result</span>, <span class="st">"Unable to process user input"</span><span class="op">)</span>
 <span class="op">}</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; TRACE [2020-11-24 11:20:21] class(userInput) = character</span>
-<span class="co">#&gt; ERROR [2020-11-24 11:20:21] Unable to process user input</span>
+<span class="co">#&gt; TRACE [2021-08-17 12:26:25] class(userInput) = character</span>
+<span class="co">#&gt; ERROR [2021-08-17 12:26:25] Unable to process user input</span>
 <span class="co">#&gt; Error : Unable to process user input</span>
 
 <span class="co"># Script completes with errors handled as they occurred</span></code></pre></div>

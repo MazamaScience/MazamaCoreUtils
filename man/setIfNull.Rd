@@ -13,7 +13,7 @@ setIfNull(target, default)
 length one).}
 }
 \value{
-If \code{target} is not \code{NULL}, then \code{target} coerced to
+If \code{target} is not \code{NULL}, then \code{target} is coerced to
   the type of \code{default}. Otherwise, \code{default} is returned.
 }
 \description{
@@ -21,7 +21,7 @@ This function attempts to set a default value for a given target object. If
 the object is \code{NULL}, a default value is returned.
 
 When the target object is not \code{NULL}, this function will try and coerce
-it to match the type if the default (given by \code{\link[base]{typeof}}).
+it to match the type of the default (given by \code{\link[base]{typeof}}).
 This is useful in situations where we are looking to parse the input as well,
 such at looking at elements of an API call string and wanting to set the
 character numbers as actual numeric types.

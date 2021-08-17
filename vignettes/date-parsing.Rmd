@@ -30,10 +30,10 @@ a universal time axis -- UTC.
 Problems can arise when parsing and formatting dates and times because R
 defaults to the system timezone available with `Sys.timezone()`. Imagine
 an agency scientist based in Washington, DC, using their laptop to display 
-recent airquality data from Los Angeles while at a conference in Tasmania. The 
-data center processing  the data might be in Boudler but the data processing 
+recent air quality data from Los Angeles while at a conference in Tasmania. The 
+data center processing  the data might be in Boulder but the data processing 
 machine  might be set to use UTC. Potential timezones 
-(availabe with `OlsonNames()`) relavent to this scenario include:
+(available with `OlsonNames()`) relevant to this scenario include:
 
 * `America/New_York`
 * `America/Los_Angeles`
@@ -41,7 +41,7 @@ machine  might be set to use UTC. Potential timezones
 * `America/Denver`
 * `UTC`
 
-Which timezone shold be used to convert a request for data from "2019-08-08"" to 
+Which timezone should be used to convert a request for data from "2019-08-08"" to 
 "2018-08-15"" into `POSIXct` datetimes?
 
 To enforce specification of timezones and to help with the common user interface
@@ -61,8 +61,8 @@ for `lubridate::parse_date_time()`.
 # Linting for timezones
 
 Enforcing the specification of timezones throughout a body of code is the most
-robust way to remove timezone-related errors from your code. To help with this
-type of code review, the package also includes functions for testing whether
+robust way to remove timezone-related errors from your software. To help with this
+thistype of code review, the package also includes functions for testing whether
 specific named arguments are used with certain function calls:
 
 * `lintFunctionArgs_file()` -- check a single file
@@ -89,7 +89,8 @@ explicitly.
 
 While these functions could be used to test for explicit use in any 
 `function:argument` pair, our concern here is primarily with specification of
-timezones. As an example, here is the result of linting the `dateRange.R`
+timezones. The packages includes a detailed list of `timezoneLintRules` to help 
+with this. As an example, here is the result of linting the `dateRange.R`
 function in this package:
 
 ```
@@ -106,8 +107,8 @@ function in this package:
 7 dateRange.R         188            18 now             <chr [1]>  TRUE             
 ```
 
-The result shows that the dateRange.R source code is consistent in always
+The result shows that the `dateRange.R` source code is consistent in always
 explicitly specifying a timezone.
 
-Hopefully, this attention to timezones will help our code avoid 
+Hopefully, this attention to timezones will help your code avoid 
 misunderstandings when it comes to date and time requests.

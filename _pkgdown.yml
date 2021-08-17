@@ -18,6 +18,8 @@ reference:
   contents:
   - '`dateRange`'
   - '`timeRange`'
+  - '`dateSequence`'
+  - '`timeStamp`'
   - '`parseDatetime`'
 - title: Logging Utilities
   desc: >
@@ -29,6 +31,7 @@ reference:
   - '`logger.error`'
   - '`logger.fatal`'
   - '`logger.info`'
+  - '`logger.isInitialized`'
   - '`logger.setLevel`'
   - '`logger.setup`'
   - '`logger.trace`'
@@ -65,5 +68,6 @@ reference:
 - title: Other Utilites
   desc: ~
   contents:
+    - '`loadDataFile`'
     - '`manageCache`'
     - '`stopOnError`'

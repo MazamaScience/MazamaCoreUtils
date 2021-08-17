@@ -186,16 +186,14 @@ dateRange <- function(
       timeInput[2] %>%
       lubridate::floor_date(unit = "day")
 
-    # Handle single-day ranges
     if ( starttime == endtime ) {
+      # Handle single-day ranges
       endtime <- endtime + lubridate::ddays(1)
-    }
-
-    # Ignore "days" parameter
-
-    # Adjust for ceilingEnd
-    if ( ceilingEnd ) {
-      endtime <- endtime + lubridate::ddays(1)
+    } else {
+      # Adjust for ceilingEnd
+      if ( ceilingEnd ) {
+        endtime <- endtime + lubridate::ddays(1)
+      }
     }
 
     endtime <- endtime - endUnitAdjust

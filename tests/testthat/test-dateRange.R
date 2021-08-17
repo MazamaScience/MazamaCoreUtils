@@ -294,12 +294,19 @@ test_that("Single day ranges are handled propery", {
   startTime <- ISOdatetime(2019, 08, 01, 00, 00, 00, tz = "America/Los_Angeles")
   endTime <- ISOdatetime(2019, 08, 01, 23, 59, 59, tz = "America/Los_Angeles")
 
-  tlim <- dateRange(startdate = startTime, enddate = endTime, timezone = "America/Los_Angeles")
+  tlim <- dateRange(startdate = startTime, enddate = endTime,
+                    timezone = "America/Los_Angeles")
+  expect_identical( c(startTime, endTime), tlim )
 
-  expect_identical(
-    c(startTime, endTime),
-    tlim
-  )
+  # First example from function description
+  tlim <- dateRange(20190801, 20190802,
+                    timezone = "America/Los_Angeles")
+  expect_identical( c(startTime, endTime), tlim )
+
+  # Second example from function description
+  tlim <- dateRange(20190801, 20190801, ceilingEnd = TRUE,
+                    timezone = "America/Los_Angeles")
+  expect_identical( c(startTime, endTime), tlim )
 
 })
 

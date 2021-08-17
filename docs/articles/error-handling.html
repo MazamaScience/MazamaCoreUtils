@@ -135,7 +135,7 @@ finally:
 }</code></pre>
 <p>For more details see:</p>
 <ul>
-<li><a href="http://mazamascience.com/WorkingWithData/?p=912">Basic Error Handling with tryCatch()</a></li>
+<li><a href="https://working-with-data.mazamascience.com/2020/10/08/basic-error-handing-in-r-with-trycatch/">Basic Error Handling with tryCatch()</a></li>
 <li><a href="http://adv-r.had.co.nz/Exceptions-Debugging.html">Exceptions and debugging - Advanced R</a></li>
 </ul>
 </div>
@@ -157,7 +157,7 @@ finally:
 </ul>
 <p>For more details see:</p>
 <ul>
-<li><a href="http://mazamascience.com/WorkingWithData/?p=929">Easier Error Handling with try()</a></li>
+<li><a href="https://working-with-data.mazamascience.com/2020/10/09/easier-error-handling-in-r-with-try/">Easier Error Handling with try()</a></li>
 </ul>
 <p>This strategy makes it easy to create error handling logic and easy to understand what it does. In the following pseudo-code please note that R considers everything between <code>{}</code> to be a single <em>expression</em>:</p>
 <pre><code>result &lt;- try({
@@ -219,7 +219,7 @@ stopOnError(result)</code></pre>
   <span class="fu"><a href="../reference/stopOnError.html">stopOnError</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>
   
 <span class="op">}</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; TRACE [2021-08-17 12:26:25] class(userInput) = numeric</span>
+<span class="co">#&gt; TRACE [2021-08-17 12:36:21] class(userInput) = numeric</span>
 
 <span class="co"># Continue despite any errors</span>
   
@@ -231,8 +231,8 @@ stopOnError(result)</code></pre>
   <span class="op">}</span>, silent<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
   <span class="fu"><a href="../reference/stopOnError.html">stopOnError</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>
 <span class="op">}</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; TRACE [2021-08-17 12:26:25] class(userInput) = character</span>
-<span class="co">#&gt; ERROR [2021-08-17 12:26:25] Error in log(x) : non-numeric argument to mathematical function</span>
+<span class="co">#&gt; TRACE [2021-08-17 12:36:21] class(userInput) = character</span>
+<span class="co">#&gt; ERROR [2021-08-17 12:36:21] Error in log(x) : non-numeric argument to mathematical function</span>
 <span class="co">#&gt; Error : Error in log(x) : non-numeric argument to mathematical function</span>
 
 <span class="co"># Continue despite any errors</span>
@@ -244,8 +244,8 @@ stopOnError(result)</code></pre>
   <span class="op">}</span>, silent<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
   <span class="fu"><a href="../reference/stopOnError.html">stopOnError</a></span><span class="op">(</span><span class="va">result</span>, <span class="st">"Unable to process user input"</span><span class="op">)</span>
 <span class="op">}</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; TRACE [2021-08-17 12:26:25] class(userInput) = character</span>
-<span class="co">#&gt; ERROR [2021-08-17 12:26:25] Unable to process user input</span>
+<span class="co">#&gt; TRACE [2021-08-17 12:36:21] class(userInput) = character</span>
+<span class="co">#&gt; ERROR [2021-08-17 12:36:21] Unable to process user input</span>
 <span class="co">#&gt; Error : Unable to process user input</span>
 
 <span class="co"># Script completes with errors handled as they occurred</span></code></pre></div>

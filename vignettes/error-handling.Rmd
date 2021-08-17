@@ -83,7 +83,7 @@ result <- tryCatch({
 
 For more details see:
 
-* [Basic Error Handling with tryCatch()](http://mazamascience.com/WorkingWithData/?p=912)
+* [Basic Error Handling with tryCatch()](https://working-with-data.mazamascience.com/2020/10/08/basic-error-handing-in-r-with-trycatch/)
 * [Exceptions and debugging - Advanced R](http://adv-r.had.co.nz/Exceptions-Debugging.html)
 
 # Simpler Error Handling in R
@@ -101,7 +101,7 @@ a `try()` function and then testing the result to see if an error occurred.
 
 For more details see:
 
-* [Easier Error Handling with try()](http://mazamascience.com/WorkingWithData/?p=929)
+* [Easier Error Handling with try()](https://working-with-data.mazamascience.com/2020/10/09/easier-error-handling-in-r-with-try/)
 
 This strategy makes it easy to create error handling logic and easy to
 understand what it does. In the following pseudo-code please note that R 

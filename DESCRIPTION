@@ -16,7 +16,7 @@ Maintainer: Jonathan Callahan <jonathan.s.callahan@gmail.com>
 Description: A suite of utility functions providing functionality commonly
     needed for production level projects such as logging, error handling,
     cache management and date-time parsing. Functions for date-time parsing and 
-    formatting require that timezones be specified explicitly, avoiding a common 
+    formatting require that time zones be specified explicitly, avoiding a common 
     source of error when working with environmental time series.
 License: GPL-3
 URL: https://github.com/MazamaScience/MazamaCoreUtils

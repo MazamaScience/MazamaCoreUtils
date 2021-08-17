@@ -63,5 +63,8 @@ altering the physical moment of time the input represents.
 }
 
 \examples{
+library(MazamaCoreUtils)
+
 timeRange("2019-01-08 10:12:15", 20190109102030, timezone = "UTC")
+
 }

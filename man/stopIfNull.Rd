@@ -21,6 +21,7 @@ This is a convenience function for testing if an object is \code{NULL}, and
 providing a custom error message if it is.
 }
 \examples{
+library(MazamaCoreUtils)
 
 # Return input invisibly if not NULL
 x <- stopIfNull(5, msg = "Custom message")

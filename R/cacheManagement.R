@@ -36,6 +36,8 @@
 #' @export
 #'
 #' @examples
+#' library(MazamaCoreUtils)
+#'
 #' # Create a cache directory and fill it with 1.6 MB of data
 #' CACHE_DIR <- tempdir()
 #' write.csv(matrix(1,400,500), file=file.path(CACHE_DIR,'m1.csv'))

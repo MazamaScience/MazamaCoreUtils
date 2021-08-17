@@ -54,6 +54,8 @@ between most types, the results are not always meaningful.
 }
 
 \examples{
+library(MazamaCoreUtils)
+
 setIfNull(NULL, "foo")
 setIfNull(10, 0)
 setIfNull("15", 0)

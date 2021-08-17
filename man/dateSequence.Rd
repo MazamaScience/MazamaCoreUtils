@@ -69,6 +69,8 @@ conversion are they floored to midnight local time
 }
 
 \examples{
+library(MazamaCoreUtils)
+
 dateSequence("2019-11-01", "2019-11-08", timezone = "America/Los_Angeles")
 dateSequence("2019-11-01", "2019-11-07", timezone = "America/Los_Angeles",
              ceilingEnd = TRUE)

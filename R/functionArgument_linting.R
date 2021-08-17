@@ -39,6 +39,8 @@
 #'
 #' @examples
 #' \dontrun{
+#' library(MazamaCoreUtils)
+#'
 #' # Example rule list for checking
 #' exRules <- list(
 #'   "fn_one" = "x",

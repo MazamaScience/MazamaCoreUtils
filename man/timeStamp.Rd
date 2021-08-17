@@ -33,6 +33,7 @@ Formatting output is are affected by both \code{style}:
 
 \itemize{
   \item{\code{"ymdhms"}}
+  \item{\code{"ymdThms"}}
   \item{\code{"julian"}}
   \item{\code{"clock"}}
 }
@@ -47,6 +48,7 @@ representation:
   \item{\code{"hour"}}
   \item{\code{"min"}}
   \item{\code{"sec"}}
+  \item{\code{"msec"}}
 }
 
 If `style == "julian"` && `unit = "month"``, the timestamp will contain the
@@ -63,6 +65,8 @@ altering the physical moment of time the input represents.
 }
 
 \examples{
+library(MazamaCoreUtils)
+
 datetime <- parseDatetime("2019-01-08 12:30:15", timezone = "UTC")
 
 timeStamp(datetime, "UTC", unit = "year")
@@ -73,8 +77,10 @@ timeStamp(datetime, "UTC", unit = "day", style = "julian")
 timeStamp(datetime, "UTC", unit = "hour")
 timeStamp(datetime, "UTC", unit = "min")
 timeStamp(datetime, "UTC", unit = "sec")
+timeStamp(datetime, "UTC", unit = "sec", style = "ymdThms")
 timeStamp(datetime, "UTC", unit = "sec", style = "julian")
 timeStamp(datetime, "UTC", unit = "sec", style = "clock")
 timeStamp(datetime, "America/Los_Angeles", unit = "sec", style = "clock")
+timeStamp(datetime, "America/Los_Angeles", unit = "msec", style = "clock")
 
 }

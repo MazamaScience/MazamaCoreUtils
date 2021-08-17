@@ -45,6 +45,8 @@
 #' @export
 #'
 #' @examples
+#' library(MazamaCoreUtils)
+#'
 #' setIfNull(NULL, "foo")
 #' setIfNull(10, 0)
 #' setIfNull("15", 0)

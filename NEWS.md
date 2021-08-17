@@ -1,5 +1,7 @@
 # MazamaCoreUtils 0.4.8
 
+* Added `"ymdThms"` format to `timeStamp()`.
+* Added `"msec"` unit option to `timestamp()`.
 * Renamed default branch from 'master' to 'main'.
 
 # MazamaCoreUtils 0.4.7

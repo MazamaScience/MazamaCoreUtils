@@ -57,6 +57,8 @@ All functionality is built on top of the excellent \pkg{futile.logger}
 }
 \examples{
 \dontrun{
+library(MazamaCoreUtils)
+
 # Only save three log files
 logger.setup(
   debugLog = "debug.log",

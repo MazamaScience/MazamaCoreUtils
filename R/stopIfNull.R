@@ -14,6 +14,7 @@
 #' @export
 #'
 #' @examples
+#' library(MazamaCoreUtils)
 #'
 #' # Return input invisibly if not NULL
 #' x <- stopIfNull(5, msg = "Custom message")

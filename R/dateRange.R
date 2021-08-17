@@ -108,6 +108,8 @@
 #' @export
 #'
 #' @examples
+#' library(MazamaCoreUtils)
+#'
 #' dateRange("2019-01-08", timezone = "UTC")
 #' dateRange("2019-01-08", unit = "min", timezone = "UTC")
 #' dateRange("2019-01-08", unit = "hour", timezone = "UTC")

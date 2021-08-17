@@ -136,6 +136,8 @@ second returned time depends on \code{ceilingStart} and \code{days}.}
 }
 
 \examples{
+library(MazamaCoreUtils)
+
 dateRange("2019-01-08", timezone = "UTC")
 dateRange("2019-01-08", unit = "min", timezone = "UTC")
 dateRange("2019-01-08", unit = "hour", timezone = "UTC")

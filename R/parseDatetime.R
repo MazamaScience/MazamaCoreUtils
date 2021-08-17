@@ -52,6 +52,8 @@
 #' @export
 #'
 #' @examples
+#' library(MazamaCoreUtils)
+#'
 #' # All y[md-hms] formats are accepted
 #' parseDatetime(2018, timezone = "America/Los_Angeles")
 #' parseDatetime(201808, timezone = "America/Los_Angeles")

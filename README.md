@@ -7,7 +7,9 @@
 ```
 A suite of utility functions providing functionality commonly
 needed for production level projects such as logging, error handling,
-cache management and date parsing.
+cache management and date-time parsing. Functions for date-time parsing and 
+formatting require that timezones be specified explicitly, avoiding a common 
+source of error when working with environmental time series.
 ```
 
 ## Background
@@ -22,7 +24,7 @@ operationally. Areas of functionality supported by this package include:
  * python style logging
  * simple error messaging
  * cache management
- * date parsing
+ * date-time parsing
  * source code linting
  
  

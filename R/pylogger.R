@@ -44,6 +44,8 @@
 #'
 #' @examples
 #' \dontrun{
+#' library(MazamaCoreUtils)
+#'
 #' # Only save three log files
 #' logger.setup(
 #'   debugLog = "debug.log",

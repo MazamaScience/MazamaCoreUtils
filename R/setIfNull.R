@@ -84,10 +84,10 @@ setIfNull <- function(
 
   # TODO: Handle target input or length > 1 (must handle NAs better)
   if (length(target) > 1)
-    stop("target must be of length one.")
+    stop("'target' must be of length one")
 
   if (length(default) > 1)
-    stop("default must be of length one.")
+    stop("'default' must be of length one")
 
 
   # Set default and possibly coerce type ---------------------------------------
@@ -105,7 +105,7 @@ setIfNull <- function(
     validTypes <- c("character", "integer", "double", "complex", "logical", "list")
 
     if (!typeof(default) %in% validTypes)
-      stop("argument 'default' is not of a supported type.")
+      stop("argument 'default' is not of a supported type")
 
     # Get appropriate coercion function
     conversionFunc <- get(paste0("as.", typeof(default)), envir = baseenv())

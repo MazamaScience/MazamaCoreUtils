@@ -105,13 +105,13 @@ parseDatetime <- function(
     stop(paste0("argument 'timezone' must be a character string of length one"))
 
   if ( !timezone %in% base::OlsonNames() )
-    stop(paste0("timezone '", timezone, "' is not recognized."))
+    stop(sprintf("'timezone = %s' is not found in OlsonNames()", timezone))
 
   if ( !is.logical(expectAll) || length(expectAll) != 1 )
-    stop("argument 'expectAll' must be a logical value of length one.")
+    stop("argument 'expectAll' must be a logical value of length one")
 
   if ( !is.logical(isJulian) || length(isJulian) != 1 )
-    stop("argument 'isJulian' must be a logical value of length one.")
+    stop("argument 'isJulian' must be a logical value of length one")
 
   # Return early if already POSIXct -----------------------------------------
 
@@ -155,7 +155,7 @@ parseDatetime <- function(
   # Handle results ----------------------------------------------------------
 
   if ( all(is.na(parsedDatetime)) ) {
-    stop("No datetimes could be parsed.")
+    stop("no datetimes could be parsed")
   }
 
   if ( expectAll ) {
@@ -171,14 +171,14 @@ parseDatetime <- function(
     #  if all non-NA values were parsed
     if (length(failedIndices) == 1) {
       stop(paste0(
-        "1 datetime failed to parse (at index: ", failedIndices, ")."
+        "1 datetime failed to parse (at index: ", failedIndices, ")"
       ))
 
     # account for differences in plural spellings
     } else if (length(failedIndices) > 1) {
       stop(paste0(
         length(failedIndices), " datetimes failed to parse (at indices: ",
-        paste0(failedIndices, collapse = ", "), ")."
+        paste0(failedIndices, collapse = ", "), ")"
       ))
     }
   }

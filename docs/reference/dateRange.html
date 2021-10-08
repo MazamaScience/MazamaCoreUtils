@@ -110,7 +110,7 @@ includes:
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9</span>
       </span>
     </div>
 
@@ -231,14 +231,14 @@ includes:</p>
     <tr>
       <th>ceilingStart</th>
       <td><p>Logical instruction to apply
-<code><a href='http://lubridate.tidyverse.org/reference/round_date.html'>ceiling_date</a></code> to the <code>startdate</code> rather than
-<code><a href='http://lubridate.tidyverse.org/reference/round_date.html'>floor_date</a></code></p></td>
+<code><a href='https://lubridate.tidyverse.org/reference/round_date.html'>ceiling_date</a></code> to the <code>startdate</code> rather than
+<code><a href='https://lubridate.tidyverse.org/reference/round_date.html'>floor_date</a></code></p></td>
     </tr>
     <tr>
       <th>ceilingEnd</th>
       <td><p>Logical instruction to apply
-<code><a href='http://lubridate.tidyverse.org/reference/round_date.html'>ceiling_date</a></code> to the <code>enddate</code> rather than
-<code><a href='http://lubridate.tidyverse.org/reference/round_date.html'>floor_date</a></code></p></td>
+<code><a href='https://lubridate.tidyverse.org/reference/round_date.html'>ceiling_date</a></code> to the <code>enddate</code> rather than
+<code><a href='https://lubridate.tidyverse.org/reference/round_date.html'>floor_date</a></code></p></td>
     </tr>
     <tr>
       <th>days</th>
@@ -256,7 +256,7 @@ includes:</p>
 <p>In the case when either <code>startdate</code> or <code>enddate</code> is missing, it is
 created from the non-missing values plus/minus <code>days</code>. If both
 <code>startdate</code> and <code>enddate</code> are misssing, <code>enddate</code> is set to
-<code><a href='http://lubridate.tidyverse.org/reference/now.html'>now</a></code> (with the given <code>timezone</code>), and then
+<code><a href='https://lubridate.tidyverse.org/reference/now.html'>now</a></code> (with the given <code>timezone</code>), and then
 <code>startdate</code> is calculated using <code>enddate - days</code>.</p>
     <h2 class="hasAnchor" id="end-of-day-units"><a class="anchor" href="#end-of-day-units"></a>End-of-Day Units</h2>
 
@@ -276,7 +276,7 @@ in the requested time zone.</p>
 <p>When <code>startdate</code> or <code>enddate</code> are already <code>POSIXct</code> values,
 they are converted to the timezone specified by <code>timezone</code> without
 altering the physical instant in time the input represents. This is different
-from the behavior of <code><a href='http://lubridate.tidyverse.org/reference/parse_date_time.html'>parse_date_time</a></code> (which powers
+from the behavior of <code><a href='https://lubridate.tidyverse.org/reference/parse_date_time.html'>parse_date_time</a></code> (which powers
 this function), which will force <code>POSIXct</code> inputs into a new timezone,
 altering the physical moment of time the input represents.</p>
     <h2 class="hasAnchor" id="parameter-precedence"><a class="anchor" href="#parameter-precedence"></a>Parameter precedence</h2>

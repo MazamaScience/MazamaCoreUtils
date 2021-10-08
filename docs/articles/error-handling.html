@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9</span>
       </span>
     </div>
 
@@ -219,8 +219,7 @@ stopOnError(result)</code></pre>
   <span class="fu"><a href="../reference/stopOnError.html">stopOnError</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>
   
 <span class="op">}</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; TRACE [2021-08-17 13:06:34] class(userInput) = numeric</span>
-
+<span class="co">#&gt; TRACE [2021-10-08 16:24:36] class(userInput) = numeric</span>
 <span class="co"># Continue despite any errors</span>
   
 <span class="va">result</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span><span class="op">(</span><span class="op">{</span>
@@ -231,10 +230,9 @@ stopOnError(result)</code></pre>
   <span class="op">}</span>, silent<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
   <span class="fu"><a href="../reference/stopOnError.html">stopOnError</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>
 <span class="op">}</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; TRACE [2021-08-17 13:06:34] class(userInput) = character</span>
-<span class="co">#&gt; ERROR [2021-08-17 13:06:34] Error in log(x) : non-numeric argument to mathematical function</span>
+<span class="co">#&gt; TRACE [2021-10-08 16:24:36] class(userInput) = character</span>
+<span class="co">#&gt; ERROR [2021-10-08 16:24:36] Error in log(x) : non-numeric argument to mathematical function</span>
 <span class="co">#&gt; Error : Error in log(x) : non-numeric argument to mathematical function</span>
-
 <span class="co"># Continue despite any errors</span>
 
 <span class="va">result</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span><span class="op">(</span><span class="op">{</span>
@@ -244,10 +242,9 @@ stopOnError(result)</code></pre>
   <span class="op">}</span>, silent<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
   <span class="fu"><a href="../reference/stopOnError.html">stopOnError</a></span><span class="op">(</span><span class="va">result</span>, <span class="st">"Unable to process user input"</span><span class="op">)</span>
 <span class="op">}</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; TRACE [2021-08-17 13:06:34] class(userInput) = character</span>
-<span class="co">#&gt; ERROR [2021-08-17 13:06:34] Unable to process user input</span>
+<span class="co">#&gt; TRACE [2021-10-08 16:24:36] class(userInput) = character</span>
+<span class="co">#&gt; ERROR [2021-10-08 16:24:36] Unable to process user input</span>
 <span class="co">#&gt; Error : Unable to process user input</span>
-
 <span class="co"># Script completes with errors handled as they occurred</span></code></pre></div>
 </div>
 </div>

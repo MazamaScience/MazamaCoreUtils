@@ -40,7 +40,7 @@
 #'   \item{\code{"msec"}}
 #' }
 #'
-#' If `style == "julian"` && `unit = "month"``, the timestamp will contain the
+#' If \code{style == "julian"} && \code{unit = "month"}, the timestamp will contain the
 #' Julian day associated with the beginning of the month.
 #'
 #' @inheritSection dateRange POSIXct inputs
@@ -81,13 +81,13 @@ timeStamp <- function(
   stopIfNull(style)
 
   if ( !timezone %in% base::OlsonNames() )
-    stop(paste0("Timezone '", timezone, "' is not recognized."))
+    stop(sprintf("'timezone = %s' is not found in OlsonNames()", timezone))
 
   if ( !unit %in% c("year", "month", "day", "hour", "min", "sec", "msec") )
-    stop(paste0("Unit '", unit, "' is not recognized."))
+    stop(sprintf("'unit = %s' is not recognized", unit))
 
   if ( !style %in% c("ymdhms", "ymdThms", "julian", "clock") )
-    stop(paste0("Unit '", style, "' is not recognized."))
+    stop(sprintf("'style = %s' is not recognized", style))
 
   # ----- Format datetimes -----------------------------------------------------
 

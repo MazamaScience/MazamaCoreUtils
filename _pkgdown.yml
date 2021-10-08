@@ -21,6 +21,13 @@ reference:
   - '`dateSequence`'
   - '`timeStamp`'
   - '`parseDatetime`'
+- title: Location Utilities
+  desc: >
+    Functions for working with geographical locations
+  contents:
+  - '`createLocationID`'
+  - '`validateLonLat`'
+  - '`validateLonsLats`'
 - title: Logging Utilities
   desc: >
     Logging utilities for MazamaScience projects

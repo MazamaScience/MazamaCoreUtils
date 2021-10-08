@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Run package checks — packageCheck • MazamaCoreUtils</title>
+<title>Validate longitude and latitude vectors — validateLonsLats • MazamaCoreUtils</title>
 
 
 <!-- jquery -->
@@ -39,15 +39,10 @@
 
 
 
-<meta property="og:title" content="Run package checks — packageCheck" />
-<meta property="og:description" content="When multiple developers are working on a package, it is
-crucially important that they check their code changes often.  After
-merging changes from multiple developers it is equally important to check the
-package thoroughly.
-The problem is that frequent checks should be quick or developers won't do
-them while thorough checks are, by nature, slow.
-Our solution is to provide shorthand functions that wrap
-devtools::check() and pass it a variety of different arguments." />
+<meta property="og:title" content="Validate longitude and latitude vectors — validateLonsLats" />
+<meta property="og:description" content="Longitude and latitude vectors validated to be parseable as numeric
+and within the bounds -180:180 and -90:90. If validation fails, an error is
+generated." />
 
 
 
@@ -121,76 +116,40 @@ devtools::check() and pass it a variety of different arguments." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Run package checks</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/R/devtools_check.R'><code>R/devtools_check.R</code></a></small>
-    <div class="hidden name"><code>packageCheck.Rd</code></div>
+    <h1>Validate longitude and latitude vectors</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/R/utils-location.R'><code>R/utils-location.R</code></a></small>
+    <div class="hidden name"><code>validateLonsLats.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>When multiple developers are working on a package, it is
-crucially important that they check their code changes <em>often</em>.  After
-merging changes from multiple developers it is equally important to check the
-package <em>thoroughly</em>.</p>
-<p>The problem is that frequent checks should be quick or developers won't do
-them while thorough checks are, by nature, slow.</p>
-<p>Our solution is to provide shorthand functions that wrap
-<code><a href='https://devtools.r-lib.org//reference/check.html'>devtools::check()</a></code> and pass it a variety of different arguments.</p>
+    <p>Longitude and latitude vectors validated to be parseable as numeric
+and within the bounds -180:180 and -90:90. If validation fails, an error is
+generated.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>check</span><span class='op'>(</span>pkg <span class='op'>=</span> <span class='st'>"."</span><span class='op'>)</span>
-
-<span class='fu'>check_fast</span><span class='op'>(</span>pkg <span class='op'>=</span> <span class='st'>"."</span><span class='op'>)</span>
-
-<span class='fu'>check_faster</span><span class='op'>(</span>pkg <span class='op'>=</span> <span class='st'>"."</span><span class='op'>)</span>
-
-<span class='fu'>check_fastest</span><span class='op'>(</span>pkg <span class='op'>=</span> <span class='st'>"."</span><span class='op'>)</span>
-
-<span class='fu'>check_slow</span><span class='op'>(</span>pkg <span class='op'>=</span> <span class='st'>"."</span><span class='op'>)</span>
-
-<span class='fu'>check_slower</span><span class='op'>(</span>pkg <span class='op'>=</span> <span class='st'>"."</span><span class='op'>)</span>
-
-<span class='fu'>check_slowest</span><span class='op'>(</span>pkg <span class='op'>=</span> <span class='st'>"."</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>validateLonsLats</span><span class='op'>(</span>longitude <span class='op'>=</span> <span class='cn'>NULL</span>, latitude <span class='op'>=</span> <span class='cn'>NULL</span>, na.rm <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>pkg</th>
-      <td><p>Package location passed to <code><a href='https://devtools.r-lib.org//reference/check.html'>devtools::check()</a></code>.</p></td>
+      <th>longitude</th>
+      <td><p>Vector of longitudes in decimal degrees E.</p></td>
+    </tr>
+    <tr>
+      <th>latitude</th>
+      <td><p>Vector of latitudes in decimal degrees N.</p></td>
+    </tr>
+    <tr>
+      <th>na.rm</th>
+      <td><p>Logical specifying whether to remove <code>NA</code> values before
+validation.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>No return.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>The table below describes the <code>args</code> passed to
-<code><a href='https://devtools.r-lib.org//reference/check.html'>devtools::check()</a></code>:</p>
-<table class='table'>
-<tr><td><code>check_slowest()</code></td><td>| <code>manual = TRUE, run_dont_test = TRUE</code></td></tr>
-<tr><td></td><td>| <code>args = c("--run-dontrun", "--use-gct")</code></td></tr>
-<tr><td><code>check_slower()</code></td><td>| <code>manual = TRUE, run_dont_test = TRUE</code></td></tr>
-<tr><td></td><td>| <code>args = c("--run-dontrun")</code></td></tr>
-<tr><td><code>check_slow()</code></td><td>| <code>manual = TRUE, run_dont_test = TRUE</code></td></tr>
-<tr><td></td><td>| <code>args = c()</code></td></tr>
-<tr><td><code>check()</code></td><td>| <code>manual = FALSE, run_dont_test = FALSE</code></td></tr>
-<tr><td></td><td>| <code>args = c()</code></td></tr>
-<tr><td><code>check_fast()</code></td><td>| <code>manual = FALSE, run_dont_test = FALSE</code></td></tr>
-<tr><td></td><td>| <code>build_args = c("--no-build-vignettes")</code></td></tr>
-<tr><td></td><td>| <code>args = c("--ignore-vignettes")</code></td></tr>
-<tr><td><code>check_faster()</code></td><td>| <code>manual = FALSE, run_dont_test = FALSE</code></td></tr>
-<tr><td></td><td>| <code>build_args = c("--no-build-vignettes")</code></td></tr>
-<tr><td></td><td>| <code>args = c("--ignore-vignettes", "--no-examples")</code></td></tr>
-<tr><td><code>check_fastest()</code></td><td>| <code>manual = FALSE, run_dont_test = FALSE</code></td></tr>
-<tr><td></td><td>| <code>build_args = c("--no-build-vignettes")</code></td></tr>
-<tr><td></td><td>| <code>args = c("--ignore-vignettes", "--no-examples", "--no-tests")</code></td></tr>
-</table>
-
-
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='https://devtools.r-lib.org//reference/check.html'>check</a></code></p></div>
+    <p>Invisibly returns <code>TRUE</code> if no error message has been generated.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -59,7 +59,7 @@ timeRange <- function(
   stopIfNull(ceilingEnd)
 
   if ( !timezone %in% base::OlsonNames() )
-    stop(paste0("Timezone '", timezone, "' is not recognized."))
+    stop(sprintf("'timezone = %s' is not found in OlsonNames()", timezone))
 
   # ----- Process datetimes ----------------------------------------------------
 

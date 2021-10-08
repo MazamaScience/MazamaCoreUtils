@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Run package checks — packageCheck • MazamaCoreUtils</title>
+<title>Create one or more unique locationIDs — createLocationID • MazamaCoreUtils</title>
 
 
 <!-- jquery -->
@@ -39,15 +39,22 @@
 
 
 
-<meta property="og:title" content="Run package checks — packageCheck" />
-<meta property="og:description" content="When multiple developers are working on a package, it is
-crucially important that they check their code changes often.  After
-merging changes from multiple developers it is equally important to check the
-package thoroughly.
-The problem is that frequent checks should be quick or developers won't do
-them while thorough checks are, by nature, slow.
-Our solution is to provide shorthand functions that wrap
-devtools::check() and pass it a variety of different arguments." />
+<meta property="og:title" content="Create one or more unique locationIDs — createLocationID" />
+<meta property="og:description" content="A unique locationID is created for each incoming
+longitude and latitude. The following code is used to generate
+each locationID. See the references for details.
+
+# Retain accuracy up to ~.1m
+locationString &amp;lt;- paste0(
+  sprintf(&quot;%.7f&quot;, longitude),
+  &quot;_&quot;,
+  sprintf(&quot;%.7f&quot;, latitude)
+)
+
+# Avoid collisions until billions of records
+locationID &amp;lt;- digest::digest(locationString, algo = &quot;xxhash64&quot;)
+
+" />
 
 
 
@@ -121,77 +128,60 @@ devtools::check() and pass it a variety of different arguments." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Run package checks</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/R/devtools_check.R'><code>R/devtools_check.R</code></a></small>
-    <div class="hidden name"><code>packageCheck.Rd</code></div>
+    <h1>Create one or more unique locationIDs</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/R/utils-location.R'><code>R/utils-location.R</code></a></small>
+    <div class="hidden name"><code>createLocationID.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>When multiple developers are working on a package, it is
-crucially important that they check their code changes <em>often</em>.  After
-merging changes from multiple developers it is equally important to check the
-package <em>thoroughly</em>.</p>
-<p>The problem is that frequent checks should be quick or developers won't do
-them while thorough checks are, by nature, slow.</p>
-<p>Our solution is to provide shorthand functions that wrap
-<code><a href='https://devtools.r-lib.org//reference/check.html'>devtools::check()</a></code> and pass it a variety of different arguments.</p>
+    <p>A unique locationID is created for each incoming
+<code>longitude</code> and <code>latitude</code>. The following code is used to generate
+each locationID. See the references for details.</p>
+<pre>
+<span class='co'># Retain accuracy up to ~.1m</span>
+<span class='va'>locationString</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/sprintf.html'>sprintf</a></span><span class='op'>(</span><span class='st'>"%.7f"</span>, <span class='va'>longitude</span><span class='op'>)</span>,
+  <span class='st'>"_"</span>,
+  <span class='fu'><a href='https://rdrr.io/r/base/sprintf.html'>sprintf</a></span><span class='op'>(</span><span class='st'>"%.7f"</span>, <span class='va'>latitude</span><span class='op'>)</span>
+<span class='op'>)</span>
+
+<span class='co'># Avoid collisions until billions of records</span>
+<span class='va'>locationID</span> <span class='op'>&lt;-</span> <span class='fu'>digest</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/digest/man/digest.html'>digest</a></span><span class='op'>(</span><span class='va'>locationString</span>, algo <span class='op'>=</span> <span class='st'>"xxhash64"</span><span class='op'>)</span>
+</pre>
+
     </div>
 
-    <pre class="usage"><span class='fu'>check</span><span class='op'>(</span>pkg <span class='op'>=</span> <span class='st'>"."</span><span class='op'>)</span>
-
-<span class='fu'>check_fast</span><span class='op'>(</span>pkg <span class='op'>=</span> <span class='st'>"."</span><span class='op'>)</span>
-
-<span class='fu'>check_faster</span><span class='op'>(</span>pkg <span class='op'>=</span> <span class='st'>"."</span><span class='op'>)</span>
-
-<span class='fu'>check_fastest</span><span class='op'>(</span>pkg <span class='op'>=</span> <span class='st'>"."</span><span class='op'>)</span>
-
-<span class='fu'>check_slow</span><span class='op'>(</span>pkg <span class='op'>=</span> <span class='st'>"."</span><span class='op'>)</span>
-
-<span class='fu'>check_slower</span><span class='op'>(</span>pkg <span class='op'>=</span> <span class='st'>"."</span><span class='op'>)</span>
-
-<span class='fu'>check_slowest</span><span class='op'>(</span>pkg <span class='op'>=</span> <span class='st'>"."</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>createLocationID</span><span class='op'>(</span>longitude <span class='op'>=</span> <span class='cn'>NULL</span>, latitude <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>pkg</th>
-      <td><p>Package location passed to <code><a href='https://devtools.r-lib.org//reference/check.html'>devtools::check()</a></code>.</p></td>
+      <th>longitude</th>
+      <td><p>Vector of longitudes in decimal degrees E.</p></td>
+    </tr>
+    <tr>
+      <th>latitude</th>
+      <td><p>Vector of latitudes in decimal degrees N.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>No return.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <p>Vector of character locationIDs.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>The table below describes the <code>args</code> passed to
-<code><a href='https://devtools.r-lib.org//reference/check.html'>devtools::check()</a></code>:</p>
-<table class='table'>
-<tr><td><code>check_slowest()</code></td><td>| <code>manual = TRUE, run_dont_test = TRUE</code></td></tr>
-<tr><td></td><td>| <code>args = c("--run-dontrun", "--use-gct")</code></td></tr>
-<tr><td><code>check_slower()</code></td><td>| <code>manual = TRUE, run_dont_test = TRUE</code></td></tr>
-<tr><td></td><td>| <code>args = c("--run-dontrun")</code></td></tr>
-<tr><td><code>check_slow()</code></td><td>| <code>manual = TRUE, run_dont_test = TRUE</code></td></tr>
-<tr><td></td><td>| <code>args = c()</code></td></tr>
-<tr><td><code>check()</code></td><td>| <code>manual = FALSE, run_dont_test = FALSE</code></td></tr>
-<tr><td></td><td>| <code>args = c()</code></td></tr>
-<tr><td><code>check_fast()</code></td><td>| <code>manual = FALSE, run_dont_test = FALSE</code></td></tr>
-<tr><td></td><td>| <code>build_args = c("--no-build-vignettes")</code></td></tr>
-<tr><td></td><td>| <code>args = c("--ignore-vignettes")</code></td></tr>
-<tr><td><code>check_faster()</code></td><td>| <code>manual = FALSE, run_dont_test = FALSE</code></td></tr>
-<tr><td></td><td>| <code>build_args = c("--no-build-vignettes")</code></td></tr>
-<tr><td></td><td>| <code>args = c("--ignore-vignettes", "--no-examples")</code></td></tr>
-<tr><td><code>check_fastest()</code></td><td>| <code>manual = FALSE, run_dont_test = FALSE</code></td></tr>
-<tr><td></td><td>| <code>build_args = c("--no-build-vignettes")</code></td></tr>
-<tr><td></td><td>| <code>args = c("--ignore-vignettes", "--no-examples", "--no-tests")</code></td></tr>
-</table>
+    <p><a href='https://en.wikipedia.org/wiki/Decimal_degrees'>https://en.wikipedia.org/wiki/Decimal_degrees</a></p>
+<p><a href='https://www.johndcook.com/blog/2017/01/10/probability-of-secure-hash-collisions/'>https://www.johndcook.com/blog/2017/01/10/probability-of-secure-hash-collisions/</a></p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/MazamaScience/MazamaCoreUtils'>MazamaCoreUtils</a></span><span class='op'>)</span>
 
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='https://devtools.r-lib.org//reference/check.html'>check</a></code></p></div>
-
+<span class='co'># Wenatchee</span>
+<span class='va'>lon</span> <span class='op'>&lt;-</span> <span class='op'>-</span><span class='fl'>120.325278</span>
+<span class='va'>lat</span> <span class='op'>&lt;-</span> <span class='fl'>47.423333</span>
+<span class='va'>locationID</span> <span class='op'>&lt;-</span> <span class='fu'>createLocationID</span><span class='op'>(</span><span class='va'>lon</span>, <span class='va'>lat</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -86,7 +86,7 @@ recommended formats:
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9</span>
       </span>
     </div>
 
@@ -135,10 +135,10 @@ recommended formats:
 
     <div class="ref-description">
     <p>Uses incoming parameters to return a pair of <code>POSIXct</code> times in the
-proper order. Both start and end times will have <code><a href='http://lubridate.tidyverse.org/reference/round_date.html'>lubridate::floor_date()</a></code>
+proper order. Both start and end times will have <code><a href='https://lubridate.tidyverse.org/reference/round_date.html'>lubridate::floor_date()</a></code>
 applied to get the nearest <code>unit</code>. This can be modified by specifying
 <code>ceilingStart = TRUE</code> or <code>ceilingEnd = TRUE</code> in which case
-<code><a href='http://lubridate.tidyverse.org/reference/round_date.html'>lubridate::ceiling_date()</a></code> will be applied.</p>
+<code><a href='https://lubridate.tidyverse.org/reference/round_date.html'>lubridate::ceiling_date()</a></code> will be applied.</p>
 <p>The required <code>timezone</code> parameter must be one of those found in
 <code><a href='https://rdrr.io/r/base/timezones.html'>OlsonNames</a></code>.</p>
 <p>Dates can be anything that is understood by
@@ -182,14 +182,14 @@ recommended formats:</p>
     <tr>
       <th>ceilingStart</th>
       <td><p>Logical instruction to apply
-<code><a href='http://lubridate.tidyverse.org/reference/round_date.html'>ceiling_date</a></code> to the <code>startdate</code> rather than
-<code><a href='http://lubridate.tidyverse.org/reference/round_date.html'>floor_date</a></code></p></td>
+<code><a href='https://lubridate.tidyverse.org/reference/round_date.html'>ceiling_date</a></code> to the <code>startdate</code> rather than
+<code><a href='https://lubridate.tidyverse.org/reference/round_date.html'>floor_date</a></code></p></td>
     </tr>
     <tr>
       <th>ceilingEnd</th>
       <td><p>Logical instruction to apply
-<code><a href='http://lubridate.tidyverse.org/reference/round_date.html'>ceiling_date</a></code> to the <code>enddate</code> rather than
-<code><a href='http://lubridate.tidyverse.org/reference/round_date.html'>floor_date</a></code></p></td>
+<code><a href='https://lubridate.tidyverse.org/reference/round_date.html'>ceiling_date</a></code> to the <code>enddate</code> rather than
+<code><a href='https://lubridate.tidyverse.org/reference/round_date.html'>floor_date</a></code></p></td>
     </tr>
     </table>
 
@@ -203,7 +203,7 @@ recommended formats:</p>
 <p>When <code>startdate</code> or <code>enddate</code> are already <code>POSIXct</code> values,
 they are converted to the timezone specified by <code>timezone</code> without
 altering the physical instant in time the input represents. This is different
-from the behavior of <code><a href='http://lubridate.tidyverse.org/reference/parse_date_time.html'>parse_date_time</a></code> (which powers
+from the behavior of <code><a href='https://lubridate.tidyverse.org/reference/parse_date_time.html'>parse_date_time</a></code> (which powers
 this function), which will force <code>POSIXct</code> inputs into a new timezone,
 altering the physical moment of time the input represents.</p>
 

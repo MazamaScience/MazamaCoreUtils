@@ -1,3 +1,11 @@
+# MazamaCoreUtils 0.4.9
+
+* Updated R dependency to R (>= 3.5.0).
+* Added `filePrefix` and `createDir` arguments to `initializeLogging()`.
+* Added location utility functions: `validateLonLat()`, `validateLonsLats()` and
+`createLocationID()`.
+* Harmonized error messages to begin with lower case and not include a period.
+
 # MazamaCoreUtils 0.4.8
 
 * Fixed bug in `dateRange()` when creating single day date ranges.

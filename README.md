@@ -5,28 +5,29 @@
 # MazamaCoreUtils
 
 ```
-A suite of utility functions providing functionality commonly
-needed for production level projects such as logging, error handling,
-cache management and date-time parsing. Functions for date-time parsing and 
-formatting require that timezones be specified explicitly, avoiding a common 
-source of error when working with environmental time series.
+A suite of utility functions providing functionality commonly needed for 
+production level projects such as logging, error handling, cache management and 
+date-time parsing. Functions for date-time parsing and formatting require that 
+timezones be specified explicitly, avoiding a common source of error when 
+working with environmental time series.
 ```
 
 ## Background
 
 The MazamaCoreUtils package was created by MazamaScience to regularize our
-work building R packages and R-based web services.
+work building R packages and R-based web services focused on environmental
+monitoring data.
 
 The main goal of this package is to create an internally standardized set of
-functions that we can use in various systems that are being run
-operationally. Areas of functionality supported by this package include:
+functions that we can use in various systems that are being run operationally. 
+Areas of functionality supported by this package include:
 
  * python style logging
  * simple error messaging
  * cache management
  * date-time parsing
+ * lat/lon validation and uniqueID creation
  * source code linting
- 
  
 ## Installation
 

@@ -3,18 +3,15 @@ test_that("Stop on all NA output", {
   input <- c(NA, "10-16-2018", "10/16/18")
 
   expect_error(
-    parseDatetime(input),
-    "argument 'timezone' must not be NULL."
+    parseDatetime(input)
   )
 
   expect_error(
-    parseDatetime(input, timezone = "America/Los_Angeles"),
-    "No datetimes could be parsed."
+    parseDatetime(input, timezone = "America/Los_Angeles")
   )
 
   expect_error(
-    parseDatetime(input, timezone = "America/Los_Angeles", expectAll = TRUE),
-    "No datetimes could be parsed."
+    parseDatetime(input, timezone = "America/Los_Angeles", expectAll = TRUE)
   )
 
 })
@@ -37,7 +34,7 @@ test_that("Fail on some NA outputs when ExpectAll is true", {
 
   expect_error(
     parseDatetime(input, timezone = "America/Los_Angeles", expectAll = TRUE),
-    "2 datetimes failed to parse (at indices: 4, 5).", fixed = TRUE
+    "2 datetimes failed to parse (at indices: 4, 5)", fixed = TRUE
   )
 
 })

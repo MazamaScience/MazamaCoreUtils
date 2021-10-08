@@ -51,7 +51,7 @@ representation:
   \item{\code{"msec"}}
 }
 
-If `style == "julian"` && `unit = "month"``, the timestamp will contain the
+If \code{style == "julian"} && \code{unit = "month"}, the timestamp will contain the
 Julian day associated with the beginning of the month.
 }
 \section{POSIXct inputs}{

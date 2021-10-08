@@ -26,7 +26,7 @@ loadDataFile <- function(
   MazamaCoreUtils::stopIfNull(filename)
 
   if ( is.null(dataUrl) && is.null(dataDir) ) {
-    stop("Either 'dataUrl' or 'dataDir' must be specified.")
+    stop("either 'dataUrl' or 'dataDir' must be specified")
   }
 
   # ----- Load the data --------------------------------------------------------
@@ -48,7 +48,7 @@ loadDataFile <- function(
       }, silent = TRUE)
 
       if ( "try-error" %in% class(result) ) {
-        stop(paste0("Data file could not be loaded from: ", filepath))
+        stop(paste0("data file could not be loaded from: ", filepath))
       } else {
         loadedData <- get(objectName)
       }
@@ -66,7 +66,7 @@ loadDataFile <- function(
       close(conn)
 
       if ( "try-error" %in% class(result) ) {
-        stop(paste0("Data file could not be loaded from: ", filepath))
+        stop(paste0("data file could not be loaded from: ", filepath))
       } else {
         loadedData <- get(objectName)
       }
@@ -80,7 +80,7 @@ loadDataFile <- function(
   # NOTE:  Failures should be handled above but just in case.
 
   if ( "try-error" %in% class(result) ) {
-    stop(paste0("Data file could not be loaded from: ", filepath))
+    stop(paste0("data file could not be loaded from: ", filepath))
   }
 
   # ----- Return ---------------------------------------------------------------

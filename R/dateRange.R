@@ -134,16 +134,16 @@ dateRange <- function(
   stopIfNull(ceilingEnd)
 
   if ( !timezone %in% base::OlsonNames() )
-    stop(paste0("Timezone '", timezone, "' is not recognized."))
+    stop(sprintf("'timezone = %s' is not found in OlsonNames()", timezone))
 
   if ( !is.numeric(days) || length(days) > 1 || days < 1 )
-    stop("`days` must be a single positive number.")
+    stop("'days' must be a single positive number")
 
   if ( !is.null(startdate) && length(startdate) != 1 )
-    stop("startdate must be of length one, if specified.")
+    stop("'startdat'e must be of length one, if specified")
 
   if ( !is.null(enddate) && length(enddate) != 1 )
-    stop("enddate must be of length one, if specified.")
+    stop("'enddate' must be of length one, if specified")
 
 
   # Handle end-of-day unit -----------------------------------------------------
@@ -157,7 +157,7 @@ dateRange <- function(
   } else if ( stringr::str_detect(unit, "^sec") ) {
     endUnitAdjust <- lubridate::seconds(1)
   } else {
-    stop("'unit' must be one of: 'day', 'hour', 'min', 'sec'.")
+    stop("'unit' must be one of: 'day', 'hour', 'min', 'sec'")
   }
 
   # Determine start and end times ----------------------------------------------

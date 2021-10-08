@@ -60,7 +60,7 @@ stopIfNull <- function(
 
   } else if (!is.character(msg) || length(msg) != 1) {
 
-    stop("msg must be a character string of length one.")
+    stop("'msg' must be a character string of length one")
 
   }
 

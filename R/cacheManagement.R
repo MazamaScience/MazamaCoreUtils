@@ -112,7 +112,7 @@ manageCache <- function(
 
   # Use dplyr to order by value specified by sortBy
   if ( !sortBy %in% c("atime", "ctime", "mtime") ) {
-    stop("Invalid value for parameter 'sortBy'")
+    stop("invalid value for parameter 'sortBy'")
   } else {
     sizeByDF <- dplyr::arrange(cacheDF, dplyr::desc(.data[[sortBy]]))
   }

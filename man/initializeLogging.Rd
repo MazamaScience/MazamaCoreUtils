@@ -4,12 +4,16 @@
 \alias{initializeLogging}
 \title{Initialize standard log files}
 \usage{
-initializeLogging(logDir = NULL)
+initializeLogging(logDir = NULL, filePrefix = "", createDir = TRUE)
 }
 \arguments{
 \item{logDir}{Directory in which to write log files.}
+
+\item{filePrefix}{Character string prepended to log files.}
+
+\item{createDir}{Logical specifying whether to create a missing \code{logDir}
+or issue an error message.}
 }
 \description{
-Convenience function that wraps logging initialization steps common to Mazama
-Science web services.
+Convenience function that wraps common logging initialization steps.
 }

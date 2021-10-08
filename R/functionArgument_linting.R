@@ -69,17 +69,17 @@ lintFunctionArgs_file <- function(
   stopIfNull(rules)
 
   if ( !is.list(rules) || is.null(names(rules)) ) {
-    stop("rules must be a named list.")
+    stop("rules must be a named list")
   }
 
   if ( !is.character(filePath) || length(filePath) != 1 ) {
-    stop("filePath must be a length 1 character vector.")
+    stop("filePath must be a length 1 character vector")
   }
 
   normFilePath <- normalizePath(filePath)
 
   if ( !utils::file_test("-f", normFilePath) ) {
-    stop("filePath must point to a file, not a directory.")
+    stop("filePath must point to a file, not a directory")
   }
 
 
@@ -157,15 +157,15 @@ lintFunctionArgs_dir <- function(
   stopIfNull(rules)
 
   if ( !is.list(rules) || is.null(names(rules)) )
-    stop("rules must be a named list.")
+    stop("rules must be a named list")
 
   if ( !is.character(dirPath) || length(dirPath) != 1 )
-    stop("dirPath must be a length 1 character vector.")
+    stop("dirPath must be a length 1 character vector")
 
   normDirPath <- normalizePath(dirPath)
 
   if ( !utils::file_test("-d", normDirPath) )
-    stop("filePath must point to a directory, not a file.")
+    stop("filePath must point to a directory, not a file")
 
 
   # Lint files -----------------------------------------------------------------

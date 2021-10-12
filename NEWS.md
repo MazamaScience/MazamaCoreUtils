@@ -5,6 +5,7 @@
 * Added location utility functions: `validateLonLat()`, `validateLonsLats()` and
 `createLocationID()`.
 * Harmonized error messages to begin with lower case and not include a period.
+* Added Zenodo DOI.
 
 # MazamaCoreUtils 0.4.8
 

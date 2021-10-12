@@ -1,6 +1,7 @@
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/MazamaCoreUtils)](https://cran.r-project.org/package=MazamaCoreUtils)
 [![Downloads](http://cranlogs.r-pkg.org/badges/MazamaCoreUtils)](https://cran.r-project.org/package=MazamaCoreUtils)
 [![Build Status](https://travis-ci.org/MazamaScience/MazamaCoreUtils.svg?branch=master)](https://travis-ci.org/MazamaScience/MazamaCoreUtils)
+[![DOI](https://zenodo.org/badge/152321630.svg)](https://zenodo.org/badge/latestdoi/152321630)
 
 # MazamaCoreUtils
 

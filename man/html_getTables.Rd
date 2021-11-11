@@ -30,17 +30,22 @@ to the url to \code{html_getTable()}.
 \examples{
 library(MazamaCoreUtils)
 
-# Wikipedia's list of timezones
-url <- "http://en.wikipedia.org/wiki/List_of_tz_database_time_zones"
+# Fail gracefully if the resource is not available
+try({
 
-# Extract tables
-tables <- html_getTables(url)
+  # Wikipedia's list of timezones
+  url <- "http://en.wikipedia.org/wiki/List_of_tz_database_time_zones"
 
-# Extract the first table
-# NOTE: Analogous to firstTable <- html_getTable(url, index = 1)
-firstTable <- tables[[1]]
+  # Extract tables
+  tables <- html_getTables(url)
 
-head(firstTable)
-nrow(firstTable)
+  # Extract the first table
+  # NOTE: Analogous to firstTable <- html_getTable(url, index = 1)
+  firstTable <- tables[[1]]
+
+  head(firstTable)
+  nrow(firstTable)
+
+}, silent = TRUE)
 
 }

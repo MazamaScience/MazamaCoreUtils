@@ -17,10 +17,10 @@ reference:
     Functions for working with datetimes
   contents:
   - '`dateRange`'
-  - '`timeRange`'
   - '`dateSequence`'
-  - '`timeStamp`'
   - '`parseDatetime`'
+  - '`timeRange`'
+  - '`timeStamp`'
 - title: Location Utilities
   desc: >
     Functions for working with geographical locations
@@ -72,9 +72,18 @@ reference:
   contents:
   - '`html_getLinks`'
   - '`html_getTables`'
+- title: API Keys
+  desc: >
+    An abstraction layer for the use of API keys
+  contents:
+    - '`APIKeys`'
+    - '`getAPIKey`'
+    - '`setAPIKey`'
+    - '`showAPIKeys`'
 - title: Other Utilites
   desc: ~
   contents:
     - '`loadDataFile`'
     - '`manageCache`'
     - '`stopOnError`'
+

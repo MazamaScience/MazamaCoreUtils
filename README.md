@@ -26,6 +26,7 @@ Areas of functionality supported by this package include:
  * python style logging
  * simple error messaging
  * cache management
+ * API key handling
  * date-time parsing
  * lat/lon validation and uniqueID creation
  * source code linting

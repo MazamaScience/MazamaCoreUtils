@@ -23,12 +23,20 @@
 #' @examples
 #' library(MazamaCoreUtils)
 #'
-#' # US Census 2019 shapefiles
-#' dataLinks <- html_getLinks("https://www2.census.gov/geo/tiger/GENZ2019/shp/")
+#' # Fail gracefully if the resource is not available
+#' try({
 #'
-#' dataLinks <- dataLinks %>%
-#'   dplyr::filter(stringr::str_detect(linkName, "us_county"))
-#' head(dataLinks, 10)
+#'   # US Census 2019 shapefiles
+#'   url <- "https://www2.census.gov/geo/tiger/GENZ2019/shp/"
+#'
+#'   # Extract links
+#'   dataLinks <- html_getLinks(url)
+#'
+#'   dataLinks <- dataLinks %>%
+#'     dplyr::filter(stringr::str_detect(linkName, "us_county"))
+#'   head(dataLinks, 10)
+#'
+#' }, silent = TRUE)
 #'
 #' @rdname html_getLinks
 #' @export

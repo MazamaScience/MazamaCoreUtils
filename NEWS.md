@@ -1,3 +1,10 @@
+# MazamaCoreUtils 0.4.10
+
+* New functions for managing API keys: `getAPIKey()`, `setAPIKey()`, `showAPIKeys()`.
+* Now exporting `futile.logger::flog.layout()` to avoid downstream complaints.
+* Examples for `html_getLinks()` and `html_getTables()` now fail gracefully.
+* Consolidated the `local_~/` directories. _(Not part of the R package.)_
+
 # MazamaCoreUtils 0.4.9
 
 * Updated R dependency to R (>= 3.5.0).

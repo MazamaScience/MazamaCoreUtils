@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a POSIXct time range — timeRange • MazamaCoreUtils</title>
+<title>Get API key — getAPIKey • MazamaCoreUtils</title>
 
 
 <!-- jquery -->
@@ -39,22 +39,10 @@
 
 
 
-<meta property="og:title" content="Create a POSIXct time range — timeRange" />
-<meta property="og:description" content="Uses incoming parameters to return a pair of POSIXct times in the
-proper order. Both start and end times will have lubridate::floor_date()
-applied to get the nearest unit. This can be modified by specifying
-ceilingStart = TRUE or ceilingEnd = TRUE in which case
-lubridate::ceiling_date() will be applied.
-The required timezone parameter must be one of those found in
-OlsonNames.
-Dates can be anything that is understood by
-lubrdiate::parse_date_time() including either of the following
-recommended formats:
-
-&quot;YYYYmmddHH[MMSS]&quot;
-&quot;YYYY-mm-dd HH:MM:SS&quot;
-
-" />
+<meta property="og:title" content="Get API key — getAPIKey" />
+<meta property="og:description" content="Returns the API key associated with a web service.
+If provider == NULL a list is returned containing all recognized
+API keys." />
 
 
 
@@ -128,91 +116,37 @@ recommended formats:
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a POSIXct time range</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/R/timeRange.R'><code>R/timeRange.R</code></a></small>
-    <div class="hidden name"><code>timeRange.Rd</code></div>
+    <h1>Get API key</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/R/MazamaCoreUtils.R'><code>R/MazamaCoreUtils.R</code></a></small>
+    <div class="hidden name"><code>getAPIKey.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Uses incoming parameters to return a pair of <code>POSIXct</code> times in the
-proper order. Both start and end times will have <code><a href='https://lubridate.tidyverse.org/reference/round_date.html'>lubridate::floor_date()</a></code>
-applied to get the nearest <code>unit</code>. This can be modified by specifying
-<code>ceilingStart = TRUE</code> or <code>ceilingEnd = TRUE</code> in which case
-<code><a href='https://lubridate.tidyverse.org/reference/round_date.html'>lubridate::ceiling_date()</a></code> will be applied.</p>
-<p>The required <code>timezone</code> parameter must be one of those found in
-<code><a href='https://rdrr.io/r/base/timezones.html'>OlsonNames</a></code>.</p>
-<p>Dates can be anything that is understood by
-<code>lubrdiate::parse_date_time()</code> including either of the following
-recommended formats:</p>
-<ul>
-<li><p><code>"YYYYmmddHH[MMSS]"</code></p></li>
-<li><p><code>"YYYY-mm-dd HH:MM:SS"</code></p></li>
-</ul>
-
+    <p>Returns the API key associated with a web service.
+If <code>provider == NULL</code> a list is returned containing all recognized
+API keys.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>timeRange</span><span class='op'>(</span>
-  starttime <span class='op'>=</span> <span class='cn'>NULL</span>,
-  endtime <span class='op'>=</span> <span class='cn'>NULL</span>,
-  timezone <span class='op'>=</span> <span class='cn'>NULL</span>,
-  unit <span class='op'>=</span> <span class='st'>"sec"</span>,
-  ceilingStart <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  ceilingEnd <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>getAPIKey</span><span class='op'>(</span>provider <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>starttime</th>
-      <td><p>Desired start datetime (ISO 8601).</p></td>
-    </tr>
-    <tr>
-      <th>endtime</th>
-      <td><p>Desired end datetime (ISO 8601).</p></td>
-    </tr>
-    <tr>
-      <th>timezone</th>
-      <td><p>Olson timezone used to interpret dates (required).</p></td>
-    </tr>
-    <tr>
-      <th>unit</th>
-      <td><p>Units used to determine time at end-of-day.</p></td>
-    </tr>
-    <tr>
-      <th>ceilingStart</th>
-      <td><p>Logical instruction to apply
-<code><a href='https://lubridate.tidyverse.org/reference/round_date.html'>ceiling_date</a></code> to the <code>startdate</code> rather than
-<code><a href='https://lubridate.tidyverse.org/reference/round_date.html'>floor_date</a></code></p></td>
-    </tr>
-    <tr>
-      <th>ceilingEnd</th>
-      <td><p>Logical instruction to apply
-<code><a href='https://lubridate.tidyverse.org/reference/round_date.html'>ceiling_date</a></code> to the <code>enddate</code> rather than
-<code><a href='https://lubridate.tidyverse.org/reference/round_date.html'>floor_date</a></code></p></td>
+      <th>provider</th>
+      <td><p>Web service provider.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A vector of two <code>POSIXct</code>s.</p>
-    <h2 class="hasAnchor" id="posixct-inputs"><a class="anchor" href="#posixct-inputs"></a>POSIXct inputs</h2>
+    <p>API key string or a list of provider:key pairs.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    
+    <div class='dont-index'><p><a href='APIKeys.html'>APIKeys</a></p>
+<p><a href='setAPIKey.html'>setAPIKey</a></p>
+<p><a href='showAPIKeys.html'>showAPIKeys</a></p></div>
 
-<p>When <code>startdate</code> or <code>enddate</code> are already <code>POSIXct</code> values,
-they are converted to the timezone specified by <code>timezone</code> without
-altering the physical instant in time the input represents. This is different
-from the behavior of <code><a href='https://lubridate.tidyverse.org/reference/parse_date_time.html'>parse_date_time</a></code> (which powers
-this function), which will force <code>POSIXct</code> inputs into a new timezone,
-altering the physical moment of time the input represents.</p>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/MazamaScience/MazamaCoreUtils'>MazamaCoreUtils</a></span><span class='op'>)</span>
-
-<span class='fu'>timeRange</span><span class='op'>(</span><span class='st'>"2019-01-08 10:12:15"</span>, <span class='fl'>20190109102030</span>, timezone <span class='op'>=</span> <span class='st'>"UTC"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "2019-01-08 10:12:15 UTC" "2019-01-09 10:20:30 UTC"</div><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

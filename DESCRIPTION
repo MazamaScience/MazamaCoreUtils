@@ -1,17 +1,13 @@
 Type: Package
 Package: MazamaCoreUtils
-Version: 0.4.9
+Version: 0.4.10
 Title: Utility Functions for Production R Code
 Authors@R: c(
     person("Jonathan", "Callahan", email="jonathan.s.callahan@gmail.com", role=c("aut","cre")),
-    person("Eli", "Grosman", email="eligrosman1@gmail.com", role=c("aut")),
-    person("Spencer", "Pease", email="spencerpease618@gmail.com", role=c("aut")),
-    person("Thomas", "Bergamaschi", email="tbergama@gmail.com", role=c("aut"))
+    person("Eli", "Grosman", email="eligrosman1@gmail.com", role=c("ctb")),
+    person("Spencer", "Pease", email="spencerpease618@gmail.com", role=c("ctb")),
+    person("Thomas", "Bergamaschi", email="tbergama@gmail.com", role=c("ctb"))
     )
-Author: Jonathan Callahan [aut, cre],
-    Eli Grosman [aut],
-    Spencer Pease [aut],
-    Thomas Bergamaschi [aut] 
 Maintainer: Jonathan Callahan <jonathan.s.callahan@gmail.com>
 Description: A suite of utility functions providing functionality commonly
     needed for production level projects such as logging, error handling,
@@ -29,13 +25,13 @@ Imports:
     dplyr,
     futile.logger,
     lubridate,
-    stringr,
     magrittr,
     purrr,
-    tibble,
     rlang (>= 0.1.2),
-    xml2,
-    rvest
+    rvest,
+    stringr,
+    tibble,
+    xml2
 Suggests:
     knitr,
     markdown,

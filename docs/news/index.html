@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.10</span>
       </span>
     </div>
 
@@ -117,15 +117,28 @@
       <small>Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="mazamacoreutils-0410" class="section level1">
+<h1 class="page-header" data-toc-text="0.4.10">
+<a href="#mazamacoreutils-0410" class="anchor"></a>MazamaCoreUtils 0.4.10<small> Unreleased </small>
+</h1>
+<ul>
+<li>New functions for managing API keys: <code><a href="../reference/getAPIKey.html">getAPIKey()</a></code>, <code><a href="../reference/setAPIKey.html">setAPIKey()</a></code>, <code><a href="../reference/showAPIKeys.html">showAPIKeys()</a></code>.</li>
+<li>Now exporting <code><a href="https://rdrr.io/pkg/futile.logger/man/flog.layout.html">futile.logger::flog.layout()</a></code> to avoid downstream complaints.</li>
+<li>Examples for <code><a href="../reference/html_getLinks.html">html_getLinks()</a></code> and <code><a href="../reference/html_getTables.html">html_getTables()</a></code> now fail gracefully.</li>
+<li>Consolidated the <code>local_~/</code> directories. <em>(Not part of the R package.)</em>
+</li>
+</ul>
+</div>
     <div id="mazamacoreutils-049" class="section level1">
 <h1 class="page-header" data-toc-text="0.4.9">
-<a href="#mazamacoreutils-049" class="anchor"></a>MazamaCoreUtils 0.4.9<small> Unreleased </small>
+<a href="#mazamacoreutils-049" class="anchor"></a>MazamaCoreUtils 0.4.9<small> 2021-10-09 </small>
 </h1>
 <ul>
 <li>Updated R dependency to R (&gt;= 3.5.0).</li>
 <li>Added <code>filePrefix</code> and <code>createDir</code> arguments to <code><a href="../reference/initializeLogging.html">initializeLogging()</a></code>.</li>
 <li>Added location utility functions: <code><a href="../reference/validateLonLat.html">validateLonLat()</a></code>, <code><a href="../reference/validateLonsLats.html">validateLonsLats()</a></code> and <code><a href="../reference/createLocationID.html">createLocationID()</a></code>.</li>
 <li>Harmonized error messages to begin with lower case and not include a period.</li>
+<li>Added Zenodo DOI.</li>
 </ul>
 </div>
     <div id="mazamacoreutils-048" class="section level1">
@@ -449,7 +462,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Jonathan Callahan, Eli Grosman, Spencer Pease, Thomas Bergamaschi.</p>
+  <p>Developed by Jonathan Callahan.</p>
 </div>
 
 <div class="pkgdown">

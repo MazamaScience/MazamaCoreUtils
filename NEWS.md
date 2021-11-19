@@ -1,3 +1,8 @@
+# MazamaCoreUtils 0.4.11
+
+* Changed examples in `html_getLinks()` and `html_getTables()` to explain any
+errors with: `try({ ...}, silent = FALSE)`.
+
 # MazamaCoreUtils 0.4.10
 
 * New functions for managing API keys: `getAPIKey()`, `setAPIKey()`, `showAPIKeys()`.

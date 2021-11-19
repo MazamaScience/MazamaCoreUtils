@@ -46,6 +46,6 @@ try({
   head(firstTable)
   nrow(firstTable)
 
-}, silent = TRUE)
+}, silent = FALSE)
 
 }

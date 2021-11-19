@@ -48,6 +48,6 @@ try({
     dplyr::filter(stringr::str_detect(linkName, "us_county"))
   head(dataLinks, 10)
 
-}, silent = TRUE)
+}, silent = FALSE)
 
 }

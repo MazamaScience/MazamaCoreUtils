@@ -35,7 +35,7 @@
 #'   head(firstTable)
 #'   nrow(firstTable)
 #'
-#' }, silent = TRUE)
+#' }, silent = FALSE)
 #'
 #' @rdname html_getTables
 #' @export

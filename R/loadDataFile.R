@@ -31,7 +31,7 @@ loadDataFile <- function(
 
   # ----- Load the data --------------------------------------------------------
 
-  result <- try({
+  try({
 
     # Always check for dataDir first
     if (
@@ -73,15 +73,8 @@ loadDataFile <- function(
 
     }
 
-  }, silent = TRUE)
-
-  # ----- Handle errors --------------------------------------------------------
-
-  # NOTE:  Failures should be handled above but just in case.
-
-  if ( "try-error" %in% class(result) ) {
-    stop(paste0("data file could not be loaded from: ", filepath))
-  }
+  }, silent = TRUE) %>%
+    stopOnError(paste0("data file could not be loaded from: ", filepath))
 
   # ----- Return ---------------------------------------------------------------
 

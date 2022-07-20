@@ -1,3 +1,9 @@
+# MazamaCoreUtils 0.4.12
+
+* Updated `stopOnError() with the following additional arguments: `prefix`,
+`code`, `maxLength`, `truncatedLength`, `call.`.
+* Corrected documentation for `timeStamp()`.
+
 # MazamaCoreUtils 0.4.11
 
 * Changed examples in `html_getLinks()` and `html_getTables()` to explain any

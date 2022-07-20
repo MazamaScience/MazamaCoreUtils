@@ -51,7 +51,7 @@ html_getTables <- function(
 
   # ----- Extract the tables ----------------------------------------------------
 
-  result <- try({
+  try({
 
     # Get the raw HTML from the URL
     urlXML <- xml2::read_html(url)
@@ -68,8 +68,8 @@ html_getTables <- function(
       dec = "."
     )
 
-  }, silent = TRUE)
-  stopOnError(result)
+  }, silent = TRUE) %>%
+  stopOnError()
 
   # ----- Return ---------------------------------------------------------------
 
@@ -99,15 +99,15 @@ html_getTable <- function(
 
   # ----- Extract the table ----------------------------------------------------
 
-  result <- try({
+  try({
 
     # Get a list of tables in this document
     tables <- html_getTables(url, header = header)
 
     returnTable <- tables[[index]]
 
-  }, silent = TRUE)
-  stopOnError(result)
+  }, silent = TRUE) %>%
+  stopOnError()
 
   # ----- Return ---------------------------------------------------------------
 

@@ -2,58 +2,109 @@
 % Please edit documentation in R/errorHandling.R
 \name{stopOnError}
 \alias{stopOnError}
-\title{Error message translator}
+\title{Error message generator}
 \usage{
-stopOnError(result, err_msg = "")
+stopOnError(
+  result,
+  err_msg = "",
+  prefix = "",
+  maxLength = 500,
+  truncatedLength = 120,
+  call. = FALSE
+)
 }
 \arguments{
 \item{result}{Return from a \code{try()} block.}
 
 \item{err_msg}{Custom error message.}
+
+\item{prefix}{Text string to add in front of the error message.}
+
+\item{maxLength}{Maximum length of an error message. Error messages
+beyond this limit will be truncated.}
+
+\item{truncatedLength}{Length of the output error message.}
+
+\item{call.}{Logical indicating whether the call should become part of the error message.}
 }
 \value{
 Issues a \code{stop()} with an appropriate error message.
 }
 \description{
-When writing R code to be used in production systems that work
-with user supplied input, it is important to enclose chunks of code inside
-of a \code{try()} block. It is equally important to generate error log
-messages that can be found and understood during an autopsy when something
-fails
+When writing R code for use in production systems, it is
+important to enclose chunks of code inside of \code{try()} blocks. This is
+especially important when processing user input or data obtained from web
+services which may fail for a variety of reasons. If any problems arise
+within a \code{try()} block, it is important to generate informative and
+consistent error messages.
 
-At Mazama Science we have our own internal standard for how to do error
-handling in a manner that allows us to quickly navigate to the source of
-errors in a production system.
+Over the years, we have developed our own standard protocol for error handling
+that is easy to understand, easy to implement, and allows for consistent
+generation of error messages. To goal is to make it easy for developers to test
+sections of code that might fail and to create more uniform, more informative
+error messages than those that might come from deep within the \R execution stack.
 
-The example section contains a snippet showing how we use this function.
+In addition to the generation of custom error messages, use of \code{prefix}
+allows for the creation of classes of errors that can be detected and handled
+appropriately as errors propagate to other functions.
 }
-\examples{
-\dontrun{
+\note{
+If logging has been initialized, the customized/modified error message
+will be logged with \code{logger.error(err_msg)} before issuing
+\code{stop(err_msg)}.
+
+The following examples show how to use this function:
+
+\preformatted{
 library(MazamaCoreUtils)
 
-logger.setup()
 
 # Arbitrarily deep in the stack we might have:
+
 myFunc <- function(x) {
   a <- log(x)
 }
 
+
+# Simple usage
+
 userInput <- 10
 result <- try({
-  myFunc(x=userInput)
-}, silent=TRUE)
+  myFunc(x = userInput)
+}, silent = TRUE)
 stopOnError(result)
 
 userInput <- "ten"
 result <- try({
-  myFunc(x=userInput)
-}, silent=TRUE)
+  myFunc(x = userInput)
+}, silent = TRUE)
 stopOnError(result)
 
-result <- try({
-  myFunc(x=userInput)
-}, silent=TRUE)
-stopOnError(result, "Unable to process user input")
+
+# More concise code with the '\%>\%' operator
+
+try({
+  myFunc(x = userInput)
+}, silent = TRUE) \%>\%
+stopOnError(result, err_msg = "Unable to process user input")
+
+try({
+  myFunc(x = userInput)
+}, silent = TRUE) \%>\%
+stopOnError(result, prefix = "USER_INPUT_ERROR")
+
+
+# Truncating error message length
+
+try({
+  myFunc(x = userInput)
+}, silent = TRUE) \%>\%
+stopOnError(
+  result,
+  prefix = "USER_INPUT_ERROR",
+  maxLength = 40,
+  truncatedLength = 32
+)
 
 }
 }

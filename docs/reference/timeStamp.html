@@ -40,11 +40,9 @@
 
 
 <meta property="og:title" content="Character representation of a POSIXct — timeStamp" />
-<meta property="og:description" content="Uses incoming parameters to return a pair of POSIXct times in the
-proper order. Both start and end times will have lubridate::floor_date()
-applied to get the nearest unit unless ceilingEnd = TRUE in
-which case the end time will will have lubridate::ceiling_date()
-applied.
+<meta property="og:description" content="Converts a vector of incoming date times (as POSIXct or character
+strings), into equivalent character representations in one of several
+formats appropriate for use in naming files or labeling plots.
 The required timezone parameter must be one of those found in
 OlsonNames.
 Formatting output is are affected by both style:
@@ -100,7 +98,7 @@ Julian day associated with the beginning of the month." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.12</span>
       </span>
     </div>
 
@@ -148,11 +146,9 @@ Julian day associated with the beginning of the month." />
     </div>
 
     <div class="ref-description">
-    <p>Uses incoming parameters to return a pair of <code>POSIXct</code> times in the
-proper order. Both start and end times will have <code><a href='https://lubridate.tidyverse.org/reference/round_date.html'>lubridate::floor_date()</a></code>
-applied to get the nearest <code>unit</code> unless <code>ceilingEnd = TRUE</code> in
-which case the end time will will have <code><a href='https://lubridate.tidyverse.org/reference/round_date.html'>lubridate::ceiling_date()</a></code>
-applied.</p>
+    <p>Converts a vector of incoming date times (as <code>POSIXct</code> or character
+strings), into equivalent character representations in one of several
+formats appropriate for use in naming files or labeling plots.</p>
 <p>The required <code>timezone</code> parameter must be one of those found in
 <code><a href='https://rdrr.io/r/base/timezones.html'>OlsonNames</a></code>.</p>
 <p>Formatting output is are affected by both <code>style</code>:</p>

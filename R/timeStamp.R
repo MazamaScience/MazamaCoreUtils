@@ -9,11 +9,9 @@
 #' @param style Style of representation, Default = "ymdhms".
 #'
 #' @description
-#' Uses incoming parameters to return a pair of \code{POSIXct} times in the
-#' proper order. Both start and end times will have \code{lubridate::floor_date()}
-#' applied to get the nearest \code{unit} unless \code{ceilingEnd = TRUE} in
-#' which case the end time will will have \code{lubridate::ceiling_date()}
-#' applied.
+#' Converts a vector of incoming date times (as \code{POSIXct} or character
+#' strings), into equivalent character representations in one of several
+#' formats appropriate for use in naming files or labeling plots.
 #'
 #' The required \code{timezone} parameter must be one of those found in
 #' \code{\link[base]{OlsonNames}}.

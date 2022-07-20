@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.12</span>
       </span>
     </div>
 
@@ -70,7 +70,7 @@
 
       
 
-      </header><script src="error-handling_files/header-attrs-2.10/header-attrs.js"></script><div class="row">
+      </header><script src="error-handling_files/header-attrs-2.14/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Error Handling</h1>
@@ -88,9 +88,17 @@
 <div id="error-handling-in-java-and-python" class="section level1">
 <h1 class="hasAnchor">
 <a href="#error-handling-in-java-and-python" class="anchor"></a>Error Handling in Java and Python</h1>
-<p>Operational systems, by definition, need to work without human input. Systems are considered “operational” after they have been thoroughly tested and shown to work properly with a variety of input.</p>
-<p>However, no software is perfect and no real-world system operates with 100% availability or 100% consistent input. Things occasionally go wrong – perhaps intermittently. In a situation with occasional failures it is vitally important to have robust error handling to deal with both expected and unexpected results.</p>
-<p>Other languages used in operational settings have language statements to help with error handling. The code to handle errors looks very similar in java and python:</p>
+<p>Operational systems, by definition, need to work without human input.
+Systems are considered “operational” after they have been thoroughly
+tested and shown to work properly with a variety of input.</p>
+<p>However, no software is perfect and no real-world system operates
+with 100% availability or 100% consistent input. Things occasionally go
+wrong – perhaps intermittently. In a situation with occasional failures
+it is vitally important to have robust error handling to deal with both
+expected and unexpected results.</p>
+<p>Other languages used in operational settings have language statements
+to help with error handling. The code to handle errors looks very
+similar in java and python:</p>
 <p><strong>java</strong></p>
 <pre><code>try {
   myFunc(a)
@@ -114,7 +122,8 @@ finally:
 <div id="error-handling-in-r" class="section level1">
 <h1 class="hasAnchor">
 <a href="#error-handling-in-r" class="anchor"></a>Error Handling in R</h1>
-<p>Not surprisingly, a functional language like R does things differently:</p>
+<p>Not surprisingly, a functional language like R does things
+differently:</p>
 <ul>
 <li>No language statements for error handling</li>
 <li>
@@ -123,7 +132,8 @@ finally:
 <li>Need to define error handling function</li>
 <li>Scope issues</li>
 </ul>
-<p>Nevertheless, R’s error handling functions can be made to look similar to java and python:</p>
+<p>Nevertheless, R’s error handling functions can be made to look
+similar to java and python:</p>
 <pre><code>result &lt;- tryCatch({
   myFunc(a)
 }, warning = function(w) {
@@ -135,15 +145,21 @@ finally:
 }</code></pre>
 <p>For more details see:</p>
 <ul>
-<li><a href="https://working-with-data.mazamascience.com/2020/10/08/basic-error-handing-in-r-with-trycatch/">Basic Error Handling with tryCatch()</a></li>
-<li><a href="http://adv-r.had.co.nz/Exceptions-Debugging.html">Exceptions and debugging - Advanced R</a></li>
+<li><a href="https://working-with-data.mazamascience.com/2020/10/08/basic-error-handing-in-r-with-trycatch/">Basic
+Error Handling with tryCatch()</a></li>
+<li><a href="http://adv-r.had.co.nz/Exceptions-Debugging.html">Exceptions and
+debugging - Advanced R</a></li>
 </ul>
 </div>
 <div id="simpler-error-handling-in-r" class="section level1">
 <h1 class="hasAnchor">
 <a href="#simpler-error-handling-in-r" class="anchor"></a>Simpler Error Handling in R</h1>
-<p>In our experience, R’s error handling is too complicated for simple use and requires too much from folks who don’t consider themselves R-gurus.</p>
-<p>Instead, we recommend wrapping any block of code that needs error handling in a <code><a href="https://rdrr.io/r/base/try.html">try()</a></code> function and then testing the result to see if an error occurred.</p>
+<p>In our experience, R’s error handling is too complicated for simple
+use and requires too much from folks who don’t consider themselves
+R-gurus.</p>
+<p>Instead, we recommend wrapping any block of code that needs error
+handling in a <code><a href="https://rdrr.io/r/base/try.html">try()</a></code> function and then testing the result to
+see if an error occurred.</p>
 <ul>
 <li>
 <code><a href="https://rdrr.io/r/base/try.html">try()</a></code> is a wrapper around <code><a href="https://rdrr.io/r/base/conditions.html">tryCatch()</a></code>
@@ -157,9 +173,13 @@ finally:
 </ul>
 <p>For more details see:</p>
 <ul>
-<li><a href="https://working-with-data.mazamascience.com/2020/10/09/easier-error-handling-in-r-with-try/">Easier Error Handling with try()</a></li>
+<li><a href="https://working-with-data.mazamascience.com/2020/10/09/easier-error-handling-in-r-with-try/">Easier
+Error Handling with try()</a></li>
 </ul>
-<p>This strategy makes it easy to create error handling logic and easy to understand what it does. In the following pseudo-code please note that R considers everything between <code>{}</code> to be a single <em>expression</em>:</p>
+<p>This strategy makes it easy to create error handling logic and easy
+to understand what it does. In the following pseudo-code please note
+that R considers everything between <code>{}</code> to be a single
+<em>expression</em>:</p>
 <pre><code>result &lt;- try({
   # ...
   # lines of R code
@@ -176,29 +196,37 @@ err_msg &lt;- geterrmessage()
 <div id="regularized-usage-in-operational-code" class="section level1">
 <h1 class="hasAnchor">
 <a href="#regularized-usage-in-operational-code" class="anchor"></a>Regularized Usage in Operational Code</h1>
-<p>The following utility function regularizes our handling of errors in operational code:</p>
+<p>The following utility function regularizes our handling of errors in
+operational code:</p>
 <div id="stoponerror" class="section level3">
 <h3 class="hasAnchor">
 <a href="#stoponerror" class="anchor"></a><code>stopOnError()</code>
 </h3>
-<p>This function tests the first argument for a class of <code>try-error</code> and, if true, performs the following actions:</p>
+<p>This function tests the first argument for a class of
+<code>try-error</code> and, if true, performs the following actions:</p>
 <ol style="list-style-type: decimal">
-<li>creates <code>err_msg</code> from a user provided error message or, if NULL, <code><a href="https://rdrr.io/r/base/stop.html">geterrmessage()</a></code>
+<li>creates <code>err_msg</code> from a user provided error message or,
+if NULL, <code><a href="https://rdrr.io/r/base/stop.html">geterrmessage()</a></code>
 </li>
 <li>logs this message with <code><a href="../reference/logger.error.html">logger.error(err_msg)</a></code>
 </li>
 <li>
-<em>throws</em> the potentially improved error message with <code><a href="https://rdrr.io/r/base/stop.html">stop(err_msg)</a></code>
+<em>throws</em> the potentially improved error message with
+<code><a href="https://rdrr.io/r/base/stop.html">stop(err_msg)</a></code>
 </li>
 </ol>
-<p>Encouraging junior R programmers to add error handling to their code is now much easier. They can place any block of R code within a “try block” with the following minimal syntax:</p>
+<p>Encouraging junior R programmers to add error handling to their code
+is now much easier. They can place any block of R code within a “try
+block” with the following minimal syntax:</p>
 <pre><code>result &lt;- try({
   # ...
   # lines of R code
   # ...
 }, silent = FALSE)
 stopOnError(result)</code></pre>
-<p>Here is a working example demonstrating how a web service might test for user input that may not have been converted from character to numeric:</p>
+<p>Here is a working example demonstrating how a web service might test
+for user input that may not have been converted from character to
+numeric:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MazamaScience/MazamaCoreUtils">MazamaCoreUtils</a></span><span class="op">)</span>
 <span class="fu"><a href="../reference/logger.setup.html">logger.setup</a></span><span class="op">(</span><span class="op">)</span>
@@ -219,7 +247,8 @@ stopOnError(result)</code></pre>
   <span class="fu"><a href="../reference/stopOnError.html">stopOnError</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>
   
 <span class="op">}</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; TRACE [2021-11-19 05:54:28] class(userInput) = numeric</span>
+<span class="co">#&gt; TRACE [2022-07-20 11:41:23] class(userInput) = numeric</span>
+
 <span class="co"># Continue despite any errors</span>
   
 <span class="va">result</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span><span class="op">(</span><span class="op">{</span>
@@ -230,9 +259,10 @@ stopOnError(result)</code></pre>
   <span class="op">}</span>, silent<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
   <span class="fu"><a href="../reference/stopOnError.html">stopOnError</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>
 <span class="op">}</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; TRACE [2021-11-19 05:54:28] class(userInput) = character</span>
-<span class="co">#&gt; ERROR [2021-11-19 05:54:28] Error in log(x) : non-numeric argument to mathematical function</span>
+<span class="co">#&gt; TRACE [2022-07-20 11:41:23] class(userInput) = character</span>
+<span class="co">#&gt; ERROR [2022-07-20 11:41:23] Error in log(x) : non-numeric argument to mathematical function</span>
 <span class="co">#&gt; Error : Error in log(x) : non-numeric argument to mathematical function</span>
+
 <span class="co"># Continue despite any errors</span>
 
 <span class="va">result</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span><span class="op">(</span><span class="op">{</span>
@@ -242,9 +272,10 @@ stopOnError(result)</code></pre>
   <span class="op">}</span>, silent<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
   <span class="fu"><a href="../reference/stopOnError.html">stopOnError</a></span><span class="op">(</span><span class="va">result</span>, <span class="st">"Unable to process user input"</span><span class="op">)</span>
 <span class="op">}</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; TRACE [2021-11-19 05:54:28] class(userInput) = character</span>
-<span class="co">#&gt; ERROR [2021-11-19 05:54:28] Unable to process user input</span>
+<span class="co">#&gt; TRACE [2022-07-20 11:41:23] class(userInput) = character</span>
+<span class="co">#&gt; ERROR [2022-07-20 11:41:23] Unable to process user input</span>
 <span class="co">#&gt; Error : Unable to process user input</span>
+
 <span class="co"># Script completes with errors handled as they occurred</span></code></pre></div>
 </div>
 </div>

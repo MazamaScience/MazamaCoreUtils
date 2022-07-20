@@ -37,7 +37,7 @@ initializeLogging <- function(
 
   # ----- Copy old log files ---------------------------------------------------
 
-  result <- try({
+  try({
     # NOTE:  Intentionally create timestamp in host system timezone
     timestamp <- strftime(lubridate::now(tzone = "UTC"), "%Y-%m-%dT%H:%M:%S")
     for (logLevel in c("TRACE", "DEBUG", "INFO", "ERROR")) {
@@ -47,20 +47,20 @@ initializeLogging <- function(
         file.rename(oldFile, newFile)
       }
     }
-  }, silent = TRUE)
-  stopOnError(result, "could not rename old log files")
+  }, silent = TRUE) %>%
+  stopOnError("could not rename old log files")
 
   # ----- Set up logging -------------------------------------------------------
 
-  result <- try({
+  try({
     logger.setup(
       traceLog = file.path(logDir, "TRACE.log"),
       debugLog = file.path(logDir, "DEBUG.log"),
       infoLog = file.path(logDir, "INFO.log"),
       errorLog = file.path(logDir, "ERROR.log")
     )
-  }, silent = TRUE)
-  stopOnError(result, "could not create log files")
+  }, silent = TRUE) %>%
+  stopOnError("could not create log files")
 
 }
 

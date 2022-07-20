@@ -55,7 +55,7 @@ html_getLinks <- function(
 
   # ----- Extract the links ----------------------------------------------------
 
-  result <- try({
+  try({
 
     urlAttributes <- xml2::read_html(url) %>% xml2::xml_find_all("//a[@href]")
 
@@ -67,8 +67,8 @@ html_getLinks <- function(
       urlAttributes %>%
       xml2::xml_attr("href")
 
-  }, silent = TRUE)
-  stopOnError(result)
+  }, silent = TRUE) %>%
+  stopOnError()
 
   df <- dplyr::tibble(linkName = urlText, linkUrl = urlLinks)
 

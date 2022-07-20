@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.12</span>
       </span>
     </div>
 
@@ -70,7 +70,7 @@
 
       
 
-      </header><script src="logging_files/header-attrs-2.10/header-attrs.js"></script><div class="row">
+      </header><script src="logging_files/header-attrs-2.14/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Logging</h1>
@@ -88,9 +88,17 @@
 <div id="logging-in-java-and-python" class="section level1">
 <h1 class="hasAnchor">
 <a href="#logging-in-java-and-python" class="anchor"></a>Logging in Java and Python</h1>
-<p>Operational systems, by definition, need to work without human input. Systems are considered “operational” after they have been thoroughly tested and shown to work properly with a variety of input.</p>
-<p>However, no software is perfect and no real-world system operates with 100% availability or 100% consistent input. Things occasionally go wrong – perhaps intermittently. In a situation with occasional failures it is vitally important to have good logging information for forensic analysis.</p>
-<p>Other languages used in operational settings support logging at different levels of information density. The code to write out logs at these different levels looks very similar in java and python:</p>
+<p>Operational systems, by definition, need to work without human input.
+Systems are considered “operational” after they have been thoroughly
+tested and shown to work properly with a variety of input.</p>
+<p>However, no software is perfect and no real-world system operates
+with 100% availability or 100% consistent input. Things occasionally go
+wrong – perhaps intermittently. In a situation with occasional failures
+it is vitally important to have good logging information for forensic
+analysis.</p>
+<p>Other languages used in operational settings support logging at
+different levels of information density. The code to write out logs at
+these different levels looks very similar in java and python:</p>
 <p><strong>java</strong></p>
 <pre><code>import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -116,7 +124,8 @@ logging.trace("TRACE level message")</code></pre>
 <div id="logging-in-r" class="section level1">
 <h1 class="hasAnchor">
 <a href="#logging-in-r" class="anchor"></a>Logging in R</h1>
-<p>The <strong>MazamaCoreUtils</strong> package provides functions so that R logging can look very similar:</p>
+<p>The <strong>MazamaCoreUtils</strong> package provides functions so
+that R logging can look very similar:</p>
 <pre><code><a href="https://github.com/MazamaScience/MazamaCoreUtils">library(MazamaCoreUtils)
  
 logger.setup(infoLog="my_INFO.log")
@@ -126,52 +135,82 @@ logger.warn("WARN level message")
 logger.info("INFO level message")
 logger.debug("DEBUG level message")
 logger.trace("TRACE level message")</a></code></pre>
-<p>This functionality is built on top of the excellent <a href="https://github.com/zatonovo/futile.logger">futile.logger</a> package.</p>
+<p>This functionality is built on top of the excellent <a href="https://github.com/zatonovo/futile.logger">futile.logger</a>
+package.</p>
 <div id="log-levels" class="section level2">
 <h2 class="hasAnchor">
 <a href="#log-levels" class="anchor"></a>Log Levels</h2>
-<p>When used properly, logging at different levels lets you create log files that help you quickly navigate to the specific part of your code base that generated an error.</p>
-<p>Different log levels also allow problems to be dealt with by staff with different skill levels. Core developers don’t need to be dragged in whenever anything goes wrong. If a real-time web site is non-responsive, non-technical staff can be assigned to look at logs to assess the situation.</p>
+<p>When used properly, logging at different levels lets you create log
+files that help you quickly navigate to the specific part of your code
+base that generated an error.</p>
+<p>Different log levels also allow problems to be dealt with by staff
+with different skill levels. Core developers don’t need to be dragged in
+whenever anything goes wrong. If a real-time web site is non-responsive,
+non-technical staff can be assigned to look at logs to assess the
+situation.</p>
 <ul>
-<li>If the <code>ERROR</code> or <code>WARN</code> logs report that no data was obtained from an upstream source, the problem is not with the R code.</li>
-<li>If the <code>INFO</code> log reports that incoming data was properly obtained but that none of it passed QC thresholds, the problem is not with the R code.</li>
-<li>If, however, these logs show everything running smoothly until some ugly R error message, then it is time to call in the core developers.</li>
+<li>If the <code>ERROR</code> or <code>WARN</code> logs report that no
+data was obtained from an upstream source, the problem is not with the R
+code.</li>
+<li>If the <code>INFO</code> log reports that incoming data was properly
+obtained but that none of it passed QC thresholds, the problem is not
+with the R code.</li>
+<li>If, however, these logs show everything running smoothly until some
+ugly R error message, then it is time to call in the core
+developers.</li>
 </ul>
-<p>Here are our best practices for how to use the different log levels:</p>
+<p>Here are our best practices for how to use the different log
+levels:</p>
 <div id="error" class="section level3">
 <h3 class="hasAnchor">
 <a href="#error" class="anchor"></a>ERROR</h3>
-<p><code>ERROR</code> log statements should only be generated immediately before a <code><a href="https://rdrr.io/r/base/stop.html">stop()</a></code> is issued. The <code>ERROR.log</code> file should only have entries when R code failed to complete.</p>
+<p><code>ERROR</code> log statements should only be generated
+immediately before a <code><a href="https://rdrr.io/r/base/stop.html">stop()</a></code> is issued. The
+<code>ERROR.log</code> file should only have entries when R code failed
+to complete.</p>
 </div>
 <div id="warn" class="section level3">
 <h3 class="hasAnchor">
 <a href="#warn" class="anchor"></a>WARN</h3>
-<p><code>WARN</code> log statements imply that something unexpected happened but that R code is able to complete, perhaps with unpredictable results. An appropriate use would be after testing the response of an internet request. R code may be able to trap and handle a failed request but should comment on the failure in the logs.</p>
+<p><code>WARN</code> log statements imply that something unexpected
+happened but that R code is able to complete, perhaps with unpredictable
+results. An appropriate use would be after testing the response of an
+internet request. R code may be able to trap and handle a failed request
+but should comment on the failure in the logs.</p>
 </div>
 <div id="info" class="section level3">
 <h3 class="hasAnchor">
 <a href="#info" class="anchor"></a>INFO</h3>
-<p><code>INFO</code> log statements are useful for a general overview of how your R code is proceeding, reflecting top level code structure and perhaps ending with a final:</p>
+<p><code>INFO</code> log statements are useful for a general overview of
+how your R code is proceeding, reflecting top level code structure and
+perhaps ending with a final:</p>
 <pre><code><a href="../reference/logger.info.html">  logger.info("Successfully completed ...")
   logger.info("\n=============== THE END ===============\n")</a></code></pre>
 </div>
 <div id="debug" class="section level3">
 <h3 class="hasAnchor">
 <a href="#debug" class="anchor"></a>DEBUG</h3>
-<p><code>DEBUG</code> log statements are best used to map out the path taken through the code. We recommend including <code>DEBUG</code> level statements inside of top level loops and beginning each function with the following:</p>
+<p><code>DEBUG</code> log statements are best used to map out the path
+taken through the code. We recommend including <code>DEBUG</code> level
+statements inside of top level loops and beginning each function with
+the following:</p>
 <pre><code><a href="../reference/logger.debug.html">logger.debug("----- FUNCTION_NAME() -----")</a></code></pre>
 </div>
 <div id="trace" class="section level3">
 <h3 class="hasAnchor">
 <a href="#trace" class="anchor"></a>TRACE</h3>
-<p><code>TRACE</code> log statements are for the gory details of any part of your code where you expect or are experiencing errors. These should contain information about program state and are intended only for developers.</p>
+<p><code>TRACE</code> log statements are for the gory details of any
+part of your code where you expect or are experiencing errors. These
+should contain information about program state and are intended only for
+developers.</p>
 </div>
 </div>
 </div>
 <div id="a-logging-example" class="section level1">
 <h1 class="hasAnchor">
 <a href="#a-logging-example" class="anchor"></a>A Logging Example</h1>
-<p>The following minimal example demonstrates the use of logging statements and their output.</p>
+<p>The following minimal example demonstrates the use of logging
+statements and their output.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MazamaScience/MazamaCoreUtils">MazamaCoreUtils</a></span><span class="op">)</span>
 
@@ -204,6 +243,7 @@ logger.trace("TRACE level message")</a></code></pre>
 <span class="op">}</span>
 <span class="co">#&gt; Error in Summary.factor(structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,  : </span>
 <span class="co">#&gt;   'sum' not meaningful for factors</span>
+
 <span class="co"># Successful completion</span>
 <span class="fu"><a href="../reference/logger.error.html">logger.error</a></span><span class="op">(</span><span class="st">"NO ERRORS"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/logger.info.html">logger.info</a></span><span class="op">(</span><span class="st">"Successfully completed loggingExample"</span><span class="op">)</span>
@@ -220,31 +260,31 @@ logger.trace("TRACE level message")</a></code></pre>
 <div id="error-log" class="section level2">
 <h2 class="hasAnchor">
 <a href="#error-log" class="anchor"></a>ERROR.log</h2>
-<pre><code>#&gt; ERROR [2021-11-19 05:54:30] NO ERRORS</code></pre>
+<pre><code>#&gt; ERROR [2022-07-20 11:41:25] NO ERRORS</code></pre>
 </div>
 <div id="info-log" class="section level2">
 <h2 class="hasAnchor">
 <a href="#info-log" class="anchor"></a>INFO.log</h2>
-<pre><code>#&gt; INFO [2021-11-19 05:54:29] Begin loggingExample ...
-#&gt; WARN [2021-11-19 05:54:30] Oops: object 'flog.appender' not found
-#&gt; ERROR [2021-11-19 05:54:30] NO ERRORS
-#&gt; INFO [2021-11-19 05:54:30] Successfully completed loggingExample
-#&gt; INFO [2021-11-19 05:54:30] 
+<pre><code>#&gt; INFO [2022-07-20 11:41:25] Begin loggingExample ...
+#&gt; WARN [2022-07-20 11:41:25] Oops: object 'flog.appender' not found
+#&gt; ERROR [2022-07-20 11:41:25] NO ERRORS
+#&gt; INFO [2022-07-20 11:41:25] Successfully completed loggingExample
+#&gt; INFO [2022-07-20 11:41:25] 
 #&gt; =============== THE END ===============</code></pre>
 </div>
 <div id="trace-log" class="section level2">
 <h2 class="hasAnchor">
 <a href="#trace-log" class="anchor"></a>TRACE.log</h2>
-<pre><code>#&gt; INFO [2021-11-19 05:54:29] Begin loggingExample ...
-#&gt; TRACE [2021-11-19 05:54:30] Working on: Sepal.Length
-#&gt; TRACE [2021-11-19 05:54:30] Working on: Sepal.Width
-#&gt; TRACE [2021-11-19 05:54:30] Working on: Petal.Length
-#&gt; TRACE [2021-11-19 05:54:30] Working on: Petal.Width
-#&gt; TRACE [2021-11-19 05:54:30] Working on: Species
-#&gt; WARN [2021-11-19 05:54:30] Oops: object 'flog.appender' not found
-#&gt; ERROR [2021-11-19 05:54:30] NO ERRORS
-#&gt; INFO [2021-11-19 05:54:30] Successfully completed loggingExample
-#&gt; INFO [2021-11-19 05:54:30] 
+<pre><code>#&gt; INFO [2022-07-20 11:41:25] Begin loggingExample ...
+#&gt; TRACE [2022-07-20 11:41:25] Working on: Sepal.Length
+#&gt; TRACE [2022-07-20 11:41:25] Working on: Sepal.Width
+#&gt; TRACE [2022-07-20 11:41:25] Working on: Petal.Length
+#&gt; TRACE [2022-07-20 11:41:25] Working on: Petal.Width
+#&gt; TRACE [2022-07-20 11:41:25] Working on: Species
+#&gt; WARN [2022-07-20 11:41:25] Oops: object 'flog.appender' not found
+#&gt; ERROR [2022-07-20 11:41:25] NO ERRORS
+#&gt; INFO [2022-07-20 11:41:25] Successfully completed loggingExample
+#&gt; INFO [2022-07-20 11:41:25] 
 #&gt; =============== THE END ===============</code></pre>
 </div>
 </div>
@@ -256,15 +296,24 @@ logger.trace("TRACE level message")</a></code></pre>
 <h3 class="hasAnchor">
 <a href="#logger-setlevel" class="anchor"></a><code>logger.setLevel()</code>
 </h3>
-<p>This function sets the log level used in the console. By default this level is set to <code>FATAL</code> which basically means “only when R crashes”. If you are debugging code interactively you may wish to see log messages as the are generated by entering the following command:</p>
+<p>This function sets the log level used in the console. By default this
+level is set to <code>FATAL</code> which basically means “only when R
+crashes”. If you are debugging code interactively you may wish to see
+log messages as the are generated by entering the following command:</p>
 <pre><code><a href="../reference/logger.setLevel.html">logger.setLevel(TRACE)</a></code></pre>
 </div>
 <div id="initializelogging" class="section level3">
 <h3 class="hasAnchor">
 <a href="#initializelogging" class="anchor"></a><code>initializeLogging()</code>
 </h3>
-<p>This function is a wrapper for our typical usage. It accepts a <code>logDir</code> parameter and looks for <code>TRACE</code>, <code>DEBUG</code> <code>INFO</code> and <code>ERROR</code> logs in that directory. If they are found, they are renamed as <code><a href="https://rdrr.io/r/base/paste.html">paste0(logLevel,".log.",timestamp)</a></code>. After renaming, new log files are setup.</p>
-<p>This is particularly useful for operational code run inside docker containers which may be automatically rebooted.</p>
+<p>This function is a wrapper for our typical usage. It accepts a
+<code>logDir</code> parameter and looks for <code>TRACE</code>,
+<code>DEBUG</code> <code>INFO</code> and <code>ERROR</code> logs in that
+directory. If they are found, they are renamed as
+<code><a href="https://rdrr.io/r/base/paste.html">paste0(logLevel,".log.",timestamp)</a></code>. After renaming, new log
+files are setup.</p>
+<p>This is particularly useful for operational code run inside docker
+containers which may be automatically rebooted.</p>
 </div>
 </div>
   </div>

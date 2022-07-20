@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.12</span>
       </span>
     </div>
 
@@ -117,12 +117,24 @@
       <small>Source: <a href='https://github.com/MazamaScience/MazamaCoreUtils/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="mazamacoreutils-0412" class="section level1">
+<h1 class="page-header" data-toc-text="0.4.12">
+<a href="#mazamacoreutils-0412" class="anchor"></a>MazamaCoreUtils 0.4.12<small> Unreleased </small>
+</h1>
+<ul>
+<li>Updated
+<code>stopOnError() with the following additional arguments:</code>prefix<code>,</code>code<code>,</code>maxLength<code>,</code>truncatedLength<code>,</code>call.`.</li>
+<li>Corrected documentation for <code><a href="../reference/timeStamp.html">timeStamp()</a></code>.</li>
+</ul>
+</div>
     <div id="mazamacoreutils-0411" class="section level1">
 <h1 class="page-header" data-toc-text="0.4.11">
 <a href="#mazamacoreutils-0411" class="anchor"></a>MazamaCoreUtils 0.4.11<small> Unreleased </small>
 </h1>
 <ul>
-<li>Changed examples in <code><a href="../reference/html_getLinks.html">html_getLinks()</a></code> and <code><a href="../reference/html_getTables.html">html_getTables()</a></code> to explain any errors with: <code><a href="https://rdrr.io/r/base/try.html">try({ ...}, silent = FALSE)</a></code>.</li>
+<li>Changed examples in <code><a href="../reference/html_getLinks.html">html_getLinks()</a></code> and
+<code><a href="../reference/html_getTables.html">html_getTables()</a></code> to explain any errors with:
+<code><a href="https://rdrr.io/r/base/try.html">try({ ...}, silent = FALSE)</a></code>.</li>
 </ul>
 </div>
     <div id="mazamacoreutils-0410" class="section level1">
@@ -130,10 +142,14 @@
 <a href="#mazamacoreutils-0410" class="anchor"></a>MazamaCoreUtils 0.4.10<small> 2021-11-11 </small>
 </h1>
 <ul>
-<li>New functions for managing API keys: <code><a href="../reference/getAPIKey.html">getAPIKey()</a></code>, <code><a href="../reference/setAPIKey.html">setAPIKey()</a></code>, <code><a href="../reference/showAPIKeys.html">showAPIKeys()</a></code>.</li>
-<li>Now exporting <code><a href="https://rdrr.io/pkg/futile.logger/man/flog.layout.html">futile.logger::flog.layout()</a></code> to avoid downstream complaints.</li>
-<li>Examples for <code><a href="../reference/html_getLinks.html">html_getLinks()</a></code> and <code><a href="../reference/html_getTables.html">html_getTables()</a></code> now fail gracefully.</li>
-<li>Consolidated the <code>local_~/</code> directories. <em>(Not part of the R package.)</em>
+<li>New functions for managing API keys: <code><a href="../reference/getAPIKey.html">getAPIKey()</a></code>,
+<code><a href="../reference/setAPIKey.html">setAPIKey()</a></code>, <code><a href="../reference/showAPIKeys.html">showAPIKeys()</a></code>.</li>
+<li>Now exporting <code><a href="https://rdrr.io/pkg/futile.logger/man/flog.layout.html">futile.logger::flog.layout()</a></code> to avoid
+downstream complaints.</li>
+<li>Examples for <code><a href="../reference/html_getLinks.html">html_getLinks()</a></code> and
+<code><a href="../reference/html_getTables.html">html_getTables()</a></code> now fail gracefully.</li>
+<li>Consolidated the <code>local_~/</code> directories. <em>(Not part of
+the R package.)</em>
 </li>
 </ul>
 </div>
@@ -143,9 +159,13 @@
 </h1>
 <ul>
 <li>Updated R dependency to R (&gt;= 3.5.0).</li>
-<li>Added <code>filePrefix</code> and <code>createDir</code> arguments to <code><a href="../reference/initializeLogging.html">initializeLogging()</a></code>.</li>
-<li>Added location utility functions: <code><a href="../reference/validateLonLat.html">validateLonLat()</a></code>, <code><a href="../reference/validateLonsLats.html">validateLonsLats()</a></code> and <code><a href="../reference/createLocationID.html">createLocationID()</a></code>.</li>
-<li>Harmonized error messages to begin with lower case and not include a period.</li>
+<li>Added <code>filePrefix</code> and <code>createDir</code> arguments
+to <code><a href="../reference/initializeLogging.html">initializeLogging()</a></code>.</li>
+<li>Added location utility functions: <code><a href="../reference/validateLonLat.html">validateLonLat()</a></code>,
+<code><a href="../reference/validateLonsLats.html">validateLonsLats()</a></code> and
+<code><a href="../reference/createLocationID.html">createLocationID()</a></code>.</li>
+<li>Harmonized error messages to begin with lower case and not include a
+period.</li>
 <li>Added Zenodo DOI.</li>
 </ul>
 </div>
@@ -154,9 +174,12 @@
 <a href="#mazamacoreutils-048" class="anchor"></a>MazamaCoreUtils 0.4.8<small> 2021-08-18 </small>
 </h1>
 <ul>
-<li>Fixed bug in <code><a href="../reference/dateRange.html">dateRange()</a></code> when creating single day date ranges.</li>
-<li>Added <code>"ymdThms"</code> format to <code><a href="../reference/timeStamp.html">timeStamp()</a></code>.</li>
-<li>Added <code>"msec"</code> unit option to <code><a href="https://rdrr.io/r/utils/savehistory.html">timestamp()</a></code>.</li>
+<li>Fixed bug in <code><a href="../reference/dateRange.html">dateRange()</a></code> when creating single day date
+ranges.</li>
+<li>Added <code>"ymdThms"</code> format to
+<code><a href="../reference/timeStamp.html">timeStamp()</a></code>.</li>
+<li>Added <code>"msec"</code> unit option to
+<code><a href="https://rdrr.io/r/utils/savehistory.html">timestamp()</a></code>.</li>
 <li>Renamed default branch from ‘master’ to ‘main’.</li>
 </ul>
 </div>
@@ -165,7 +188,8 @@
 <a href="#mazamacoreutils-047" class="anchor"></a>MazamaCoreUtils 0.4.7<small> Unreleased </small>
 </h1>
 <ul>
-<li>Updated <code><a href="../reference/html_getTables.html">html_getTable()</a></code> to not disregard the <code>index</code> parameter.</li>
+<li>Updated <code><a href="../reference/html_getTables.html">html_getTable()</a></code> to not disregard the
+<code>index</code> parameter.</li>
 </ul>
 </div>
     <div id="mazamacoreutils-046" class="section level1">
@@ -173,7 +197,9 @@
 <a href="#mazamacoreutils-046" class="anchor"></a>MazamaCoreUtils 0.4.6<small> 2020-11-13 </small>
 </h1>
 <ul>
-<li>Updated <code>check_~()</code> functions to use <code><a href="https://devtools.r-lib.org//reference/check.html">devtools::check()</a></code> <code>manual</code> and <code>run_dont_test</code> arguments.</li>
+<li>Updated <code>check_~()</code> functions to use
+<code><a href="https://devtools.r-lib.org/reference/check.html">devtools::check()</a></code> <code>manual</code> and
+<code>run_dont_test</code> arguments.</li>
 </ul>
 </div>
     <div id="mazamacoreutils-045" class="section level1">
@@ -181,7 +207,8 @@
 <a href="#mazamacoreutils-045" class="anchor"></a>MazamaCoreUtils 0.4.5<small> Unreleased </small>
 </h1>
 <ul>
-<li>Added <code>header</code> option to <code><a href="../reference/html_getLinks.html">html_getLinks()</a></code> and <code><a href="../reference/html_getTables.html">html_getTables()</a></code> functions.</li>
+<li>Added <code>header</code> option to <code><a href="../reference/html_getLinks.html">html_getLinks()</a></code> and
+<code><a href="../reference/html_getTables.html">html_getTables()</a></code> functions.</li>
 </ul>
 </div>
     <div id="mazamacoreutils-044" class="section level1">
@@ -189,7 +216,8 @@
 <a href="#mazamacoreutils-044" class="anchor"></a>MazamaCoreUtils 0.4.4<small> 2020-07-20 </small>
 </h1>
 <ul>
-<li>Added new <code><a href="../reference/html_getLinks.html">html_getLinks()</a></code> and <code><a href="../reference/html_getTables.html">html_getTables()</a></code> functions.</li>
+<li>Added new <code><a href="../reference/html_getLinks.html">html_getLinks()</a></code> and
+<code><a href="../reference/html_getTables.html">html_getTables()</a></code> functions.</li>
 </ul>
 </div>
     <div id="mazamacoreutils-043" class="section level1">
@@ -197,7 +225,8 @@
 <a href="#mazamacoreutils-043" class="anchor"></a>MazamaCoreUtils 0.4.3<small> 2020-04-08 </small>
 </h1>
 <ul>
-<li>Now exporting <code><a href="https://rdrr.io/pkg/futile.logger/man/flog.layout.html">futile.logger::flog.layout()</a></code> to avoid downstream complaints.</li>
+<li>Now exporting <code><a href="https://rdrr.io/pkg/futile.logger/man/flog.layout.html">futile.logger::flog.layout()</a></code> to avoid
+downstream complaints.</li>
 <li>Updated documentation for <code>check_~()</code> functions.</li>
 </ul>
 </div>
@@ -207,7 +236,8 @@
 </h1>
 <ul>
 <li>Fixed error messaging in <code><a href="../reference/loadDataFile.html">loadDataFile()</a></code>.</li>
-<li>Added <code>ceilingStart</code> argument to <code><a href="../reference/dateRange.html">dateRange()</a></code> and <code><a href="../reference/timeRange.html">timeRange()</a></code>.</li>
+<li>Added <code>ceilingStart</code> argument to <code><a href="../reference/dateRange.html">dateRange()</a></code>
+and <code><a href="../reference/timeRange.html">timeRange()</a></code>.</li>
 </ul>
 </div>
     <div id="mazamacoreutils-041" class="section level1">
@@ -215,23 +245,34 @@
 <a href="#mazamacoreutils-041" class="anchor"></a>MazamaCoreUtils 0.4.1<small> Unreleased </small>
 </h1>
 <ul>
-<li>Fixed improper handling of single day date ranges in <code><a href="../reference/dateRange.html">dateRange()</a></code>.</li>
+<li>Fixed improper handling of single day date ranges in
+<code><a href="../reference/dateRange.html">dateRange()</a></code>.</li>
 </ul>
 </div>
     <div id="mazamacoreutils-040" class="section level1">
 <h1 class="page-header" data-toc-text="0.4.0">
 <a href="#mazamacoreutils-040" class="anchor"></a>MazamaCoreUtils 0.4.0<small> 2019-11-06 </small>
 </h1>
-<p>This version address a few issues encountered while using 0.3.11 in production.</p>
+<p>This version address a few issues encountered while using 0.3.11 in
+production.</p>
 <ul>
-<li>New <code><a href="../reference/timeStamp.html">timeStamp()</a></code> function creates character timestamps useful for labeling.</li>
-<li>New <code><a href="../reference/dateSequence.html">dateSequence()</a></code> function generates a sequence of <code>POSIXct</code> values that align with midnight local time even through the switch to/from daylight savings.</li>
-<li>New <code><a href="../reference/loadDataFile.html">loadDataFile()</a></code> function supports loading data from local directories or URLs.</li>
-<li>Added year-only support to <code><a href="../reference/parseDatetime.html">parseDatetime()</a></code> when parsing julian dates.</li>
-<li>Renamed <code>parsDatetime()</code> argument <code>julian</code> to <code>isJulian</code>.</li>
+<li>New <code><a href="../reference/timeStamp.html">timeStamp()</a></code> function creates character timestamps
+useful for labeling.</li>
+<li>New <code><a href="../reference/dateSequence.html">dateSequence()</a></code> function generates a sequence of
+<code>POSIXct</code> values that align with midnight local time even
+through the switch to/from daylight savings.</li>
+<li>New <code><a href="../reference/loadDataFile.html">loadDataFile()</a></code> function supports loading data from
+local directories or URLs.</li>
+<li>Added year-only support to <code><a href="../reference/parseDatetime.html">parseDatetime()</a></code> when parsing
+julian dates.</li>
+<li>Renamed <code>parsDatetime()</code> argument <code>julian</code> to
+<code>isJulian</code>.</li>
 <li>
-<code><a href="../reference/stopIfNull.html">stopIfNull()</a></code> and <code><a href="../reference/setIfNull.html">setIfNull()</a></code> now issue <code><a href="https://rdrr.io/r/base/stop.html">stop(...)</a></code> messages with <code>call. = TRUE</code> so that the stack information bubbles up.</li>
-<li>Now exporting <code><a href="https://rdrr.io/pkg/futile.logger/man/flog.logger.html">futile.logger::flog.logger()</a></code> to avoid downstream complaints.</li>
+<code><a href="../reference/stopIfNull.html">stopIfNull()</a></code> and <code><a href="../reference/setIfNull.html">setIfNull()</a></code> now issue
+<code><a href="https://rdrr.io/r/base/stop.html">stop(...)</a></code> messages with <code>call. = TRUE</code> so that
+the stack information bubbles up.</li>
+<li>Now exporting <code><a href="https://rdrr.io/pkg/futile.logger/man/flog.logger.html">futile.logger::flog.logger()</a></code> to avoid
+downstream complaints.</li>
 </ul>
 </div>
     <div id="mazamacoreutils-0311" class="section level1">
@@ -239,7 +280,8 @@
 <a href="#mazamacoreutils-0311" class="anchor"></a>MazamaCoreUtils 0.3.11<small> Unreleased </small>
 </h1>
 <ul>
-<li>Added this package’s own date parsing functions to <code>timezoneLintrules</code>.</li>
+<li>Added this package’s own date parsing functions to
+<code>timezoneLintrules</code>.</li>
 </ul>
 </div>
     <div id="mazamacoreutils-0310" class="section level1">
@@ -248,7 +290,8 @@
 </h1>
 <ul>
 <li>
-<code><a href="../reference/parseDatetime.html">parseDatetime()</a></code> now supports YYYY and YYYYmm formats.</li>
+<code><a href="../reference/parseDatetime.html">parseDatetime()</a></code> now supports YYYY and YYYYmm
+formats.</li>
 </ul>
 </div>
     <div id="mazamacoreutils-039" class="section level1">
@@ -256,14 +299,16 @@
 <a href="#mazamacoreutils-039" class="anchor"></a>MazamaCoreUtils 0.3.9<small> 2019-10-04 </small>
 </h1>
 <ul>
-<li>Added <code>julian</code> argument to <code><a href="../reference/parseDatetime.html">parseDatetime()</a></code> to support Julian day formats.</li>
+<li>Added <code>julian</code> argument to <code><a href="../reference/parseDatetime.html">parseDatetime()</a></code>
+to support Julian day formats.</li>
 </ul>
 </div>
     <div id="mazamacoreutils-038" class="section level1">
 <h1 class="page-header" data-toc-text="0.3.8">
 <a href="#mazamacoreutils-038" class="anchor"></a>MazamaCoreUtils 0.3.8<small> Unreleased </small>
 </h1>
-<p>Added a suite of functions to easily run <code><a href="https://devtools.r-lib.org//reference/check.html">devtools::check()</a></code> with different arguments:</p>
+<p>Added a suite of functions to easily run
+<code><a href="https://devtools.r-lib.org/reference/check.html">devtools::check()</a></code> with different arguments:</p>
 <ul>
 <li><p><code><a href="../reference/packageCheck.html">check_fastest()</a></code></p></li>
 <li><p><code><a href="../reference/packageCheck.html">check_faster()</a></code></p></li>
@@ -272,7 +317,8 @@
 <li><p><code><a href="../reference/packageCheck.html">check_slow()</a></code></p></li>
 <li><p><code><a href="../reference/packageCheck.html">check_slower()</a></code></p></li>
 <li><p><code><a href="../reference/packageCheck.html">check_slowest()</a></code></p></li>
-<li><p>Added more <em>lubridate</em> functions to <code>timezoneLintRules</code>.</p></li>
+<li><p>Added more <em>lubridate</em> functions to
+<code>timezoneLintRules</code>.</p></li>
 </ul>
 </div>
     <div id="mazamacoreutils-037" class="section level1">
@@ -282,21 +328,28 @@
 <ul>
 <li>Added <code><a href="../reference/logger.isInitialized.html">logger.isInitialized()</a></code> for programmatic use.</li>
 <li>
-<code><a href="../reference/logger.setLevel.html">logger.setLevel()</a></code> now guarantees that <code><a href="../reference/logger.setup.html">logger.setup()</a></code> has been called, fixing a bug that generated multiple output messages when <code><a href="../reference/logger.setLevel.html">logger.setLevel()</a></code> was called before <code><a href="../reference/logger.setup.html">logger.setup()</a></code>.</li>
-<li>Added more <em>lubridate</em> functions to <code>timezoneLintRules</code>.</li>
+<code><a href="../reference/logger.setLevel.html">logger.setLevel()</a></code> now guarantees that
+<code><a href="../reference/logger.setup.html">logger.setup()</a></code> has been called, fixing a bug that generated
+multiple output messages when <code><a href="../reference/logger.setLevel.html">logger.setLevel()</a></code> was called
+before <code><a href="../reference/logger.setup.html">logger.setup()</a></code>.</li>
+<li>Added more <em>lubridate</em> functions to
+<code>timezoneLintRules</code>.</li>
 </ul>
 </div>
     <div id="mazamacoreutils-036" class="section level1">
 <h1 class="page-header" data-toc-text="0.3.6">
 <a href="#mazamacoreutils-036" class="anchor"></a>MazamaCoreUtils 0.3.6<small> Unreleased </small>
 </h1>
-<p>More consistency improvements to <code><a href="../reference/dateRange.html">dateRange()</a></code>. When specified, the <code>days</code> parameter now takes precedence over <code>ceilingEnd</code> when no <code>enddate</code> is specified.</p>
+<p>More consistency improvements to <code><a href="../reference/dateRange.html">dateRange()</a></code>. When
+specified, the <code>days</code> parameter now takes precedence over
+<code>ceilingEnd</code> when no <code>enddate</code> is specified.</p>
 </div>
     <div id="mazamacoreutils-035" class="section level1">
 <h1 class="page-header" data-toc-text="0.3.5">
 <a href="#mazamacoreutils-035" class="anchor"></a>MazamaCoreUtils 0.3.5<small> 2019-09-10 </small>
 </h1>
-<p>Fully self-consistent package using internal functions wherever possible.</p>
+<p>Fully self-consistent package using internal functions wherever
+possible.</p>
 </div>
     <div id="mazamacoreutils-034" class="section level1">
 <h1 class="page-header" data-toc-text="0.3.4">
@@ -305,21 +358,29 @@
 <p>Various improvements after usage in an operational setting:</p>
 <ul>
 <li>
-<code>timezoneLintRules</code> includes more date related functions.</li>
-<li>Added <code>quiet</code> argument to <code>parseDateTime()</code>.</li>
+<code>timezoneLintRules</code> includes more date related
+functions.</li>
+<li>Added <code>quiet</code> argument to
+<code>parseDateTime()</code>.</li>
 <li>
-<code><a href="../reference/timeRange.html">timeRange()</a></code> function now accepts <code>unit</code> and <code>ceilingEnd</code> arguments.</li>
+<code><a href="../reference/timeRange.html">timeRange()</a></code> function now accepts <code>unit</code> and
+<code>ceilingEnd</code> arguments.</li>
 <li>
-<code><a href="../reference/dateRange.html">dateRange()</a></code> function now accepts <code>ceilingEnd</code> argument.</li>
+<code><a href="../reference/dateRange.html">dateRange()</a></code> function now accepts
+<code>ceilingEnd</code> argument.</li>
 <li>More unit tests for dates and times.</li>
 </ul>
-<p>The <code>ceilingEnd</code> argument addresses the ambiguity of a phrase like: “August 1-8”. With <code>ceilingEnd = FALSE</code> (default) this pharse means “through the beginning of Aug 8”. With <code>ceilingEnd = TRUE</code> it means “through the end of Aug 8”.</p>
+<p>The <code>ceilingEnd</code> argument addresses the ambiguity of a
+phrase like: “August 1-8”. With <code>ceilingEnd = FALSE</code>
+(default) this pharse means “through the beginning of Aug 8”. With
+<code>ceilingEnd = TRUE</code> it means “through the end of Aug 8”.</p>
 </div>
     <div id="mazamacoreutils-033" class="section level1">
 <h1 class="page-header" data-toc-text="0.3.3">
 <a href="#mazamacoreutils-033" class="anchor"></a>MazamaCoreUtils 0.3.3<small> Unreleased </small>
 </h1>
-<p>This version adds new convenience functions for dealing with <code>NULL</code> values in pipeline flow control.</p>
+<p>This version adds new convenience functions for dealing with
+<code>NULL</code> values in pipeline flow control.</p>
 <div id="new-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-functions" class="anchor"></a>New functions</h2>
@@ -331,7 +392,14 @@
 <div id="dealing-with-null-values" class="section level2">
 <h2 class="hasAnchor">
 <a href="#dealing-with-null-values" class="anchor"></a>Dealing with NULL values</h2>
-<p>In a lot of the data pipelines we build (web services, packages, etc.), we need to deal with the possibility of <code>NULL</code> inputs. Setting a default value or throwing an error are two of the most common ways <code>NUll</code> values are dealt with. While the code to handle this is straightforward to write, it is verbose and repetitive. <code><a href="../reference/setIfNull.html">setIfNull()</a></code> and <code><a href="../reference/stopIfNull.html">stopIfNull()</a></code> are designed to abstract away boilerplate code, allowing us to focus on more important things.</p>
+<p>In a lot of the data pipelines we build (web services, packages,
+etc.), we need to deal with the possibility of <code>NULL</code> inputs.
+Setting a default value or throwing an error are two of the most common
+ways <code>NUll</code> values are dealt with. While the code to handle
+this is straightforward to write, it is verbose and repetitive.
+<code><a href="../reference/setIfNull.html">setIfNull()</a></code> and <code><a href="../reference/stopIfNull.html">stopIfNull()</a></code> are designed to
+abstract away boilerplate code, allowing us to focus on more important
+things.</p>
 </div>
 </div>
     <div id="mazamacoreutils-032" class="section level1">
@@ -339,7 +407,8 @@
 <a href="#mazamacoreutils-032" class="anchor"></a>MazamaCoreUtils 0.3.2<small> Unreleased </small>
 </h1>
 <ul>
-<li>Improved documentation for <code>enddate</code> in `dateRange().</li>
+<li>Improved documentation for <code>enddate</code> in
+`dateRange().</li>
 </ul>
 </div>
     <div id="mazamacoreutils-031" class="section level1">
@@ -348,7 +417,8 @@
 </h1>
 <ul>
 <li>Tweak for CRAN.</li>
-<li>Renamed <code>lintFunctionArgs_directory()</code> to <code><a href="../reference/lintFunctionArgs.html">lintFunctionArgs_dir()</a></code>.</li>
+<li>Renamed <code>lintFunctionArgs_directory()</code> to
+<code><a href="../reference/lintFunctionArgs.html">lintFunctionArgs_dir()</a></code>.</li>
 <li>Added <code>fullPath</code> argument to linting functions.</li>
 <li>Added <code>date-parsing</code> vignette.</li>
 </ul>
@@ -357,7 +427,8 @@
 <h1 class="page-header" data-toc-text="0.3.0">
 <a href="#mazamacoreutils-030" class="anchor"></a>MazamaCoreUtils 0.3.0<small> Unreleased </small>
 </h1>
-<p>This version focuses on enhancing the time utility capabilities of <em>MazamaCoreUtils</em>.</p>
+<p>This version focuses on enhancing the time utility capabilities of
+<em>MazamaCoreUtils</em>.</p>
 <div id="new-functions-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-functions-1" class="anchor"></a>New functions</h2>
@@ -371,13 +442,26 @@
 <div id="function-argument-linting" class="section level2">
 <h2 class="hasAnchor">
 <a href="#function-argument-linting" class="anchor"></a>Function Argument Linting</h2>
-<p>In order to ensure that we are working with timezones consistently, the functions <code><a href="../reference/lintFunctionArgs.html">lintFunctionArgs_file()</a></code> and <code>lintFunctionArgs_directory()</code> were created to parse <strong>R</strong> source files and determine if certain functions contained specific named arguments, based on a set of rules. A set of rules, <code>timezoneLintRules</code>, was created to check that all functions that accept a timezone have that argument explicitly fill, avoiding inconsistent default behavior.</p>
+<p>In order to ensure that we are working with timezones consistently,
+the functions <code><a href="../reference/lintFunctionArgs.html">lintFunctionArgs_file()</a></code> and
+<code>lintFunctionArgs_directory()</code> were created to parse
+<strong>R</strong> source files and determine if certain functions
+contained specific named arguments, based on a set of rules. A set of
+rules, <code>timezoneLintRules</code>, was created to check that all
+functions that accept a timezone have that argument explicitly fill,
+avoiding inconsistent default behavior.</p>
 </div>
 <div id="consolidating-time-utility-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#consolidating-time-utility-functions" class="anchor"></a>Consolidating Time-Utility functions</h2>
-<p><code>PWFSLSmoke::parseDatetime()</code> was moved into <em>MazamaCoreUtils</em> so more packages can benefit from it without importing the rest of <em>PWFSLSmoke</em>. Also, <code><a href="../reference/timeRange.html">timeRange()</a></code> was created to work as a function analogous to <code><a href="../reference/dateRange.html">dateRange()</a></code>, parsing time ranges instead of finding date ranges.</p>
-<p>As part of this consolidation, more unit tests were added to the package.</p>
+<p><code>PWFSLSmoke::parseDatetime()</code> was moved into
+<em>MazamaCoreUtils</em> so more packages can benefit from it without
+importing the rest of <em>PWFSLSmoke</em>. Also,
+<code><a href="../reference/timeRange.html">timeRange()</a></code> was created to work as a function analogous to
+<code><a href="../reference/dateRange.html">dateRange()</a></code>, parsing time ranges instead of finding date
+ranges.</p>
+<p>As part of this consolidation, more unit tests were added to the
+package.</p>
 </div>
 </div>
     <div id="mazamacoreutils-021" class="section level1">
@@ -389,7 +473,8 @@
 <li>
 <code><a href="../reference/dateRange.html">dateRange()</a></code> no longer provides a default timezone.</li>
 <li>
-<code><a href="../reference/dateRange.html">dateRange()</a></code> no longer alters <code>POSIXct</code> inputs</li>
+<code><a href="../reference/dateRange.html">dateRange()</a></code> no longer alters <code>POSIXct</code>
+inputs</li>
 <li>
 <code><a href="../reference/dateRange.html">dateRange()</a></code> now has stricter argument checking</li>
 </ul>
@@ -399,7 +484,8 @@
 <a href="#mazamacoreutils-020" class="anchor"></a>MazamaCoreUtils 0.2.0<small> 2019-07-18 </small>
 </h1>
 <ul>
-<li>Moved <code>futile.logger</code> from <code>Depends</code> to <code>Imports</code>.</li>
+<li>Moved <code>futile.logger</code> from <code>Depends</code> to
+<code>Imports</code>.</li>
 <li>Version bump.</li>
 </ul>
 </div>
@@ -427,8 +513,10 @@
 </h1>
 <ul>
 <li>Added <em>pkgdown</em> documentation.</li>
-<li>New vignettes for <code>error-handling</code> and <code>logging</code>.</li>
-<li>Package now <strong>Depends:</strong> on futile.logger – avoids <code>futile.logger not found</code> error messages.</li>
+<li>New vignettes for <code>error-handling</code> and
+<code>logging</code>.</li>
+<li>Package now <strong>Depends:</strong> on futile.logger – avoids
+<code>futile.logger not found</code> error messages.</li>
 <li>Additional logging unit tests.</li>
 </ul>
 </div>
@@ -437,8 +525,11 @@
 <a href="#mazamacoreutils-012" class="anchor"></a>MazamaCoreUtils 0.1.2<small> Unreleased </small>
 </h1>
 <ul>
-<li>Added <code>maxFileAge</code> parameter to <code>cacheManagement()</code> to help with removal of out-of-data products.</li>
-<li>New dependencies on <em>magrittr</em> and <em>rlang</em> packages.</li>
+<li>Added <code>maxFileAge</code> parameter to
+<code>cacheManagement()</code> to help with removal of out-of-data
+products.</li>
+<li>New dependencies on <em>magrittr</em> and <em>rlang</em>
+packages.</li>
 </ul>
 </div>
     <div id="mazamacoreutils-011" class="section level1">

@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.13</span>
       </span>
     </div>
 
@@ -193,26 +193,24 @@ err_msg &lt;- geterrmessage()
   # stop() if necessary with user friendly error strings
 }</code></pre>
 </div>
-<div id="regularized-usage-in-operational-code" class="section level1">
+<div id="stoponerror" class="section level1">
 <h1 class="hasAnchor">
-<a href="#regularized-usage-in-operational-code" class="anchor"></a>Regularized Usage in Operational Code</h1>
-<p>The following utility function regularizes our handling of errors in
-operational code:</p>
-<div id="stoponerror" class="section level3">
-<h3 class="hasAnchor">
 <a href="#stoponerror" class="anchor"></a><code>stopOnError()</code>
-</h3>
-<p>This function tests the first argument for a class of
-<code>try-error</code> and, if true, performs the following actions:</p>
+</h1>
+<p>The <strong><code><a href="../reference/stopOnError.html">stopOnError()</a></code></strong> utility function
+regularizes our handling of errors in operational code. This function
+tests the first argument for a class of <code>try-error</code> and, if
+true, performs the following actions:</p>
 <ol style="list-style-type: decimal">
 <li>creates <code>err_msg</code> from a user provided error message or,
 if NULL, <code><a href="https://rdrr.io/r/base/stop.html">geterrmessage()</a></code>
 </li>
-<li>logs this message with <code><a href="../reference/logger.error.html">logger.error(err_msg)</a></code>
+<li>allows modification of error messages with arguments
+<code>prefix</code> and <code>maxLength</code>
 </li>
-<li>
-<em>throws</em> the potentially improved error message with
-<code><a href="https://rdrr.io/r/base/stop.html">stop(err_msg)</a></code>
+<li>logs this message with <code><a href="../reference/logger.error.html">logger.error(err_msg)</a></code> if logging
+has been enabled</li>
+<li>throws an updated error message with <code><a href="https://rdrr.io/r/base/stop.html">stop(err_msg)</a></code>
 </li>
 </ol>
 <p>Encouraging junior R programmers to add error handling to their code
@@ -224,60 +222,86 @@ block” with the following minimal syntax:</p>
   # ...
 }, silent = FALSE)
 stopOnError(result)</code></pre>
+<p>Using the <code><a href="../reference/%&gt;%.html">%&gt;%</a></code> pipe operator, we can write this even
+more concisely without creating the interim <code>result</code>
+object:</p>
+<pre><code>try({
+  # ...
+  # lines of R code
+  # ...
+}, silent = FALSE) %&gt;%
+  stopOnError()</code></pre>
+</div>
+<div id="working-example" class="section level1">
+<h1 class="hasAnchor">
+<a href="#working-example" class="anchor"></a>Working example</h1>
 <p>Here is a working example demonstrating how a web service might test
 for user input that may not have been converted from character to
-numeric:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+numeric. All errors are appropriately logged. <em>(The outer
+<code><a href="https://rdrr.io/r/base/try.html">try()</a></code> blocks in the examples below allow the code to be
+evaluated for this vignette.)</em>.</p>
+<p>In the third example, we see how low level error messages that may be
+hard to understand in the context of a complex, multi-level piece of
+code can be converted into a message that makes sense in the context of
+a web service application.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MazamaScience/MazamaCoreUtils">MazamaCoreUtils</a></span><span class="op">)</span>
 <span class="fu"><a href="../reference/logger.setup.html">logger.setup</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="../reference/logger.setLevel.html">logger.setLevel</a></span><span class="op">(</span><span class="va">TRACE</span><span class="op">)</span>
+<span class="fu"><a href="../reference/logger.setLevel.html">logger.setLevel</a></span><span class="op">(</span><span class="va">TRACE</span><span class="op">)</span> <span class="co"># force logs to be printed to the console</span>
 
 <span class="co"># Arbitrarily deep in the stack we might have:</span>
 <span class="va">myFunc</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span>
 
-<span class="va">result</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span><span class="op">(</span><span class="op">{</span>
+<span class="co"># ----- Example 1:  good user input --------------------------------------------</span>
+<span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span><span class="op">(</span><span class="op">{</span>
   
   <span class="va">userInput</span> <span class="op">&lt;-</span> <span class="fl">10</span>
-  <span class="va">result</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span><span class="op">(</span><span class="op">{</span>
-    <span class="fu"><a href="../reference/logger.trace.html">logger.trace</a></span><span class="op">(</span><span class="st">"class(userInput) = %s"</span>, <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">userInput</span><span class="op">)</span><span class="op">)</span>
-    <span class="fu">myFunc</span><span class="op">(</span>x<span class="op">=</span><span class="va">userInput</span><span class="op">)</span>
-  <span class="op">}</span>, silent<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-  <span class="fu"><a href="../reference/stopOnError.html">stopOnError</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>
+  <span class="fu"><a href="../reference/logger.trace.html">logger.trace</a></span><span class="op">(</span><span class="st">"class(userInput) = %s"</span>, <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">userInput</span><span class="op">)</span><span class="op">)</span>
   
-<span class="op">}</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; TRACE [2022-07-20 11:41:23] class(userInput) = numeric</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span><span class="op">(</span><span class="op">{</span>
+    <span class="fu">myFunc</span><span class="op">(</span>x <span class="op">=</span> <span class="va">userInput</span><span class="op">)</span>
+  <span class="op">}</span>, silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="../reference/stopOnError.html">stopOnError</a></span><span class="op">(</span><span class="op">)</span>
+  
+  <span class="fu"><a href="../reference/logger.trace.html">logger.trace</a></span><span class="op">(</span><span class="st">"Continue processing ..."</span><span class="op">)</span>
+  
+<span class="op">}</span>, silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; TRACE [2022-08-10 11:52:06] class(userInput) = numeric</span>
+<span class="co">#&gt; TRACE [2022-08-10 11:52:06] Continue processing ...</span>
 
-<span class="co"># Continue despite any errors</span>
+<span class="co"># ----- Example 2:  bad user input ---------------------------------------------</span>
+<span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span><span class="op">(</span><span class="op">{</span>
   
-<span class="va">result</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span><span class="op">(</span><span class="op">{</span>
   <span class="va">userInput</span> <span class="op">&lt;-</span> <span class="st">"10"</span>
-  <span class="va">result</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span><span class="op">(</span><span class="op">{</span>
+  <span class="fu"><a href="../reference/logger.trace.html">logger.trace</a></span><span class="op">(</span><span class="st">"class(userInput) = %s"</span>, <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">userInput</span><span class="op">)</span><span class="op">)</span>
+  
+  <span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span><span class="op">(</span><span class="op">{</span>
+    <span class="fu">myFunc</span><span class="op">(</span>x <span class="op">=</span> <span class="va">userInput</span><span class="op">)</span>
+  <span class="op">}</span>, silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="../reference/stopOnError.html">stopOnError</a></span><span class="op">(</span><span class="op">)</span>
+  
+  <span class="fu"><a href="../reference/logger.trace.html">logger.trace</a></span><span class="op">(</span><span class="st">"Continue processing ..."</span><span class="op">)</span> <span class="co"># we don't get here</span>
+  
+<span class="op">}</span>, silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; TRACE [2022-08-10 11:52:06] class(userInput) = character</span>
+<span class="co">#&gt; ERROR [2022-08-10 11:52:06] Error in log(x) : non-numeric argument to mathematical function</span>
+
+<span class="co"># ----- Example 3:  bad user input, custom error message -----------------------</span>
+<span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span><span class="op">(</span><span class="op">{</span>
+  
+  <span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span><span class="op">(</span><span class="op">{</span>
     <span class="fu"><a href="../reference/logger.trace.html">logger.trace</a></span><span class="op">(</span><span class="st">"class(userInput) = %s"</span>, <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">userInput</span><span class="op">)</span><span class="op">)</span>
-    <span class="fu">myFunc</span><span class="op">(</span>x<span class="op">=</span><span class="va">userInput</span><span class="op">)</span>
-  <span class="op">}</span>, silent<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-  <span class="fu"><a href="../reference/stopOnError.html">stopOnError</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>
-<span class="op">}</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; TRACE [2022-07-20 11:41:23] class(userInput) = character</span>
-<span class="co">#&gt; ERROR [2022-07-20 11:41:23] Error in log(x) : non-numeric argument to mathematical function</span>
-<span class="co">#&gt; Error : Error in log(x) : non-numeric argument to mathematical function</span>
-
-<span class="co"># Continue despite any errors</span>
-
-<span class="va">result</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span><span class="op">(</span><span class="op">{</span>
-  <span class="va">result</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span><span class="op">(</span><span class="op">{</span>
-    <span class="fu"><a href="../reference/logger.trace.html">logger.trace</a></span><span class="op">(</span><span class="st">"class(userInput) = %s"</span>, <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">userInput</span><span class="op">)</span><span class="op">)</span>
-    <span class="fu">myFunc</span><span class="op">(</span>x<span class="op">=</span><span class="va">userInput</span><span class="op">)</span>
-  <span class="op">}</span>, silent<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-  <span class="fu"><a href="../reference/stopOnError.html">stopOnError</a></span><span class="op">(</span><span class="va">result</span>, <span class="st">"Unable to process user input"</span><span class="op">)</span>
-<span class="op">}</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; TRACE [2022-07-20 11:41:23] class(userInput) = character</span>
-<span class="co">#&gt; ERROR [2022-07-20 11:41:23] Unable to process user input</span>
-<span class="co">#&gt; Error : Unable to process user input</span>
-
-<span class="co"># Script completes with errors handled as they occurred</span></code></pre></div>
-</div>
+    <span class="fu">myFunc</span><span class="op">(</span>x <span class="op">=</span> <span class="va">userInput</span><span class="op">)</span>
+  <span class="op">}</span>, silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="../reference/stopOnError.html">stopOnError</a></span><span class="op">(</span><span class="st">"Unable to process user input"</span><span class="op">)</span>
+  
+  <span class="fu"><a href="../reference/logger.trace.html">logger.trace</a></span><span class="op">(</span><span class="st">"Continue processing ..."</span><span class="op">)</span> <span class="co"># we don't get here</span>
+  
+<span class="op">}</span>, silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; TRACE [2022-08-10 11:52:06] class(userInput) = character</span>
+<span class="co">#&gt; ERROR [2022-08-10 11:52:06] Unable to process user input</span></code></pre></div>
 </div>
   </div>
 

@@ -122,20 +122,17 @@ err_msg <- geterrmessage()
 }
 ```
 
-# Regularized Usage in Operational Code
+# `stopOnError()`
 
-The following utility function regularizes our handling of errors in operational
-code:
-
-### `stopOnError()`
-
-This function tests the first argument for a class of `try-error`
+The **`stopOnError()`** utility function regularizes our handling of 
+errors in operational code. This function tests the first argument for a class of `try-error`
 and, if true, performs the following actions:
 
  1. creates `err_msg` from a user provided error message or, if NULL, 
 `geterrmessage()`
- 1. logs this message with `logger.error(err_msg)`
- 1. *throws* the potentially improved error message with `stop(err_msg)`
+ 1. allows modification of error messages with arguments `prefix` and `maxLength`
+ 1. logs this message with `logger.error(err_msg)` if logging has been enabled
+ 1. throws an updated error message with `stop(err_msg)`
 
 Encouraging junior R programmers to add error handling to their code is now much
 easier. They can place any block of R code within a "try block" with the 
@@ -150,52 +147,81 @@ result <- try({
 stopOnError(result)
 ```
 
+Using the `%>%` pipe operator, we can write this even more concisely without 
+creating the interim `result` object:
+
+```
+try({
+  # ...
+  # lines of R code
+  # ...
+}, silent = FALSE) %>%
+  stopOnError()
+```
+
+# Working example
+
 Here is a working example demonstrating how a web service might test for user 
-input that may not have been converted from character to numeric:
+input that may not have been converted from character to numeric. All errors are
+appropriately logged. _(The outer `try()` blocks in the examples below allow the 
+code to be evaluated for this vignette.)_. 
+
+In the third example, we see how low level error messages that may be hard to
+understand in the context of a complex, multi-level piece of code can be converted
+into a message that makes sense in the context of a web service application.
 
 ```{r stopOnError}
 library(MazamaCoreUtils)
 logger.setup()
-logger.setLevel(TRACE)
+logger.setLevel(TRACE) # force logs to be printed to the console
 
 # Arbitrarily deep in the stack we might have:
 myFunc <- function(x) {
-  a <- log(x)
+  return(log(x))
 }
 
-result <- try({
+# ----- Example 1:  good user input --------------------------------------------
+try({
   
   userInput <- 10
-  result <- try({
-    logger.trace("class(userInput) = %s", class(userInput))
-    myFunc(x=userInput)
-  }, silent=TRUE)
-  stopOnError(result)
+  logger.trace("class(userInput) = %s", class(userInput))
   
-}, silent = FALSE)
+  try({
+    myFunc(x = userInput)
+  }, silent = TRUE) %>%
+    stopOnError()
+  
+  logger.trace("Continue processing ...")
+  
+}, silent = TRUE)
 
-# Continue despite any errors
+# ----- Example 2:  bad user input ---------------------------------------------
+try({
   
-result <- try({
   userInput <- "10"
-  result <- try({
+  logger.trace("class(userInput) = %s", class(userInput))
+  
+  try({
+    myFunc(x = userInput)
+  }, silent = TRUE) %>%
+    stopOnError()
+  
+  logger.trace("Continue processing ...") # we don't get here
+  
+}, silent = TRUE)
+
+# ----- Example 3:  bad user input, custom error message -----------------------
+try({
+  
+  try({
     logger.trace("class(userInput) = %s", class(userInput))
-    myFunc(x=userInput)
-  }, silent=TRUE)
-  stopOnError(result)
-}, silent = FALSE)
-
-# Continue despite any errors
-
-result <- try({
-  result <- try({
-    logger.trace("class(userInput) = %s", class(userInput))
-    myFunc(x=userInput)
-  }, silent=TRUE)
-  stopOnError(result, "Unable to process user input")
-}, silent = FALSE)
-
-# Script completes with errors handled as they occurred
+    myFunc(x = userInput)
+  }, silent = TRUE) %>%
+    stopOnError("Unable to process user input")
+  
+  logger.trace("Continue processing ...") # we don't get here
+  
+}, silent = TRUE)
 ```
 
 

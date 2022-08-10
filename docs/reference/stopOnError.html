@@ -85,7 +85,7 @@ appropriately as errors propagate to other functions." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.13</span>
       </span>
     </div>
 
@@ -200,7 +200,6 @@ will be logged with <code><a href='logger.error.html'>logger.error(err_msg)</a><
 <pre>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/MazamaScience/MazamaCoreUtils'>MazamaCoreUtils</a></span><span class='op'>)</span>
 
-
 <span class='co'># Arbitrarily deep in the stack we might have:</span>
 
 <span class='va'>myFunc</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span>
@@ -228,12 +227,12 @@ will be logged with <code><a href='logger.error.html'>logger.error(err_msg)</a><
 <span class='kw'><a href='https://rdrr.io/r/base/try.html'>try</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'>myFunc</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>userInput</span><span class='op'>)</span>
 <span class='op'>}</span>, silent <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-<span class='fu'>stopOnError</span><span class='op'>(</span><span class='va'>result</span>, err_msg <span class='op'>=</span> <span class='st'>"Unable to process user input"</span><span class='op'>)</span>
+<span class='fu'>stopOnError</span><span class='op'>(</span>err_msg <span class='op'>=</span> <span class='st'>"Unable to process user input"</span><span class='op'>)</span>
 
 <span class='kw'><a href='https://rdrr.io/r/base/try.html'>try</a></span><span class='op'>(</span><span class='op'>{</span>
   <span class='fu'>myFunc</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>userInput</span><span class='op'>)</span>
 <span class='op'>}</span>, silent <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-<span class='fu'>stopOnError</span><span class='op'>(</span><span class='va'>result</span>, prefix <span class='op'>=</span> <span class='st'>"USER_INPUT_ERROR"</span><span class='op'>)</span>
+<span class='fu'>stopOnError</span><span class='op'>(</span>prefix <span class='op'>=</span> <span class='st'>"USER_INPUT_ERROR"</span><span class='op'>)</span>
 
 
 <span class='co'># Truncating error message length</span>
@@ -242,7 +241,6 @@ will be logged with <code><a href='logger.error.html'>logger.error(err_msg)</a><
   <span class='fu'>myFunc</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>userInput</span><span class='op'>)</span>
 <span class='op'>}</span>, silent <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
 <span class='fu'>stopOnError</span><span class='op'>(</span>
-  <span class='va'>result</span>,
   prefix <span class='op'>=</span> <span class='st'>"USER_INPUT_ERROR"</span>,
   maxLength <span class='op'>=</span> <span class='fl'>40</span>,
   truncatedLength <span class='op'>=</span> <span class='fl'>32</span>

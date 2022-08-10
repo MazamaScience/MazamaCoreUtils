@@ -1,6 +1,10 @@
+# MazamaCoreUtils 0.4.13
+
+* Updated `stopOnError()` function documentation and associated vignette.
+
 # MazamaCoreUtils 0.4.12
 
-* Updated `stopOnError() with the following additional arguments: `prefix`,
+* Updated `stopOnError()` with the following additional arguments: `prefix`,
 `code`, `maxLength`, `truncatedLength`, `call.`.
 * Corrected documentation for `timeStamp()`.
 

@@ -37,7 +37,6 @@
 #' \preformatted{
 #' library(MazamaCoreUtils)
 #'
-#'
 #' # Arbitrarily deep in the stack we might have:
 #'
 #' myFunc <- function(x) {
@@ -65,12 +64,12 @@
 #' try({
 #'   myFunc(x = userInput)
 #' }, silent = TRUE) \%>\%
-#' stopOnError(result, err_msg = "Unable to process user input")
+#' stopOnError(err_msg = "Unable to process user input")
 #'
 #' try({
 #'   myFunc(x = userInput)
 #' }, silent = TRUE) \%>\%
-#' stopOnError(result, prefix = "USER_INPUT_ERROR")
+#' stopOnError(prefix = "USER_INPUT_ERROR")
 #'
 #'
 #' # Truncating error message length
@@ -79,7 +78,6 @@
 #'   myFunc(x = userInput)
 #' }, silent = TRUE) \%>\%
 #' stopOnError(
-#'   result,
 #'   prefix = "USER_INPUT_ERROR",
 #'   maxLength = 40,
 #'   truncatedLength = 32

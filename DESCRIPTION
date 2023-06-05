@@ -1,6 +1,6 @@
 Type: Package
 Package: MazamaCoreUtils
-Version: 0.4.13
+Version: 0.4.14
 Title: Utility Functions for Production R Code
 Authors@R: c(
     person("Jonathan", "Callahan", email="jonathan.s.callahan@gmail.com", role=c("aut","cre")),
@@ -24,6 +24,7 @@ Imports:
     digest,
     dplyr,
     futile.logger,
+    geohashTools,
     lubridate,
     magrittr,
     purrr,
@@ -40,4 +41,4 @@ Suggests:
     roxygen2
 Encoding: UTF-8
 VignetteBuilder: knitr
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3

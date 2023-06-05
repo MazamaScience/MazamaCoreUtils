@@ -23,6 +23,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -35,18 +37,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.14</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -59,7 +55,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/MazamaScience/MazamaCoreUtils/">
+  <a href="https://github.com/MazamaScience/MazamaCoreUtils/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -78,24 +74,20 @@
   <div class="contents col-md-9">
 
 
-<div id="mazamacoreutils" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#mazamacoreutils" class="anchor"></a>MazamaCoreUtils</h1></div>
+<p>A dedicated Slack channel has been created for announcements, support and to help build a community of practice around this open source package. You may request an invitation to join from <a href="mailto:jonathan.callahan@dri.com" class="email">jonathan.callahan@dri.com</a>.</p>
+<div class="section level1">
+<div class="page-header"><h1 id="mazamacoreutils">MazamaCoreUtils<a class="anchor" aria-label="anchor" href="#mazamacoreutils"></a>
+</h1></div>
 <pre><code>A suite of utility functions providing functionality commonly needed for 
 production level projects such as logging, error handling, cache management and 
 date-time parsing. Functions for date-time parsing and formatting require that 
 timezones be specified explicitly, avoiding a common source of error when 
 working with environmental time series.</code></pre>
-<div id="background" class="section level2">
-<h2 class="hasAnchor">
-<a href="#background" class="anchor"></a>Background</h2>
-<p>The MazamaCoreUtils package was created by MazamaScience to
-regularize our work building R packages and R-based web services focused
-on environmental monitoring data.</p>
-<p>The main goal of this package is to create an internally standardized
-set of functions that we can use in various systems that are being run
-operationally. Areas of functionality supported by this package
-include:</p>
+<div class="section level2">
+<h2 id="background">Background<a class="anchor" aria-label="anchor" href="#background"></a>
+</h2>
+<p>The MazamaCoreUtils package was created by MazamaScience to regularize our work building R packages and R-based web services focused on environmental monitoring data.</p>
+<p>The main goal of this package is to create an internally standardized set of functions that we can use in various systems that are being run operationally. Areas of functionality supported by this package include:</p>
 <ul>
 <li>python style logging</li>
 <li>simple error messaging</li>
@@ -106,13 +98,13 @@ include:</p>
 <li>source code linting</li>
 </ul>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>Install from CRAN with:</p>
-<p><code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages('MazamaCoreUtils')</a></code></p>
+<p><code>install.packages('MazamaCoreUtils')</code></p>
 <p>Install the latest version from GitHub with:</p>
-<p><code><a href="https://devtools.r-lib.org/reference/remote-reexports.html">devtools::install_github('mazamascience/MazamaCoreUtils')</a></code></p>
+<p><code>devtools::install_github('mazamascience/MazamaCoreUtils')</code></p>
 <hr>
 <p>This project is supported by Mazama Science.</p>
 </div>
@@ -122,49 +114,58 @@ include:</p>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=MazamaCoreUtils">https://​cloud.r-project.org/​package=MazamaCoreUtils</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/MazamaScience/MazamaCoreUtils/">https://​github.com/​MazamaScience/​MazamaCoreUtils/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/MazamaScience/MazamaCoreUtils/issues">https://​github.com/​MazamaScience/​MazamaCoreUtils/​issues</a>
-</li>
-</ul>
-</div>
-<div class="license">
-<h2>License</h2>
-<ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
-</ul>
-</div>
-<div class="developers">
-<h2>Developers</h2>
-<ul class="list-unstyled">
-<li>Jonathan Callahan <br><small class="roles"> Author, maintainer </small>  </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="https://cloud.r-project.org/package=MazamaCoreUtils" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/MazamaScience/MazamaCoreUtils/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/MazamaScience/MazamaCoreUtils/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="license">
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://cran.r-project.org/package=MazamaCoreUtils"><img src="http://www.r-pkg.org/badges/version/MazamaCoreUtils" alt="CRAN_Status_Badge"></a></li>
-<li><a href="https://cran.r-project.org/package=MazamaCoreUtils"><img src="http://cranlogs.r-pkg.org/badges/MazamaCoreUtils" alt="Downloads"></a></li>
-<li><a href="https://travis-ci.org/MazamaScience/MazamaCoreUtils"><img src="https://travis-ci.org/MazamaScience/MazamaCoreUtils.svg?branch=master" alt="Build Status"></a></li>
-<li><a href="https://zenodo.org/badge/latestdoi/152321630"><img src="https://zenodo.org/badge/152321630.svg" alt="DOI"></a></li>
+<li><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing MazamaCoreUtils</a></li>
+</ul>
 </div>
+
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
+<ul class="list-unstyled">
+<li>Jonathan Callahan <br><small class="roles"> Author, maintainer </small>  </li>
+<li><a href="authors.html">More about authors...</a></li>
+</ul>
+</div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://cran.r-project.org/package=MazamaCoreUtils" class="external-link"><img src="http://www.r-pkg.org/badges/version/MazamaCoreUtils" alt="CRAN_Status_Badge"></a></li>
+<li><a href="https://cran.r-project.org/package=MazamaCoreUtils" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/MazamaCoreUtils" alt="Downloads"></a></li>
+<li><a href="https://zenodo.org/badge/latestdoi/152321630" class="external-link"><img src="https://zenodo.org/badge/152321630.svg" alt="DOI"></a></li>
+</ul>
+</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Jonathan Callahan.</p>
+  <p></p>
+<p>Developed by Jonathan Callahan.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -172,6 +173,8 @@ include:</p>
 
   
 
+
+  
 
   </body>
 </html>

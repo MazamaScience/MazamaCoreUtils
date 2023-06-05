@@ -4,20 +4,28 @@
 \alias{createLocationID}
 \title{Create one or more unique locationIDs}
 \usage{
-createLocationID(longitude = NULL, latitude = NULL)
+createLocationID(
+  longitude = NULL,
+  latitude = NULL,
+  algorithm = c("digest", "geohash")
+)
 }
 \arguments{
 \item{longitude}{Vector of longitudes in decimal degrees E.}
 
 \item{latitude}{Vector of latitudes in decimal degrees N.}
+
+\item{algorithm}{Algorithm to use -- either \code{"digest"} or \code{"geohash"}.}
 }
 \value{
 Vector of character locationIDs.
 }
 \description{
 A unique locationID is created for each incoming
-\code{longitude} and \code{latitude}. The following code is used to generate
-each locationID. See the references for details.
+\code{longitude} and \code{latitude}.
+
+When the \code{"digest"} algorithm is specified,
+the following code is used to generate each locationID.
 
 \preformatted{
 # Retain accuracy up to ~.1m
@@ -26,10 +34,24 @@ locationString <- paste0(
   "_",
   sprintf("\%.7f", latitude)
 )
-
 # Avoid collisions until billions of records
 locationID <- digest::digest(locationString, algo = "xxhash64")
 }
+
+When the \code{"geohash"} algorithm is specified,
+the following code is used:
+
+\preformatted{
+  locationID <-
+    geohashTools::gh_encode(latitude, longitude, precision = 10)
+}
+
+See the references for details on either algorithm.
+}
+\note{
+The \code{"geohash"} algorithm is preferred but the \code{"digest"}
+algorithm is retained (and the default) because several existing databases
+use the \code{"digest"} algorithm as a unique identifier.
 }
 \examples{
 library(MazamaCoreUtils)
@@ -43,4 +65,6 @@ locationID <- createLocationID(lon, lat)
 \url{https://en.wikipedia.org/wiki/Decimal_degrees}
 
 \url{https://www.johndcook.com/blog/2017/01/10/probability-of-secure-hash-collisions/}
+
+\url{https://michaelchirico.github.io/geohashTools/index.html}
 }

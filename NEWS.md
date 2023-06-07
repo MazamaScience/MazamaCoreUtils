@@ -1,11 +1,11 @@
 # MazamaCoreUtils 0.4.14
 
-* Added `algorithm` argument to `createLocationID()` to select between `"digest"`
-and '"geohash"'.
+* Added `algorithm` argument to `createLocationID()` to select between "digest"
+and "geohash".
 
-The `"geohash"` algorithm is preferred but the `"digest"`
-algorithm is retained (and the default) because several existing databases
-use the `"digest"` algorithm as a unique identifier.
+The "geohash" algorithm is preferred but the "digest" algorithm is retained 
+(and the default) because several existing databases use the "digest"
+algorithm as a unique identifier.
 
 # MazamaCoreUtils 0.4.13
 

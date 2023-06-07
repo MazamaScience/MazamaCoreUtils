@@ -12,6 +12,11 @@ articles:
     - error-handling
     - logging
 reference:
+- title: Package Summary
+  desc: >
+    Summary description of package capabilities.
+  contents:
+  - MazamaCoreUtils
 - title: Time Utilities
   desc: >
     Functions for working with datetimes

@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.14</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -55,7 +51,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/MazamaScience/MazamaCoreUtils/">
+  <a href="https://github.com/MazamaScience/MazamaCoreUtils/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -70,24 +66,25 @@
 
       
 
-      </header><script src="date-parsing_files/header-attrs-2.14/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Date Parsing</h1>
-                        <h4 class="author">Jonathan Callahan</h4>
+                        <h4 data-toc-skip class="author">Jonathan
+Callahan</h4>
             
-            <h4 class="date">2019-08-20</h4>
+            <h4 data-toc-skip class="date">2019-08-20</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/MazamaScience/MazamaCoreUtils/blob/master/vignettes/date-parsing.Rmd"><code>vignettes/date-parsing.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/MazamaScience/MazamaCoreUtils/blob/HEAD/vignettes/date-parsing.Rmd" class="external-link"><code>vignettes/date-parsing.Rmd</code></a></small>
       <div class="hidden name"><code>date-parsing.Rmd</code></div>
 
     </div>
 
     
     
-<div id="environmental-time-series-data" class="section level1">
-<h1 class="hasAnchor">
-<a href="#environmental-time-series-data" class="anchor"></a>Environmental Time Series Data</h1>
+<div class="section level2">
+<h2 id="environmental-time-series-data">Environmental Time Series Data<a class="anchor" aria-label="anchor" href="#environmental-time-series-data"></a>
+</h2>
 <p>Dates, times and timezones can be frustrating, especially when
 working with environmental time series such as those collected by air
 and water quality sensors.</p>
@@ -97,12 +94,12 @@ when data are aggregated into larger collections, it is typical to store
 data with a universal time axis – UTC.</p>
 <p>Problems can arise when parsing and formatting dates and times
 because R defaults to the system timezone available with
-<code><a href="https://rdrr.io/r/base/timezones.html">Sys.timezone()</a></code>. Imagine an agency scientist based in
+<code><a href="https://rdrr.io/r/base/timezones.html" class="external-link">Sys.timezone()</a></code>. Imagine an agency scientist based in
 Washington, DC, using their laptop to display recent air quality data
 from Los Angeles while at a conference in Tasmania. The data center
 processing the data might be in Boulder but the data processing machine
 might be set to use UTC. Potential timezones (available with
-<code><a href="https://rdrr.io/r/base/timezones.html">OlsonNames()</a></code>) relevant to this scenario include:</p>
+<code><a href="https://rdrr.io/r/base/timezones.html" class="external-link">OlsonNames()</a></code>) relevant to this scenario include:</p>
 <ul>
 <li><code>America/New_York</code></li>
 <li><code>America/Los_Angeles</code></li>
@@ -130,11 +127,11 @@ start and end times in the specified timezone</li>
 </ul>
 <p>The <code><a href="../reference/parseDatetime.html">parseDatetime()</a></code> function is intended as a
 timezone-requiring replacement for
-<code><a href="https://lubridate.tidyverse.org/reference/parse_date_time.html">lubridate::parse_date_time()</a></code>.</p>
+<code><a href="https://lubridate.tidyverse.org/reference/parse_date_time.html" class="external-link">lubridate::parse_date_time()</a></code>.</p>
 </div>
-<div id="linting-for-timezones" class="section level1">
-<h1 class="hasAnchor">
-<a href="#linting-for-timezones" class="anchor"></a>Linting for timezones</h1>
+<div class="section level2">
+<h2 id="linting-for-timezones">Linting for timezones<a class="anchor" aria-label="anchor" href="#linting-for-timezones"></a>
+</h2>
 <p>Enforcing the specification of timezones throughout a body of code is
 the most robust way to remove timezone-related errors from your
 software. To help with this thistype of code review, the package also
@@ -148,12 +145,12 @@ with certain function calls:</p>
 </ul>
 <p>To use these functions you must define a set of
 <code>function:argument</code> rules to be applied such as:</p>
-<pre><code>timezoneLintRules &lt;- list(
-  "parse_date_time" = "tz",
-  "with_tz" = "tzone",
-  "now" = "tzone",
-  "strftime" = "tz"
-)</code></pre>
+<pre><code><span><span class="va">timezoneLintRules</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="st">"parse_date_time"</span> <span class="op">=</span> <span class="st">"tz"</span>,</span>
+<span>  <span class="st">"with_tz"</span> <span class="op">=</span> <span class="st">"tzone"</span>,</span>
+<span>  <span class="st">"now"</span> <span class="op">=</span> <span class="st">"tzone"</span>,</span>
+<span>  <span class="st">"strftime"</span> <span class="op">=</span> <span class="st">"tz"</span></span>
+<span><span class="op">)</span></span></code></pre>
 <p>This is interpreted as:</p>
 <ul>
 <li>Every use of the <code>parse_date_time()</code> function must use
@@ -197,11 +194,13 @@ misunderstandings when it comes to date and time requests.</p>
 
 
       <footer><div class="copyright">
-  <p>Developed by Jonathan Callahan.</p>
+  <p></p>
+<p>Developed by Jonathan Callahan.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -209,6 +208,8 @@ misunderstandings when it comes to date and time requests.</p>
 
   
 
+
+  
 
   </body>
 </html>

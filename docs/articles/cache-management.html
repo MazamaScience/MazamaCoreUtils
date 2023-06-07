@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.14</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -55,7 +51,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/MazamaScience/MazamaCoreUtils/">
+  <a href="https://github.com/MazamaScience/MazamaCoreUtils/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -70,15 +66,16 @@
 
       
 
-      </header><script src="cache-management_files/header-attrs-2.14/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Cache Management</h1>
-                        <h4 class="author">Thomas Bergamaschi</h4>
+                        <h4 data-toc-skip class="author">Thomas
+Bergamaschi</h4>
             
-            <h4 class="date">2018-10-18</h4>
+            <h4 data-toc-skip class="date">2018-10-18</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/MazamaScience/MazamaCoreUtils/blob/master/vignettes/cache-management.Rmd"><code>vignettes/cache-management.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/MazamaScience/MazamaCoreUtils/blob/HEAD/vignettes/cache-management.Rmd" class="external-link"><code>vignettes/cache-management.Rmd</code></a></small>
       <div class="hidden name"><code>cache-management.Rmd</code></div>
 
     </div>
@@ -91,64 +88,64 @@ them unnecessarily. Because the cache has finite disk space allocated to
 it, the cache should be routinely purged of old or outdated files to
 make room new ones. The <code><a href="../reference/manageCache.html">manageCache()</a></code> utility function
 simplifies this process.</p>
-<div id="a-product-cache-example" class="section level2">
-<h2 class="hasAnchor">
-<a href="#a-product-cache-example" class="anchor"></a>A Product Cache Example</h2>
+<div class="section level2">
+<h2 id="a-product-cache-example">A Product Cache Example<a class="anchor" aria-label="anchor" href="#a-product-cache-example"></a>
+</h2>
 <p>Lets first make a cache directory and put some data products in
 it.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Create a cache directory</span>
-<span class="va">CACHE_DIR</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">'cache'</span><span class="op">)</span>
-<span class="kw">if</span> <span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/files.html">file.exists</a></span><span class="op">(</span><span class="va">CACHE_DIR</span><span class="op">)</span> <span class="op">==</span> <span class="cn">FALSE</span> <span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/files2.html">dir.create</a></span><span class="op">(</span><span class="va">CACHE_DIR</span><span class="op">)</span>
-<span class="op">}</span>
-
-<span class="co"># Add a few files to the cache</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">400</span>,<span class="fl">500</span><span class="op">)</span>, file<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">CACHE_DIR</span>,<span class="st">'m1.csv'</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html">Sys.sleep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="co"># wait a bit between each to give them different mtimes</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">400</span>,<span class="fl">500</span><span class="op">)</span>, file<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">CACHE_DIR</span>,<span class="st">'m2.csv'</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html">Sys.sleep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">400</span>,<span class="fl">500</span><span class="op">)</span>, file<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">CACHE_DIR</span>,<span class="st">'m3.csv'</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html">Sys.sleep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">400</span>,<span class="fl">500</span><span class="op">)</span>, file<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">CACHE_DIR</span>,<span class="st">'m4.csv'</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Create a cache directory</span></span>
+<span><span class="va">CACHE_DIR</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">'cache'</span><span class="op">)</span></span>
+<span><span class="kw">if</span> <span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="va">CACHE_DIR</span><span class="op">)</span> <span class="op">==</span> <span class="cn">FALSE</span> <span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="va">CACHE_DIR</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co"># Add a few files to the cache</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">400</span>,<span class="fl">500</span><span class="op">)</span>, file<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">CACHE_DIR</span>,<span class="st">'m1.csv'</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="co"># wait a bit between each to give them different mtimes</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">400</span>,<span class="fl">500</span><span class="op">)</span>, file<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">CACHE_DIR</span>,<span class="st">'m2.csv'</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">400</span>,<span class="fl">500</span><span class="op">)</span>, file<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">CACHE_DIR</span>,<span class="st">'m3.csv'</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html" class="external-link">Sys.sleep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">400</span>,<span class="fl">500</span><span class="op">)</span>, file<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">CACHE_DIR</span>,<span class="st">'m4.csv'</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>We can look in our new cache directory and see the four files we just
 added. The directory contains about 1.5 MB of data.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cachedFiles</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="va">CACHE_DIR</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">infoDF</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.info.html">file.info</a></span><span class="op">(</span><span class="va">cachedFiles</span><span class="op">)</span>
-<span class="va">cacheSize</span> <span class="op">=</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">infoDF</span><span class="op">$</span><span class="va">size</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1e6</span><span class="op">)</span> <span class="co"># in MB</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="va">CACHE_DIR</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] "m1.csv" "m2.csv" "m3.csv" "m4.csv"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Cache size = %s MB"</span>, <span class="va">cacheSize</span><span class="op">)</span>
-<span class="co">#&gt; [1] "Cache size = 1.622748 MB"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">cachedFiles</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="va">CACHE_DIR</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">infoDF</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.info.html" class="external-link">file.info</a></span><span class="op">(</span><span class="va">cachedFiles</span><span class="op">)</span></span>
+<span><span class="va">cacheSize</span> <span class="op">=</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">infoDF</span><span class="op">$</span><span class="va">size</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1e6</span><span class="op">)</span> <span class="co"># in MB</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="va">CACHE_DIR</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "m1.csv" "m2.csv" "m3.csv" "m4.csv"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"Cache size = %s MB"</span>, <span class="va">cacheSize</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Cache size = 1.622748 MB"</span></span></code></pre></div>
 <p>In order to simulate file requests, lets read two of them to update
 their access time.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Access two of the files, updating their atime</span>
-<span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">CACHE_DIR</span>, <span class="st">'m1.csv'</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">CACHE_DIR</span>, <span class="st">'m2.csv'</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Access two of the files, updating their atime</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">CACHE_DIR</span>, <span class="st">'m1.csv'</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">CACHE_DIR</span>, <span class="st">'m2.csv'</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span></span></code></pre></div>
 <p>Now, lets use <code><a href="../reference/manageCache.html">manageCache()</a></code> to get our cache down to 1
 MB.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Use manageCache() to get cache to 1 MB</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MazamaScience/MazamaCoreUtils">MazamaCoreUtils</a></span><span class="op">)</span>
-<span class="fu"><a href="../reference/manageCache.html">manageCache</a></span><span class="op">(</span><span class="va">CACHE_DIR</span>, extensions <span class="op">=</span> <span class="st">'csv'</span>, maxCacheSize <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Use manageCache() to get cache to 1 MB</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MazamaScience/MazamaCoreUtils" class="external-link">MazamaCoreUtils</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/manageCache.html">manageCache</a></span><span class="op">(</span><span class="va">CACHE_DIR</span>, extensions <span class="op">=</span> <span class="st">'csv'</span>, maxCacheSize <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p>When we check our cache again, we will see that the two files with
 the oldest access times are gone and the cache size is now under 1
 MB.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Check cache contents and total size again</span>
-<span class="va">cachedFiles</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="va">CACHE_DIR</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">infoDF</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.info.html">file.info</a></span><span class="op">(</span><span class="va">cachedFiles</span><span class="op">)</span>
-<span class="va">cacheSize</span> <span class="op">=</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">infoDF</span><span class="op">$</span><span class="va">size</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1e6</span><span class="op">)</span> <span class="co"># in MB</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="va">CACHE_DIR</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] "m1.csv" "m2.csv"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"Cache size = %s MB"</span>, <span class="va">cacheSize</span><span class="op">)</span>
-<span class="co">#&gt; [1] "Cache size = 0.811374 MB"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Check cache contents and total size again</span></span>
+<span><span class="va">cachedFiles</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="va">CACHE_DIR</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">infoDF</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.info.html" class="external-link">file.info</a></span><span class="op">(</span><span class="va">cachedFiles</span><span class="op">)</span></span>
+<span><span class="va">cacheSize</span> <span class="op">=</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">infoDF</span><span class="op">$</span><span class="va">size</span><span class="op">)</span> <span class="op">/</span> <span class="fl">1e6</span><span class="op">)</span> <span class="co"># in MB</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="va">CACHE_DIR</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "m1.csv" "m2.csv"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"Cache size = %s MB"</span>, <span class="va">cacheSize</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Cache size = 0.811374 MB"</span></span></code></pre></div>
 </div>
-<div id="removing-stale-products" class="section level2">
-<h2 class="hasAnchor">
-<a href="#removing-stale-products" class="anchor"></a>Removing ‘Stale’ Products</h2>
+<div class="section level2">
+<h2 id="removing-stale-products">Removing ‘Stale’ Products<a class="anchor" aria-label="anchor" href="#removing-stale-products"></a>
+</h2>
 <p>Web services that provide access to real-time data often generate
 products that have an expiration date. Files older than a specific
 number of days or hours should be removed from the cache because they no
@@ -162,11 +159,11 @@ parameter. When this is set, files with an <code>mtime</code> older than
 <code>maxCacheSize</code>. Fractional days are allowed.</p>
 <p>You can remove standard products in the cache that haven’t been
 modified in the last 3 hours with:</p>
-<pre><code><a href="../reference/manageCache.html">manageCache(CACHE_DIR, maxFileAge = 3/24)</a></code></pre>
+<pre><code><span><span class="fu"><a href="../reference/manageCache.html">manageCache</a></span><span class="op">(</span><span class="va">CACHE_DIR</span>, maxFileAge <span class="op">=</span> <span class="fl">3</span><span class="op">/</span><span class="fl">24</span><span class="op">)</span></span></code></pre>
 </div>
-<div id="other-use-cases" class="section level2">
-<h2 class="hasAnchor">
-<a href="#other-use-cases" class="anchor"></a>Other Use Cases</h2>
+<div class="section level2">
+<h2 id="other-use-cases">Other Use Cases<a class="anchor" aria-label="anchor" href="#other-use-cases"></a>
+</h2>
 <p>In the case of a product cache, the most typical behavior will be to
 sort files based on last access time. The <code><a href="../reference/manageCache.html">manageCache()</a></code>
 function uses <code>sortBy = "atime"</code> as the default. It is also
@@ -191,11 +188,13 @@ clear.</p>
 
 
       <footer><div class="copyright">
-  <p>Developed by Jonathan Callahan.</p>
+  <p></p>
+<p>Developed by Jonathan Callahan.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -203,6 +202,8 @@ clear.</p>
 
   
 
+
+  
 
   </body>
 </html>

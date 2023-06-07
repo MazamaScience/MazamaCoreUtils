@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.14</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -55,7 +51,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/MazamaScience/MazamaCoreUtils/">
+  <a href="https://github.com/MazamaScience/MazamaCoreUtils/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -70,24 +66,25 @@
 
       
 
-      </header><script src="logging_files/header-attrs-2.14/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Logging</h1>
-                        <h4 class="author">Jonathan Callahan</h4>
+                        <h4 data-toc-skip class="author">Jonathan
+Callahan</h4>
             
-            <h4 class="date">2018-12-02</h4>
+            <h4 data-toc-skip class="date">2018-12-02</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/MazamaScience/MazamaCoreUtils/blob/master/vignettes/logging.Rmd"><code>vignettes/logging.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/MazamaScience/MazamaCoreUtils/blob/HEAD/vignettes/logging.Rmd" class="external-link"><code>vignettes/logging.Rmd</code></a></small>
       <div class="hidden name"><code>logging.Rmd</code></div>
 
     </div>
 
     
     
-<div id="logging-in-java-and-python" class="section level1">
-<h1 class="hasAnchor">
-<a href="#logging-in-java-and-python" class="anchor"></a>Logging in Java and Python</h1>
+<div class="section level2">
+<h2 id="logging-in-java-and-python">Logging in Java and Python<a class="anchor" aria-label="anchor" href="#logging-in-java-and-python"></a>
+</h2>
 <p>Operational systems, by definition, need to work without human input.
 Systems are considered “operational” after they have been thoroughly
 tested and shown to work properly with a variety of input.</p>
@@ -104,11 +101,11 @@ these different levels looks very similar in java and python:</p>
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.impl.Jdk14Logger;</code></pre>
 <p>… ugly setup of log files …</p>
-<pre><code>log.error("ERROR level message");
-log.warn("WARN level message");
-log.info("INFO level message");
-log.debug("DEBUG level message");
-log.trace("TRACE level message");</code></pre>
+<pre><code><span><span class="fu">log.error</span><span class="op">(</span><span class="st">"ERROR level message"</span><span class="op">)</span>;</span>
+<span><span class="fu">log.warn</span><span class="op">(</span><span class="st">"WARN level message"</span><span class="op">)</span>;</span>
+<span><span class="fu">log.info</span><span class="op">(</span><span class="st">"INFO level message"</span><span class="op">)</span>;</span>
+<span><span class="fu">log.debug</span><span class="op">(</span><span class="st">"DEBUG level message"</span><span class="op">)</span>;</span>
+<span><span class="fu">log.trace</span><span class="op">(</span><span class="st">"TRACE level message"</span><span class="op">)</span>;</span></code></pre>
 <p><strong>python</strong></p>
 <pre><code>import logging
  
@@ -121,25 +118,25 @@ logging.info("INFO level message")
 logging.debug("DEBUG level message")
 logging.trace("TRACE level message")</code></pre>
 </div>
-<div id="logging-in-r" class="section level1">
-<h1 class="hasAnchor">
-<a href="#logging-in-r" class="anchor"></a>Logging in R</h1>
+<div class="section level2">
+<h2 id="logging-in-r">Logging in R<a class="anchor" aria-label="anchor" href="#logging-in-r"></a>
+</h2>
 <p>The <strong>MazamaCoreUtils</strong> package provides functions so
 that R logging can look very similar:</p>
-<pre><code><a href="https://github.com/MazamaScience/MazamaCoreUtils">library(MazamaCoreUtils)
- 
-logger.setup(infoLog="my_INFO.log")
-
-logger.error("ERROR level message")
-logger.warn("WARN level message")
-logger.info("INFO level message")
-logger.debug("DEBUG level message")
-logger.trace("TRACE level message")</a></code></pre>
-<p>This functionality is built on top of the excellent <a href="https://github.com/zatonovo/futile.logger">futile.logger</a>
+<pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MazamaScience/MazamaCoreUtils" class="external-link">MazamaCoreUtils</a></span><span class="op">)</span></span>
+<span> </span>
+<span><span class="fu"><a href="../reference/logger.setup.html">logger.setup</a></span><span class="op">(</span>infoLog<span class="op">=</span><span class="st">"my_INFO.log"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/logger.error.html">logger.error</a></span><span class="op">(</span><span class="st">"ERROR level message"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/logger.warn.html">logger.warn</a></span><span class="op">(</span><span class="st">"WARN level message"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/logger.info.html">logger.info</a></span><span class="op">(</span><span class="st">"INFO level message"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/logger.debug.html">logger.debug</a></span><span class="op">(</span><span class="st">"DEBUG level message"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/logger.trace.html">logger.trace</a></span><span class="op">(</span><span class="st">"TRACE level message"</span><span class="op">)</span></span></code></pre>
+<p>This functionality is built on top of the excellent <a href="https://github.com/zatonovo/futile.logger" class="external-link">futile.logger</a>
 package.</p>
-<div id="log-levels" class="section level2">
-<h2 class="hasAnchor">
-<a href="#log-levels" class="anchor"></a>Log Levels</h2>
+<div class="section level3">
+<h3 id="log-levels">Log Levels<a class="anchor" aria-label="anchor" href="#log-levels"></a>
+</h3>
 <p>When used properly, logging at different levels lets you create log
 files that help you quickly navigate to the specific part of your code
 base that generated an error.</p>
@@ -161,44 +158,44 @@ developers.</li>
 </ul>
 <p>Here are our best practices for how to use the different log
 levels:</p>
-<div id="error" class="section level3">
-<h3 class="hasAnchor">
-<a href="#error" class="anchor"></a>ERROR</h3>
+<div class="section level4">
+<h4 id="error">ERROR<a class="anchor" aria-label="anchor" href="#error"></a>
+</h4>
 <p><code>ERROR</code> log statements should only be generated
-immediately before a <code><a href="https://rdrr.io/r/base/stop.html">stop()</a></code> is issued. The
+immediately before a <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop()</a></code> is issued. The
 <code>ERROR.log</code> file should only have entries when R code failed
 to complete.</p>
 </div>
-<div id="warn" class="section level3">
-<h3 class="hasAnchor">
-<a href="#warn" class="anchor"></a>WARN</h3>
+<div class="section level4">
+<h4 id="warn">WARN<a class="anchor" aria-label="anchor" href="#warn"></a>
+</h4>
 <p><code>WARN</code> log statements imply that something unexpected
 happened but that R code is able to complete, perhaps with unpredictable
 results. An appropriate use would be after testing the response of an
 internet request. R code may be able to trap and handle a failed request
 but should comment on the failure in the logs.</p>
 </div>
-<div id="info" class="section level3">
-<h3 class="hasAnchor">
-<a href="#info" class="anchor"></a>INFO</h3>
+<div class="section level4">
+<h4 id="info">INFO<a class="anchor" aria-label="anchor" href="#info"></a>
+</h4>
 <p><code>INFO</code> log statements are useful for a general overview of
 how your R code is proceeding, reflecting top level code structure and
 perhaps ending with a final:</p>
-<pre><code><a href="../reference/logger.info.html">  logger.info("Successfully completed ...")
-  logger.info("\n=============== THE END ===============\n")</a></code></pre>
+<pre><code><span>  <span class="fu"><a href="../reference/logger.info.html">logger.info</a></span><span class="op">(</span><span class="st">"Successfully completed ..."</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/logger.info.html">logger.info</a></span><span class="op">(</span><span class="st">"\n=============== THE END ===============\n"</span><span class="op">)</span></span></code></pre>
 </div>
-<div id="debug" class="section level3">
-<h3 class="hasAnchor">
-<a href="#debug" class="anchor"></a>DEBUG</h3>
+<div class="section level4">
+<h4 id="debug">DEBUG<a class="anchor" aria-label="anchor" href="#debug"></a>
+</h4>
 <p><code>DEBUG</code> log statements are best used to map out the path
 taken through the code. We recommend including <code>DEBUG</code> level
 statements inside of top level loops and beginning each function with
 the following:</p>
-<pre><code><a href="../reference/logger.debug.html">logger.debug("----- FUNCTION_NAME() -----")</a></code></pre>
+<pre><code><span><span class="fu"><a href="../reference/logger.debug.html">logger.debug</a></span><span class="op">(</span><span class="st">"----- FUNCTION_NAME() -----"</span><span class="op">)</span></span></code></pre>
 </div>
-<div id="trace" class="section level3">
-<h3 class="hasAnchor">
-<a href="#trace" class="anchor"></a>TRACE</h3>
+<div class="section level4">
+<h4 id="trace">TRACE<a class="anchor" aria-label="anchor" href="#trace"></a>
+</h4>
 <p><code>TRACE</code> log statements are for the gory details of any
 part of your code where you expect or are experiencing errors. These
 should contain information about program state and are intended only for
@@ -206,111 +203,111 @@ developers.</p>
 </div>
 </div>
 </div>
-<div id="a-logging-example" class="section level1">
-<h1 class="hasAnchor">
-<a href="#a-logging-example" class="anchor"></a>A Logging Example</h1>
+<div class="section level2">
+<h2 id="a-logging-example">A Logging Example<a class="anchor" aria-label="anchor" href="#a-logging-example"></a>
+</h2>
 <p>The following minimal example demonstrates the use of logging
 statements and their output.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MazamaScience/MazamaCoreUtils">MazamaCoreUtils</a></span><span class="op">)</span>
-
-<span class="co"># Set up logging </span>
-<span class="va">tmpDir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="../reference/logger.setup.html">logger.setup</a></span><span class="op">(</span>
-  errorLog <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmpDir</span>,<span class="st">"ERROR.log"</span><span class="op">)</span>,
-  infoLog <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmpDir</span>,<span class="st">"INFO.log"</span><span class="op">)</span>,
-  traceLog <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmpDir</span>,<span class="st">"TRACE.log"</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="co"># Begin main program</span>
-<span class="fu"><a href="../reference/logger.info.html">logger.info</a></span><span class="op">(</span><span class="st">"Begin loggingExample ..."</span><span class="op">)</span>
-
-<span class="co"># Try something that might fail</span>
-<span class="va">outputSums</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>
-<span class="kw">for</span> <span class="op">(</span> <span class="va">column</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="op">)</span> <span class="op">{</span>
-  
-  <span class="fu"><a href="../reference/logger.trace.html">logger.trace</a></span><span class="op">(</span><span class="st">"Working on: %s"</span>, <span class="va">column</span><span class="op">)</span>
-  
-  <span class="va">result</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span><span class="op">(</span><span class="op">{</span>
-    <span class="va">outputSums</span><span class="op">[[</span><span class="va">column</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> 
-      <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Sum of "</span>, <span class="va">column</span>, <span class="st">" = "</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[[</span><span class="va">column</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">}</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-  
-  <span class="kw">if</span> <span class="op">(</span> <span class="st">"try-error"</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span> <span class="op">)</span> <span class="op">{</span>
-    <span class="fu"><a href="../reference/logger.warn.html">logger.warn</a></span><span class="op">(</span><span class="st">"Oops: %s"</span>, <span class="fu"><a href="https://rdrr.io/r/base/stop.html">geterrmessage</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">}</span>
-  
-<span class="op">}</span>
-<span class="co">#&gt; Error in Summary.factor(structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,  : </span>
-<span class="co">#&gt;   'sum' not meaningful for factors</span>
-
-<span class="co"># Successful completion</span>
-<span class="fu"><a href="../reference/logger.error.html">logger.error</a></span><span class="op">(</span><span class="st">"NO ERRORS"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/logger.info.html">logger.info</a></span><span class="op">(</span><span class="st">"Successfully completed loggingExample"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/logger.info.html">logger.info</a></span><span class="op">(</span><span class="st">"\n=============== THE END ===============\n"</span><span class="op">)</span>
-
-<span class="co"># Check the output</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">outputSums</span><span class="op">)</span>
-<span class="co">#&gt; List of 4</span>
-<span class="co">#&gt;  $ Sepal.Length: chr "Sum of Sepal.Length = 876.5"</span>
-<span class="co">#&gt;  $ Sepal.Width : chr "Sum of Sepal.Width = 458.6"</span>
-<span class="co">#&gt;  $ Petal.Length: chr "Sum of Petal.Length = 563.7"</span>
-<span class="co">#&gt;  $ Petal.Width : chr "Sum of Petal.Width = 179.9"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MazamaScience/MazamaCoreUtils" class="external-link">MazamaCoreUtils</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Set up logging </span></span>
+<span><span class="va">tmpDir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/logger.setup.html">logger.setup</a></span><span class="op">(</span></span>
+<span>  errorLog <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmpDir</span>,<span class="st">"ERROR.log"</span><span class="op">)</span>,</span>
+<span>  infoLog <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmpDir</span>,<span class="st">"INFO.log"</span><span class="op">)</span>,</span>
+<span>  traceLog <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmpDir</span>,<span class="st">"TRACE.log"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Begin main program</span></span>
+<span><span class="fu"><a href="../reference/logger.info.html">logger.info</a></span><span class="op">(</span><span class="st">"Begin loggingExample ..."</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Try something that might fail</span></span>
+<span><span class="va">outputSums</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="kw">for</span> <span class="op">(</span> <span class="va">column</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="op">)</span> <span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="fu"><a href="../reference/logger.trace.html">logger.trace</a></span><span class="op">(</span><span class="st">"Working on: %s"</span>, <span class="va">column</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">result</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="va">outputSums</span><span class="op">[[</span><span class="va">column</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> </span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Sum of "</span>, <span class="va">column</span>, <span class="st">" = "</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[[</span><span class="va">column</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="kw">if</span> <span class="op">(</span> <span class="st">"try-error"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span> <span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="../reference/logger.warn.html">logger.warn</a></span><span class="op">(</span><span class="st">"Oops: %s"</span>, <span class="fu"><a href="https://rdrr.io/r/base/stop.html" class="external-link">geterrmessage</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  </span>
+<span><span class="op">}</span></span>
+<span><span class="co">#&gt; Error in Summary.factor(structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,  : </span></span>
+<span><span class="co">#&gt;   'sum' not meaningful for factors</span></span>
+<span></span>
+<span><span class="co"># Successful completion</span></span>
+<span><span class="fu"><a href="../reference/logger.error.html">logger.error</a></span><span class="op">(</span><span class="st">"NO ERRORS"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/logger.info.html">logger.info</a></span><span class="op">(</span><span class="st">"Successfully completed loggingExample"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/logger.info.html">logger.info</a></span><span class="op">(</span><span class="st">"\n=============== THE END ===============\n"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Check the output</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">outputSums</span><span class="op">)</span></span>
+<span><span class="co">#&gt; List of 4</span></span>
+<span><span class="co">#&gt;  $ Sepal.Length: chr "Sum of Sepal.Length = 876.5"</span></span>
+<span><span class="co">#&gt;  $ Sepal.Width : chr "Sum of Sepal.Width = 458.6"</span></span>
+<span><span class="co">#&gt;  $ Petal.Length: chr "Sum of Petal.Length = 563.7"</span></span>
+<span><span class="co">#&gt;  $ Petal.Width : chr "Sum of Petal.Width = 179.9"</span></span></code></pre></div>
 <p>Here is what is generated in the log files:</p>
-<div id="error-log" class="section level2">
-<h2 class="hasAnchor">
-<a href="#error-log" class="anchor"></a>ERROR.log</h2>
-<pre><code>#&gt; ERROR [2022-08-10 11:52:08] NO ERRORS</code></pre>
-</div>
-<div id="info-log" class="section level2">
-<h2 class="hasAnchor">
-<a href="#info-log" class="anchor"></a>INFO.log</h2>
-<pre><code>#&gt; INFO [2022-08-10 11:52:08] Begin loggingExample ...
-#&gt; WARN [2022-08-10 11:52:08] Oops: object 'flog.appender' not found
-#&gt; ERROR [2022-08-10 11:52:08] NO ERRORS
-#&gt; INFO [2022-08-10 11:52:08] Successfully completed loggingExample
-#&gt; INFO [2022-08-10 11:52:08] 
-#&gt; =============== THE END ===============</code></pre>
-</div>
-<div id="trace-log" class="section level2">
-<h2 class="hasAnchor">
-<a href="#trace-log" class="anchor"></a>TRACE.log</h2>
-<pre><code>#&gt; INFO [2022-08-10 11:52:08] Begin loggingExample ...
-#&gt; TRACE [2022-08-10 11:52:08] Working on: Sepal.Length
-#&gt; TRACE [2022-08-10 11:52:08] Working on: Sepal.Width
-#&gt; TRACE [2022-08-10 11:52:08] Working on: Petal.Length
-#&gt; TRACE [2022-08-10 11:52:08] Working on: Petal.Width
-#&gt; TRACE [2022-08-10 11:52:08] Working on: Species
-#&gt; WARN [2022-08-10 11:52:08] Oops: object 'flog.appender' not found
-#&gt; ERROR [2022-08-10 11:52:08] NO ERRORS
-#&gt; INFO [2022-08-10 11:52:08] Successfully completed loggingExample
-#&gt; INFO [2022-08-10 11:52:08] 
-#&gt; =============== THE END ===============</code></pre>
-</div>
-</div>
-<div id="extra-functionality" class="section level1">
-<h1 class="hasAnchor">
-<a href="#extra-functionality" class="anchor"></a>Extra Functionality</h1>
-<p>Two more utility functions need to be mentioned</p>
-<div id="logger-setlevel" class="section level3">
-<h3 class="hasAnchor">
-<a href="#logger-setlevel" class="anchor"></a><code>logger.setLevel()</code>
+<div class="section level3">
+<h3 id="error-log">ERROR.log<a class="anchor" aria-label="anchor" href="#error-log"></a>
 </h3>
+<pre><code><span><span class="co">#&gt; ERROR [2023-06-07 07:38:31] NO ERRORS</span></span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="info-log">INFO.log<a class="anchor" aria-label="anchor" href="#info-log"></a>
+</h3>
+<pre><code><span><span class="co">#&gt; INFO [2023-06-07 07:38:31] Begin loggingExample ...</span></span>
+<span><span class="co">#&gt; WARN [2023-06-07 07:38:31] Oops: object 'flog.appender' not found</span></span>
+<span><span class="co">#&gt; ERROR [2023-06-07 07:38:31] NO ERRORS</span></span>
+<span><span class="co">#&gt; INFO [2023-06-07 07:38:31] Successfully completed loggingExample</span></span>
+<span><span class="co">#&gt; INFO [2023-06-07 07:38:31] </span></span>
+<span><span class="co">#&gt; =============== THE END ===============</span></span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="trace-log">TRACE.log<a class="anchor" aria-label="anchor" href="#trace-log"></a>
+</h3>
+<pre><code><span><span class="co">#&gt; INFO [2023-06-07 07:38:31] Begin loggingExample ...</span></span>
+<span><span class="co">#&gt; TRACE [2023-06-07 07:38:31] Working on: Sepal.Length</span></span>
+<span><span class="co">#&gt; TRACE [2023-06-07 07:38:31] Working on: Sepal.Width</span></span>
+<span><span class="co">#&gt; TRACE [2023-06-07 07:38:31] Working on: Petal.Length</span></span>
+<span><span class="co">#&gt; TRACE [2023-06-07 07:38:31] Working on: Petal.Width</span></span>
+<span><span class="co">#&gt; TRACE [2023-06-07 07:38:31] Working on: Species</span></span>
+<span><span class="co">#&gt; WARN [2023-06-07 07:38:31] Oops: object 'flog.appender' not found</span></span>
+<span><span class="co">#&gt; ERROR [2023-06-07 07:38:31] NO ERRORS</span></span>
+<span><span class="co">#&gt; INFO [2023-06-07 07:38:31] Successfully completed loggingExample</span></span>
+<span><span class="co">#&gt; INFO [2023-06-07 07:38:31] </span></span>
+<span><span class="co">#&gt; =============== THE END ===============</span></span></code></pre>
+</div>
+</div>
+<div class="section level2">
+<h2 id="extra-functionality">Extra Functionality<a class="anchor" aria-label="anchor" href="#extra-functionality"></a>
+</h2>
+<p>Two more utility functions need to be mentioned</p>
+<div class="section level4">
+<h4 id="logger-setlevel">
+<code>logger.setLevel()</code><a class="anchor" aria-label="anchor" href="#logger-setlevel"></a>
+</h4>
 <p>This function sets the log level used in the console. By default this
 level is set to <code>FATAL</code> which basically means “only when R
 crashes”. If you are debugging code interactively you may wish to see
 log messages as the are generated by entering the following command:</p>
-<pre><code><a href="../reference/logger.setLevel.html">logger.setLevel(TRACE)</a></code></pre>
+<pre><code><span><span class="fu"><a href="../reference/logger.setLevel.html">logger.setLevel</a></span><span class="op">(</span><span class="va">TRACE</span><span class="op">)</span></span></code></pre>
 </div>
-<div id="initializelogging" class="section level3">
-<h3 class="hasAnchor">
-<a href="#initializelogging" class="anchor"></a><code>initializeLogging()</code>
-</h3>
+<div class="section level4">
+<h4 id="initializelogging">
+<code>initializeLogging()</code><a class="anchor" aria-label="anchor" href="#initializelogging"></a>
+</h4>
 <p>This function is a wrapper for our typical usage. It accepts a
 <code>logDir</code> parameter and looks for <code>TRACE</code>,
 <code>DEBUG</code> <code>INFO</code> and <code>ERROR</code> logs in that
 directory. If they are found, they are renamed as
-<code><a href="https://rdrr.io/r/base/paste.html">paste0(logLevel,".log.",timestamp)</a></code>. After renaming, new log
+<code>paste0(logLevel,".log.",timestamp)</code>. After renaming, new log
 files are setup.</p>
 <p>This is particularly useful for operational code run inside docker
 containers which may be automatically rebooted.</p>
@@ -329,11 +326,13 @@ containers which may be automatically rebooted.</p>
 
 
       <footer><div class="copyright">
-  <p>Developed by Jonathan Callahan.</p>
+  <p></p>
+<p>Developed by Jonathan Callahan.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -341,6 +340,8 @@ containers which may be automatically rebooted.</p>
 
   
 
+
+  
 
   </body>
 </html>

@@ -124,6 +124,17 @@ test_that("All character formats from Y to YmdHMSz are supported", {
     output
   )
 
+  # Test EPA AirNow time strings
+  input <- c("20180101T0000-0800", "20181001T0000-0800", "20181016T0000-0800")
+  output <- c("2018-01-01 08:00:00", "2018-10-01 08:00:00", "2018-10-16 08:00:00")
+
+  datetime <- parseDatetime(input, timezone = "UTC")
+
+  expect_equal(
+    strftime(datetime, "%Y-%m-%d %H:%M:%S", tz = "UTC"),
+    output
+  )
+
 
 
 })

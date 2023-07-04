@@ -49,7 +49,7 @@ formats not recognized will be returned as NA.'><!-- mathjax --><script src="htt
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.15</span>
       </span>
     </div>
 
@@ -158,6 +158,13 @@ optionally suppress warning messages.</p></dd>
 
 <p>A vector of POSIXct datetimes.</p>
     </div>
+    <div id="note">
+    <h2>Note</h2>
+    <p>If <code>datetime</code> is a character string containing signed offset
+information, <em>e.g.</em> "-07:00", this information is used to generate an
+equivalent UTC time which is then assigned to the timezone specified by
+the <code>timezone</code> argument.</p>
+    </div>
     <div id="mazama-science-conventions">
     <h2>Mazama Science Conventions</h2>
     
@@ -198,6 +205,10 @@ account for.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2018-08-07 18:12:15 PDT"</span>
 <span class="r-in"><span><span class="fu">parseDatetime</span><span class="op">(</span><span class="st">"2018-08-07 18:12:15"</span>, timezone <span class="op">=</span> <span class="st">"America/Los_Angeles"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2018-08-07 18:12:15 PDT"</span>
+<span class="r-in"><span><span class="fu">parseDatetime</span><span class="op">(</span><span class="st">"2018-08-07 18:12:15-07:00"</span>, timezone <span class="op">=</span> <span class="st">"America/Los_Angeles"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2018-08-07 18:12:15 PDT"</span>
+<span class="r-in"><span><span class="fu">parseDatetime</span><span class="op">(</span><span class="st">"2018-08-07 18:12:15-07:00"</span>, timezone <span class="op">=</span> <span class="st">"UTC"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2018-08-08 01:12:15 UTC"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Julian days are accepeted</span></span></span>
 <span class="r-in"><span><span class="fu">parseDatetime</span><span class="op">(</span><span class="fl">2018219181215</span>, timezone <span class="op">=</span> <span class="st">"America/Los_Angeles"</span>,</span></span>

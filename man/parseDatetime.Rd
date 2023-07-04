@@ -55,6 +55,12 @@ interpreted in the specified timezone.
 If \code{datetime} is a \code{POSIXct} it will be returned unmodified, and
 formats not recognized will be returned as \code{NA}.
 }
+\note{
+If \code{datetime} is a character string containing signed offset
+information, \emph{e.g.} "-07:00", this information is used to generate an
+equivalent UTC time which is then assigned to the timezone specified by
+the \code{timezone} argument.
+}
 \section{Mazama Science Conventions}{
 
 Within Mazama Science package, datetimes not in \code{POSIXct} format are
@@ -80,6 +86,8 @@ parseDatetime(2018080718, timezone = "America/Los_Angeles")
 parseDatetime(201808071812, timezone = "America/Los_Angeles")
 parseDatetime(20180807181215, timezone = "America/Los_Angeles")
 parseDatetime("2018-08-07 18:12:15", timezone = "America/Los_Angeles")
+parseDatetime("2018-08-07 18:12:15-07:00", timezone = "America/Los_Angeles")
+parseDatetime("2018-08-07 18:12:15-07:00", timezone = "UTC")
 
 # Julian days are accepeted
 parseDatetime(2018219181215, timezone = "America/Los_Angeles",

@@ -70,6 +70,64 @@ test_that("All orders from Y to YmdHMS are supported", {
 
 })
 
+test_that("All character formats from Y to YmdHMSz are supported", {
+
+  # Test standard character format
+  input <- c("2018-01-01 00:00:00", "2018-10-01 00:00:00", "2018-10-16 00:00:00",
+              "2018-10-16 12:00:00", "2018-10-16 12:15:00", "2018-10-16 12:15:30")
+  output <- c("2018-01-01 00:00:00", "2018-10-01 00:00:00", "2018-10-16 00:00:00",
+              "2018-10-16 12:00:00", "2018-10-16 12:15:00", "2018-10-16 12:15:30")
+
+  datetime <- parseDatetime(input, timezone = "UTC")
+
+  expect_equal(
+    strftime(datetime, "%Y-%m-%d %H:%M:%S", tz = "UTC"),
+    output
+  )
+
+  # Text Unix 'T' format
+  input <- c("2018-01-01T00:00:00", "2018-10-01T00:00:00", "2018-10-16T00:00:00",
+             "2018-10-16T12:00:00", "2018-10-16T12:15:00", "2018-10-16T12:15:30")
+  output <- c("2018-01-01 00:00:00", "2018-10-01 00:00:00", "2018-10-16 00:00:00",
+              "2018-10-16 12:00:00", "2018-10-16 12:15:00", "2018-10-16 12:15:30")
+
+  datetime <- parseDatetime(input, timezone = "UTC")
+
+  expect_equal(
+    strftime(datetime, "%Y-%m-%d %H:%M:%S", tz = "UTC"),
+    output
+  )
+
+  # Test various timezone specifiers
+  input <- c("2018-01-01T00:00:00+00:00", "2018-10-01T00:00:00Z", "2018-10-16T00:00:00+0000",
+             "2018-10-16T12:00:00+00", "2018-10-16T12:15:00+00:00", "2018-10-16T12:15:30Z")
+  output <- c("2018-01-01 00:00:00", "2018-10-01 00:00:00", "2018-10-16 00:00:00",
+              "2018-10-16 12:00:00", "2018-10-16 12:15:00", "2018-10-16 12:15:30")
+
+  datetime <- parseDatetime(input, timezone = "UTC")
+
+  expect_equal(
+    strftime(datetime, "%Y-%m-%d %H:%M:%S", tz = "UTC"),
+    output
+  )
+
+  # Test various timezone offsets
+  input <- c("2018-01-01T00:00:00+02:00", "2018-10-01T00:00:00+04:00", "2018-10-16T00:00:00+06:30",
+             "2018-10-16T12:00:00-02:00", "2018-10-16T12:15:00-04:00", "2018-10-16T12:15:30-06:30")
+  output <- c("2017-12-31 22:00:00", "2018-09-30 20:00:00", "2018-10-15 17:30:00",
+              "2018-10-16 14:00:00", "2018-10-16 16:15:00", "2018-10-16 18:45:30")
+
+  datetime <- parseDatetime(input, timezone = "UTC")
+
+  expect_equal(
+    strftime(datetime, "%Y-%m-%d %H:%M:%S", tz = "UTC"),
+    output
+  )
+
+
+
+})
+
 test_that("All orders from Y to YjHMS are supported for isJulian = TRUE", {
 
   input <- c(2018, 2018289, 201828912, 20182891215, 2018289121530)

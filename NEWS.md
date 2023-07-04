@@ -1,3 +1,7 @@
+# MazamaCoreUtils 0.4.15
+
+* `parseDatetime() now supports data formats with timezone: "2018-10-16 12:00:00+00:00".
+
 # MazamaCoreUtils 0.4.14
 
 * Added `algorithm` argument to `createLocationID()` to select between "digest"

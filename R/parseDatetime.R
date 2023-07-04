@@ -25,6 +25,10 @@
 #' If \code{datetime} is a \code{POSIXct} it will be returned unmodified, and
 #' formats not recognized will be returned as \code{NA}.
 #'
+#' @note If \code{datetime} is a character string containing signed offset
+#' information, \emph{e.g.} "-07:00", this information will override the
+#' offset implied by the \code{timezone} argument.
+#'
 #' @param datetime Vector of character or integer datetimes in Ymd[HMS] format
 #'   (or POSIXct).
 #' @param timezone Olson timezone used to interpret dates (required).
@@ -62,6 +66,7 @@
 #' parseDatetime(201808071812, timezone = "America/Los_Angeles")
 #' parseDatetime(20180807181215, timezone = "America/Los_Angeles")
 #' parseDatetime("2018-08-07 18:12:15", timezone = "America/Los_Angeles")
+#' parseDatetime("2018-08-07 18:12:15-07:00", timezone = "America/Los_Angeles")
 #'
 #' # Julian days are accepeted
 #' parseDatetime(2018219181215, timezone = "America/Los_Angeles",
@@ -144,7 +149,7 @@ parseDatetime <- function(
 
   } else {
 
-    orders <- c("Y", "Ym", "Ymd", "YmdH", "YmdHM", "YmdHMS")
+    orders <- c("Y", "Ym", "Ymd", "YmdH", "YmdHM", "YmdHMS", "YmdHMSz")
     parsedDatetime <- lubridate::parse_date_time(datetime,
                                                  orders,
                                                  tz = timezone,

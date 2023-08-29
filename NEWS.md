@@ -1,3 +1,7 @@
+# MazamaCoreUtils 0.4.16
+
+* Addressed CRAN package documentation issue.
+
 # MazamaCoreUtils 0.4.15
 
 * `parseDatetime() now supports data formats with UTC offset: "2018-10-16 12:00:00+00:00".

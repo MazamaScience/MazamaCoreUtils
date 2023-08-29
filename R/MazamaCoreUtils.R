@@ -1,5 +1,6 @@
 #' @docType package
 #' @name MazamaCoreUtils
+#' @aliases MazamaCoreUtils-package
 #' @title Utility Functions for Production R Code
 #' @description The MazamaCoreUtils package was created by MazamaScience to
 #' regularize our work building R-based web services.

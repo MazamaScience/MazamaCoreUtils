@@ -17,7 +17,9 @@ operationally. Areas of functionality supported by this package include:
 \item{ python style logging }
 \item{ simple error messaging }
 \item{ cache management }
-\item{ date parsing }
+\item{ API key handling }
+\item{ date parsing and formatting }
+\item{ lat/lon validation and uniqueID creation }
 \item{ source code linting }
 }
 }

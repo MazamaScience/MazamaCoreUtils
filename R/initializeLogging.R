@@ -22,8 +22,8 @@ initializeLogging <- function(
   # ----- Validate parameters --------------------------------------------------
 
   stopIfNull(logDir)
-  setIfNull(filePrefix, "")
-  setIfNull(createDir, TRUE)
+  filePrefix <- setIfNull(filePrefix, "")
+  createDir <- setIfNull(createDir, TRUE)
 
   # ----- Create Directory -----------------------------------------------------
 
@@ -41,8 +41,8 @@ initializeLogging <- function(
     # NOTE:  Intentionally create timestamp in host system timezone
     timestamp <- strftime(lubridate::now(tzone = "UTC"), "%Y-%m-%dT%H:%M:%S")
     for (logLevel in c("TRACE", "DEBUG", "INFO", "ERROR")) {
-      oldFile <- file.path(logDir, paste0(filePrefix, logLevel, ".log"))
-      newFile <- file.path(logDir, paste0(filePrefix, logLevel, ".log.", timestamp))
+      oldFile <- file.path(logDir, sprintf("%s%s.log", filePrefix, logLevel))
+      newFile <- file.path(logDir, sprintf("%s%s.log.%s", filePrefix, logLevel, timestamp))
       if ( file.exists(oldFile) ) {
         file.rename(oldFile, newFile)
       }
@@ -54,10 +54,10 @@ initializeLogging <- function(
 
   try({
     logger.setup(
-      traceLog = file.path(logDir, "TRACE.log"),
-      debugLog = file.path(logDir, "DEBUG.log"),
-      infoLog = file.path(logDir, "INFO.log"),
-      errorLog = file.path(logDir, "ERROR.log")
+      traceLog = file.path(logDir, sprintf("%sTRACE.log", filePrefix)),
+      debugLog = file.path(logDir, sprintf("%sDEBUG.log", filePrefix)),
+      infoLog = file.path(logDir, sprintf("%sINFO.log", filePrefix)),
+      errorLog = file.path(logDir, sprintf("%sERROR.log", filePrefix))
     )
   }, silent = TRUE) %>%
   stopOnError("could not create log files")

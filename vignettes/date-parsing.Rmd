@@ -62,7 +62,7 @@ for `lubridate::parse_date_time()`.
 
 Enforcing the specification of timezones throughout a body of code is the most
 robust way to remove timezone-related errors from your software. To help with this
-thistype of code review, the package also includes functions for testing whether
+this type of code review, the package also includes functions for testing whether
 specific named arguments are used with certain function calls:
 
 * `lintFunctionArgs_file()` -- check a single file

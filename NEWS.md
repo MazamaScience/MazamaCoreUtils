@@ -1,3 +1,22 @@
+# MazamaCoreUtils 0.5.0
+
+* Updated dependencies to **R** 4.0.0 and **rlang** 1.1.0.
+* `initializeLogging()` now properly uses `filePrefix` argument.
+* The `timeStamp()` function now defaults to `lubridate::now("UTC")` when
+no `datetime` is provided. This supports common use cases such as:
+```
+> timeStamp(unit = "hour")
+[1] "2023102618"
+> timeStamp(style = "clock")
+[1] "2023-10-26T18:25:55"
+```
+* Updated imports from **futile.logger** to avoid error messages like this:
+`WARN [2023-08-29 14:06:58] Oops: object 'flog.appender' not found`
+* Added `createLocationMask()` to identify invalid locations.
+* `createLocationID()` now defaults to `algorithm = "geohash"`.
+* `createLocationID()` now returns the user specified `invalidID` for invalid 
+locations rather than stopping with an error message.
+
 # MazamaCoreUtils 0.4.16
 
 * Addressed CRAN package documentation issue.

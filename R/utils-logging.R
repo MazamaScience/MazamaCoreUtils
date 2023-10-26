@@ -286,7 +286,7 @@ logger.debug <- function(msg, ...) {
 
 #' @name logger.info
 #' @export
-#' @importFrom futile.logger flog.debug
+#' @importFrom futile.logger flog.info
 #' @title Python-style logging statements
 #' @param msg Message with format strings applied to additional arguments.
 #' @param \dots Additional arguments to be formatted.

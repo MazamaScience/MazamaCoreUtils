@@ -1,9 +1,17 @@
 test_that("explicit arguments are required", {
 
-  expect_error(dateSequence(datetime = NULL))
-  expect_error(dateSequence(timezone = NULL))
   expect_error(dateSequence(unit = NULL))
   expect_error(dateSequence(style = NULL))
+
+})
+
+test_that("works will NULL datetime", {
+
+  datetime <- lubridate::now(tzone = "UTC")
+  stamp <- timeStamp(datetime, "UTC", unit = "hour")
+  expect_identical(timeStamp(unit = "hour"), stamp)
+  stamp <- timeStamp(datetime, "UTC", unit = "hour", style = "clock")
+  expect_identical(timeStamp(unit = "hour", style = "clock"), stamp)
 
 })
 

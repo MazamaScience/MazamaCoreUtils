@@ -40,10 +40,16 @@
     <loc>/reference/createLocationID.html</loc>
   </url>
   <url>
+    <loc>/reference/createLocationMask.html</loc>
+  </url>
+  <url>
     <loc>/reference/dateRange.html</loc>
   </url>
   <url>
     <loc>/reference/dateSequence.html</loc>
+  </url>
+  <url>
+    <loc>/reference/flog.appender.html</loc>
   </url>
   <url>
     <loc>/reference/flog.layout.html</loc>

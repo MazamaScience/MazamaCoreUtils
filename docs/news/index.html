@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.0</span>
       </span>
     </div>
 
@@ -51,7 +51,25 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.4.16" id="mazamacoreutils-0416">MazamaCoreUtils 0.4.16<a class="anchor" aria-label="anchor" href="#mazamacoreutils-0416"></a></h2>
+<h2 class="page-header" data-toc-text="0.5.0" id="mazamacoreutils-050">MazamaCoreUtils 0.5.0<a class="anchor" aria-label="anchor" href="#mazamacoreutils-050"></a></h2>
+<ul><li>Updated dependencies to <strong>R</strong> 4.0.0 and <strong>rlang</strong> 1.1.0.</li>
+<li>
+<code><a href="../reference/initializeLogging.html">initializeLogging()</a></code> now properly uses <code>filePrefix</code> argument.</li>
+<li>The <code><a href="../reference/timeStamp.html">timeStamp()</a></code> function now defaults to <code>lubridate::now("UTC")</code> when no <code>datetime</code> is provided. This supports common use cases such as:</li>
+</ul><pre><code>&gt; timeStamp(unit = "hour")
+[1] "2023102618"
+&gt; timeStamp(style = "clock")
+[1] "2023-10-26T18:25:55"</code></pre>
+<ul><li>Updated imports from <strong>futile.logger</strong> to avoid error messages like this: <code>WARN [2023-08-29 14:06:58] Oops: object 'flog.appender' not found</code>
+</li>
+<li>Added <code><a href="../reference/createLocationMask.html">createLocationMask()</a></code> to identify invalid locations.</li>
+<li>
+<code><a href="../reference/createLocationID.html">createLocationID()</a></code> now defaults to <code>algorithm = "geohash"</code>.</li>
+<li>
+<code><a href="../reference/createLocationID.html">createLocationID()</a></code> now returns the user specified <code>invalidID</code> for invalid locations rather than stopping with an error message.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.4.16" id="mazamacoreutils-0416">MazamaCoreUtils 0.4.16<small>2023-08-29</small><a class="anchor" aria-label="anchor" href="#mazamacoreutils-0416"></a></h2>
 <ul><li>Addressed CRAN package documentation issue.</li>
 </ul></div>
     <div class="section level2">

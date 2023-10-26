@@ -2,7 +2,9 @@
 [![Downloads](http://cranlogs.r-pkg.org/badges/MazamaCoreUtils)](https://cran.r-project.org/package=MazamaCoreUtils)
 [![DOI](https://zenodo.org/badge/152321630.svg)](https://zenodo.org/badge/latestdoi/152321630)
 
-A dedicated Slack channel has been created for announcements, support and to help build a community of practice around this open source package. You may request an invitation to join from jonathan.callahan@dri.com.
+A dedicated Slack channel has been created for announcements, support and to 
+help build a community of practice around this open source package. You may 
+request an invitation to join from <jonathan.callahan@dri.com>.
 
 # MazamaCoreUtils
 
@@ -17,8 +19,8 @@ working with environmental time series.
 ## Background
 
 The MazamaCoreUtils package was created by MazamaScience to regularize our
-work building R packages and R-based web services focused on environmental
-monitoring data.
+work building R packages, data processing pipelines and web services focused on 
+environmental monitoring data.
 
 The main goal of this package is to create an internally standardized set of
 functions that we can use in various systems that are being run operationally. 
@@ -28,7 +30,7 @@ Areas of functionality supported by this package include:
  * simple error messaging
  * cache management
  * API key handling
- * date-time parsing
+ * date-time parsing and formatting
  * lat/lon validation and uniqueID creation
  * source code linting
  
@@ -40,9 +42,15 @@ Install from CRAN with:
 
 Install the latest version from GitHub with:
 
-``` devtools::install_github('mazamascience/MazamaCoreUtils') ```
+```devtools::install_github('mazamascience/MazamaCoreUtils')```
 
 ----
 
-This project is supported by Mazama Science.
+Development of this R package has been supported with funding from the 
+following institutions:
+
+* USFS [AirFire Research Team](https://www.airfire.org)
+
+Questions regarding further development of the package should be directed to 
+<jonathan.callahan@dri.edu>.
 

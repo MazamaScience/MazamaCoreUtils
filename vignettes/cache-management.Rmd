@@ -88,10 +88,8 @@ sprintf("Cache size = %s MB", cacheSize)
 Web services that provide access to real-time data often generate products that
 have an expiration date. Files older than a specific number of days or hours 
 should be removed from the cache because they no longer represent the current
-status.
-
-Removing stale files can also help to keep the cache much smaller than the
-absolute maximum cache size, enhancing overall performance.
+status. Removing stale files can also help to keep the cache much smaller than 
+the absolute maximum cache size, enhancing overall performance.
 
 Stale files -- files that haven't been modified in a while -- can be removed 
 regardless of  cache size with the `maxFileAge` parameter. When this is set, 
@@ -107,7 +105,7 @@ manageCache(CACHE_DIR, maxFileAge = 3/24)
 
 ## Other Use Cases
 
-In the case of a product cache, the most typical behavior will be to sort
+When used to manage a product cache, the most typical behavior will be to sort
 files based on last access time. The `manageCache()` function uses
 `sortBy = "atime"` as the default. It is also possible to sort based on 
 modification time `mtime` or change time `ctime`.

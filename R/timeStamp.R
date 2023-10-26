@@ -13,6 +13,8 @@
 #' strings), into equivalent character representations in one of several
 #' formats appropriate for use in naming files or labeling plots.
 #'
+#' When \code{datetime} is not provided, defaults to \code{lubridate::now()}.
+#'
 #' The required \code{timezone} parameter must be one of those found in
 #' \code{\link[base]{OlsonNames}}.
 #'
@@ -50,6 +52,7 @@
 #'
 #' datetime <- parseDatetime("2019-01-08 12:30:15", timezone = "UTC")
 #'
+#' timeStamp()
 #' timeStamp(datetime, "UTC", unit = "year")
 #' timeStamp(datetime, "UTC", unit = "month")
 #' timeStamp(datetime, "UTC", unit = "month", style = "julian")
@@ -72,6 +75,12 @@ timeStamp <- function(
 ) {
 
   # ----- Validate parameters --------------------------------------------------
+
+  # Common use case
+  if ( is.null(datetime) ) {
+    datetime <- lubridate::now(tzone = "UTC")
+    if ( is.null(timezone) ) timezone <- "UTC"
+  }
 
   stopIfNull(datetime)
   stopIfNull(timezone)

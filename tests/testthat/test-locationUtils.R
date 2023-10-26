@@ -42,47 +42,44 @@ test_that("validateLonsLats() works", {
 
 })
 
-test_that("createLocationID() validates input", {
+test_that("createLocationMask() validates input", {
 
-  expect_error(createLocationID())
-  expect_error(createLocationID("abc"))
-  expect_error(createLocationID(-120.325278))
-  expect_error(createLocationID(-120.325278, "abc"))
+  # Generate errors
+  expect_error(createLocationMask())
+  expect_error(createLocationMask("abc"))
+  expect_error(createLocationMask(-120.325278))
+  expect_error(createLocationMask(1:4, 1:5))
+  expect_error(createLocationMask(1, 1, lonRange = c(-200, -120)))
+  expect_error(createLocationMask(1, 1, latRange = c(-200, 500)))
+
+  # Acceptable bad input
+  expect_equal(createLocationMask(-120.325278, "abc"), FALSE)
+  expect_equal(createLocationMask(-120.325278, NA), FALSE)
+
+})
+
+test_that("createLocationMask() works", {
+
+  # removeZeroZero = TRUE
+  expect_equal(
+    createLocationMask(
+      longitude = c(1,NA,1,0,1,200,  1,1,1,0,1,1),
+      latitude = c(1,1,1,1,1,1,  1,NA,1,0,1,200)
+    ),
+    c(TRUE, FALSE, TRUE, TRUE, TRUE, FALSE,
+      TRUE, FALSE, TRUE, FALSE, TRUE, FALSE)
+  )
+
+  # removeZeroZero = FALSE
+  expect_equal(
+    createLocationMask(
+      longitude = c(1,NA,1,0,1,200,  1,1,1,0,1,1),
+      latitude = c(1,1,1,1,1,1,  1,NA,1,0,1,200),
+      removeZeroZero = FALSE
+    ),
+    c(TRUE, FALSE, TRUE, TRUE, TRUE, FALSE,
+      TRUE, FALSE, TRUE, TRUE, TRUE, FALSE)
+  )
 
 })
 
-test_that("createLocationID() rounds properly", {
-
-  # Wenatchee
-
-  # Test significant digits
-  expect_equal(
-    createLocationID(-120.325278, 47.423333),
-    "500cb09a70d3d981"
-  )
-
-  expect_equal(
-    createLocationID(-120.3252780, 47.4233330),
-    "500cb09a70d3d981"
-  )
-
-  # Test rounding
-  expect_equal(
-    createLocationID(-120.32527804, 47.42333304),
-    "500cb09a70d3d981"
-  )
-
-  expect_equal(
-    createLocationID(-120.32527796, 47.42333296),
-    "500cb09a70d3d981"
-  )
-
-  expect_false(
-    createLocationID(-120.32527806, 47.42333306) == "500cb09a70d3d981"
-  )
-
-  expect_false(
-    createLocationID(-120.32527794, 47.42333294) == "500cb09a70d3d981"
-  )
-
-})

@@ -68,7 +68,6 @@
 #' \dontrun{
 #' # Not all coercions are possible
 #' setIfNull("bar", 5)
-#' setIfNull("5i", 0+0i)
 #' setIfNull("t", FALSE)
 #' }
 setIfNull <- function(

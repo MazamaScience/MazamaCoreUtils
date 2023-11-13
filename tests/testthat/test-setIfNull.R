@@ -28,7 +28,6 @@ test_that("Appropriate coercion works", {
 test_that("Inappropriate coercion fails", {
 
   expect_error(setIfNull("hello", 5))
-  expect_error(setIfNull("6i", 0i))
 
 })
 

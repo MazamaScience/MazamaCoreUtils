@@ -1,3 +1,8 @@
+# MazamaCoreUtils 0.5.1
+
+* Addressed CRAN check error.
+* Added `precision` argument to `createLocationID()`.
+
 # MazamaCoreUtils 0.5.0
 
 * Updated dependencies to **R** 4.0.0 and **rlang** 1.1.0.

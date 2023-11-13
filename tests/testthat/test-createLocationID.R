@@ -91,5 +91,34 @@ test_that("createLocationID() algorithms work", {
 
 })
 
+test_that("precision is used properly", {
 
+  # Wenatchee
+
+  expect_equal(
+    createLocationID(-120.325278, 47.423333, precision = 10),
+    "c26mvcjucy"
+  )
+
+  expect_equal(
+    createLocationID(-120.325278, 47.423333, precision = 9),
+    "c26mvcjuc"
+  )
+
+  expect_equal(
+    createLocationID(-120.325278, 47.423333, precision = 8),
+    "c26mvcju"
+  )
+
+  expect_equal(
+    createLocationID(-120.325278, 47.423333, precision = 7),
+    "c26mvcj"
+  )
+
+  expect_equal(
+    createLocationID(-120.325278, 47.423333, precision = 6),
+    "c26mvc"
+  )
+
+})
 

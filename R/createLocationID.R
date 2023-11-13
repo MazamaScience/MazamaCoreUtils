@@ -1,17 +1,34 @@
 #' @title Create one or more unique locationIDs
-#' @description A unique locationID is created for each incoming
-#' \code{longitude} and \code{latitude}.
+#' @description A locationID is created for each incoming \code{longitude} and
+#' \code{latitude}. Each locationID is unique to within a certain spatial scale.
+#' With \code{algorithm = "geohash"}, the
+#' \code{precision} argument determines the size of a geohash grid cell. At the
+#' equator, the following grid cell sizes apply for different precision levels:
 #'
+#' \preformatted{
+#' precision   (maximum grid cell X axis, in m)
+#'         5   ± 2400
+#'         6   ± 610
+#'         7   ± 76
+#'         8   ± 19
+#'         9   ± 2.4
+#'        10   ± 0.6
+#' }
+#'
+#' Invalid locations will be assigned a locationID specified by the user with
+#' the \code{invalidID} argument, typically \code{NA}.
+#'
+#' @details
 #' When the \code{"geohash"} algorithm is specified,
-#' the following code is used:
+#' the following code is used to generate each locationID:
 #'
 #' \preformatted{
 #'   locationID <-
-#'     geohashTools::gh_encode(latitude, longitude, precision = 10)
+#'     geohashTools::gh_encode(latitude, longitude, precision)
 #' }
 #'
 #' When the \code{"digest"} algorithm is specified,
-#' the following code is used to generate each locationID.
+#' the following code is used:
 #'
 #' \preformatted{
 #' # Retain accuracy up to ~.1m
@@ -26,9 +43,6 @@
 #'
 #' See the references for details on either algorithm.
 #'
-#' The locationID for any invalid location can be specified by the user with
-#' the \code{invalidID} argument.
-#'
 #' @note The \code{"geohash"} algorithm is preferred but the \code{"digest"}
 #' algorithm is retained because several existing databases
 #' use the \code{"digest"} algorithm as a unique identifier.
@@ -36,6 +50,7 @@
 #' @param longitude Vector of longitudes in decimal degrees E.
 #' @param latitude Vector of latitudes in decimal degrees N.
 #' @param algorithm Algorithm to use -- either \code{"geohash"} or \code{"digest"}.
+#' @param precision \code{precision} argument used when encoding with \code{"geohash"}.
 #' @param invalidID Identifier to use for invalid locations. This can be a
 #' character string or \code{NA}.
 #' @return Vector of character locationIDs.
@@ -43,7 +58,7 @@
 #' library(MazamaCoreUtils)
 #'
 #' longitude <- c(-122.5, 0, NA, -122.5, -122.5)
-#' latitude <- c( 47.5, 0, 47.5,   NA, 47.5)
+#' latitude <- c( 47.5, 0, 47.5, NA, 47.5)
 #'
 #' createLocationID(longitude, latitude)
 #' createLocationID(longitude, latitude, invalidID = "bad")
@@ -59,10 +74,16 @@ createLocationID <- function(
     longitude = NULL,
     latitude = NULL,
     algorithm = c("geohash", "digest"),
+    precision = 10,
     invalidID = as.character(NA)
 ) {
 
   # ----- Validate parameters --------------------------------------------------
+
+  stopIfNull(longitude)
+  stopIfNull(latitude)
+
+  precision <- setIfNull(precision, 10)
 
   algorithm <- match.arg(algorithm)
 
@@ -116,7 +137,7 @@ createLocationID <- function(
   } else if ( algorithm == "geohash" ) {
 
     locationID[mask] <- mapply(
-      function(lat, lon) { geohashTools::gh_encode(lat, lon, precision = 10) },
+      function(lat, lon) { geohashTools::gh_encode(lat, lon, precision) },
       latitude[mask],
       longitude[mask],
       SIMPLIFY = TRUE,

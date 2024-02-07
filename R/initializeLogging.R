@@ -40,7 +40,7 @@ initializeLogging <- function(
   try({
     # NOTE:  Intentionally create timestamp in host system timezone
     timestamp <- strftime(lubridate::now(tzone = "UTC"), "%Y-%m-%dT%H:%M:%S")
-    for (logLevel in c("TRACE", "DEBUG", "INFO", "ERROR")) {
+    for (logLevel in c("TRACE", "DEBUG", "INFO", "WARN", "ERROR")) {
       oldFile <- file.path(logDir, sprintf("%s%s.log", filePrefix, logLevel))
       newFile <- file.path(logDir, sprintf("%s%s.log.%s", filePrefix, logLevel, timestamp))
       if ( file.exists(oldFile) ) {
@@ -57,6 +57,7 @@ initializeLogging <- function(
       traceLog = file.path(logDir, sprintf("%sTRACE.log", filePrefix)),
       debugLog = file.path(logDir, sprintf("%sDEBUG.log", filePrefix)),
       infoLog = file.path(logDir, sprintf("%sINFO.log", filePrefix)),
+      warnLog = file.path(logDir, sprintf("%sWARN.log", filePrefix)),
       errorLog = file.path(logDir, sprintf("%sERROR.log", filePrefix))
     )
   }, silent = TRUE) %>%

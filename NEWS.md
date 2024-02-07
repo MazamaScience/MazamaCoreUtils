@@ -1,3 +1,8 @@
+# MazamaCoreUtils 0.5.2
+
+* `initializeLogging()` now creates a `WARN.log` file to complete the suite of
+`TRACE`, `DEBUG`, `INFO`, `WARN` and `ERROR`.
+
 # MazamaCoreUtils 0.5.1
 
 * Addressed CRAN check error.

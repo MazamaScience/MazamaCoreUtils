@@ -84,6 +84,7 @@ longitude <- c(-122.5, 0, NA, -122.5, -122.5)
 latitude <- c( 47.5, 0, 47.5, NA, 47.5)
 
 createLocationID(longitude, latitude)
+createLocationID(longitude, latitude, precision = 7)
 createLocationID(longitude, latitude, invalidID = "bad")
 createLocationID(longitude, latitude, algorithm = "digest")
 

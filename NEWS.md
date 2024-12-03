@@ -1,3 +1,9 @@
+# MazamaCoreUtils 0.5.3
+
+* The `loadDataFile()` function now includes a `priority` argument so that 
+either `dataUrl` or `dataDir` can be prioritized with the other as a backup
+if initial loading of data fails.
+
 # MazamaCoreUtils 0.5.2
 
 * `initializeLogging()` now creates a `WARN.log` file to complete the suite of

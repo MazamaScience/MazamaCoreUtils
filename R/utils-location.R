@@ -9,7 +9,7 @@
 #' @return Invisibly returns \code{TRUE} if no error message has been generated.
 #' @rdname validateLonsLats
 #' @export
-#'
+
 validateLonsLats <- function(
     longitude = NULL,
     latitude = NULL,
@@ -41,7 +41,7 @@ validateLonsLats <- function(
     stop("all longitudes must be valid values between -180 and 180")
 
   if ( anyNA(latitude) || any(latitude < -90) || any(latitude > 90) )
-    stop("all latitudes must be a valid values between -90 and 90")
+    stop("all latitudes must be valid values between -90 and 90")
 
   return(invisible(TRUE))
 

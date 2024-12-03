@@ -188,19 +188,19 @@ Here is what is generated in the log files:
 
 ## ERROR.log
 
-```{r errorLog, echo = FALSE}
+```{r errorLog, echo = TRUE}
 cat(paste(readLines(file.path(tmpDir,"ERROR.log")),collapse='\n'))
 ```
 
 ## INFO.log
 
-```{r infoLog, echo = FALSE}
+```{r infoLog, echo = TRUE}
 cat(paste(readLines(file.path(tmpDir,"INFO.log")),collapse='\n'))
 ```
 
 ## TRACE.log
 
-```{r traceLog, echo = FALSE}
+```{r traceLog, echo = TRUE}
 cat(paste(readLines(file.path(tmpDir,"TRACE.log")),collapse='\n'))
 ```
 

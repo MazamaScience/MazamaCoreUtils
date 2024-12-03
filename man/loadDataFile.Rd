@@ -2,26 +2,58 @@
 % Please edit documentation in R/loadDataFile.R
 \name{loadDataFile}
 \alias{loadDataFile}
-\title{Load data from URL or local file}
+\title{Load R data from URL or local file}
 \usage{
-loadDataFile(filename = NULL, dataUrl = NULL, dataDir = NULL)
+loadDataFile(
+  filename = NULL,
+  dataUrl = NULL,
+  dataDir = NULL,
+  priority = c("dataDir", "dataUrl")
+)
 }
 \arguments{
-\item{filename}{Name of the data file to be loaded.}
+\item{filename}{Name of the R data file to be loaded.}
 
 \item{dataUrl}{Remote URL directory for data files.}
 
-\item{dataDir}{Local directory containing data files.}
+\item{dataDir}{Local disk directory containing data files.}
+
+\item{priority}{First data source to attempt if both are supplied.}
 }
 \value{
 A data object.
 }
 \description{
-Loads pre-generated R binary files from a URL or a local
+Loads pre-generated R binary (".rda") files from a URL or a local
 directory. This function is intended to be called by other \code{~_load()}
 functions and can remove internet latencies when local versions of data are
 available.
 
-For this reason, specification of \code{dataDir} always takes precedence over
-\code{dataUrl}.
+If both \code{dataUrl} and \code{dataDir} are provided, an attempt will be
+made to load data from the source specified by \code{priority} with the
+other source used as a backup.
+}
+\examples{
+\dontrun{
+library(MazamaCoreUtils)
+
+filename = "USCensusStates_02.rda"
+dir = "~/Data/Spatial"
+url = "http://data.mazamascience.com/MazamaSpatialUtils/Spatial_0.8"
+
+# Load local file
+USCensusStates = loadDataFile(filename, dataDir = dir)
+
+# Load remote file
+USCensusStates = loadDataFile(filename, dataUrl = url)
+
+# Load local file with remote file as backup
+USCensusStates =
+  loadDataFile(filename, dataDir = dir, dataUrl = url, priority = "dataDir")
+
+# Load remote file with local file as backup
+USCensusStates =
+  loadDataFile(filename, dataDir = dir, dataUrl = url, priority = "dataUrl")
+
+}
 }

@@ -89,7 +89,7 @@ explicitly.
 
 While these functions could be used to test for explicit use in any 
 `function:argument` pair, our concern here is primarily with specification of
-timezones. The packages includes a detailed list of `timezoneLintRules` to help 
+timezones. The package includes a detailed list of `timezoneLintRules` to help 
 with this. As an example, here is the result of linting the `dateRange.R`
 function in this package:
 

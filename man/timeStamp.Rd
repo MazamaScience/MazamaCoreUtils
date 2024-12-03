@@ -81,6 +81,8 @@ timeStamp(datetime, "UTC", unit = "sec")
 timeStamp(datetime, "UTC", unit = "sec", style = "ymdThms")
 timeStamp(datetime, "UTC", unit = "sec", style = "julian")
 timeStamp(datetime, "UTC", unit = "sec", style = "clock")
+timeStamp(datetime, "UTC", unit = "sec", style = "clock") \%>\%
+  stringr::str_replace("T", " ")
 timeStamp(datetime, "America/Los_Angeles", unit = "sec", style = "clock")
 timeStamp(datetime, "America/Los_Angeles", unit = "msec", style = "clock")
 

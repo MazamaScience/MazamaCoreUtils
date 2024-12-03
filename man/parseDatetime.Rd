@@ -63,7 +63,7 @@ the \code{timezone} argument.
 }
 \section{Mazama Science Conventions}{
 
-Within Mazama Science package, datetimes not in \code{POSIXct} format are
+Within Mazama Science packages, datetimes not in \code{POSIXct} format are
 often represented as decimal values with no separation (ex: 20181012,
 20181012130900), either as numerics or strings.
 }

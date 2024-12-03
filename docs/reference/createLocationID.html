@@ -33,7 +33,7 @@ the invalidID argument, typically NA.'><!-- mathjax --><script src="https://cdnj
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.3</span>
       </span>
     </div>
 
@@ -170,6 +170,8 @@ use the <code>"digest"</code> algorithm as a unique identifier.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">createLocationID</span><span class="op">(</span><span class="va">longitude</span>, <span class="va">latitude</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "c22yhrn5x1" NA           NA           NA           "c22yhrn5x1"</span>
+<span class="r-in"><span><span class="fu">createLocationID</span><span class="op">(</span><span class="va">longitude</span>, <span class="va">latitude</span>, precision <span class="op">=</span> <span class="fl">7</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "c22yhrn" NA        NA        NA        "c22yhrn"</span>
 <span class="r-in"><span><span class="fu">createLocationID</span><span class="op">(</span><span class="va">longitude</span>, <span class="va">latitude</span>, invalidID <span class="op">=</span> <span class="st">"bad"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "c22yhrn5x1" "bad"        "bad"        "bad"        "c22yhrn5x1"</span>
 <span class="r-in"><span><span class="fu">createLocationID</span><span class="op">(</span><span class="va">longitude</span>, <span class="va">latitude</span>, algorithm <span class="op">=</span> <span class="st">"digest"</span><span class="op">)</span></span></span>

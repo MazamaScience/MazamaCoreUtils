@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.3</span>
       </span>
     </div>
 
@@ -257,36 +257,42 @@ statements and their output.</p>
 <div class="section level3">
 <h3 id="error-log">ERROR.log<a class="anchor" aria-label="anchor" href="#error-log"></a>
 </h3>
-<pre><code><span><span class="co">#&gt; ERROR [2024-02-07 10:48:03] NO ERRORS</span></span></code></pre>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmpDir</span>,<span class="st">"ERROR.log"</span><span class="op">)</span><span class="op">)</span>,collapse<span class="op">=</span><span class="st">'\n'</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ERROR [2024-12-02 20:43:29] NO ERRORS</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="info-log">INFO.log<a class="anchor" aria-label="anchor" href="#info-log"></a>
 </h3>
-<pre><code><span><span class="co">#&gt; INFO [2024-02-07 10:48:03] Begin loggingExample ...</span></span>
-<span><span class="co">#&gt; WARN [2024-02-07 10:48:03] Oops: Error in Summary.factor(structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,  : </span></span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmpDir</span>,<span class="st">"INFO.log"</span><span class="op">)</span><span class="op">)</span>,collapse<span class="op">=</span><span class="st">'\n'</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; INFO [2024-12-02 20:43:29] Begin loggingExample ...</span></span>
+<span><span class="co">#&gt; WARN [2024-12-02 20:43:29] Oops: Error in Summary.factor(structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,  : </span></span>
 <span><span class="co">#&gt;   'sum' not meaningful for factors</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ERROR [2024-02-07 10:48:03] NO ERRORS</span></span>
-<span><span class="co">#&gt; INFO [2024-02-07 10:48:03] Successfully completed loggingExample</span></span>
-<span><span class="co">#&gt; INFO [2024-02-07 10:48:03] </span></span>
-<span><span class="co">#&gt; =============== THE END ===============</span></span></code></pre>
+<span><span class="co">#&gt; ERROR [2024-12-02 20:43:29] NO ERRORS</span></span>
+<span><span class="co">#&gt; INFO [2024-12-02 20:43:29] Successfully completed loggingExample</span></span>
+<span><span class="co">#&gt; INFO [2024-12-02 20:43:29] </span></span>
+<span><span class="co">#&gt; =============== THE END ===============</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="trace-log">TRACE.log<a class="anchor" aria-label="anchor" href="#trace-log"></a>
 </h3>
-<pre><code><span><span class="co">#&gt; INFO [2024-02-07 10:48:03] Begin loggingExample ...</span></span>
-<span><span class="co">#&gt; TRACE [2024-02-07 10:48:03] Working on: Sepal.Length</span></span>
-<span><span class="co">#&gt; TRACE [2024-02-07 10:48:03] Working on: Sepal.Width</span></span>
-<span><span class="co">#&gt; TRACE [2024-02-07 10:48:03] Working on: Petal.Length</span></span>
-<span><span class="co">#&gt; TRACE [2024-02-07 10:48:03] Working on: Petal.Width</span></span>
-<span><span class="co">#&gt; TRACE [2024-02-07 10:48:03] Working on: Species</span></span>
-<span><span class="co">#&gt; WARN [2024-02-07 10:48:03] Oops: Error in Summary.factor(structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,  : </span></span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmpDir</span>,<span class="st">"TRACE.log"</span><span class="op">)</span><span class="op">)</span>,collapse<span class="op">=</span><span class="st">'\n'</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; INFO [2024-12-02 20:43:29] Begin loggingExample ...</span></span>
+<span><span class="co">#&gt; TRACE [2024-12-02 20:43:29] Working on: Sepal.Length</span></span>
+<span><span class="co">#&gt; TRACE [2024-12-02 20:43:29] Working on: Sepal.Width</span></span>
+<span><span class="co">#&gt; TRACE [2024-12-02 20:43:29] Working on: Petal.Length</span></span>
+<span><span class="co">#&gt; TRACE [2024-12-02 20:43:29] Working on: Petal.Width</span></span>
+<span><span class="co">#&gt; TRACE [2024-12-02 20:43:29] Working on: Species</span></span>
+<span><span class="co">#&gt; WARN [2024-12-02 20:43:29] Oops: Error in Summary.factor(structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,  : </span></span>
 <span><span class="co">#&gt;   'sum' not meaningful for factors</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ERROR [2024-02-07 10:48:03] NO ERRORS</span></span>
-<span><span class="co">#&gt; INFO [2024-02-07 10:48:03] Successfully completed loggingExample</span></span>
-<span><span class="co">#&gt; INFO [2024-02-07 10:48:03] </span></span>
-<span><span class="co">#&gt; =============== THE END ===============</span></span></code></pre>
+<span><span class="co">#&gt; ERROR [2024-12-02 20:43:29] NO ERRORS</span></span>
+<span><span class="co">#&gt; INFO [2024-12-02 20:43:29] Successfully completed loggingExample</span></span>
+<span><span class="co">#&gt; INFO [2024-12-02 20:43:29] </span></span>
+<span><span class="co">#&gt; =============== THE END ===============</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">

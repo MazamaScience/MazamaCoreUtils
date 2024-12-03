@@ -99,7 +99,7 @@ of the  `maxCacheSize`. Fractional days are allowed.
 You can remove standard products in the cache that haven't been modified in the 
 last 3 hours with:
 
-```
+```{r maxFileAge}
 manageCache(CACHE_DIR, maxFileAge = 3/24)
 ```
 

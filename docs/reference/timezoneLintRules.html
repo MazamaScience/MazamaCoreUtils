@@ -3,7 +3,44 @@
 lintFunctionArgs_~(). functions. It includes all time-related
 functions from the base and lubridate packages that are involved
 with parsing or formatting datetimes and helps check whether the appropriate
-timezone arguments are being explicitly used."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+timezone arguments are being explicitly used.
+
+timezoneLintRules &amp;lt;- list(
+  # base functions
+  &quot;as.Date&quot; = &quot;tz&quot;,
+  &quot;as.POSIXct&quot; = &quot;tz&quot;,
+  &quot;as.POSIXlt&quot; = &quot;tz&quot;,
+  &quot;ISOdate&quot; = &quot;tz&quot;,
+  &quot;ISOdatetime&quot; = &quot;tz&quot;,
+  &quot;strftime&quot; = &quot;tz&quot;,
+  &quot;strptime&quot; = &quot;tz&quot;,
+  &quot;Sys.Date&quot; = &quot;DEPRECATED&quot;, # Please don't use this function!
+  &quot;Sys.time&quot; = &quot;DEPRECATED&quot;, # Please don't use this function!
+  # lubridate functions
+  &quot;as_datetime&quot; = &quot;tz&quot;,
+  &quot;date_decimal&quot; = &quot;tz&quot;,
+  &quot;fast_strptime&quot; = &quot;tz&quot;,
+  &quot;force_tz&quot; = &quot;tzone&quot;,
+  &quot;force_tzs&quot; = &quot;tzone_out&quot;,
+  &quot;interval&quot; = &quot;tzone&quot;,
+  &quot;local_time&quot; = &quot;tz&quot;,
+  &quot;make_datetime&quot; = &quot;tz&quot;,
+  &quot;now&quot; = &quot;tzone&quot;,
+  &quot;parse_date_time&quot; = &quot;tz&quot;,
+  &quot;parse_date_time2&quot; = &quot;tz&quot;,
+  &quot;today&quot; = &quot;tzone&quot;,
+  &quot;with_tz&quot; = &quot;tzone&quot;,
+  &quot;ymd&quot; = &quot;tz&quot;,
+  &quot;ymd_h&quot; = &quot;tz&quot;,
+  &quot;ymd_hm&quot; = &quot;tz&quot;,
+  &quot;ymd_hms&quot; = &quot;tz&quot;,
+  # MazamaCoreUtils functions
+  &quot;dateRange&quot; = &quot;timezone&quot;,
+  &quot;timeRange&quot; = &quot;timezone&quot;,
+  &quot;parseDatetime&quot; = &quot;timezone&quot;
+)
+
+"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
@@ -21,7 +58,7 @@ timezone arguments are being explicitly used."><!-- mathjax --><script src="http
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.3</span>
       </span>
     </div>
 
@@ -61,6 +98,42 @@ timezone arguments are being explicitly used."><!-- mathjax --><script src="http
 functions from the <span class="pkg">base</span> and <span class="pkg">lubridate</span> packages that are involved
 with parsing or formatting datetimes and helps check whether the appropriate
 timezone arguments are being explicitly used.</p>
+<div class="sourceCode"><pre><code><span></span>
+<span><span class="va">timezoneLintRules</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="co"># base functions</span></span>
+<span>  <span class="st">"as.Date"</span> <span class="op">=</span> <span class="st">"tz"</span>,</span>
+<span>  <span class="st">"as.POSIXct"</span> <span class="op">=</span> <span class="st">"tz"</span>,</span>
+<span>  <span class="st">"as.POSIXlt"</span> <span class="op">=</span> <span class="st">"tz"</span>,</span>
+<span>  <span class="st">"ISOdate"</span> <span class="op">=</span> <span class="st">"tz"</span>,</span>
+<span>  <span class="st">"ISOdatetime"</span> <span class="op">=</span> <span class="st">"tz"</span>,</span>
+<span>  <span class="st">"strftime"</span> <span class="op">=</span> <span class="st">"tz"</span>,</span>
+<span>  <span class="st">"strptime"</span> <span class="op">=</span> <span class="st">"tz"</span>,</span>
+<span>  <span class="st">"Sys.Date"</span> <span class="op">=</span> <span class="st">"DEPRECATED"</span>, <span class="co"># Please don't use this function!</span></span>
+<span>  <span class="st">"Sys.time"</span> <span class="op">=</span> <span class="st">"DEPRECATED"</span>, <span class="co"># Please don't use this function!</span></span>
+<span>  <span class="co"># lubridate functions</span></span>
+<span>  <span class="st">"as_datetime"</span> <span class="op">=</span> <span class="st">"tz"</span>,</span>
+<span>  <span class="st">"date_decimal"</span> <span class="op">=</span> <span class="st">"tz"</span>,</span>
+<span>  <span class="st">"fast_strptime"</span> <span class="op">=</span> <span class="st">"tz"</span>,</span>
+<span>  <span class="st">"force_tz"</span> <span class="op">=</span> <span class="st">"tzone"</span>,</span>
+<span>  <span class="st">"force_tzs"</span> <span class="op">=</span> <span class="st">"tzone_out"</span>,</span>
+<span>  <span class="st">"interval"</span> <span class="op">=</span> <span class="st">"tzone"</span>,</span>
+<span>  <span class="st">"local_time"</span> <span class="op">=</span> <span class="st">"tz"</span>,</span>
+<span>  <span class="st">"make_datetime"</span> <span class="op">=</span> <span class="st">"tz"</span>,</span>
+<span>  <span class="st">"now"</span> <span class="op">=</span> <span class="st">"tzone"</span>,</span>
+<span>  <span class="st">"parse_date_time"</span> <span class="op">=</span> <span class="st">"tz"</span>,</span>
+<span>  <span class="st">"parse_date_time2"</span> <span class="op">=</span> <span class="st">"tz"</span>,</span>
+<span>  <span class="st">"today"</span> <span class="op">=</span> <span class="st">"tzone"</span>,</span>
+<span>  <span class="st">"with_tz"</span> <span class="op">=</span> <span class="st">"tzone"</span>,</span>
+<span>  <span class="st">"ymd"</span> <span class="op">=</span> <span class="st">"tz"</span>,</span>
+<span>  <span class="st">"ymd_h"</span> <span class="op">=</span> <span class="st">"tz"</span>,</span>
+<span>  <span class="st">"ymd_hm"</span> <span class="op">=</span> <span class="st">"tz"</span>,</span>
+<span>  <span class="st">"ymd_hms"</span> <span class="op">=</span> <span class="st">"tz"</span>,</span>
+<span>  <span class="co"># MazamaCoreUtils functions</span></span>
+<span>  <span class="st">"dateRange"</span> <span class="op">=</span> <span class="st">"timezone"</span>,</span>
+<span>  <span class="st">"timeRange"</span> <span class="op">=</span> <span class="st">"timezone"</span>,</span>
+<span>  <span class="st">"parseDatetime"</span> <span class="op">=</span> <span class="st">"timezone"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+
     </div>
 
     <div id="ref-usage">

@@ -4,7 +4,7 @@
 
 A dedicated Slack channel has been created for announcements, support and to 
 help build a community of practice around this open source package. You may 
-request an invitation to join from <jonathan.callahan@gmail.com>.
+request an invitation to join from <jonathan.s.callahan@gmail.com>.
 
 # MazamaCoreUtils
 

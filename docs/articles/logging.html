@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Logging • MazamaCoreUtils</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.0</span>
       </span>
     </div>
 
@@ -132,8 +132,7 @@ that R logging can look very similar:</p>
 <span><span class="fu"><a href="../reference/logger.info.html">logger.info</a></span><span class="op">(</span><span class="st">"INFO level message"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/logger.debug.html">logger.debug</a></span><span class="op">(</span><span class="st">"DEBUG level message"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/logger.trace.html">logger.trace</a></span><span class="op">(</span><span class="st">"TRACE level message"</span><span class="op">)</span></span></code></pre>
-<p>This functionality is built on top of the excellent <a href="https://github.com/zatonovo/futile.logger" class="external-link">futile.logger</a>
-package.</p>
+<p>This functionality is built on top of the excellent <a href="https://daroczig.github.io/logger/" class="external-link">logger</a> package.</p>
 <div class="section level3">
 <h3 id="log-levels">Log Levels<a class="anchor" aria-label="anchor" href="#log-levels"></a>
 </h3>
@@ -231,15 +230,13 @@ statements and their output.</p>
 <span>  <span class="va">result</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>    <span class="va">outputSums</span><span class="op">[[</span><span class="va">column</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> </span>
 <span>      <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Sum of "</span>, <span class="va">column</span>, <span class="st">" = "</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[[</span><span class="va">column</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">}</span>, silent <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  <span class="op">}</span>, silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span>  </span>
 <span>  <span class="kw">if</span> <span class="op">(</span> <span class="st">"try-error"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span> <span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="../reference/logger.warn.html">logger.warn</a></span><span class="op">(</span><span class="st">"Oops: %s"</span>, <span class="fu"><a href="https://rdrr.io/r/base/stop.html" class="external-link">geterrmessage</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span>  </span>
 <span><span class="op">}</span></span>
-<span><span class="co">#&gt; Error in Summary.factor(structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,  : </span></span>
-<span><span class="co">#&gt;   'sum' not meaningful for factors</span></span>
 <span></span>
 <span><span class="co"># Successful completion</span></span>
 <span><span class="fu"><a href="../reference/logger.error.html">logger.error</a></span><span class="op">(</span><span class="st">"NO ERRORS"</span><span class="op">)</span></span>
@@ -259,20 +256,20 @@ statements and their output.</p>
 </h3>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmpDir</span>,<span class="st">"ERROR.log"</span><span class="op">)</span><span class="op">)</span>,collapse<span class="op">=</span><span class="st">'\n'</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ERROR [2024-12-02 20:43:29] NO ERRORS</span></span></code></pre></div>
+<span><span class="co">#&gt; ERROR [2026-01-01 01:54:09 UTC] NO ERRORS</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="info-log">INFO.log<a class="anchor" aria-label="anchor" href="#info-log"></a>
 </h3>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmpDir</span>,<span class="st">"INFO.log"</span><span class="op">)</span><span class="op">)</span>,collapse<span class="op">=</span><span class="st">'\n'</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2024-12-02 20:43:29] Begin loggingExample ...</span></span>
-<span><span class="co">#&gt; WARN [2024-12-02 20:43:29] Oops: Error in Summary.factor(structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,  : </span></span>
+<span><span class="co">#&gt; INFO  [2026-01-01 01:54:09 UTC] Begin loggingExample ...</span></span>
+<span><span class="co">#&gt; WARN  [2026-01-01 01:54:09 UTC] Oops: Error in Summary.factor(structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,  : </span></span>
 <span><span class="co">#&gt;   'sum' not meaningful for factors</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ERROR [2024-12-02 20:43:29] NO ERRORS</span></span>
-<span><span class="co">#&gt; INFO [2024-12-02 20:43:29] Successfully completed loggingExample</span></span>
-<span><span class="co">#&gt; INFO [2024-12-02 20:43:29] </span></span>
+<span><span class="co">#&gt; ERROR [2026-01-01 01:54:09 UTC] NO ERRORS</span></span>
+<span><span class="co">#&gt; INFO  [2026-01-01 01:54:09 UTC] Successfully completed loggingExample</span></span>
+<span><span class="co">#&gt; INFO  [2026-01-01 01:54:09 UTC] </span></span>
 <span><span class="co">#&gt; =============== THE END ===============</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -280,18 +277,18 @@ statements and their output.</p>
 </h3>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmpDir</span>,<span class="st">"TRACE.log"</span><span class="op">)</span><span class="op">)</span>,collapse<span class="op">=</span><span class="st">'\n'</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO [2024-12-02 20:43:29] Begin loggingExample ...</span></span>
-<span><span class="co">#&gt; TRACE [2024-12-02 20:43:29] Working on: Sepal.Length</span></span>
-<span><span class="co">#&gt; TRACE [2024-12-02 20:43:29] Working on: Sepal.Width</span></span>
-<span><span class="co">#&gt; TRACE [2024-12-02 20:43:29] Working on: Petal.Length</span></span>
-<span><span class="co">#&gt; TRACE [2024-12-02 20:43:29] Working on: Petal.Width</span></span>
-<span><span class="co">#&gt; TRACE [2024-12-02 20:43:29] Working on: Species</span></span>
-<span><span class="co">#&gt; WARN [2024-12-02 20:43:29] Oops: Error in Summary.factor(structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,  : </span></span>
+<span><span class="co">#&gt; INFO  [2026-01-01 01:54:09 UTC] Begin loggingExample ...</span></span>
+<span><span class="co">#&gt; TRACE [2026-01-01 01:54:09 UTC] Working on: Sepal.Length</span></span>
+<span><span class="co">#&gt; TRACE [2026-01-01 01:54:09 UTC] Working on: Sepal.Width</span></span>
+<span><span class="co">#&gt; TRACE [2026-01-01 01:54:09 UTC] Working on: Petal.Length</span></span>
+<span><span class="co">#&gt; TRACE [2026-01-01 01:54:09 UTC] Working on: Petal.Width</span></span>
+<span><span class="co">#&gt; TRACE [2026-01-01 01:54:09 UTC] Working on: Species</span></span>
+<span><span class="co">#&gt; WARN  [2026-01-01 01:54:09 UTC] Oops: Error in Summary.factor(structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,  : </span></span>
 <span><span class="co">#&gt;   'sum' not meaningful for factors</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ERROR [2024-12-02 20:43:29] NO ERRORS</span></span>
-<span><span class="co">#&gt; INFO [2024-12-02 20:43:29] Successfully completed loggingExample</span></span>
-<span><span class="co">#&gt; INFO [2024-12-02 20:43:29] </span></span>
+<span><span class="co">#&gt; ERROR [2026-01-01 01:54:09 UTC] NO ERRORS</span></span>
+<span><span class="co">#&gt; INFO  [2026-01-01 01:54:09 UTC] Successfully completed loggingExample</span></span>
+<span><span class="co">#&gt; INFO  [2026-01-01 01:54:09 UTC] </span></span>
 <span><span class="co">#&gt; =============== THE END ===============</span></span></code></pre></div>
 </div>
 </div>
@@ -315,8 +312,8 @@ log messages as the are generated by entering the following command:</p>
 </h4>
 <p>This function is a wrapper for our typical usage. It accepts a
 <code>logDir</code> parameter and looks for <code>TRACE</code>,
-<code>DEBUG</code> <code>INFO</code> and <code>ERROR</code> logs in that
-directory. If they are found, they are renamed as
+<code>DEBUG</code>, <code>INFO</code> and <code>ERROR</code> logs in
+that directory. If they are found, they are renamed as
 <code>paste0(logLevel,".log.",timestamp)</code>. After renaming, new log
 files are setup.</p>
 <p>This is particularly useful for operational code run inside docker
@@ -342,7 +339,7 @@ containers which may be automatically rebooted.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
       </footer>

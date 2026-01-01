@@ -78,7 +78,7 @@ logger.trace("TRACE level message")
 ```
 
 This functionality is built on top of the excellent
-[logger](https://daroczig.github.io/logger) package.
+[logger](https://daroczig.github.io/logger/) package.
 
 ## Log Levels
 

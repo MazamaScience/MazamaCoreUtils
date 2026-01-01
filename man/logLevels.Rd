@@ -17,7 +17,7 @@ An object of class \code{integer} of length 1.
 FATAL
 }
 \description{
-Log levels matching those found in \pkg{futile.logger}.
+Log levels matching those historically found in \pkg{futile.logger}.
 Available levels include:
 
 \code{FATAL ERROR WARN INFO DEBUG TRACE}

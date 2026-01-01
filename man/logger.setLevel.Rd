@@ -13,13 +13,13 @@ logger.setLevel(level)
 No return value.
 }
 \description{
-By default, the logger threshold is set to \code{FATAL} so that the console
+By default, the console logger threshold is set to \code{FATAL} so that the console
 will typically receive no log messages. By setting the level to one of the
 other log levels: \code{TRACE, DEBUG, INFO, WARN, ERROR} users can see
 logging messages while running commands at the command line.
 }
 \note{
-All functionality is built on top of the excellent \pkg{futile.logger}
+All functionality is built on top of the excellent \pkg{logger}
   package.
 }
 \examples{

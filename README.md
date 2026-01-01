@@ -52,5 +52,5 @@ following institutions:
 * USFS [AirFire Research Team](https://www.airfire.org)
 
 Questions regarding further development of the package should be directed to 
-<jonathan.callahan@gmail.com>.
+<jonathan.s.callahan@gmail.com>.
 

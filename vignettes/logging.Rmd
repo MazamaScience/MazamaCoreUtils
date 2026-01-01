@@ -78,7 +78,7 @@ logger.trace("TRACE level message")
 ```
 
 This functionality is built on top of the excellent
-[futile.logger](https://github.com/zatonovo/futile.logger) package.
+[logger](https://daroczig.github.io/logger) package.
 
 ## Log Levels
 
@@ -167,7 +167,7 @@ for ( column in names(iris) ) {
   result <- try({
     outputSums[[column]] <- 
       paste0("Sum of ", column, " = ", sum(iris[[column]]))
-  }, silent = FALSE)
+  }, silent = TRUE)
   
   if ( "try-error" %in% class(result) ) {
     logger.warn("Oops: %s", geterrmessage())
@@ -222,7 +222,7 @@ logger.setLevel(TRACE)
 ### `initializeLogging()`
 
 This function is a wrapper for our typical usage. It accepts a `logDir`
-parameter and looks for `TRACE`, `DEBUG` `INFO` and `ERROR` logs in that 
+parameter and looks for `TRACE`, `DEBUG`, `INFO` and `ERROR` logs in that 
 directory. If they are found, they are renamed as 
 `paste0(logLevel,".log.",timestamp)`. After renaming, new log files are setup.
 

@@ -52,7 +52,7 @@ Python-style logging requires the use of \code{logger.debug()} style logging
 statements as seen in the example below.
 }
 \note{
-All functionality is built on top of the excellent \pkg{futile.logger}
+All functionality is built on top of the excellent \pkg{logger}
   package.
 }
 \examples{
@@ -66,7 +66,7 @@ logger.setup(
   errorLog = "error.log"
 )
 
-# But allow lot statements at all levels within the code
+# But allow log statements at all levels within the code
 logger.trace("trace statement #\%d", 1)
 logger.debug("debug statement")
 logger.info("info statement \%s \%s", "with", "arguments")

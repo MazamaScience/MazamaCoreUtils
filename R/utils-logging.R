@@ -1,3 +1,147 @@
+# utils-logging.R
+#
+# Refactor note (2025-12-31):
+#   This file now uses the {logger} package under the hood while retaining the
+#   MazamaCoreUtils public API:
+#     - logger.setup()
+#     - logger.isInitialized()
+#     - logger.setLevel()
+#     - logger.trace()/debug()/info()/warn()/error()/fatal()
+#
+#   The exported log level constants (FATAL/ERROR/WARN/INFO/DEBUG/TRACE) are
+#   retained for backwards compatibility.
+
+# ------------------------------------------------------------------------------
+# Internal constants + helpers
+# ------------------------------------------------------------------------------
+
+.MAZAMA_LOG_NAMESPACE <- "MazamaCoreUtils"
+
+# This function is conceptually "appender.null()" from futile.logger.
+# Used when a given log file is NULL (disabled).
+appender.null <- function() {
+  function(lines) invisible(NULL)
+}
+
+# Map MazamaCoreUtils levels (and/or logger levels) to logger package constants.
+.logger_map_level <- function(level) {
+  # Allow passing the MazamaCoreUtils exported constants, which have names().
+  if (is.numeric(level) && length(level) == 1L && !is.null(names(level))) {
+    lvl_name <- names(level)[1]
+  } else if (is.character(level) && length(level) == 1L) {
+    lvl_name <- level
+  } else if (is.numeric(level) && length(level) == 1L) {
+    # Best effort: if user passes a raw integer, assume it's already a logger level.
+    return(level)
+  } else {
+    stop("Invalid log level. Use one of: TRACE, DEBUG, INFO, WARN, ERROR, FATAL.", call. = FALSE)
+  }
+
+  lvl_name <- toupper(lvl_name)
+
+  if (!requireNamespace("logger", quietly = TRUE)) {
+    stop("Package 'logger' must be installed to use MazamaCoreUtils logging.", call. = FALSE)
+  }
+
+  # logger has OFF, FATAL, ERROR, WARN, SUCCESS, INFO, DEBUG, TRACE
+  if (!exists(lvl_name, envir = asNamespace("logger"), inherits = FALSE)) {
+    stop(sprintf("Unknown log level '%s'.", lvl_name), call. = FALSE)
+  }
+
+  get(lvl_name, envir = asNamespace("logger"), inherits = FALSE)
+}
+
+# Remove all existing logger indices in our namespace to make setup idempotent.
+#
+# IMPORTANT:
+#   The {logger} package expects at least one config/index in a namespace.
+#   Deleting down to zero can trigger internal "integerOneIndex" errors when
+#   setting layout/threshold/appender later.
+#
+# Strategy:
+#   - If indices exist, delete indices 2..n, then "re-initialize" index 1 by
+#     setting its appender/formatter/layout/threshold.
+#   - If no indices exist, we will create index 1 by calling log_appender()
+#     first in logger.setup().
+.logger_reset_namespace <- function() {
+  if (!requireNamespace("logger", quietly = TRUE)) {
+    stop("Package 'logger' must be installed to use MazamaCoreUtils logging.", call. = FALSE)
+  }
+
+  ns <- .MAZAMA_LOG_NAMESPACE
+  n <- logger::log_indices(namespace = ns)
+
+  if (is.na(n) || n <= 1L) {
+    return(invisible(NULL))
+  }
+
+  # Delete in reverse order (but keep index 1).
+  for (idx in seq.int(from = n, to = 2L, by = -1L)) {
+    logger::delete_logger_index(namespace = ns, index = idx)
+  }
+
+  invisible(NULL)
+}
+
+# Quick test if logging has been initialized (MazamaCoreUtils view of the world)
+.stopIfNotInitilized <- function() {
+  if (!isTRUE(getOption("MazamaCoreUtils.logger.initialized", FALSE))) {
+    stop(
+      "You must initialize with 'logger.setup()' before issuing logger statements.",
+      call. = FALSE
+    )
+  }
+}
+
+# ------------------------------------------------------------------------------
+# Internal layout
+# ------------------------------------------------------------------------------
+
+.mazama_layout <- function(level, msg, namespace, index, ...) {
+
+  # --------------------------------------------------------------------------
+  # Determine level name
+  # --------------------------------------------------------------------------
+
+  # Preferred: loglevel objects carry the name as an attribute
+  lvl <- attr(level, "level", exact = TRUE)
+
+  # Fallback: bare integer (defensive, but rare)
+  if (is.null(lvl)) {
+    lvl <- switch(
+      as.character(level),
+      "0"   = "OFF",
+      "100" = "FATAL",
+      "200" = "ERROR",
+      "300" = "WARN",
+      "350" = "SUCCESS",
+      "400" = "INFO",
+      "500" = "DEBUG",
+      "600" = "TRACE",
+      as.character(level)
+    )
+  }
+
+  # --------------------------------------------------------------------------
+  # Format fields
+  # --------------------------------------------------------------------------
+
+  # Pad level to fixed width so timestamps align
+  lvl <- sprintf("%-5s", toupper(lvl))
+
+  # Timestamp in UTC with timezone
+  ts <- format(
+    as.POSIXct(Sys.time(), tz = "UTC"),
+    "%Y-%m-%d %H:%M:%S %Z"
+  )
+
+  sprintf("%s [%s] %s", lvl, ts, msg)
+}
+
+# ------------------------------------------------------------------------------
+# Public API
+# ------------------------------------------------------------------------------
+
 #' @title Set up python-style logging
 #'
 #' @description
@@ -30,16 +174,16 @@
 #'   will be sent.
 #' @return No return value.
 #'
-#' @note All functionality is built on top of the excellent \pkg{futile.logger}
+#' @note All functionality is built on top of the excellent \pkg{logger}
 #'   package.
 #'
 #' @name logger.setup
 #'
-#' @importFrom futile.logger appender.console appender.file appender.tee
-#' @importFrom futile.logger flog.appender flog.logger flog.threshold
-#' @importFrom futile.logger flog.debug flog.error flog.fatal flog.info
-#' @importFrom futile.logger flog.trace flog.warn
-#' @importFrom futile.logger flog.layout
+#' @importFrom logger log_appender log_layout log_threshold
+#' @importFrom logger log_formatter
+#' @importFrom logger appender_console appender_file appender_tee appender_void
+#' @importFrom logger layout_simple
+#' @importFrom logger formatter_sprintf
 #' @export
 #'
 #' @examples
@@ -53,7 +197,7 @@
 #'   errorLog = "error.log"
 #' )
 #'
-#' # But allow lot statements at all levels within the code
+#' # But allow log statements at all levels within the code
 #' logger.trace("trace statement #%d", 1)
 #' logger.debug("debug statement")
 #' logger.info("info statement %s %s", "with", "arguments")
@@ -66,86 +210,83 @@
 #' @seealso \code{\link{logger.trace}} \code{\link{logger.debug}}
 #'   \code{\link{logger.info}} \code{\link{logger.warn}}
 #'   \code{\link{logger.error}} \code{\link{logger.fatal}}
-#'
-# Set up logging namespaces
 logger.setup <- function(
-  traceLog = NULL,
-  debugLog = NULL,
-  infoLog = NULL,
-  warnLog = NULL,
-  errorLog = NULL,
-  fatalLog = NULL
+    traceLog = NULL,
+    debugLog = NULL,
+    infoLog  = NULL,
+    warnLog  = NULL,
+    errorLog = NULL,
+    fatalLog = NULL
 ) {
-
-  if (! "futile.logger" %in% loadedNamespaces()) {
-    requireNamespace("futile.logger", quietly = TRUE)
+  if (!requireNamespace("logger", quietly = TRUE)) {
+    stop("Package 'logger' must be installed to use MazamaCoreUtils logging.", call. = FALSE)
   }
+
+  ns <- .MAZAMA_LOG_NAMESPACE
+
+  # Make setup idempotent (but do not delete index 1 down to zero indices).
+  .logger_reset_namespace()
+
+  # Ensure index 1 exists by setting an appender FIRST.
+  # (logger will create the config slot when we set an appender.)
+  if (is.null(fatalLog)) {
+    # IMPORTANT: appender_console is a function; do NOT call it.
+    logger::log_appender(logger::appender_console, namespace = ns, index = 1L)
+  } else {
+    if (file.exists(fatalLog)) file.remove(fatalLog)
+    # appender_tee() is a factory (needs file), so DO call it.
+    logger::log_appender(logger::appender_tee(fatalLog), namespace = ns, index = 1L)
+  }
+
+  # Use formatter_sprintf so existing "printf-style" calls continue to work.
+  logger::log_formatter(logger::formatter_sprintf, namespace = ns, index = 1L)
+
+  # layout_simple is a layout function; do NOT call it.
+  logger::log_layout(.mazama_layout, namespace = ns, index = 1L)
 
   # By default, the console receives only FATAL messages.
-  flog.threshold(FATAL)
+  logger::log_threshold(.logger_map_level(FATAL), namespace = ns, index = 1L)
 
-  # Set up TRACE logging
-  if (is.null(traceLog)) {
-    invisible(flog.logger("trace", TRACE, appender.null()))
-  } else {
-    if (file.exists(traceLog)) result <- file.remove(traceLog)
-    invisible(flog.logger("trace", TRACE, appender.file(traceLog)))
+  # Helper for per-level file appenders (indices 2..6).
+  # NOTE: Must set appender first (creates index config slot), then formatter/layout/threshold.
+  set_file_logger <- function(index, level_const, path) {
+
+    if (is.null(path)) {
+      # Prefer built-in void appender; consistent with {logger}.
+      logger::log_appender(logger::appender_void, namespace = ns, index = index)
+    } else {
+      if (file.exists(path)) file.remove(path)
+      logger::log_appender(logger::appender_file(path), namespace = ns, index = index)
+    }
+
+    logger::log_formatter(logger::formatter_sprintf, namespace = ns, index = index)
+    logger::log_layout(.mazama_layout, namespace = ns, index = index)
+    logger::log_threshold(.logger_map_level(level_const), namespace = ns, index = index)
+
+    invisible(NULL)
   }
 
-  # Set up DEBUG logging
-  if (is.null(debugLog)) {
-    invisible(flog.logger("debug", DEBUG, appender.null()))
-  } else {
-    if (file.exists(debugLog)) result <- file.remove(debugLog)
-    invisible(flog.logger("debug", DEBUG, appender.file(debugLog)))
-  }
+  # Indices are fixed so downstream behavior is stable and easy to reason about.
+  set_file_logger(index = 2L, level_const = TRACE, path = traceLog)
+  set_file_logger(index = 3L, level_const = DEBUG, path = debugLog)
+  set_file_logger(index = 4L, level_const = INFO,  path = infoLog)
+  set_file_logger(index = 5L, level_const = WARN,  path = warnLog)
+  set_file_logger(index = 6L, level_const = ERROR, path = errorLog)
 
-  # Set up INFO logging
-  if (is.null(infoLog)) {
-    invisible(flog.logger("info", INFO, appender.null()))
-  } else {
-    if (file.exists(infoLog)) result <- file.remove(infoLog)
-    invisible(flog.logger("info", INFO, appender.file(infoLog)))
-  }
+  options("MazamaCoreUtils.logger.initialized" = TRUE)
 
-  # Set up WARN logging
-  if (is.null(warnLog)) {
-    invisible(flog.logger("warn", WARN, appender.null()))
-  } else {
-    if (file.exists(warnLog)) result <- file.remove(warnLog)
-    invisible(flog.logger("warn", WARN, appender.file(warnLog)))
-  }
-
-  # Set up ERROR logging
-  if (is.null(errorLog)) {
-    invisible(flog.logger("error", ERROR, appender.null()))
-  } else {
-    if (file.exists(errorLog)) result <- file.remove(errorLog)
-    invisible(flog.logger("error", ERROR, appender.file(errorLog)))
-  }
-
-  # Set up FATAL logging
-  if (is.null(fatalLog)) {
-    invisible(flog.appender(appender.console(), name = "ROOT"))
-  } else {
-    if (file.exists(fatalLog)) result <- file.remove(fatalLog)
-    invisible(flog.appender(appender.tee(fatalLog)))
-  }
-
+  invisible(NULL)
 }
-
 
 #' @title Check for initialization of loggers
 #'
 #' @description
 #' Returns \code{TRUE} if logging has been initialized. This allows packages
-#' to emit logging statements only if logging has already been set up,
-#' potentially avoiding `futile.log` errors.
+#' to emit logging statements only if logging has already been set up.
 #'
 #' @return \code{TRUE} if logging has already been initialized.
 #'
 #' @name logger.isInitialized
-#' @importFrom futile.logger flog.threshold
 #' @export
 #'
 #' @examples
@@ -157,27 +298,14 @@ logger.setup <- function(
 #'
 #' @seealso \code{\link{logger.setup}}
 #' @seealso \code{\link{initializeLogging}}
-#'
 logger.isInitialized <- function() {
-  if ( "futile.logger" %in% loadedNamespaces() ) {
-    if (
-      futile.logger::flog.logger("trace")$threshold == futile.logger::TRACE &&
-      futile.logger::flog.logger("debug")$threshold == futile.logger::DEBUG &&
-      futile.logger::flog.logger("info")$threshold == futile.logger::INFO &&
-      futile.logger::flog.logger("warn")$threshold == futile.logger::WARN &&
-      futile.logger::flog.logger("error")$threshold == futile.logger::ERROR
-    ) {
-      return(TRUE)
-    }
-  }
-  return(FALSE)
+  isTRUE(getOption("MazamaCoreUtils.logger.initialized", FALSE))
 }
-
 
 #' @title Set console log level
 #'
 #' @description
-#' By default, the logger threshold is set to \code{FATAL} so that the console
+#' By default, the console logger threshold is set to \code{FATAL} so that the console
 #' will typically receive no log messages. By setting the level to one of the
 #' other log levels: \code{TRACE, DEBUG, INFO, WARN, ERROR} users can see
 #' logging messages while running commands at the command line.
@@ -185,11 +313,11 @@ logger.isInitialized <- function() {
 #' @param level Threshold level.
 #' @return No return value.
 #'
-#' @note All functionality is built on top of the excellent \pkg{futile.logger}
+#' @note All functionality is built on top of the excellent \pkg{logger}
 #'   package.
 #'
 #' @name logger.setLevel
-#' @importFrom futile.logger flog.threshold
+#' @importFrom logger log_threshold
 #' @export
 #'
 #' @examples
@@ -200,277 +328,129 @@ logger.isInitialized <- function() {
 #' }
 #'
 #' @seealso \code{\link{logger.setup}}
-#'
 logger.setLevel <- function(level) {
-  if ( !logger.isInitialized() ) {
+  if (!logger.isInitialized()) {
     logger.setup()
   }
-  invisible(flog.threshold(level))
+
+  lvl <- .logger_map_level(level)
+
+  # Console is always index 1 in our namespace.
+  invisible(logger::log_threshold(lvl, namespace = .MAZAMA_LOG_NAMESPACE, index = 1L))
 }
 
+# ------------------------------------------------------------------------------
+# Logging functions (retain MazamaCoreUtils API)
+# ------------------------------------------------------------------------------
 
 #' @name logger.trace
 #' @export
-#' @importFrom futile.logger flog.trace
+#' @importFrom logger log_trace
 #' @title Python-style logging statements
 #' @param msg Message with format strings applied to additional arguments.
 #' @param \dots Additional arguments to be formatted.
 #' @return No return value.
 #' @description After initializing the level-specific log files with \code{logger.setup(...)},
 #' this function will generate \code{TRACE} level log statements.
-#' @note All functionality is built on top of the excellent \pkg{futile.logger} package.
-#' @examples
-#' \dontrun{
-#' # Only save three log files
-#' logger.setup(
-#'   debugLog = "debug.log",
-#'   infoLog = "info.log",
-#'   errorLog = "error.log"
-#' )
-#'
-#' # But allow log statements at all levels within the code
-#' logger.trace("trace statement #%d", 1)
-#' logger.debug("debug statement")
-#' logger.info("info statement %s %s", "with", "arguments")
-#' logger.warn("warn statement %s", "about to try something dumb")
-#' result <- try(1/"a", silent=TRUE)
-#' logger.error("error message: %s", geterrmessage())
-#' logger.fatal("fatal statement %s", "THE END")
-#' }
+#' @note All functionality is built on top of the excellent \pkg{logger} package.
 #' @seealso \code{\link{logger.setup}}
-
-# Log at the TRACE level
 logger.trace <- function(msg, ...) {
   .stopIfNotInitilized()
-  flog.trace(msg, ..., name = "ROOT")
-  flog.trace(msg, ..., name = "trace")
+  logger::log_trace(msg, ..., namespace = .MAZAMA_LOG_NAMESPACE)
 }
 
 #' @name logger.debug
 #' @export
-#' @importFrom futile.logger flog.debug
+#' @importFrom logger log_debug
 #' @title Python-style logging statements
 #' @param msg Message with format strings applied to additional arguments.
 #' @param \dots Additional arguments to be formatted.
 #' @return No return value.
 #' @description After initializing the level-specific log files with \code{logger.setup(...)},
 #' this function will generate \code{DEBUG} level log statements.
-#' @note All functionality is built on top of the excellent \pkg{futile.logger} package.
-#' @examples
-#' \dontrun{
-#' # Only save three log files
-#' logger.setup(
-#'   debugLog = "debug.log",
-#'   infoLog = "info.log",
-#'   errorLog = "error.log"
-#' )
-#'
-#' # But allow log statements at all levels within the code
-#' logger.trace("trace statement #%d", 1)
-#' logger.debug("debug statement")
-#' logger.info("info statement %s %s", "with", "arguments")
-#' logger.warn("warn statement %s", "about to try something dumb")
-#' result <- try(1/"a", silent=TRUE)
-#' logger.error("error message: %s", geterrmessage())
-#' logger.fatal("fatal statement %s", "THE END")
-#' }
+#' @note All functionality is built on top of the excellent \pkg{logger} package.
 #' @seealso \code{\link{logger.setup}}
-
-# Log at the DEBUG level
 logger.debug <- function(msg, ...) {
   .stopIfNotInitilized()
-  flog.debug(msg, ..., name = "ROOT")
-  flog.debug(msg, ..., name = "trace")
-  flog.debug(msg, ..., name = "debug")
+  logger::log_debug(msg, ..., namespace = .MAZAMA_LOG_NAMESPACE)
 }
 
 #' @name logger.info
 #' @export
-#' @importFrom futile.logger flog.info
+#' @importFrom logger log_info
 #' @title Python-style logging statements
 #' @param msg Message with format strings applied to additional arguments.
 #' @param \dots Additional arguments to be formatted.
 #' @return No return value.
 #' @description After initializing the level-specific log files with \code{logger.setup(...)},
 #' this function will generate \code{INFO} level log statements.
-#' @note All functionality is built on top of the excellent \pkg{futile.logger} package.
-#' @examples
-#' \dontrun{
-#' # Only save three log files
-#' logger.setup(
-#'   debugLog = "debug.log",
-#'   infoLog = "info.log",
-#'   errorLog = "error.log"
-#' )
-#'
-#' # But allow log statements at all levels within the code
-#' logger.trace("trace statement #%d", 1)
-#' logger.debug("debug statement")
-#' logger.info("info statement %s %s", "with", "arguments")
-#' logger.warn("warn statement %s", "about to try something dumb")
-#' result <- try(1/"a", silent=TRUE)
-#' logger.error("error message: %s", geterrmessage())
-#' logger.fatal("fatal statement %s", "THE END")
-#' }
+#' @note All functionality is built on top of the excellent \pkg{logger} package.
 #' @seealso \code{\link{logger.setup}}
-
-# Log at the INFO level
 logger.info <- function(msg, ...) {
   .stopIfNotInitilized()
-  flog.info(msg, ..., name = "ROOT")
-  flog.info(msg, ..., name = "trace")
-  flog.info(msg, ..., name = "debug")
-  flog.info(msg, ..., name = "info")
+  logger::log_info(msg, ..., namespace = .MAZAMA_LOG_NAMESPACE)
 }
 
 #' @name logger.warn
 #' @export
-#' @importFrom futile.logger flog.warn
+#' @importFrom logger log_warn
 #' @title Python-style logging statements
 #' @param msg Message with format strings applied to additional arguments.
 #' @param \dots Additional arguments to be formatted.
 #' @return No return value.
 #' @description After initializing the level-specific log files with \code{logger.setup(...)},
 #' this function will generate \code{WARN} level log statements.
-#' @note All functionality is built on top of the excellent \pkg{futile.logger} package.
-#' @examples
-#' \dontrun{
-#' # Only save three log files
-#' logger.setup(
-#'   debugLog = "debug.log",
-#'   infoLog = "info.log",
-#'   errorLog = "error.log"
-#' )
-#'
-#' # But allow log statements at all levels within the code
-#' logger.trace("trace statement #%d", 1)
-#' logger.debug("debug statement")
-#' logger.info("info statement %s %s", "with", "arguments")
-#' logger.warn("warn statement %s", "about to try something dumb")
-#' result <- try(1/"a", silent=TRUE)
-#' logger.error("error message: %s", geterrmessage())
-#' logger.fatal("fatal statement %s", "THE END")
-#' }
+#' @note All functionality is built on top of the excellent \pkg{logger} package.
 #' @seealso \code{\link{logger.setup}}
-
-# Log at the WARN level
 logger.warn <- function(msg, ...) {
   .stopIfNotInitilized()
-  flog.warn(msg, ..., name = "ROOT")
-  flog.warn(msg, ..., name = "trace")
-  flog.warn(msg, ..., name = "debug")
-  flog.warn(msg, ..., name = "info")
-  flog.warn(msg, ..., name = "warn")
+  logger::log_warn(msg, ..., namespace = .MAZAMA_LOG_NAMESPACE)
 }
 
 #' @name logger.error
 #' @export
-#' @importFrom futile.logger flog.error
+#' @importFrom logger log_error
 #' @title Python-style logging statements
 #' @param msg Message with format strings applied to additional arguments.
 #' @param \dots Additional arguments to be formatted.
 #' @return No return value.
 #' @description After initializing the level-specific log files with \code{logger.setup(...)},
 #' this function will generate \code{ERROR} level log statements.
-#' @note All functionality is built on top of the excellent \pkg{futile.logger} package.
-#' @examples
-#' \dontrun{
-#' # Only save three log files
-#' logger.setup(
-#'   debugLog = "debug.log",
-#'   infoLog = "info.log",
-#'   errorLog = "error.log"
-#' )
-#'
-#' # But allow log statements at all levels within the code
-#' logger.trace("trace statement #%d", 1)
-#' logger.debug("debug statement")
-#' logger.info("info statement %s %s", "with", "arguments")
-#' logger.warn("warn statement %s", "about to try something dumb")
-#' result <- try(1/"a", silent=TRUE)
-#' logger.error("error message: %s", geterrmessage())
-#' logger.fatal("fatal statement %s", "THE END")
-#' }
+#' @note All functionality is built on top of the excellent \pkg{logger} package.
 #' @seealso \code{\link{logger.setup}}
-
-# Log at the ERROR level
 logger.error <- function(msg, ...) {
   .stopIfNotInitilized()
-  flog.error(msg, ..., name = "ROOT")
-  flog.error(msg, ..., name = "trace")
-  flog.error(msg, ..., name = "debug")
-  flog.error(msg, ..., name = "info")
-  flog.error(msg, ..., name = "warn")
-  flog.error(msg, ..., name = "error")
+  logger::log_error(msg, ..., namespace = .MAZAMA_LOG_NAMESPACE)
 }
 
 #' @name logger.fatal
 #' @export
-#' @importFrom futile.logger flog.fatal
+#' @importFrom logger log_fatal
 #' @title Python-style logging statements
 #' @param msg Message with format strings applied to additional arguments.
 #' @param \dots Additional arguments to be formatted.
 #' @return No return value.
 #' @description After initializing the level-specific log files with \code{logger.setup(...)},
 #' this function will generate \code{FATAL} level log statements.
-#' @note All functionality is built on top of the excellent \pkg{futile.logger} package.
-#' @examples
-#' \dontrun{
-#' # Only save three log files
-#' logger.setup(
-#'   debugLog = "debug.log",
-#'   infoLog = "info.log",
-#'   errorLog = "error.log"
-#' )
-#'
-#' # But allow log statements at all levels within the code
-#' logger.trace("trace statement #%d", 1)
-#' logger.debug("debug statement")
-#' logger.info("info statement %s %s", "with", "arguments")
-#' logger.warn("warn statement %s", "about to try something dumb")
-#' result <- try(1/"a", silent=TRUE)
-#' logger.error("error message: %s", geterrmessage())
-#' logger.fatal("fatal statement %s", "THE END")
-#' }
+#' @note All functionality is built on top of the excellent \pkg{logger} package.
 #' @seealso \code{\link{logger.setup}}
-
-# Log at the fatal level
 logger.fatal <- function(msg, ...) {
   .stopIfNotInitilized()
-  flog.fatal(msg, ..., name = "ROOT")
-  flog.fatal(msg, ..., name = "trace")
-  flog.fatal(msg, ..., name = "debug")
-  flog.fatal(msg, ..., name = "info")
-  flog.fatal(msg, ..., name = "warn")
-  flog.fatal(msg, ..., name = "error")
+  logger::log_fatal(msg, ..., namespace = .MAZAMA_LOG_NAMESPACE)
 }
 
-# Utility functions ------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# Constants (retain existing exported API)
+# ------------------------------------------------------------------------------
 
-# This function is missing from futile.logger
-appender.null <- function() {
-  function(line) invisible(NULL)
-}
+# Verbatim values from constants (legacy API). These are *not* required to match
+# logger's internal numeric values; we map by name (see .logger_map_level()).
 
-# Quick test if futile.logger namespace is loaded
-.stopIfNotInitilized <- function() {
-  if (! "futile.logger" %in% loadedNamespaces()) {
-    stop(
-      "You must initialize with 'logger.setup()' before issuing logger statements.",
-      call. = FALSE
-    )
-  }
-}
-
-
-# Constants --------------------------------------------------------------------
-
-# Verbatim values from constants
 #' @docType data
 #' @name logLevels
 #' @aliases FATAL ERROR WARN INFO DEBUG TRACE
 #' @title Log levels
-#' @description Log levels matching those found in \pkg{futile.logger}.
+#' @description Log levels matching those historically found in \pkg{futile.logger}.
 #' Available levels include:
 #'
 #' \code{FATAL ERROR WARN INFO DEBUG TRACE}

@@ -1,3 +1,9 @@
+# MazamaCoreUtils 0.6.0
+
+* Refactor to use **logger** rather than **futile.logger**.
+* Time stamps in log files are now vertically aligned for easier scanning.
+* Additional tests of logging functionality.
+
 # MazamaCoreUtils 0.5.3
 
 * The `loadDataFile()` function now includes a `priority` argument so that 

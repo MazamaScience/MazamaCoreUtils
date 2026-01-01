@@ -41,8 +41,8 @@ machine  might be set to use UTC. Potential timezones
 * `America/Denver`
 * `UTC`
 
-Which timezone should be used to convert a request for data from "2019-08-08"" to 
-"2018-08-15"" into `POSIXct` datetimes?
+Which timezone should be used to convert a request for data from "2019-08-08" to 
+"2018-08-15" into `POSIXct` datetimes?
 
 To enforce specification of timezones and to help with the common user interface
 need to specify a range of dates or times, the **MazamaCoreUtils** package

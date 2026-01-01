@@ -11,8 +11,7 @@ logger.isInitialized()
 }
 \description{
 Returns \code{TRUE} if logging has been initialized. This allows packages
-to emit logging statements only if logging has already been set up,
-potentially avoiding `futile.log` errors.
+to emit logging statements only if logging has already been set up.
 }
 \examples{
 \dontrun{

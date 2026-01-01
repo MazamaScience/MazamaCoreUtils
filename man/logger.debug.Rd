@@ -19,26 +19,7 @@ After initializing the level-specific log files with \code{logger.setup(...)},
 this function will generate \code{DEBUG} level log statements.
 }
 \note{
-All functionality is built on top of the excellent \pkg{futile.logger} package.
-}
-\examples{
-\dontrun{
-# Only save three log files
-logger.setup(
-  debugLog = "debug.log",
-  infoLog = "info.log",
-  errorLog = "error.log"
-)
-
-# But allow log statements at all levels within the code
-logger.trace("trace statement #\%d", 1)
-logger.debug("debug statement")
-logger.info("info statement \%s \%s", "with", "arguments")
-logger.warn("warn statement \%s", "about to try something dumb")
-result <- try(1/"a", silent=TRUE)
-logger.error("error message: \%s", geterrmessage())
-logger.fatal("fatal statement \%s", "THE END")
-}
+All functionality is built on top of the excellent \pkg{logger} package.
 }
 \seealso{
 \code{\link{logger.setup}}

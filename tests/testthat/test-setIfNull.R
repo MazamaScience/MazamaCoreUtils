@@ -1,46 +1,50 @@
-test_that("Appropriate coercion works", {
+test_that("setIfNull() returns default only when target is NULL", {
 
-  expect_identical(setIfNull("4", 0), 4)
-  expect_type(setIfNull("4", 0), "double")
-
-  expect_identical(setIfNull("4", 0L), 4L)
-  expect_type(setIfNull("4", 0L), "integer")
-  expect_identical(setIfNull(6, 0L), 6L)
-  expect_type(setIfNull(6, 0L), "integer")
-
-  expect_identical(setIfNull("TRUE", TRUE), TRUE)
-  expect_identical(setIfNull("TRUE", FALSE), TRUE)
-  expect_identical(setIfNull("true", FALSE), TRUE)
-  expect_identical(setIfNull("FALSE", FALSE), FALSE)
-  expect_identical(setIfNull("FALSE", TRUE), FALSE)
-  expect_identical(setIfNull("false", TRUE), FALSE)
-  expect_type(setIfNull("TRUE", FALSE), "logical")
-
-  expect_identical(setIfNull(5.6, 0L), 5L)
-  expect_type(setIfNull(5.6, 0L), "integer")
-
-  expect_identical(setIfNull("3+5i", 0i), 3 + 5i)
-  expect_identical(setIfNull("6", 0i), 6 + 0i)
-
-})
-
-
-test_that("Inappropriate coercion fails", {
-
-  expect_error(setIfNull("hello", 5))
-
-})
-
-
-test_that("Default is properly set", {
-
-  expect_identical(setIfNull(NULL, 5), 5)
-  expect_identical(setIfNull(NULL, 5L), 5L)
-  expect_identical(setIfNull(NULL, "5"), "5")
-  expect_identical(setIfNull(NULL, "hello"), "hello")
-  expect_identical(setIfNull(NULL, 3 + 5i), 3 + 5i)
+  expect_identical(setIfNull(NULL, "foo"), "foo")
+  expect_identical(setIfNull(NULL, 10), 10)
   expect_identical(setIfNull(NULL, TRUE), TRUE)
-  expect_identical(setIfNull(NULL, FALSE), FALSE)
-  expect_identical(setIfNull(NULL, list(1)), list(1))
+
+})
+
+test_that("setIfNull() returns supplied target unchanged", {
+
+  expect_identical(setIfNull("15", 0), "15")
+  expect_identical(setIfNull(10, "foo"), 10)
+  expect_identical(setIfNull(TRUE, 0), TRUE)
+  expect_identical(setIfNull(mean, 0), mean)
+  expect_identical(setIfNull(c(1, 2, 3), 0), c(1, 2, 3))
+
+})
+
+test_that("setIfNull() optionally enforces output type with as.* functions", {
+
+  expect_identical(
+    setIfNull("15", 0, enforceType = "double"),
+    15
+  )
+
+  expect_identical(
+    setIfNull(NULL, "15", enforceType = "integer"),
+    15L
+  )
+
+  expect_identical(
+    setIfNull(1, 0, enforceType = "character"),
+    "1"
+  )
+
+  expect_identical(
+    setIfNull("2025-01-01", NULL, enforceType = "Date"),
+    as.Date("2025-01-01")
+  )
+
+})
+
+test_that("setIfNull() errors when requested coercion function does not exist", {
+
+  expect_error(
+    setIfNull(1, 0, enforceType = "notAType"),
+    "No coercion function 'as.notAType\\(\\)' found"
+  )
 
 })

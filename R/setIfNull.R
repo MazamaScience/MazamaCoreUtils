@@ -1,128 +1,80 @@
-#' @title Set a variable to a default value if it is NULL
+#' Set a variable to a default value if it is NULL
 #'
-#' @description
-#' This function attempts to set a default value for a given target object. If
-#' the object is \code{NULL}, a default value is returned.
+#' Returns `default` when `target` is `NULL`; otherwise returns `target`
+#' unchanged.
 #'
-#' When the target object is not \code{NULL}, this function will try and coerce
-#' it to match the type of the default (given by \code{\link[base]{typeof}}).
-#' This is useful in situations where we are looking to parse the input as well,
-#' such at looking at elements of an API call string and wanting to set the
-#' character numbers as actual numeric types.
+#' This is useful for assigning default values to optional arguments while
+#' preserving any user-supplied value exactly as provided.
 #'
-#' Not all coercions are possible, however, and if the function encounters one
-#' of these (ex: \code{setIfNull("foo", 5)}) the function will fail.
+#' Optionally, `enforceType` may be used to coerce the returned value to a
+#' specific type. This coercion is applied after the `NULL` check and affects
+#' both `target` and `default`.
 #'
-#' @param target Object to test if \code{NULL} (must be length 1).
-#' @param default Object to return if \code{target} is \code{NULL} (must be
-#'   length one).
+#' @param target Object to test for `NULL`.
+#' @param default Object to return when `target` is `NULL`.
+#' @param enforceType Optional character string specifying the suffix of an
+#'   `as.*()` coercion function to apply to the returned value. For example,
+#'   `"double"` uses `as.double()`, `"character"` uses `as.character()`,
+#'   and `"Date"` uses `as.Date()`.
 #'
-#' @return If \code{target} is not \code{NULL}, then \code{target} is coerced to
-#'   the type of \code{default}. Otherwise, \code{default} is returned.
+#'   If `NULL` (the default), no coercion is performed.
 #'
-#' @section Possible Coercions:
-#' This function checks the type of the target and default as given by
-#' \code{\link[base]{typeof}}. Specifically, it accounts for the types:
+#' @return
+#' The value of `target` if it is not `NULL`; otherwise `default`.
 #'
-#' \itemize{
-#'   \item \code{character}
-#'   \item \code{integer}
-#'   \item \code{double}
-#'   \item \code{complex}
-#'   \item \code{logical}
-#'   \item \code{list}
-#' }
-#'
-#' \emph{R} tries to intelligently coerce types, but some coercions from one
-#' type to another won't always be possible. Everything can be turned into a
-#' character, but only some character objects can become numeric ("7" can,
-#' while "hello" cannot). Some other coercions work, but you will lose
-#' information in the process. For example, the \emph{double} 5.7 can be coerced
-#' into an \emph{integer}, but the decimal portion will be dropped with no
-#' rounding. It is important to realize that while it is possible to move
-#' between most types, the results are not always meaningful.
+#' If `enforceType` is specified, the returned value is coerced using the
+#' corresponding `as.*()` function.
 #'
 #' @export
 #'
 #' @examples
-#' library(MazamaCoreUtils)
-#'
 #' setIfNull(NULL, "foo")
 #' setIfNull(10, 0)
 #' setIfNull("15", 0)
 #'
+#' # User-supplied values are returned unchanged
+#' setIfNull("15", 0)
+#' setIfNull("mean", 0)
+#' setIfNull(mean, 0)
 #'
-#' # This function can be useful for adding elements to a list
-#' testList <- list("a" = 1, "b" = "baz", "c" = "4")
+#' # Optional type enforcement
+#' setIfNull("15", 0, enforceType = "double")
+#' setIfNull(NULL, "15", enforceType = "integer")
 #'
-#' testList$a <- setIfNull(testList$a, 0)
-#' testList$b <- setIfNull(testList$c, 0)
-#' testList$d <- setIfNull(testList$d, 6)
-#'
-#'
-#' # Be careful about unintended results
-#' setIfNull("T", FALSE) # This returns `TRUE`
-#' setIfNull(12.8, 5L)   # This returns the integer 12
-#'
-#'
-#' \dontrun{
-#' # Not all coercions are possible
-#' setIfNull("bar", 5)
-#' setIfNull("t", FALSE)
-#' }
 setIfNull <- function(
-  target,
-  default
+    target,
+    default,
+    enforceType = NULL
 ) {
 
-  # Validate parameters --------------------------------------------------------
+  # Return target or default --------------------------------------------------
 
-  ## NOTE:
-  #  With no default arguments specified, the function will fail if any argument
-  #  is missing.
-
-  # TODO: Handle target input or length > 1 (must handle NAs better)
-  if (length(target) > 1)
-    stop("'target' must be of length one")
-
-  if (length(default) > 1)
-    stop("'default' must be of length one")
+  result <- if (is.null(target)) default else target
 
 
-  # Set default and possibly coerce type ---------------------------------------
+  # Optionally enforce type ---------------------------------------------------
 
-  if (is.null(target)) {
+  if (!is.null(enforceType)) {
 
-    result <- default
+    conversionFuncName <- paste0("as.", enforceType)
 
-  } else if (typeof(target) == typeof(default)) {
+    if (!exists(conversionFuncName, mode = "function")) {
+      stop(
+        sprintf(
+          "No coercion function '%s()' found.",
+          conversionFuncName
+        )
+      )
+    }
 
-    result <- target
+    conversionFunc <-
+      get(conversionFuncName, mode = "function")
 
-  } else {
-
-    validTypes <- c("character", "integer", "double", "complex", "logical", "list")
-
-    if (!typeof(default) %in% validTypes)
-      stop("argument 'default' is not of a supported type")
-
-    # Get appropriate coercion function
-    conversionFunc <- get(paste0("as.", typeof(default)), envir = baseenv())
-
-    # Suppress warning about NAs when unable to coerce types
-    result <- suppressWarnings(conversionFunc(target))
-
-    # If the target can't be coerced to the type of the defult, NA is produced.
-    if (is.na(result))
-      stop(paste0(
-        "Could not convert target ", typeof(target), " `", target, "` ",
-        "to output ", typeof(default), " `", default, "`."
-      ))
+    result <- conversionFunc(result)
 
   }
 
-
-  # Return result --------------------------------------------------------------
+  # Return result -------------------------------------------------------------
 
   return(result)
 

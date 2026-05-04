@@ -1,3 +1,8 @@
+# MazamaCoreUtils 0.6.1
+
+* Fixed `setIfNull()` so that it doesn't ever convert type if the user provides 
+a value.
+
 # MazamaCoreUtils 0.6.0
 
 * Refactor to use **logger** rather than **futile.logger**.

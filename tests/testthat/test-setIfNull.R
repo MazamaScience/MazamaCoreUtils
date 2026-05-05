@@ -19,22 +19,22 @@ test_that("setIfNull() returns supplied target unchanged", {
 test_that("setIfNull() optionally enforces output type with as.* functions", {
 
   expect_identical(
-    setIfNull("15", 0, enforceType = "double"),
+    setIfNull("15", 0, enforcedType = "double"),
     15
   )
 
   expect_identical(
-    setIfNull(NULL, "15", enforceType = "integer"),
+    setIfNull(NULL, "15", enforcedType = "integer"),
     15L
   )
 
   expect_identical(
-    setIfNull(1, 0, enforceType = "character"),
+    setIfNull(1, 0, enforcedType = "character"),
     "1"
   )
 
   expect_identical(
-    setIfNull("2025-01-01", NULL, enforceType = "Date"),
+    setIfNull("2025-01-01", NULL, enforcedType = "Date"),
     as.Date("2025-01-01")
   )
 
@@ -43,7 +43,7 @@ test_that("setIfNull() optionally enforces output type with as.* functions", {
 test_that("setIfNull() errors when requested coercion function does not exist", {
 
   expect_error(
-    setIfNull(1, 0, enforceType = "notAType"),
+    setIfNull(1, 0, enforcedType = "notAType"),
     "No coercion function 'as.notAType\\(\\)' found"
   )
 

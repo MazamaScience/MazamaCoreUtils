@@ -1,64 +1,71 @@
-#' @name manageCache
+#' Manage cache size
 #'
-#' @title Manage the size of a cache
+#' Remove old or excess files from a cache directory.
+#'
+#' Files are eligible for removal when their extension matches `extensions`.
+#' Matching is case-sensitive and extensions may be supplied with or without a
+#' leading dot.
+#'
+#' Files can be removed for two reasons:
+#'
+#' \itemize{
+#'   \item files older than `maxFileAge` days are removed first
+#'   \item if the remaining cache exceeds `maxCacheSize`, additional files are
+#'   removed until the cache is under the requested size
+#' }
+#'
+#' When removing files to satisfy `maxCacheSize`, files are ordered by the
+#' timestamp specified by `sortBy`.
 #'
 #' @param cacheDir Location of cache directory.
 #' @param extensions Vector of file extensions eligible for removal.
 #' @param maxCacheSize Maximum cache size in megabytes.
-#' @param sortBy Timestamp to sort by when sorting files eligible for removal.
-#'   One of \code{atime|ctime|mtime}.
-#' @param maxFileAge Maximum age in days of files allowed in the cache.
+#' @param sortBy Timestamp used to order files for size-based removal. One of
+#'   `"atime"`, `"ctime"`, or `"mtime"`.
+#' @param maxFileAge Maximum file age in days. Files with modification times
+#'   older than this value are removed regardless of cache size. Fractional days
+#'   are allowed.
 #'
-#' @return Invisibly returns the number of files removed.
+#' @return
+#' Invisibly returns the number of files removed.
 #'
-#' @description
-#' If \code{cacheDir} takes up more than \code{maxCacheSize}
-#' megabytes on disk, files will be removed in order of access time by
-#' default. Only files matching \code{extensions} are eligible for removal.
-#' Files can also be removed in order of change time with \code{sortBy='ctime'}
-#' or modification time with \code{sortBy='mtime'}.
+#' @details
+#' Timestamp meanings are:
 #'
-#' The \code{maxFileAge} parameter can also be used to remove files that haven't
-#' been modified in a certain number of days. Fractional days are allowed. This
-#' removal happens without regard to the size of the cache and is useful for
-#' removing out-of-date data.
-#'
-#' It is important to understand precisely what these timestamps
-#' represent:
-#' \itemize{
-#' \item{\code{atime} -- File access time: updated whenever a file is opened.}
-#' \item{\code{ctime} -- File change time: updated whenever a file's metadata
-#' changes e.g. name, permission, ownership.}
-#' \item{\code{mtime} -- file modification time: updated whenever a file's
-#' contents change.}
+#' \describe{
+#'   \item{`atime`}{File access time, updated when a file is opened.}
+#'   \item{`ctime`}{File change time, updated when file metadata changes.}
+#'   \item{`mtime`}{File modification time, updated when file contents change.}
 #' }
-#'
-#' @export
 #'
 #' @examples
-#' library(MazamaCoreUtils)
-#'
-#' # Create a cache directory and fill it with 1.6 MB of data
 #' CACHE_DIR <- tempdir()
-#' write.csv(matrix(1,400,500), file=file.path(CACHE_DIR,'m1.csv'))
-#' write.csv(matrix(2,400,500), file=file.path(CACHE_DIR,'m2.csv'))
-#' write.csv(matrix(3,400,500), file=file.path(CACHE_DIR,'m3.csv'))
-#' write.csv(matrix(4,400,500), file=file.path(CACHE_DIR,'m4.csv'))
-#' for (file in list.files(CACHE_DIR, full.names=TRUE)) {
-#'   print(file.info(file)[,c(1,6)])
+#'
+#' write.csv(matrix(1, 400, 500), file = file.path(CACHE_DIR, "m1.csv"))
+#' write.csv(matrix(2, 400, 500), file = file.path(CACHE_DIR, "m2.csv"))
+#' write.csv(matrix(3, 400, 500), file = file.path(CACHE_DIR, "m3.csv"))
+#' write.csv(matrix(4, 400, 500), file = file.path(CACHE_DIR, "m4.csv"))
+#'
+#' for (file in list.files(CACHE_DIR, pattern = "\\.csv$", full.names = TRUE)) {
+#'   print(file.info(file)[, c("size", "mtime")])
 #' }
 #'
-#' # Remove files based on access time until we get under 1 MB
-#' manageCache(CACHE_DIR, extensions='csv', maxCacheSize=1, sortBy='atime')
-#' for (file in list.files(CACHE_DIR, full.names=TRUE)) {
-#'   print(file.info(file)[,c(1,6)])
+#' # Remove files based on access time until the cache is under 1 MB
+#' manageCache(
+#'   CACHE_DIR,
+#'   extensions = "csv",
+#'   maxCacheSize = 1,
+#'   sortBy = "atime"
+#' )
+#'
+#' for (file in list.files(CACHE_DIR, pattern = "\\.csv$", full.names = TRUE)) {
+#'   print(file.info(file)[, c("size", "mtime")])
 #' }
 #'
-#' # Or remove files based on modification time
-#' manageCache(CACHE_DIR, extensions='csv', maxCacheSize=1, sortBy='mtime')
-#' for (file in list.files(CACHE_DIR, full.names=TRUE)) {
-#'   print(file.info(file)[,c(1,6)])
-#' }
+#' @name manageCache
+#' @importFrom rlang .data
+#' @export
+#'
 
 manageCache <- function(
   cacheDir = NULL,
@@ -105,6 +112,10 @@ manageCache <- function(
     ageRemovalCount <- nrow(removalDF)
     if ( ageRemovalCount > 0 ) {
       file.remove(removalDF$file)
+      # Remove deleted files before size-based cleanup.
+      cacheDF <-
+        cacheDF %>%
+        dplyr::filter(!.data$file %in% removalDF$file)
     }
   }
 

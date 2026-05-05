@@ -5,6 +5,6 @@
 \alias{.data}
 \title{Data pronoun for tidy evaluation}
 \description{
-See \code{rlang::\link[rlang]{.data}} for details.
+See \link[rlang:dot-data]{rlang::.data} for details.
 }
 \keyword{internal}

@@ -1,43 +1,45 @@
-#' @name html_getLinks
+#' Extract links from an HTML page
 #'
-#' @importFrom rlang .data
+#' Parse an HTML page and return all `<a href="...">...</a>` links as a data
+#' frame.
 #'
-#' @title Find all links in an html page
+#' The returned data frame contains the human-readable link text in `linkName`
+#' and the `href` value in `linkUrl`. This is useful for extracting links from
+#' index pages, including web-accessible directories that list downloadable
+#' files.
 #'
-#' @param url URL or file path of an html page.
-#' @param relative Logical instruction to return relative URLs.
+#' Wrapper functions [html_getLinkNames()] and [html_getLinkUrls()] return the
+#' corresponding columns as character vectors.
 #'
-#' @return A dataframe with \code{linkName} and/or \code{linkUrl} columns.
+#' @param url URL or local file path of an HTML page.
+#' @param relative Logical specifying whether to return relative URLs. If
+#'   `FALSE`, relative URLs are converted to absolute URLs using `url` as the
+#'   base.
 #'
-#' @description Parses an html page to extract all \code{<a href="...">...</a>}
-#' links and return them in a dataframe where \code{linkName} is the human
-#' readable name and \code{linkUrl} is the \code{href} portion. By default this
-#' function will return relative URLs.
-#'
-#' This is especially useful for extracting data from an index page that shows
-#' the contents of a web accessible directory.
-#'
-#' Wrapper functions \code{html_getLinkNames()} and \code{html_getLinkUrls()}
-#' return the appropriate columns as vectors.
+#' @return
+#' A tibble with `linkName` and `linkUrl` columns.
 #'
 #' @examples
-#' library(MazamaCoreUtils)
+#' \dontrun{
 #'
-#' # Fail gracefully if the resource is not available
-#' try({
+#' # If you want to download lots of USCensus shapefiles
+#' url <- "https://www2.census.gov/geo/tiger/GENZ2019/shp/"
 #'
-#'   # US Census 2019 shapefiles
-#'   url <- "https://www2.census.gov/geo/tiger/GENZ2019/shp/"
+#' browseURL(url)
 #'
-#'   # Extract links
-#'   dataLinks <- html_getLinks(url)
+#' dataLinks <- html_getLinks(url)
 #'
-#'   dataLinks <- dataLinks %>%
-#'     dplyr::filter(stringr::str_detect(linkName, "us_county"))
-#'   head(dataLinks, 10)
+#' dataLinks <-
+#'   dataLinks %>%
+#'   dplyr::filter(stringr::str_detect(linkName, "us_county"))
 #'
-#' }, silent = FALSE)
+#' head(dataLinks, 10)
 #'
+#' html_getLinkNames(url)
+#' html_getLinkUrls(url, relative = FALSE)
+#' }
+#'
+#' @name html_getLinks
 #' @rdname html_getLinks
 #' @export
 
@@ -81,7 +83,7 @@ html_getLinks <- function(
     dplyr::filter(!is.na(.data$linkUrl) & !is.na(.data$linkName)) %>%
 
     # Remove Apache indexing
-    dplyr::filter(stringr::str_detect(.data$linkUrl, "^?C=.;O=.*", negate = TRUE)) %>%
+    dplyr::filter(stringr::str_detect(.data$linkUrl, "^\\?C=.;O=.*", negate = TRUE)) %>%
 
     # Remove "Parent Directory"
     dplyr::filter(stringr::str_detect(.data$linkName, "Parent Directory", negate = TRUE)) %>%
@@ -90,17 +92,16 @@ html_getLinks <- function(
     dplyr::mutate(linkUrl = stringr::str_replace(.data$linkUrl, stringr::regex("^//"), ""))
 
 
-  # ----- Handle relative URLs -------------------------------------------------
+  # ----- Expand relative URLs -------------------------------------------------
 
   if ( !relative ) {
-    # Remove ending /
-    if ( stringr::str_sub(url, -1) == "/" )
-      url <- stringr::str_sub(url, 0, -2)
 
-    # Append URL to records not beginning with http or www
     df <-
       df %>%
-      dplyr::mutate(linkUrl = stringr::str_replace(.data$linkUrl, stringr::regex("^(?!http|www).*"), file.path(url, df$linkUrl)))
+      dplyr::mutate(
+        linkUrl = xml2::url_absolute(.data$linkUrl, base = url)
+      )
+
   }
 
   # ----- Return ---------------------------------------------------------------
@@ -110,7 +111,10 @@ html_getLinks <- function(
 }
 
 #' @rdname html_getLinks
-#' @param url URL or file path of an html page.
+#'
+#' @return
+#' `html_getLinkNames()` returns a character vector of link names.
+#'
 #' @export
 html_getLinkNames <- function(
   url = NULL
@@ -133,8 +137,10 @@ html_getLinkNames <- function(
 }
 
 #' @rdname html_getLinks
-#' @param url URL or file path of an html page.
-#' @param relative Logical instruction to return relative URLs.
+#'
+#' @return
+#' `html_getLinkUrls()` returns a character vector of link URLs.
+#'
 #' @export
 html_getLinkUrls <- function(
   url = NULL,

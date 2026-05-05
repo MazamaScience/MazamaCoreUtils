@@ -4,69 +4,71 @@
 \alias{lintFunctionArgs}
 \alias{lintFunctionArgs_file}
 \alias{lintFunctionArgs_dir}
-\title{Lint a source file's function arguments}
+\title{Lint function calls for required named arguments}
 \usage{
 lintFunctionArgs_file(filePath = NULL, rules = NULL, fullPath = FALSE)
 
 lintFunctionArgs_dir(dirPath = "./R", rules = NULL, fullPath = FALSE)
 }
 \arguments{
-\item{filePath}{Path to a file, given as a length one character vector.}
+\item{filePath}{Path to a single R source file.}
 
-\item{rules}{A named list where the name of each element is a function name,
-and the value is a character vector of the named argument to check for. All
-arguments must be specified for a function to "pass".}
+\item{rules}{Named list of linting rules. Each list name is a function name
+and each value is a character vector of required named arguments.}
 
-\item{fullPath}{Logical specifying whether to display absolute paths.}
+\item{fullPath}{Logical specifying whether returned file paths should be
+absolute paths. If \code{FALSE}, only base file names are returned.}
 
-\item{dirPath}{Path to a directory, given as a length one character vector.}
+\item{dirPath}{Path to a directory containing R source files.}
 }
 \value{
-A \code{\link[tibble]{tibble}} detailing the results of the lint.
-}
-\description{
-This function parses an R Script file, grouping function calls and the named
-arguments passed to those functions. Then, based on a set of rules, it is
-determined if functions of interest have specific named arguments specified.
-}
-\section{Linting Output}{
-
-The output of the function argument linter is a tibble with the following
-columns:
+A tibble describing matching function calls, with columns:
 
 \describe{
-  \item{file_path}{path to the source file}
-  \item{line_number}{Line of the source file the function is on}
-  \item{column_number}{Column of the source file the function starts at}
-  \item{function_name}{The name of the function}
-  \item{named_args}{A vector of the named arguments passed to the function}
-  \item{includes_required}{True iff the function specifies all of the named
-    arguments required by the given rules}
+\item{file}{Source file path or file name.}
+\item{line_number}{Line number where the function call begins.}
+\item{column_number}{Column number where the function call begins.}
+\item{function_name}{Name of the function being checked.}
+\item{named_args}{List column containing named arguments used in the call.}
+\item{includes_required}{Logical indicating whether all required named
+arguments were supplied.}
 }
 }
+\description{
+Parse R source code and identify calls to selected functions that are missing
+required named arguments.
+}
+\details{
+Rules are supplied as a named list where each name is a function to check and
+each value is a character vector of required argument names. A function call
+passes when all required arguments are supplied by name.
 
+This linter only checks whether arguments are named in the call. It does not
+evaluate code, inspect argument values, or detect unnamed positional
+arguments.
+}
 \section{Limitations}{
 
-This function is only able to test for named arguments passed to a function.
-For example, it would report that \code{foo(x = bar, "baz")} has specified
-the named argument \code{x}, but not that \code{bar} was the value of the
-argument, or that \code{"baz"} had been passed as an unnamed argument.
+This linter only detects named arguments. For example, \code{foo(x = bar, "baz")}
+is treated as specifying the named argument \code{x}, but the value \code{bar} and the
+unnamed argument \code{"baz"} are not inspected.
 }
 
 \examples{
 \dontrun{
-library(MazamaCoreUtils)
-
-# Example rule list for checking
-exRules <- list(
-  "fn_one" = "x",
-  "fn_two" = c("foo", "bar")
+rules <- list(
+  fn_one = "x",
+  fn_two = c("foo", "bar")
 )
 
-# Example of using included timezone argument linter
 lintFunctionArgs_file(
-  "local_test/timezone_lint_test_script.R",
-  MazamaCoreUtils::timezoneLintRules
+  filePath = "local_test/timezone_lint_test_script.R",
+  rules = rules
+)
+
+lintFunctionArgs_dir(
+  dirPath = "./R",
+  rules = MazamaCoreUtils::timezoneLintRules
 )
 }
 }

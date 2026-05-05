@@ -3,22 +3,22 @@
 \docType{data}
 \name{APIKeys}
 \alias{APIKeys}
-\title{API keys for data services.}
+\title{API keys for data services}
 \format{
-List of character strings.
+A named list of character strings.
 }
 \description{
-This package maintains an internal set of API keys which
-users can set using \code{setAPIKey()}. These keys will be remembered for
-the duration of an R session. This functionality provides an abstraction
-layer in dependent packages so that data access functions can test for and
-access specific API keys with generic code.
+Internal session state used to store API keys for web services.
+}
+\details{
+Users can set API keys with \code{\link[=setAPIKey]{setAPIKey()}}. Keys are remembered for the
+duration of the R session and can be retrieved with \code{\link[=getAPIKey]{getAPIKey()}}.
+
+This provides a small abstraction layer for dependent packages so that data
+access functions can test for and retrieve provider-specific API keys with
+generic code.
 }
 \seealso{
-\link{getAPIKey}
-
-\link{setAPIKey}
-
-\link{showAPIKeys}
+\code{\link[=getAPIKey]{getAPIKey()}}, \code{\link[=setAPIKey]{setAPIKey()}}, \code{\link[=showAPIKeys]{showAPIKeys()}}
 }
 \keyword{environment}

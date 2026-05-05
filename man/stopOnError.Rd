@@ -2,7 +2,7 @@
 % Please edit documentation in R/errorHandling.R
 \name{stopOnError}
 \alias{stopOnError}
-\title{Error message generator}
+\title{Stop on try-error}
 \usage{
 stopOnError(
   result,
@@ -14,95 +14,63 @@ stopOnError(
 )
 }
 \arguments{
-\item{result}{Return from a \code{try()} block.}
+\item{result}{Return value from a \code{try()} block.}
 
-\item{err_msg}{Custom error message.}
+\item{err_msg}{Optional custom error message.}
 
-\item{prefix}{Text string to add in front of the error message.}
+\item{prefix}{Optional text to prepend to the error message.}
 
-\item{maxLength}{Maximum length of an error message. Error messages
-beyond this limit will be truncated.}
+\item{maxLength}{Maximum allowed error message length before truncation.}
 
-\item{truncatedLength}{Length of the output error message.}
+\item{truncatedLength}{Length of the truncated error message.}
 
-\item{call.}{Logical indicating whether the call should become part of the error message.}
+\item{call.}{Logical indicating whether the call should be included in the
+error message. Passed to \code{\link[=stop]{stop()}}.}
 }
 \value{
-Issues a \code{stop()} with an appropriate error message.
+Returns \code{NULL} if \code{result} is not a \code{"try-error"}; otherwise stops with an
+error.
 }
 \description{
-When writing R code for use in production systems, it is
-important to enclose chunks of code inside of \code{try()} blocks. This is
-especially important when processing user input or data obtained from web
-services which may fail for a variety of reasons. If any problems arise
-within a \code{try()} block, it is important to generate informative and
-consistent error messages.
+Generate a consistent error message from the result of a \code{try()} block.
+}
+\details{
+This function is intended for production code where potentially fragile
+operations are wrapped in \code{try(..., silent = TRUE)}. If \code{result} inherits
+from \code{"try-error"}, a cleaned and optionally customized error message is
+generated and passed to \code{\link[=stop]{stop()}}.
 
-Over the years, we have developed our own standard protocol for error handling
-that is easy to understand, easy to implement, and allows for consistent
-generation of error messages. To goal is to make it easy for developers to test
-sections of code that might fail and to create more uniform, more informative
-error messages than those that might come from deep within the \R execution stack.
-
-In addition to the generation of custom error messages, use of \code{prefix}
-allows for the creation of classes of errors that can be detected and handled
-appropriately as errors propagate to other functions.
+If \code{result} is not a \code{"try-error"}, the function returns \code{NULL}.
 }
 \note{
-If logging has been initialized, the customized/modified error message
-will be logged with \code{logger.error(err_msg)} before issuing
-\code{stop(err_msg)}.
-
-The following examples show how to use this function:
-
-\preformatted{
-library(MazamaCoreUtils)
-
-# Arbitrarily deep in the stack we might have:
-
+If logging has been initialized, the final error message is logged with
+\code{\link[=logger.error]{logger.error()}} before calling \code{\link[=stop]{stop()}}.
+}
+\examples{
+\dontrun{
 myFunc <- function(x) {
-  a <- log(x)
+  log(x)
 }
 
-
-# Simple usage
-
-userInput <- 10
 result <- try({
-  myFunc(x = userInput)
+  myFunc("ten")
 }, silent = TRUE)
+
 stopOnError(result)
 
-userInput <- "ten"
-result <- try({
-  myFunc(x = userInput)
-}, silent = TRUE)
-stopOnError(result)
-
-
-# More concise code with the '\%>\%' operator
+try({
+  myFunc("ten")
+}, silent = TRUE) \%>\%
+  stopOnError(err_msg = "Unable to process user input")
 
 try({
-  myFunc(x = userInput)
+  myFunc("ten")
 }, silent = TRUE) \%>\%
-stopOnError(err_msg = "Unable to process user input")
-
-try({
-  myFunc(x = userInput)
-}, silent = TRUE) \%>\%
-stopOnError(prefix = "USER_INPUT_ERROR")
-
-
-# Truncating error message length
-
-try({
-  myFunc(x = userInput)
-}, silent = TRUE) \%>\%
-stopOnError(
-  prefix = "USER_INPUT_ERROR",
-  maxLength = 40,
-  truncatedLength = 32
-)
-
+  stopOnError(
+    prefix = "USER_INPUT_ERROR",
+    maxLength = 40,
+    truncatedLength = 32
+  )
 }
+
 }

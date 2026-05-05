@@ -142,40 +142,46 @@ appender.null <- function() {
 # Public API
 # ------------------------------------------------------------------------------
 
-#' @title Set up python-style logging
+#' Set up Python-style logging
 #'
-#' @description
-#' Good logging allows package developers and users to create log files at
-#' different levels to track and debug lengthy or complex calculations.
-#' "Python-style" logging is intended to suggest that users should set up
-#' multiple log files for different log severities so that the \code{errorLog}
-#' will contain only log messages at or above the \code{ERROR} level while a
-#' \code{debugLog} will contain log messages at the \code{DEBUG} level as well
-#' as all higher levels.
+#' Configure level-specific log files using the package logging API.
 #'
-#' Python-style log files are set up with \code{logger.setup()}. Logs can be set
-#' up for any combination of log levels. Accepting the default \code{NULL}
-#' setting for any log file simply means that log file will not be created.
+#' Logging is built on top of the [logger](https://daroczig.github.io/logger/)
+#' package while retaining the historical MazamaCoreUtils logging interface.
 #'
-#' Python-style logging requires the use of \code{logger.debug()} style logging
-#' statements as seen in the example below.
+#' Separate log files can be created for different log levels so that, for
+#' example, an `errorLog` contains only `ERROR` and `FATAL` messages while a
+#' `debugLog` contains `DEBUG` messages as well as all higher-severity messages.
 #'
-#' @param traceLog File name or full path where \code{logger.trace()} messages
-#'   will be sent.
-#' @param debugLog File name or full path where \code{logger.debug()} messages
-#'   will be sent.
-#' @param infoLog File name or full path where \code{logger.info()} messages
-#'   will be sent.
-#' @param warnLog File name or full path where \code{logger.warn()} messages
-#'   will be sent.
-#' @param errorLog File name or full path where \code{logger.error()} messages
-#'   will be sent.
-#' @param fatalLog File name or full path where \code{logger.fatal()} messages
-#'   will be sent.
-#' @return No return value.
+#' Any log file argument left as `NULL` is disabled and no file will be created
+#' for that level.
 #'
-#' @note All functionality is built on top of the excellent \pkg{logger}
-#'   package.
+#' After initialization, logging statements can be generated with:
+#' `logger.trace()`, `logger.debug()`, `logger.info()`,
+#' `logger.warn()`, `logger.error()`, and `logger.fatal()`.
+#'
+#' @param traceLog File path receiving `TRACE` messages.
+#' @param debugLog File path receiving `DEBUG` messages.
+#' @param infoLog File path receiving `INFO` messages.
+#' @param warnLog File path receiving `WARN` messages.
+#' @param errorLog File path receiving `ERROR` messages.
+#' @param fatalLog File path receiving `FATAL` messages.
+#'
+#' @return
+#' No return value. Called for side effects.
+#'
+#' @details
+#' Log messages are formatted with:
+#'
+#' \preformatted{
+#' LEVEL [YYYY-MM-DD HH:MM:SS UTC] message
+#' }
+#'
+#' Console logging is enabled by default only for `FATAL` messages. Use
+#' [logger.setLevel()] to display additional log messages in the console.
+#'
+#' @note
+#' All functionality is implemented with the excellent \pkg{logger} package.
 #'
 #' @name logger.setup
 #'
@@ -188,28 +194,32 @@ appender.null <- function() {
 #'
 #' @examples
 #' \dontrun{
-#' library(MazamaCoreUtils)
-#'
-#' # Only save three log files
+#' # Create three log files
 #' logger.setup(
 #'   debugLog = "debug.log",
 #'   infoLog = "info.log",
 #'   errorLog = "error.log"
 #' )
 #'
-#' # But allow log statements at all levels within the code
+#' # Generate log messages
 #' logger.trace("trace statement #%d", 1)
 #' logger.debug("debug statement")
 #' logger.info("info statement %s %s", "with", "arguments")
-#' logger.warn("warn statement %s", "about to try something dumb")
-#' result <- try(1/"a", silent=TRUE)
+#' logger.warn("warn statement: %s", "about to try something risky")
+#'
+#' result <- try(1 / "a", silent = TRUE)
 #' logger.error("error message: %s", geterrmessage())
-#' logger.fatal("fatal statement %s", "THE END")
+#' logger.fatal("fatal statement: %s", "THE END")
+#'
+#' cat(readLines("debug.log"), sep = "\n")
+#' cat(readLines("info.log"), sep = "\n")
+#' cat(readLines("error.log"), sep = "\n")
 #' }
 #'
-#' @seealso \code{\link{logger.trace}} \code{\link{logger.debug}}
-#'   \code{\link{logger.info}} \code{\link{logger.warn}}
-#'   \code{\link{logger.error}} \code{\link{logger.fatal}}
+#' @seealso
+#' [logger.trace()], [logger.debug()], [logger.info()],
+#' [logger.warn()], [logger.error()], [logger.fatal()]
+#'
 logger.setup <- function(
     traceLog = NULL,
     debugLog = NULL,
@@ -278,13 +288,15 @@ logger.setup <- function(
   invisible(NULL)
 }
 
-#' @title Check for initialization of loggers
+#' Check whether logging has been initialized
 #'
-#' @description
-#' Returns \code{TRUE} if logging has been initialized. This allows packages
-#' to emit logging statements only if logging has already been set up.
+#' Determine whether [logger.setup()] has already been called.
 #'
-#' @return \code{TRUE} if logging has already been initialized.
+#' This function is useful in package code that conditionally emits log
+#' statements only when logging has been configured.
+#'
+#' @return
+#' Logical scalar indicating whether logging has been initialized.
 #'
 #' @name logger.isInitialized
 #' @export
@@ -292,29 +304,44 @@ logger.setup <- function(
 #' @examples
 #' \dontrun{
 #' logger.isInitialized()
+#'
 #' logger.setup()
+#'
 #' logger.isInitialized()
 #' }
 #'
-#' @seealso \code{\link{logger.setup}}
-#' @seealso \code{\link{initializeLogging}}
+#' @seealso
+#' [logger.setup()]
+#'
 logger.isInitialized <- function() {
   isTRUE(getOption("MazamaCoreUtils.logger.initialized", FALSE))
 }
 
-#' @title Set console log level
+#' Set console log level
 #'
-#' @description
-#' By default, the console logger threshold is set to \code{FATAL} so that the console
-#' will typically receive no log messages. By setting the level to one of the
-#' other log levels: \code{TRACE, DEBUG, INFO, WARN, ERROR} users can see
-#' logging messages while running commands at the command line.
+#' Set the minimum log level displayed in the console.
 #'
-#' @param level Threshold level.
-#' @return No return value.
+#' By default, only `FATAL` messages are displayed in the console. This
+#' function allows users to display additional log messages interactively.
 #'
-#' @note All functionality is built on top of the excellent \pkg{logger}
-#'   package.
+#' Available log levels are:
+#'
+#' \preformatted{
+#' TRACE
+#' DEBUG
+#' INFO
+#' WARN
+#' ERROR
+#' FATAL
+#' }
+#'
+#' @param level Logging threshold level.
+#'
+#' @return
+#' No return value. Called for side effects.
+#'
+#' @note
+#' All functionality is implemented with the excellent \pkg{logger} package.
 #'
 #' @name logger.setLevel
 #' @importFrom logger log_threshold
@@ -322,12 +349,15 @@ logger.isInitialized <- function() {
 #'
 #' @examples
 #' \dontrun{
-#' # Set up console logging only
+#' # Enable console logging
 #' logger.setup()
+#'
+#' # Show DEBUG and higher messages in the console
 #' logger.setLevel(DEBUG)
 #' }
 #'
-#' @seealso \code{\link{logger.setup}}
+#' @seealso
+#' [logger.setup()]
 logger.setLevel <- function(level) {
   if (!logger.isInitialized()) {
     logger.setup()
@@ -343,97 +373,144 @@ logger.setLevel <- function(level) {
 # Logging functions (retain MazamaCoreUtils API)
 # ------------------------------------------------------------------------------
 
+#' Python-style logging statements
+#'
+#' Emit a `TRACE` level log message.
+#'
+#' Logging must first be initialized with [logger.setup()].
+#'
 #' @name logger.trace
+#' @param msg Message with optional format strings.
+#' @param ... Additional arguments passed to `sprintf()` formatting.
+#'
+#' @return
+#' No return value. Called for side effects.
+#'
+#' @seealso
+#' [logger.setup()]
+#'
 #' @export
 #' @importFrom logger log_trace
-#' @title Python-style logging statements
-#' @param msg Message with format strings applied to additional arguments.
-#' @param \dots Additional arguments to be formatted.
-#' @return No return value.
-#' @description After initializing the level-specific log files with \code{logger.setup(...)},
-#' this function will generate \code{TRACE} level log statements.
-#' @note All functionality is built on top of the excellent \pkg{logger} package.
-#' @seealso \code{\link{logger.setup}}
 logger.trace <- function(msg, ...) {
   .stopIfNotInitilized()
   logger::log_trace(msg, ..., namespace = .MAZAMA_LOG_NAMESPACE)
 }
 
+#' Python-style logging statements
+#'
+#' Emit a `DEBUG` level log message.
+#'
+#' Logging must first be initialized with [logger.setup()].
+#'
 #' @name logger.debug
+#' @param msg Message with optional format strings.
+#' @param ... Additional arguments passed to `sprintf()` formatting.
+#'
+#' @return
+#' No return value. Called for side effects.
+#'
+#' @seealso
+#' [logger.setup()]
+#'
 #' @export
 #' @importFrom logger log_debug
-#' @title Python-style logging statements
-#' @param msg Message with format strings applied to additional arguments.
-#' @param \dots Additional arguments to be formatted.
-#' @return No return value.
-#' @description After initializing the level-specific log files with \code{logger.setup(...)},
-#' this function will generate \code{DEBUG} level log statements.
-#' @note All functionality is built on top of the excellent \pkg{logger} package.
-#' @seealso \code{\link{logger.setup}}
+#'
 logger.debug <- function(msg, ...) {
   .stopIfNotInitilized()
   logger::log_debug(msg, ..., namespace = .MAZAMA_LOG_NAMESPACE)
 }
 
+#' Python-style logging statements
+#'
+#' Emit an `INFO` level log message.
+#'
+#' Logging must first be initialized with [logger.setup()].
+#'
 #' @name logger.info
+#' @param msg Message with optional format strings.
+#' @param ... Additional arguments passed to `sprintf()` formatting.
+#'
+#' @return
+#' No return value. Called for side effects.
+#'
+#' @seealso
+#' [logger.setup()]
+#'
 #' @export
 #' @importFrom logger log_info
-#' @title Python-style logging statements
-#' @param msg Message with format strings applied to additional arguments.
-#' @param \dots Additional arguments to be formatted.
-#' @return No return value.
-#' @description After initializing the level-specific log files with \code{logger.setup(...)},
-#' this function will generate \code{INFO} level log statements.
-#' @note All functionality is built on top of the excellent \pkg{logger} package.
-#' @seealso \code{\link{logger.setup}}
+#'
 logger.info <- function(msg, ...) {
   .stopIfNotInitilized()
   logger::log_info(msg, ..., namespace = .MAZAMA_LOG_NAMESPACE)
 }
 
+#' Python-style logging statements
+#'
+#' Emit a `WARN` level log message.
+#'
+#' Logging must first be initialized with [logger.setup()].
+#'
 #' @name logger.warn
+#' @param msg Message with optional format strings.
+#' @param ... Additional arguments passed to `sprintf()` formatting.
+#'
+#' @return
+#' No return value. Called for side effects.
+#'
+#' @seealso
+#' [logger.setup()]
+#'
 #' @export
 #' @importFrom logger log_warn
-#' @title Python-style logging statements
-#' @param msg Message with format strings applied to additional arguments.
-#' @param \dots Additional arguments to be formatted.
-#' @return No return value.
-#' @description After initializing the level-specific log files with \code{logger.setup(...)},
-#' this function will generate \code{WARN} level log statements.
-#' @note All functionality is built on top of the excellent \pkg{logger} package.
-#' @seealso \code{\link{logger.setup}}
+#'
 logger.warn <- function(msg, ...) {
   .stopIfNotInitilized()
   logger::log_warn(msg, ..., namespace = .MAZAMA_LOG_NAMESPACE)
 }
 
+#' Python-style logging statements
+#'
+#' Emit an `ERROR` level log message.
+#'
+#' Logging must first be initialized with [logger.setup()].
+#'
 #' @name logger.error
+#' @param msg Message with optional format strings.
+#' @param ... Additional arguments passed to `sprintf()` formatting.
+#'
+#' @return
+#' No return value. Called for side effects.
+#'
+#' @seealso
+#' [logger.setup()]
+#'
 #' @export
 #' @importFrom logger log_error
-#' @title Python-style logging statements
-#' @param msg Message with format strings applied to additional arguments.
-#' @param \dots Additional arguments to be formatted.
-#' @return No return value.
-#' @description After initializing the level-specific log files with \code{logger.setup(...)},
-#' this function will generate \code{ERROR} level log statements.
-#' @note All functionality is built on top of the excellent \pkg{logger} package.
-#' @seealso \code{\link{logger.setup}}
+#'
 logger.error <- function(msg, ...) {
   .stopIfNotInitilized()
   logger::log_error(msg, ..., namespace = .MAZAMA_LOG_NAMESPACE)
 }
 
+#' Python-style logging statements
+#'
+#' Emit a `FATAL` level log message.
+#'
+#' Logging must first be initialized with [logger.setup()].
+#'
 #' @name logger.fatal
+#' @param msg Message with optional format strings.
+#' @param ... Additional arguments passed to `sprintf()` formatting.
+#'
+#' @return
+#' No return value. Called for side effects.
+#'
+#' @seealso
+#' [logger.setup()]
+#'
 #' @export
 #' @importFrom logger log_fatal
-#' @title Python-style logging statements
-#' @param msg Message with format strings applied to additional arguments.
-#' @param \dots Additional arguments to be formatted.
-#' @return No return value.
-#' @description After initializing the level-specific log files with \code{logger.setup(...)},
-#' this function will generate \code{FATAL} level log statements.
-#' @note All functionality is built on top of the excellent \pkg{logger} package.
-#' @seealso \code{\link{logger.setup}}
+#'
 logger.fatal <- function(msg, ...) {
   .stopIfNotInitilized()
   logger::log_fatal(msg, ..., namespace = .MAZAMA_LOG_NAMESPACE)
@@ -446,15 +523,29 @@ logger.fatal <- function(msg, ...) {
 # Verbatim values from constants (legacy API). These are *not* required to match
 # logger's internal numeric values; we map by name (see .logger_map_level()).
 
+#' Log levels
+#'
+#' Logging level constants used by the MazamaCoreUtils logging API.
+#'
+#' Available log levels include:
+#'
+#' \preformatted{
+#' FATAL
+#' ERROR
+#' WARN
+#' INFO
+#' DEBUG
+#' TRACE
+#' }
+#'
+#' These constants are retained for backwards compatibility with the original
+#' MazamaCoreUtils logging system.
+#'
 #' @docType data
 #' @name logLevels
 #' @aliases FATAL ERROR WARN INFO DEBUG TRACE
-#' @title Log levels
-#' @description Log levels matching those historically found in \pkg{futile.logger}.
-#' Available levels include:
-#'
-#' \code{FATAL ERROR WARN INFO DEBUG TRACE}
 #' @export
+#'
 FATAL <- 1L
 names(FATAL) <- "FATAL"
 #' @export

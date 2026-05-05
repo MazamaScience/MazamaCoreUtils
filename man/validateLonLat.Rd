@@ -7,15 +7,28 @@
 validateLonLat(longitude = NULL, latitude = NULL)
 }
 \arguments{
-\item{longitude}{Single longitude in decimal degrees E.}
+\item{longitude}{Single longitude in decimal degrees east.}
 
-\item{latitude}{Single latitude in decimal degrees N.}
+\item{latitude}{Single latitude in decimal degrees north.}
 }
 \value{
-Invisibly returns \code{TRUE} if no error message has been generated.
+Invisibly returns \code{TRUE} if validation succeeds.
 }
 \description{
-Longitude and latitude are validated to be parseable as numeric
-and within the bounds -180:180 and -90:90. If validation fails, an error is
+Validate a single longitude/latitude pair to ensure both values are
+numeric scalars and fall within valid geographic bounds.
+}
+\details{
+Longitudes must fall between -180 and 180 degrees and latitudes must
+fall between -90 and 90 degrees. If validation fails, an error is
 generated.
+}
+\examples{
+validateLonLat(-122.5, 47.5)
+
+\dontrun{
+validateLonLat(-200, 47.5)
+validateLonLat(-122.5, NA)
+}
+
 }

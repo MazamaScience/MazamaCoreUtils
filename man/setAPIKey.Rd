@@ -2,7 +2,7 @@
 % Please edit documentation in R/MazamaCoreUtils-package.R
 \name{setAPIKey}
 \alias{setAPIKey}
-\title{Set APIKey}
+\title{Set API key}
 \usage{
 setAPIKey(provider = NULL, key = NULL)
 }
@@ -12,14 +12,16 @@ setAPIKey(provider = NULL, key = NULL)
 \item{key}{API key.}
 }
 \value{
-Silently returns previous value of the API key.
+Invisibly returns the previous value of the API key.
 }
 \description{
-Sets the API key associated with a web service.
+Set the API key associated with a web service provider.
+}
+\details{
+API keys are stored in package session state and are remembered only for the
+duration of the current R session.
 }
 \seealso{
-\link{getAPIKey}
-
-\link{showAPIKeys}
+\code{\link[=getAPIKey]{getAPIKey()}}, \code{\link[=showAPIKeys]{showAPIKeys()}}
 }
 \keyword{environment}

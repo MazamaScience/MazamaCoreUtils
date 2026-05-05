@@ -2,6 +2,11 @@
 
 * Fixed `setIfNull()` so that it doesn't ever convert type if the user provides 
 a value.
+* Removed the `algorithm` argument from `createLocationID()`. Now always using
+`geohash`.
+* Updated documentation throughout.
+* Added all **lubridate** functions to `timezoneLintRules`.
+* Addressed several minor edge cases.
 
 # MazamaCoreUtils 0.6.0
 

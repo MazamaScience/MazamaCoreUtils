@@ -7,29 +7,42 @@
 logger.setLevel(level)
 }
 \arguments{
-\item{level}{Threshold level.}
+\item{level}{Logging threshold level.}
 }
 \value{
-No return value.
+No return value. Called for side effects.
 }
 \description{
-By default, the console logger threshold is set to \code{FATAL} so that the console
-will typically receive no log messages. By setting the level to one of the
-other log levels: \code{TRACE, DEBUG, INFO, WARN, ERROR} users can see
-logging messages while running commands at the command line.
+Set the minimum log level displayed in the console.
+}
+\details{
+By default, only \code{FATAL} messages are displayed in the console. This
+function allows users to display additional log messages interactively.
+
+Available log levels are:
+
+\preformatted{
+TRACE
+DEBUG
+INFO
+WARN
+ERROR
+FATAL
+}
 }
 \note{
-All functionality is built on top of the excellent \pkg{logger}
-  package.
+All functionality is implemented with the excellent \pkg{logger} package.
 }
 \examples{
 \dontrun{
-# Set up console logging only
+# Enable console logging
 logger.setup()
+
+# Show DEBUG and higher messages in the console
 logger.setLevel(DEBUG)
 }
 
 }
 \seealso{
-\code{\link{logger.setup}}
+\code{\link[=logger.setup]{logger.setup()}}
 }

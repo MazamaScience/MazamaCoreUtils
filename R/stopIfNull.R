@@ -1,26 +1,27 @@
-#' Stop if an object is NULL
+#' Stop if an object is `NULL`
 #'
-#' @description
-#' This is a convenience function for testing if an object is \code{NULL}, and
-#' providing a custom error message if it is.
+#' Convenience function for validating that an object is not `NULL`.
 #'
-#' @param target Object to test if \code{NULL}.
-#' @param msg Optional custom message to display when \code{target} is
-#'   \code{NULL}.
+#' If `target` is not `NULL`, it is returned invisibly. If `target` is
+#' `NULL`, the function stops with either a default or user-supplied
+#' error message.
 #'
-#' @return If \code{target} is not \code{NULL}, \code{target} is returned
-#'   invisibly.
+#' This function is especially useful for validating required function
+#' arguments or for guarding intermediate results in pipelines.
 #'
-#' @export
+#' @param target Object to test.
+#' @param msg Optional error message to display if `target` is `NULL`.
+#'   Must be a character string of length one.
+#'
+#' @return
+#' Invisibly returns `target` when it is not `NULL`.
 #'
 #' @examples
-#' library(MazamaCoreUtils)
-#'
 #' # Return input invisibly if not NULL
-#' x <- stopIfNull(5, msg = "Custom message")
+#' x <- stopIfNull(5)
 #' print(x)
 #'
-#' # This can be useful when building pipelines
+#' # Useful in pipelines
 #' y <- 1:10
 #' y_mean <-
 #'   y %>%
@@ -28,8 +29,11 @@
 #'   mean()
 #'
 #' \dontrun{
+#' # Trigger the default error message
 #' testVar <- NULL
 #' stopIfNull(testVar)
+#'
+#' # Trigger a custom error message
 #' stopIfNull(testVar, msg = "This is NULL")
 #'
 #' # Make a failing pipeline
@@ -39,9 +43,11 @@
 #'   stopIfNull("This has failed.") %>%
 #'   mean()
 #' }
+#'
+#' @export
 stopIfNull <- function(
-  target,
-  msg = NULL
+    target,
+    msg = NULL
 ) {
 
   # Return early if not NULL ---------------------------------------------------
@@ -54,11 +60,13 @@ stopIfNull <- function(
 
   if ( is.null(msg) ) {
 
-    msg <- paste0("argument '",
-                  deparse(substitute(target)),
-                  "' must not be NULL.")
+    msg <- paste0(
+      "argument '",
+      deparse(substitute(target)),
+      "' must not be NULL."
+    )
 
-  } else if (!is.character(msg) || length(msg) != 1) {
+  } else if ( !is.character(msg) || length(msg) != 1 ) {
 
     stop("'msg' must be a character string of length one")
 

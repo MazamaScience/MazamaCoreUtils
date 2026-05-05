@@ -2,71 +2,66 @@
 % Please edit documentation in R/timeStamp.R
 \name{timeStamp}
 \alias{timeStamp}
-\title{Character representation of a POSIXct}
+\title{Create character timestamps}
 \usage{
 timeStamp(datetime = NULL, timezone = NULL, unit = "sec", style = "ymdhms")
 }
 \arguments{
-\item{datetime}{Vector of character or integer datetimes in Ymd[HMS] format
-(or POSIXct).}
+\item{datetime}{Vector of character, integer, or \code{POSIXct} datetimes.}
 
-\item{timezone}{Olson timezone used to interpret incoming dates (required).}
+\item{timezone}{Olson timezone used to interpret incoming datetimes.}
 
-\item{unit}{Units used to determine precision of generated time stamps.}
+\item{unit}{Temporal precision of the generated timestamp.}
 
-\item{style}{Style of representation, Default = "ymdhms".}
+\item{style}{Output timestamp style.}
 }
 \value{
-A vector of time stamps.
+Character vector of timestamps.
 }
 \description{
-Converts a vector of incoming date times (as \code{POSIXct} or character
-strings), into equivalent character representations in one of several
-formats appropriate for use in naming files or labeling plots.
+Convert datetimes to compact character timestamps suitable for file names,
+identifiers, labels, and other reproducible text output.
+}
+\details{
+Input values are converted with \code{\link[=parseDatetime]{parseDatetime()}} using the required
+\code{timezone} argument. When \code{datetime = NULL}, the current UTC time is used
+and \code{timezone} defaults to \code{"UTC"}.
 
-When \code{datetime} is not provided, defaults to \code{lubridate::now()}.
+The \code{unit} argument controls the precision of the output timestamp. The
+\code{style} argument controls the output format.
 
-The required \code{timezone} parameter must be one of those found in
-\code{\link[base]{OlsonNames}}.
+Supported \code{unit} values are:
 
-Formatting output is are affected by both \code{style}:
-
-\itemize{
-  \item{\code{"ymdhms"}}
-  \item{\code{"ymdThms"}}
-  \item{\code{"julian"}}
-  \item{\code{"clock"}}
+\preformatted{
+"year"
+"month"
+"day"
+"hour"
+"min"
+"sec"
+"msec"
 }
 
-and \code{unit} which determines the temporal precision of the generated
-representation:
+Supported \code{style} values are:
 
-\itemize{
-  \item{\code{"year"}}
-  \item{\code{"month"}}
-  \item{\code{"day"}}
-  \item{\code{"hour"}}
-  \item{\code{"min"}}
-  \item{\code{"sec"}}
-  \item{\code{"msec"}}
+\preformatted{
+"ymdhms"   compact calendar time
+"ymdThms"  compact calendar time with "T" separator
+"julian"   year and Julian day
+"clock"    ISO-like clock time
 }
 
-If \code{style == "julian"} && \code{unit = "month"}, the timestamp will contain the
-Julian day associated with the beginning of the month.
+For \code{style = "julian"} and \code{unit = "month"}, the timestamp uses the Julian
+day associated with the beginning of the month.
 }
 \section{POSIXct inputs}{
 
-When \code{startdate} or \code{enddate} are already \code{POSIXct} values,
-they are converted to the timezone specified by \code{timezone} without
-altering the physical instant in time the input represents. This is different
-from the behavior of \code{\link[lubridate]{parse_date_time}} (which powers
-this function), which will force \code{POSIXct} inputs into a new timezone,
-altering the physical moment of time the input represents.
+When \code{startdate} or \code{enddate} are already \code{POSIXct} values, they are first
+converted to \code{timezone} with \code{\link[lubridate:with_tz]{lubridate::with_tz()}} without changing the
+represented instant in time.
 }
 
 \examples{
-library(MazamaCoreUtils)
-
 datetime <- parseDatetime("2019-01-08 12:30:15", timezone = "UTC")
 
 timeStamp()
@@ -81,8 +76,6 @@ timeStamp(datetime, "UTC", unit = "sec")
 timeStamp(datetime, "UTC", unit = "sec", style = "ymdThms")
 timeStamp(datetime, "UTC", unit = "sec", style = "julian")
 timeStamp(datetime, "UTC", unit = "sec", style = "clock")
-timeStamp(datetime, "UTC", unit = "sec", style = "clock") \%>\%
-  stringr::str_replace("T", " ")
 timeStamp(datetime, "America/Los_Angeles", unit = "sec", style = "clock")
 timeStamp(datetime, "America/Los_Angeles", unit = "msec", style = "clock")
 

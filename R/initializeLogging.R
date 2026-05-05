@@ -1,17 +1,36 @@
-#' @title Initialize standard log files
+#' Initialize standard log files
 #'
-#' @description
-#' Convenience function that wraps common logging initialization steps.
+#' Create a standard set of MazamaCoreUtils log files.
+#'
+#' This convenience function creates or validates a log directory, archives any
+#' existing standard log files by appending a UTC timestamp, and then initializes
+#' logging with [logger.setup()].
+#'
+#' Standard log files include:
+#'
+#' \preformatted{
+#' TRACE.log
+#' DEBUG.log
+#' INFO.log
+#' WARN.log
+#' ERROR.log
+#' }
+#'
+#' When `filePrefix` is supplied, it is prepended to each log file name.
 #'
 #' @param logDir Directory in which to write log files.
-#' @param filePrefix Character string prepended to log files.
-#' @param createDir Logical specifying whether to create a missing \code{logDir}
-#' or issue an error message.
+#' @param filePrefix Character string prepended to log file names.
+#' @param createDir Logical specifying whether to create `logDir` if it does
+#'   not already exist.
 #'
-#' @return NULL
+#' @return
+#' No return value. Called for side effects.
 #'
 #' @name initializeLogging
 #' @export
+#'
+#' @seealso
+#' [logger.setup()]
 #'
 initializeLogging <- function(
   logDir = NULL,
@@ -63,6 +82,7 @@ initializeLogging <- function(
   }, silent = TRUE) %>%
   stopOnError("could not create log files")
 
+  invisible(NULL)
 }
 
 

@@ -2,32 +2,36 @@
 % Please edit documentation in R/stopIfNull.R
 \name{stopIfNull}
 \alias{stopIfNull}
-\title{Stop if an object is NULL}
+\title{Stop if an object is \code{NULL}}
 \usage{
 stopIfNull(target, msg = NULL)
 }
 \arguments{
-\item{target}{Object to test if \code{NULL}.}
+\item{target}{Object to test.}
 
-\item{msg}{Optional custom message to display when \code{target} is
-\code{NULL}.}
+\item{msg}{Optional error message to display if \code{target} is \code{NULL}.
+Must be a character string of length one.}
 }
 \value{
-If \code{target} is not \code{NULL}, \code{target} is returned
-  invisibly.
+Invisibly returns \code{target} when it is not \code{NULL}.
 }
 \description{
-This is a convenience function for testing if an object is \code{NULL}, and
-providing a custom error message if it is.
+Convenience function for validating that an object is not \code{NULL}.
+}
+\details{
+If \code{target} is not \code{NULL}, it is returned invisibly. If \code{target} is
+\code{NULL}, the function stops with either a default or user-supplied
+error message.
+
+This function is especially useful for validating required function
+arguments or for guarding intermediate results in pipelines.
 }
 \examples{
-library(MazamaCoreUtils)
-
 # Return input invisibly if not NULL
-x <- stopIfNull(5, msg = "Custom message")
+x <- stopIfNull(5)
 print(x)
 
-# This can be useful when building pipelines
+# Useful in pipelines
 y <- 1:10
 y_mean <-
   y \%>\%
@@ -35,8 +39,11 @@ y_mean <-
   mean()
 
 \dontrun{
+# Trigger the default error message
 testVar <- NULL
 stopIfNull(testVar)
+
+# Trigger a custom error message
 stopIfNull(testVar, msg = "This is NULL")
 
 # Make a failing pipeline
@@ -46,4 +53,5 @@ z_mean <-
   stopIfNull("This has failed.") \%>\%
   mean()
 }
+
 }

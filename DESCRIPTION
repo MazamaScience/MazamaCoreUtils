@@ -21,7 +21,6 @@ Depends:
     R (>= 4.0.0)
 Imports:
     devtools,
-    digest,
     dplyr,
     geohashTools,
     logger,
@@ -42,3 +41,5 @@ Suggests:
 Encoding: UTF-8
 VignetteBuilder: knitr
 RoxygenNote: 7.3.3
+Roxygen: list(markdown = TRUE)
+

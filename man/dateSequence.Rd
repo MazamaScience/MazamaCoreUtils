@@ -12,80 +12,84 @@ dateSequence(
 )
 }
 \arguments{
-\item{startdate}{Desired start datetime (ISO 8601).}
+\item{startdate}{Desired start datetime.}
 
-\item{enddate}{Desired end datetime (ISO 8601).}
+\item{enddate}{Desired end datetime.}
 
-\item{timezone}{Olson timezone used to interpret dates (required).}
+\item{timezone}{Olson timezone used to interpret incoming dates.}
 
-\item{ceilingEnd}{Logical instruction to apply
-\code{\link[lubridate]{ceiling_date}} to the \code{enddate} rather than
-\code{\link[lubridate]{floor_date}}}
+\item{ceilingEnd}{Logical specifying whether to include the end of the final
+day.}
 }
 \value{
-A vector of \code{POSIXct}s at midnight local time.
+A vector of \code{POSIXct} datetimes at local midnight.
 }
 \description{
-Uses incoming parameters to return a seqeunce of \code{POSIXct} times at
-local midnight in the specified \code{timezone}. The first returned time will
-be midnight of the requested \code{startdate}. The final returned time will
-be midnight (\emph{at the beginning}) of the requested \code{enddate}.
-
-The \code{ceilingEnd} argument addresses the ambiguity of a phrase like:
-"August 1-8". With \code{ceilingEnd = FALSE} (default) this pharse means
-"through the beginning of Aug 8". With \code{ceilingEnd = TRUE} it means
-"through the end of Aug 8".
-
-The required \code{timezone} parameter must be one of those found in
-\code{\link[base]{OlsonNames}}.
-
-Dates can be anything that is understood by
-\code{lubrdiate::parse_date_time()} using the \code{Ymd[HMS]} orders. This
-includes:
-
-\itemize{
-  \item{\code{"YYYYmmdd"}}
-  \item{\code{"YYYYmmddHHMMSS"}}
-  \item{\code{"YYYY-mm-dd"}}
-  \item{\code{"YYYY-mm-dd H"}}
-  \item{\code{"YYYY-mm-dd H:M"}}
-  \item{\code{"YYYY-mm-dd H:M:S"}}
+Create a sequence of local-midnight \code{POSIXct} datetimes in a specified
+timezone.
 }
+\details{
+The returned sequence begins at midnight local time on \code{startdate} and ends
+at midnight local time on \code{enddate}, \emph{i.e.} the \emph{beginning} of \code{enddate}.
 
-All hour-minute-second information is removed after parsing.
+The \code{ceilingEnd} argument addresses ambiguity in date ranges such as
+\code{"August 1-8"}. With \code{ceilingEnd = FALSE} (default), the sequence ends at
+the beginning of August 8. With \code{ceilingEnd = TRUE}, the sequence
+includes the entirety of August 8, ending at the midnight that begins August 9.
+
+Input dates are parsed with \code{\link[=parseDatetime]{parseDatetime()}} using the specified
+\code{timezone}. Any hour-minute-second information is removed after parsing.
 }
 \note{
-The main utility of this function is that it respects "clock time" and
-returns times associated with midnight regardless of daylight savings. This
-is in contrast to `seq.Date(from, to, by = "day")` which creates a sequence
-of datetimes always separated by 24 hours.
+This function preserves local clock-time midnight boundaries across daylight
+savings transitions. This differs from \code{seq.Date(..., by = "day")}, which
+advances by fixed 24-hour intervals and can drift away from midnight local
+time during daylight savings changes.
 }
 \section{POSIXct inputs}{
 
-When \code{startdate} or \code{enddate} are already \code{POSIXct} values,
-they are converted to the timezone specified by \code{timezone} without
-altering the physical instant in time the input represents. Only after
-conversion are they floored to midnight local time
+When \code{startdate} or \code{enddate} are already \code{POSIXct} values, they are first
+converted to \code{timezone} with \code{\link[lubridate:with_tz]{lubridate::with_tz()}} without changing the
+represented instant in time. They are then floored to local midnight.
 }
 
 \examples{
-library(MazamaCoreUtils)
+dateSequence(
+  "2019-11-01",
+  "2019-11-08",
+  timezone = "America/Los_Angeles"
+)
 
-dateSequence("2019-11-01", "2019-11-08", timezone = "America/Los_Angeles")
-dateSequence("2019-11-01", "2019-11-07", timezone = "America/Los_Angeles",
-             ceilingEnd = TRUE)
+dateSequence(
+  "2019-11-01",
+  "2019-11-07",
+  timezone = "America/Los_Angeles",
+  ceilingEnd = TRUE
+)
 
-# Observe the handling of daylight savings
-datetime <- dateSequence("2019-11-01", "2019-11-08",
-                         timezone = "America/Los_Angeles")
+# Observe daylight savings handling
+datetime <- dateSequence(
+  "2019-11-01",
+  "2019-11-08",
+  timezone = "America/Los_Angeles"
+)
 
 datetime
 lubridate::with_tz(datetime, "UTC")
 
-# Passing in POSIXct values preserves the instant in time before flooring --
-#   midnight Tokyo time is the day before in UTC
-jst <- dateSequence(20190307, 20190315, timezone = "Asia/Tokyo")
+# POSIXct inputs preserve the represented instant before flooring
+jst <- dateSequence(
+  20190307,
+  20190315,
+  timezone = "Asia/Tokyo"
+)
+
 jst
-dateSequence(jst[1], jst[7], timezone = "UTC")
+
+dateSequence(
+  jst[1],
+  jst[7],
+  timezone = "UTC"
+)
 
 }

@@ -26,47 +26,48 @@ check_slower(pkg = ".")
 check_slowest(pkg = ".")
 }
 \arguments{
-\item{pkg}{Package location passed to \code{devtools::check()}.}
+\item{pkg}{Package location passed to \code{\link[devtools:check]{devtools::check()}}.}
 }
 \value{
-No return.
+Invisibly returns the result from \code{\link[devtools:check]{devtools::check()}}.
 }
 \description{
-When multiple developers are working on a package, it is
-crucially important that they check their code changes \emph{often}.  After
-merging changes from multiple developers it is equally important to check the
-package \emph{thoroughly}.
-
-The problem is that frequent checks should be quick or developers won't do
-them while thorough checks are, by nature, slow.
-
-Our solution is to provide shorthand functions that wrap
-\code{devtools::check()} and pass it a variety of different arguments.
+Convenience wrappers around \code{\link[devtools:check]{devtools::check()}} for package checking at
+different levels of thoroughness.
 }
 \details{
-The table below describes the \code{args} passed to
-\code{devtools::check()}:
+These functions make it easy to run quick checks during active development
+and more thorough checks before merging or releasing package changes.
 
-\tabular{rl}{
-\code{check_slowest()} \tab | \code{manual = TRUE, run_dont_test = TRUE} \cr
-\tab | \code{args = c("--run-dontrun", "--use-gct")}\cr
-\code{check_slower()} \tab | \code{manual = TRUE, run_dont_test = TRUE} \cr
-\tab | \code{args = c("--run-dontrun")}\cr
-\code{check_slow()} \tab | \code{manual = TRUE, run_dont_test = TRUE}\cr
-\tab | \code{args = c()}\cr
-\code{check()} \tab | \code{manual = FALSE, run_dont_test = FALSE} \cr
-\tab | \code{args = c()}\cr
-\code{check_fast()} \tab | \code{manual = FALSE, run_dont_test = FALSE} \cr
-\tab | \code{build_args = c("--no-build-vignettes")}\cr
-\tab | \code{args = c("--ignore-vignettes")}\cr
-\code{check_faster()} \tab | \code{manual = FALSE, run_dont_test = FALSE} \cr
-\tab | \code{build_args = c("--no-build-vignettes")}\cr
-\tab | \code{args = c("--ignore-vignettes", "--no-examples")}\cr
-\code{check_fastest()} \tab | \code{manual = FALSE, run_dont_test = FALSE} \cr
-\tab | \code{build_args = c("--no-build-vignettes")}\cr
-\tab | \code{args = c("--ignore-vignettes", "--no-examples", "--no-tests")}\cr
+The functions are ordered from most thorough to fastest:
+
+\describe{
+\item{\code{check_slowest()}}{
+Builds the manual, runs \code{donttest} and \code{dontrun} examples, and
+uses \code{--use-gct}.
+}
+\item{\code{check_slower()}}{
+Builds the manual and runs \code{donttest} and \code{dontrun} examples.
+}
+\item{\code{check_slow()}}{
+Builds the manual and runs \code{donttest} examples.
+}
+\item{\code{check()}}{
+Standard development check without building the manual or running
+\code{donttest} examples.
+}
+\item{\code{check_fast()}}{
+Skips vignette building and ignores vignettes during checking.
+}
+\item{\code{check_faster()}}{
+Skips vignette building, ignores vignettes, and skips examples.
+}
+\item{\code{check_fastest()}}{
+Skips vignette building, ignores vignettes, skips examples, and skips
+tests.
+}
 }
 }
 \seealso{
-\code{\link[devtools]{check}}
+\code{\link[devtools:check]{devtools::check()}}
 }

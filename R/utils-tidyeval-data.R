@@ -1,6 +1,6 @@
-#' @title Data pronoun for tidy evaluation
+#' Data pronoun for tidy evaluation
 #'
-#' @description See \code{rlang::\link[rlang]{.data}} for details.
+#' See [rlang::.data] for details.
 #'
 #' @name tidyeval-data
 #' @keywords internal

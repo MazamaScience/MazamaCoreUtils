@@ -1,42 +1,32 @@
-#' @name html_getTables
+#' Extract tables from an HTML page
 #'
-#' @importFrom rlang .data
+#' Parse an HTML page and return all `<table>` elements as a list of data
+#' frames.
 #'
-#' @title Find all tables in an html page
+#' The `url` argument may be either a remote URL or a local file path. Tables are
+#' parsed with [rvest::html_table()]. To extract a single table, use
+#' [html_getTable()].
 #'
-#' @param url URL or file path of an html page.
-#' @param header Use first row as header? If NA, will use first row if it
-#' consists of <th> tags.
+#' @param url URL or local file path of an HTML page.
+#' @param header Logical specifying whether the first row should be used as
+#'   column names. If `NA`, the first row is used only when it contains `<th>`
+#'   elements.
 #'
-#' @return A list of dataframes representing each table on a html page.
-#'
-#' @description Parses an html page to extract all \code{<table>} elements and
-#' return them in a list of dataframes representing each table. The columns and
-#' rows of these dataframes are that of the table it represents. A single table
-#' can be extracted as a dataframe by passing the index of the table in addition
-#' to the url to \code{html_getTable()}.
+#' @return
+#' List of data frames, one for each HTML table.
 #'
 #' @examples
-#' library(MazamaCoreUtils)
+#' \dontrun{
+#' url <- "https://en.wikipedia.org/wiki/List_of_tz_database_time_zones"
 #'
-#' # Fail gracefully if the resource is not available
-#' try({
+#' tables <- html_getTables(url)
+#' firstTable <- tables[[1]]
 #'
-#'   # Wikipedia's list of timezones
-#'   url <- "http://en.wikipedia.org/wiki/List_of_tz_database_time_zones"
+#' head(firstTable)
+#' nrow(firstTable)
+#' }
 #'
-#'   # Extract tables
-#'   tables <- html_getTables(url)
-#'
-#'   # Extract the first table
-#'   # NOTE: Analogous to firstTable <- html_getTable(url, index = 1)
-#'   firstTable <- tables[[1]]
-#'
-#'   head(firstTable)
-#'   nrow(firstTable)
-#'
-#' }, silent = FALSE)
-#'
+#' @name html_getTables
 #' @rdname html_getTables
 #' @export
 
@@ -57,7 +47,7 @@ html_getTables <- function(
     urlXML <- xml2::read_html(url)
 
     # Get a list of tables in the document
-    tableNodes <- rvest::html_nodes(urlXML, css = "table")
+    tableNodes <- rvest::html_elements(urlXML, css = "table")
 
     # Make this list human-readable
     tables_clean <- rvest::html_table(
@@ -78,10 +68,12 @@ html_getTables <- function(
 }
 
 #' @rdname html_getTables
-#' @param url URL or file path of an html page.
-#' @param header Use first row as header? If NA, will use first row if it
-#' consists of <th> tags.
-#' @param index Index identifying which table to to return.
+#'
+#' @param index Index identifying which table to return.
+#'
+#' @return
+#' A single data frame containing the requested HTML table.
+#'
 #' @export
 html_getTable <- function(
   url = NULL,

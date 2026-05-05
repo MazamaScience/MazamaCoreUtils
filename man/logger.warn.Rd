@@ -7,20 +7,19 @@
 logger.warn(msg, ...)
 }
 \arguments{
-\item{msg}{Message with format strings applied to additional arguments.}
+\item{msg}{Message with optional format strings.}
 
-\item{\dots}{Additional arguments to be formatted.}
+\item{...}{Additional arguments passed to \code{sprintf()} formatting.}
 }
 \value{
-No return value.
+No return value. Called for side effects.
 }
 \description{
-After initializing the level-specific log files with \code{logger.setup(...)},
-this function will generate \code{WARN} level log statements.
+Emit a \code{WARN} level log message.
 }
-\note{
-All functionality is built on top of the excellent \pkg{logger} package.
+\details{
+Logging must first be initialized with \code{\link[=logger.setup]{logger.setup()}}.
 }
 \seealso{
-\code{\link{logger.setup}}
+\code{\link[=logger.setup]{logger.setup()}}
 }

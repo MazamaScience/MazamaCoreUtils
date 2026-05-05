@@ -3,49 +3,44 @@
 \name{html_getTables}
 \alias{html_getTables}
 \alias{html_getTable}
-\title{Find all tables in an html page}
+\title{Extract tables from an HTML page}
 \usage{
 html_getTables(url = NULL, header = NA)
 
 html_getTable(url = NULL, header = NA, index = 1)
 }
 \arguments{
-\item{url}{URL or file path of an html page.}
+\item{url}{URL or local file path of an HTML page.}
 
-\item{header}{Use first row as header? If NA, will use first row if it
-consists of <th> tags.}
+\item{header}{Logical specifying whether the first row should be used as
+column names. If \code{NA}, the first row is used only when it contains \verb{<th>}
+elements.}
 
-\item{index}{Index identifying which table to to return.}
+\item{index}{Index identifying which table to return.}
 }
 \value{
-A list of dataframes representing each table on a html page.
+List of data frames, one for each HTML table.
+
+A single data frame containing the requested HTML table.
 }
 \description{
-Parses an html page to extract all \code{<table>} elements and
-return them in a list of dataframes representing each table. The columns and
-rows of these dataframes are that of the table it represents. A single table
-can be extracted as a dataframe by passing the index of the table in addition
-to the url to \code{html_getTable()}.
+Parse an HTML page and return all \verb{<table>} elements as a list of data
+frames.
+}
+\details{
+The \code{url} argument may be either a remote URL or a local file path. Tables are
+parsed with \code{\link[rvest:html_table]{rvest::html_table()}}. To extract a single table, use
+\code{\link[=html_getTable]{html_getTable()}}.
 }
 \examples{
-library(MazamaCoreUtils)
+\dontrun{
+url <- "https://en.wikipedia.org/wiki/List_of_tz_database_time_zones"
 
-# Fail gracefully if the resource is not available
-try({
+tables <- html_getTables(url)
+firstTable <- tables[[1]]
 
-  # Wikipedia's list of timezones
-  url <- "http://en.wikipedia.org/wiki/List_of_tz_database_time_zones"
-
-  # Extract tables
-  tables <- html_getTables(url)
-
-  # Extract the first table
-  # NOTE: Analogous to firstTable <- html_getTable(url, index = 1)
-  firstTable <- tables[[1]]
-
-  head(firstTable)
-  nrow(firstTable)
-
-}, silent = FALSE)
+head(firstTable)
+nrow(firstTable)
+}
 
 }

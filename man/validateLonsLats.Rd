@@ -7,18 +7,40 @@
 validateLonsLats(longitude = NULL, latitude = NULL, na.rm = FALSE)
 }
 \arguments{
-\item{longitude}{Vector of longitudes in decimal degrees E.}
+\item{longitude}{Vector of longitudes in decimal degrees east.}
 
-\item{latitude}{Vector of latitudes in decimal degrees N.}
+\item{latitude}{Vector of latitudes in decimal degrees north.}
 
 \item{na.rm}{Logical specifying whether to remove \code{NA} values before
 validation.}
 }
 \value{
-Invisibly returns \code{TRUE} if no error message has been generated.
+Invisibly returns \code{TRUE} if validation succeeds.
 }
 \description{
-Longitude and latitude vectors validated to be parseable as numeric
-and within the bounds -180:180 and -90:90. If validation fails, an error is
+Validate longitude and latitude vectors to ensure they are numeric,
+have matching lengths, and contain values within valid geographic bounds.
+}
+\details{
+Longitudes must fall between -180 and 180 degrees and latitudes must
+fall between -90 and 90 degrees. If validation fails, an error is
 generated.
+}
+\examples{
+longitude <- c(-122.5, -122.4)
+latitude <- c(47.5, 47.6)
+
+validateLonsLats(longitude, latitude)
+
+# Remove missing values before validation
+validateLonsLats(
+  c(-122.5, NA),
+  c(47.5, NA),
+  na.rm = TRUE
+)
+
+\dontrun{
+validateLonsLats(c(-200, 0), c(45, 46))
+}
+
 }

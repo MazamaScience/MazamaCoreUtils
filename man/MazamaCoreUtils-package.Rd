@@ -4,25 +4,25 @@
 \name{MazamaCoreUtils-package}
 \alias{MazamaCoreUtils}
 \alias{MazamaCoreUtils-package}
-\title{MazamaCoreUtils: Utility Functions for Production R Code}
+\title{MazamaCoreUtils}
 \description{
-A suite of utility functions providing functionality commonly needed for production level projects such as logging, error handling, cache management and date-time parsing. Functions for date-time parsing and formatting require that time zones be specified explicitly, avoiding a common source of error when working with environmental time series.
+Utility functions for production R code.
+}
+\details{
+MazamaCoreUtils provides a standardized set of utility functions used by
+MazamaScience packages and R-based operational systems.
 
-The MazamaCoreUtils package was created by MazamaScience to
-regularize our work building R-based web services.
-
-The main goal of this package is to create an internally standardized set of
-functions that we can use in various systems that are being run
-operationally. Areas of functionality supported by this package include:
+Functionality includes:
 
 \itemize{
-\item{ python style logging }
-\item{ simple error messaging }
-\item{ cache management }
-\item{ API key handling }
-\item{ date parsing and formatting }
-\item{ lat/lon validation and uniqueID creation }
-\item{ source code linting }
+\item Python-style logging
+\item simple error messaging
+\item cache management
+\item API key handling
+\item date parsing and formatting
+\item longitude/latitude validation
+\item unique location ID creation
+\item source code linting
 }
 }
 \seealso{

@@ -1,26 +1,25 @@
-#' @keywords internal
-"_PACKAGE"#'
-
-#' @name MazamaCoreUtils-package
-#' @title Utility Functions for Production R Code
-#' @description The MazamaCoreUtils package was created by MazamaScience to
-#' regularize our work building R-based web services.
+#' MazamaCoreUtils
 #'
-#' The main goal of this package is to create an internally standardized set of
-#' functions that we can use in various systems that are being run
-#' operationally. Areas of functionality supported by this package include:
+#' Utility functions for production R code.
+#'
+#' MazamaCoreUtils provides a standardized set of utility functions used by
+#' MazamaScience packages and R-based operational systems.
+#'
+#' Functionality includes:
 #'
 #' \itemize{
-#' \item{ python style logging }
-#' \item{ simple error messaging }
-#' \item{ cache management }
-#' \item{ API key handling }
-#' \item{ date parsing and formatting }
-#' \item{ lat/lon validation and uniqueID creation }
-#' \item{ source code linting }
+#'   \item Python-style logging
+#'   \item simple error messaging
+#'   \item cache management
+#'   \item API key handling
+#'   \item date parsing and formatting
+#'   \item longitude/latitude validation
+#'   \item unique location ID creation
+#'   \item source code linting
 #' }
-NULL
-
+#'
+#' @keywords internal
+"_PACKAGE"
 
 # ----- Internal Package State -------------------------------------------------
 
@@ -30,46 +29,61 @@ MazamaCoreUtilsEnv$APIKeys <- list()
 
 # ----- API Keys ---------------------------------------------------------------
 
+#' API keys for data services
+#'
+#' Internal session state used to store API keys for web services.
+#'
+#' Users can set API keys with [setAPIKey()]. Keys are remembered for the
+#' duration of the R session and can be retrieved with [getAPIKey()].
+#'
+#' This provides a small abstraction layer for dependent packages so that data
+#' access functions can test for and retrieve provider-specific API keys with
+#' generic code.
+#'
+#' @name APIKeys
 #' @docType data
 #' @keywords environment
-#' @name APIKeys
-#' @title API keys for data services.
-#' @format List of character strings.
-#' @description This package maintains an internal set of API keys which
-#' users can set using \code{setAPIKey()}. These keys will be remembered for
-#' the duration of an R session. This functionality provides an abstraction
-#' layer in dependent packages so that data access functions can test for and
-#' access specific API keys with generic code.
-#' @seealso \link{getAPIKey}
-#' @seealso \link{setAPIKey}
-#' @seealso \link{showAPIKeys}
+#'
+#' @format
+#' A named list of character strings.
+#'
+#' @seealso
+#' [getAPIKey()], [setAPIKey()], [showAPIKeys()]
 NULL
 
+#' Show API keys
+#'
+#' Print all currently set API keys.
+#'
+#' @return
+#' No return value. Called for side effects.
+#'
+#' @seealso
+#' [getAPIKey()], [setAPIKey()]
+#'
 #' @keywords environment
 #' @export
 #' @importFrom utils str
-#' @title Show API keys
-#' @description Returns a list of all currently set API keys.
-#' @return List of provider:key pairs.
-#' @seealso \link{getAPIKey}
-#' @seealso \link{setAPIKey}
-
 showAPIKeys <- function() {
   utils::str(MazamaCoreUtilsEnv$APIKeys)
 }
 
+#' Get API key
+#'
+#' Return the API key associated with a web service provider.
+#'
+#' If `provider = NULL`, all currently stored API keys are returned.
+#'
+#' @param provider Web service provider.
+#'
+#' @return
+#' API key string, `NULL`, or a named list of all provider/key pairs.
+#'
+#' @seealso
+#' [APIKeys], [setAPIKey()], [showAPIKeys()]
+#'
 #' @keywords environment
 #' @export
-#' @title Get API key
-#' @param provider Web service provider.
-#' @description Returns the API key associated with a web service.
-#' If \code{provider == NULL} a list is returned containing all recognized
-#' API keys.
-#' @return API key string or a list of provider:key pairs.
-#' @seealso \link{APIKeys}
-#' @seealso \link{setAPIKey}
-#' @seealso \link{showAPIKeys}
-
 getAPIKey <- function(provider = NULL) {
   if ( is.null(provider) ) {
     return(MazamaCoreUtilsEnv$APIKeys)
@@ -78,18 +92,27 @@ getAPIKey <- function(provider = NULL) {
   }
 }
 
-#' @keywords environment
-#' @export
-#' @title Set APIKey
+#' Set API key
+#'
+#' Set the API key associated with a web service provider.
+#'
+#' API keys are stored in package session state and are remembered only for the
+#' duration of the current R session.
+#'
 #' @param provider Web service provider.
 #' @param key API key.
-#' @description Sets the API key associated with a web service.
-#' @return Silently returns previous value of the API key.
-#' @seealso \link{getAPIKey}
-#' @seealso \link{showAPIKeys}
-
+#'
+#' @return
+#' Invisibly returns the previous value of the API key.
+#'
+#' @seealso
+#' [getAPIKey()], [showAPIKeys()]
+#'
+#' @keywords environment
+#' @export
 setAPIKey <- function(provider = NULL, key = NULL) {
   old <- MazamaCoreUtilsEnv$APIKeys[[provider]]
   MazamaCoreUtilsEnv$APIKeys[[provider]] <- key
   return(invisible(old))
 }
+

@@ -15,134 +15,124 @@ dateRange(
 )
 }
 \arguments{
-\item{startdate}{Desired start datetime (ISO 8601).}
+\item{startdate}{Desired start datetime.}
 
-\item{enddate}{Desired end datetime (ISO 8601).}
+\item{enddate}{Desired end datetime.}
 
-\item{timezone}{Olson timezone used to interpret dates (required).}
+\item{timezone}{Olson timezone used to interpret incoming dates.}
 
-\item{unit}{Units used to determine time at end-of-day.}
+\item{unit}{Temporal precision used for the returned end-of-range value.
+One of \code{"day"}, \code{"hour"}, \code{"min"}, or \code{"sec"}.}
 
-\item{ceilingStart}{Logical instruction to apply
-\code{\link[lubridate]{ceiling_date}} to the \code{startdate} rather than
-\code{\link[lubridate]{floor_date}}}
+\item{ceilingStart}{Logical specifying whether to round \code{startdate} up to the
+next day boundary instead of down.}
 
-\item{ceilingEnd}{Logical instruction to apply
-\code{\link[lubridate]{ceiling_date}} to the \code{enddate} rather than
-\code{\link[lubridate]{floor_date}}}
+\item{ceilingEnd}{Logical specifying whether to include the entirety of the
+final day.}
 
-\item{days}{Number of days of data to include.}
+\item{days}{Number of days to include when either \code{startdate} or \code{enddate}
+is omitted.}
 }
 \value{
-A vector of two \code{POSIXct}s.
+Two-element \code{POSIXct} vector ordered from earliest to latest.
 }
 \description{
-Uses incoming parameters to return a pair of \code{POSIXct} times in the
-proper order. The first returned time will be midnight of the desired
-starting date. The second returned time will represent the "end of the day"
-of the requested or calculated \code{enddate} boundary.
+Create a two-element \code{POSIXct} vector representing a date/time range in a
+specified timezone.
+}
+\details{
+The returned range is ordered from earliest to latest. The first element
+represents the beginning of the requested date range and the second element
+represents the end of the requested date range at the requested temporal
+precision.
 
-Note that the returned end date will be one \code{unit} prior to the start
-of the requested \code{enddate} unless \code{ceilingEnd = TRUE} in
-which case the entire \code{enddate} will be included up to the last
-\code{unit}.
-
-The \code{ceilingEnd} argument addresses the ambiguity of a phrase like:
-"August 1-8". With \code{ceilingEnd = FALSE} (default) this pharse means
-"through the beginning of Aug 8". With \code{ceilingEnd = TRUE} it means
-"through the end of Aug 8".
-
-So, to get 24 hours of data staring on Jan 01, 2019 you would specify:
+By default, the returned end time is one \code{unit} \emph{before} the beginning of
+\code{enddate}. For example:
 
 \preformatted{
-> MazamaCoreUtils::dateRange(20190101, 20190102, timezone = "UTC")
-[1] "2019-01-01 00:00:00 UTC" "2019-01-01 23:59:59 UTC"
+dateRange(20190101, 20190102, timezone = "UTC")
+[1] "2019-01-01 00:00:00 UTC"
+[2] "2019-01-01 23:59:59 UTC"
 }
 
-or
+Setting \code{ceilingEnd = TRUE} includes the entirety of \code{enddate}:
 
 \preformatted{
-> MazamaCoreUtils::dateRange(20190101, 20190101,
-                             timezone = "UTC", ceilingEnd = TRUE)
-[1] "2019-01-01 00:00:00 UTC" "2019-01-01 23:59:59 UTC"
+dateRange(
+  20190101,
+  20190101,
+  timezone = "UTC",
+  ceilingEnd = TRUE
+)
+[1] "2019-01-01 00:00:00 UTC"
+[2] "2019-01-01 23:59:59 UTC"
 }
 
-The required \code{timezone} parameter must be one of those found in
-\code{\link[base]{OlsonNames}}.
+The \code{ceilingEnd} argument addresses ambiguity in phrases such as
+\code{"August 1-8"}. With \code{ceilingEnd = FALSE} (default), the range extends
+through the end of August 7, stopping at the midnight boundary where August 8
+begins. With \code{ceilingEnd = TRUE}, the range
+extends through the end of August 8.
 
-Dates can be anything that is understood by
-\code{lubrdiate::parse_date_time()} using the \code{Ymd[HMS]} orders. This
-includes:
-
-\itemize{
-  \item{\code{"YYYYmmdd"}}
-  \item{\code{"YYYYmmddHHMMSS"}}
-  \item{\code{"YYYY-mm-dd"}}
-  \item{\code{"YYYY-mm-dd H"}}
-  \item{\code{"YYYY-mm-dd H:M"}}
-  \item{\code{"YYYY-mm-dd H:M:S"}}
+Input dates are parsed with \code{\link[=parseDatetime]{parseDatetime()}} using the specified
+\code{timezone}.
 }
-}
-\section{Default Arguments}{
+\section{Default arguments}{
 
-In the case when either \code{startdate} or \code{enddate} is missing, it is
-created from the non-missing values plus/minus \code{days}. If both
-\code{startdate} and \code{enddate} are misssing, \code{enddate} is set to
-\code{\link[lubridate]{now}} (with the given \code{timezone}), and then
-\code{startdate} is calculated using \code{enddate - days}.
+If either \code{startdate} or \code{enddate} is missing, the missing boundary is
+calculated using \code{days}.
+
+If both are missing, \code{enddate} defaults to the current day in \code{timezone}
+and \code{startdate} is calculated as \code{enddate - days}.
 }
 
-\section{End-of-Day Units}{
+\section{End-of-day units}{
 
-The second of the returned \code{POSIXct}s will end one \code{unit} before
-the specified \code{enddate}. Acceptable units are \code{"day",
-"hour", "min", "sec"}.
+The returned end time is adjusted to the last representable value within the
+requested unit:
 
-The aim is to quickly calculate full-day date ranges for time series whose
-values are binned at different units. Thus, if \code{unit = "min"}, the
-returned value associated with \code{enddate} will always be at 23:59:00
-in the requested time zone.
+\describe{
+\item{\code{unit = "day"}}{End time is midnight at the start of the final day.}
+\item{\code{unit = "hour"}}{End time is \code{23:00:00}.}
+\item{\code{unit = "min"}}{End time is \code{23:59:00}.}
+\item{\code{unit = "sec"}}{End time is \code{23:59:59}.}
+}
 }
 
 \section{POSIXct inputs}{
 
-When \code{startdate} or \code{enddate} are already \code{POSIXct} values,
-they are converted to the timezone specified by \code{timezone} without
-altering the physical instant in time the input represents. This is different
-from the behavior of \code{\link[lubridate]{parse_date_time}} (which powers
-this function), which will force \code{POSIXct} inputs into a new timezone,
-altering the physical moment of time the input represents.
+When \code{startdate} or \code{enddate} are already \code{POSIXct} values, they are first
+converted to \code{timezone} with \code{\link[lubridate:with_tz]{lubridate::with_tz()}} without changing the
+represented instant in time.
 }
 
 \section{Parameter precedence}{
 
-It is possible to supply input paramters that are in conflict. For example:
-
-\code{dateRange("2019-01-01", "2019-01-08", days = 3, timezone = "UTC")}
-
-The \code{startdate} and \code{enddate} parameters would imply a 7-day range
-which is in conflict with \code{days = 3}. The following rules resolve
-conflicts of this nature:
+When parameters conflict, the following rules apply:
 
 \enumerate{
-\item{When \code{startdate} and \code{enddate} are both specified, the
-\code{days} parameter is ignored.}
-\item{When \code{startdate} is missing, \code{ceilingStart} is ignored and
-the first returned time will depend on the combination of \code{enddate},
-\code{days} and \code{ceilingEnd}.}
-\item{When \code{enddate} is missing, \code{ceilingEnd} is ignored and the
-second returned time depends on \code{ceilingStart} and \code{days}.}
+\item If both \code{startdate} and \code{enddate} are supplied, \code{days} is ignored.
+\item If \code{startdate} is missing, \code{ceilingStart} is ignored.
+\item If \code{enddate} is missing, \code{ceilingEnd} is ignored.
 }
 }
 
 \examples{
-library(MazamaCoreUtils)
-
 dateRange("2019-01-08", timezone = "UTC")
+
 dateRange("2019-01-08", unit = "min", timezone = "UTC")
+
 dateRange("2019-01-08", unit = "hour", timezone = "UTC")
+
 dateRange("2019-01-08", unit = "day", timezone = "UTC")
+
 dateRange("2019-01-08", "2019-01-11", timezone = "UTC")
-dateRange(enddate = 20190112, days = 3,
-          unit = "day", timezone = "America/Los_Angeles")
+
+dateRange(
+  enddate = 20190112,
+  days = 3,
+  unit = "day",
+  timezone = "America/Los_Angeles"
+)
+
 }

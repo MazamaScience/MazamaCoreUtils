@@ -17,9 +17,21 @@ An object of class \code{integer} of length 1.
 FATAL
 }
 \description{
-Log levels matching those historically found in \pkg{futile.logger}.
-Available levels include:
+Logging level constants used by the MazamaCoreUtils logging API.
+}
+\details{
+Available log levels include:
 
-\code{FATAL ERROR WARN INFO DEBUG TRACE}
+\preformatted{
+FATAL
+ERROR
+WARN
+INFO
+DEBUG
+TRACE
+}
+
+These constants are retained for backwards compatibility with the original
+MazamaCoreUtils logging system.
 }
 \keyword{datasets}

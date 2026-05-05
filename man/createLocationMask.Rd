@@ -13,46 +13,48 @@ createLocationMask(
 )
 }
 \arguments{
-\item{longitude}{Vector of longitudes in decimal degrees E.}
+\item{longitude}{Vector of longitudes in decimal degrees east.}
 
-\item{latitude}{Vector of latitudes in decimal degrees N.}
+\item{latitude}{Vector of latitudes in decimal degrees north.}
 
 \item{lonRange}{Range of valid longitudes.}
 
 \item{latRange}{Range of valid latitudes.}
 
-\item{removeZeroZero}{Logical indicating whether locations at \code{0.0, 0.0}
-should be marked as invalid.}
+\item{removeZeroZero}{Logical specifying whether the coordinate pair
+\verb{(0, 0)} should be treated as invalid.}
 }
 \value{
-Vector of logical values.
+Logical vector identifying valid locations.
 }
 \description{
-A logical vector is created with either \code{TRUE} or
-\code{FALSE} for each incoming \code{longitude, latitude} pair with
-\code{TRUE} indicating a valid location. This can be used to filter dataframes
-to retain only records with valid locations.
+Create a logical mask identifying valid longitude/latitude pairs.
+}
+\details{
+The returned logical vector contains \code{TRUE} for valid locations and \code{FALSE}
+for invalid locations. This is useful for filtering data frames to retain
+only records with valid geographic coordinates.
 
-\code{lonRange} and \code{latRange} can be used to create a valid-mask for
-locations within a rectangular area.
+Longitude and latitude values are considered valid when they:
 
-\code{removeZeroZero} will invalidate the location \code{0.0, 0.0} which is
-sometimes seen in poorly QC'ed datasets.
+\itemize{
+\item fall within \code{lonRange} and \code{latRange}
+\item are not missing
+\item are not located at \verb{(0, 0)} when \code{removeZeroZero = TRUE}
+}
 
-\code{NA} values found in \code{longitude} or \code{latitude} will result
-in a mask value of \code{FALSE}.
+The \code{lonRange} and \code{latRange} arguments can be used to restrict valid
+locations to a rectangular geographic region.
 }
 \examples{
-library(MazamaCoreUtils)
-
 createLocationMask(
   longitude = c(-120, NA, -120, -220, -120, 0),
   latitude = c(45, 45, NA, 45, 100, 0)
 )
 
 createLocationMask(
-  longitude = c(-120:-90),
-  latitude = c(20:50),
+  longitude = -120:-90,
+  latitude = 20:50,
   lonRange = c(-110, -100),
   latRange = c(30, 40)
 )

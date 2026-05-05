@@ -1,38 +1,41 @@
-#' @title Create a mask of valid locations
-#' @description A logical vector is created with either \code{TRUE} or
-#' \code{FALSE} for each incoming \code{longitude, latitude} pair with
-#' \code{TRUE} indicating a valid location. This can be used to filter dataframes
-#' to retain only records with valid locations.
+#' Create a mask of valid locations
 #'
-#' \code{lonRange} and \code{latRange} can be used to create a valid-mask for
-#' locations within a rectangular area.
+#' Create a logical mask identifying valid longitude/latitude pairs.
 #'
-#' \code{removeZeroZero} will invalidate the location \code{0.0, 0.0} which is
-#' sometimes seen in poorly QC'ed datasets.
+#' The returned logical vector contains `TRUE` for valid locations and `FALSE`
+#' for invalid locations. This is useful for filtering data frames to retain
+#' only records with valid geographic coordinates.
 #'
-#' \code{NA} values found in \code{longitude} or \code{latitude} will result
-#' in a mask value of \code{FALSE}.
+#' Longitude and latitude values are considered valid when they:
 #'
-#' @param longitude Vector of longitudes in decimal degrees E.
-#' @param latitude Vector of latitudes in decimal degrees N.
+#' \itemize{
+#'   \item fall within `lonRange` and `latRange`
+#'   \item are not missing
+#'   \item are not located at `(0, 0)` when `removeZeroZero = TRUE`
+#' }
+#'
+#' The `lonRange` and `latRange` arguments can be used to restrict valid
+#' locations to a rectangular geographic region.
+#'
+#' @param longitude Vector of longitudes in decimal degrees east.
+#' @param latitude Vector of latitudes in decimal degrees north.
 #' @param lonRange Range of valid longitudes.
 #' @param latRange Range of valid latitudes.
-#' @param removeZeroZero Logical indicating whether locations at \code{0.0, 0.0}
-#' should be marked as invalid.
+#' @param removeZeroZero Logical specifying whether the coordinate pair
+#'   `(0, 0)` should be treated as invalid.
 #'
-#' @return Vector of logical values.
+#' @return
+#' Logical vector identifying valid locations.
 #'
 #' @examples
-#' library(MazamaCoreUtils)
-#'
 #' createLocationMask(
 #'   longitude = c(-120, NA, -120, -220, -120, 0),
 #'   latitude = c(45, 45, NA, 45, 100, 0)
 #' )
 #'
 #' createLocationMask(
-#'   longitude = c(-120:-90),
-#'   latitude = c(20:50),
+#'   longitude = -120:-90,
+#'   latitude = 20:50,
 #'   lonRange = c(-110, -100),
 #'   latRange = c(30, 40)
 #' )
@@ -78,10 +81,10 @@ createLocationMask <- function(
 
   mask <-
     zero_mask &
-    longitude > lonRange[1] &
-    longitude < lonRange[2] &
-    latitude > latRange[1] &
-    latitude < latRange[2]
+    longitude >= lonRange[1] &
+    longitude <= lonRange[2] &
+    latitude >= latRange[1] &
+    latitude <= latRange[2]
 
   mask[is.na(mask)] <- FALSE
 

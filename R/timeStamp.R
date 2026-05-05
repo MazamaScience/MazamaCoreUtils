@@ -1,55 +1,50 @@
-#' @export
+#' Create character timestamps
 #'
-#' @title Character representation of a POSIXct
+#' Convert datetimes to compact character timestamps suitable for file names,
+#' identifiers, labels, and other reproducible text output.
 #'
-#' @param datetime Vector of character or integer datetimes in Ymd[HMS] format
-#'   (or POSIXct).
-#' @param timezone Olson timezone used to interpret incoming dates (required).
-#' @param unit Units used to determine precision of generated time stamps.
-#' @param style Style of representation, Default = "ymdhms".
+#' Input values are converted with [parseDatetime()] using the required
+#' `timezone` argument. When `datetime = NULL`, the current UTC time is used
+#' and `timezone` defaults to `"UTC"`.
 #'
-#' @description
-#' Converts a vector of incoming date times (as \code{POSIXct} or character
-#' strings), into equivalent character representations in one of several
-#' formats appropriate for use in naming files or labeling plots.
+#' The `unit` argument controls the precision of the output timestamp. The
+#' `style` argument controls the output format.
 #'
-#' When \code{datetime} is not provided, defaults to \code{lubridate::now()}.
+#' Supported `unit` values are:
 #'
-#' The required \code{timezone} parameter must be one of those found in
-#' \code{\link[base]{OlsonNames}}.
-#'
-#' Formatting output is are affected by both \code{style}:
-#'
-#' \itemize{
-#'   \item{\code{"ymdhms"}}
-#'   \item{\code{"ymdThms"}}
-#'   \item{\code{"julian"}}
-#'   \item{\code{"clock"}}
+#' \preformatted{
+#' "year"
+#' "month"
+#' "day"
+#' "hour"
+#' "min"
+#' "sec"
+#' "msec"
 #' }
 #'
-#' and \code{unit} which determines the temporal precision of the generated
-#' representation:
+#' Supported `style` values are:
 #'
-#' \itemize{
-#'   \item{\code{"year"}}
-#'   \item{\code{"month"}}
-#'   \item{\code{"day"}}
-#'   \item{\code{"hour"}}
-#'   \item{\code{"min"}}
-#'   \item{\code{"sec"}}
-#'   \item{\code{"msec"}}
+#' \preformatted{
+#' "ymdhms"   compact calendar time
+#' "ymdThms"  compact calendar time with "T" separator
+#' "julian"   year and Julian day
+#' "clock"    ISO-like clock time
 #' }
 #'
-#' If \code{style == "julian"} && \code{unit = "month"}, the timestamp will contain the
-#' Julian day associated with the beginning of the month.
+#' For `style = "julian"` and `unit = "month"`, the timestamp uses the Julian
+#' day associated with the beginning of the month.
+#'
+#' @param datetime Vector of character, integer, or `POSIXct` datetimes.
+#' @param timezone Olson timezone used to interpret incoming datetimes.
+#' @param unit Temporal precision of the generated timestamp.
+#' @param style Output timestamp style.
+#'
+#' @return
+#' Character vector of timestamps.
 #'
 #' @inheritSection dateRange POSIXct inputs
 #'
-#' @return A vector of time stamps.
-#'
 #' @examples
-#' library(MazamaCoreUtils)
-#'
 #' datetime <- parseDatetime("2019-01-08 12:30:15", timezone = "UTC")
 #'
 #' timeStamp()
@@ -64,10 +59,10 @@
 #' timeStamp(datetime, "UTC", unit = "sec", style = "ymdThms")
 #' timeStamp(datetime, "UTC", unit = "sec", style = "julian")
 #' timeStamp(datetime, "UTC", unit = "sec", style = "clock")
-#' timeStamp(datetime, "UTC", unit = "sec", style = "clock") %>%
-#'   stringr::str_replace("T", " ")
 #' timeStamp(datetime, "America/Los_Angeles", unit = "sec", style = "clock")
 #' timeStamp(datetime, "America/Los_Angeles", unit = "msec", style = "clock")
+#'
+#' @export
 #'
 timeStamp <- function(
   datetime = NULL,

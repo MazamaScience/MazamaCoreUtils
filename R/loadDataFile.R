@@ -1,47 +1,56 @@
-#' @export
+#' Load R data from a URL or local file
 #'
-#' @title Load R data from URL or local file
+#' Load a pre-generated R binary data file from either a local directory or a
+#' remote URL.
 #'
-#' @param filename Name of the R data file to be loaded.
-#' @param dataUrl Remote URL directory for data files.
-#' @param dataDir Local disk directory containing data files.
-#' @param priority First data source to attempt if both are supplied.
-#' @return A data object.
+#' This function is intended for use by package-level `*_load()` helper
+#' functions. It allows locally cached data files to be used when available,
+#' avoiding unnecessary internet access.
 #'
-#' @description Loads pre-generated R binary (".rda") files from a URL or a local
-#' directory. This function is intended to be called by other \code{~_load()}
-#' functions and can remove internet latencies when local versions of data are
-#' available.
+#' If both `dataDir` and `dataUrl` are provided, `priority` determines which
+#' source is tried first. If loading from the first source fails, the other
+#' source is used as a fallback.
 #'
-#' If both \code{dataUrl} and \code{dataDir} are provided, an attempt will be
-#' made to load data from the source specified by \code{priority} with the
-#' other source used as a backup.
+#' @param filename Name of the `.rda` file to load.
+#' @param dataUrl Remote URL directory containing data files.
+#' @param dataDir Local directory containing data files.
+#' @param priority First data source to try when both `dataDir` and `dataUrl`
+#'   are supplied.
+#'
+#' @return
+#' Object loaded from the `.rda` file.
 #'
 #' @examples
 #' \dontrun{
-#' library(MazamaCoreUtils)
-#'
-#' filename = "USCensusStates_02.rda"
-#' dir = "~/Data/Spatial"
-#' url = "http://data.mazamascience.com/MazamaSpatialUtils/Spatial_0.8"
+#' filename <- "USCensusStates_02.rda"
+#' dataDir <- "~/Data/Spatial"
+#' dataUrl <- "http://data.mazamascience.com/MazamaSpatialUtils/Spatial_0.8"
 #'
 #' # Load local file
-#' USCensusStates = loadDataFile(filename, dataDir = dir)
+#' USCensusStates <- loadDataFile(filename, dataDir = dataDir)
 #'
 #' # Load remote file
-#' USCensusStates = loadDataFile(filename, dataUrl = url)
+#' USCensusStates <- loadDataFile(filename, dataUrl = dataUrl)
 #'
 #' # Load local file with remote file as backup
-#' USCensusStates =
-#'   loadDataFile(filename, dataDir = dir, dataUrl = url, priority = "dataDir")
+#' USCensusStates <- loadDataFile(
+#'   filename,
+#'   dataDir = dataDir,
+#'   dataUrl = dataUrl,
+#'   priority = "dataDir"
+#' )
 #'
 #' # Load remote file with local file as backup
-#' USCensusStates =
-#'   loadDataFile(filename, dataDir = dir, dataUrl = url, priority = "dataUrl")
-#'
+#' USCensusStates <- loadDataFile(
+#'   filename,
+#'   dataDir = dataDir,
+#'   dataUrl = dataUrl,
+#'   priority = "dataUrl"
+#' )
 #' }
-
-
+#'
+#' @export
+#'
 loadDataFile <- function(
     filename = NULL,
     dataUrl = NULL,
@@ -147,12 +156,12 @@ loadDataFile <- function(
 
   # Define a 'connection' object so we can close it no matter what happens
   conn <- url(filepath)
+  on.exit(close(conn), add = TRUE)
   result <- try({
     suppressWarnings({
       objectName <- load(conn)
     })
   }, silent = TRUE)
-  close(conn)
 
   if ( "try-error" %in% class(result) ) {
     stop(sprintf("data file could not be loaded from: %s", filepath), call. = FALSE)

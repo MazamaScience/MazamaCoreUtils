@@ -7,14 +7,12 @@
 showAPIKeys()
 }
 \value{
-List of provider:key pairs.
+No return value. Called for side effects.
 }
 \description{
-Returns a list of all currently set API keys.
+Print all currently set API keys.
 }
 \seealso{
-\link{getAPIKey}
-
-\link{setAPIKey}
+\code{\link[=getAPIKey]{getAPIKey()}}, \code{\link[=setAPIKey]{setAPIKey()}}
 }
 \keyword{environment}

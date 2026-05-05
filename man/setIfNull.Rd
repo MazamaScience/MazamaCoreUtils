@@ -4,37 +4,37 @@
 \alias{setIfNull}
 \title{Set a variable to a default value if it is NULL}
 \usage{
-setIfNull(target, default, enforceType = NULL)
+setIfNull(target, default, enforcedType = NULL)
 }
 \arguments{
-\item{target}{Object to test for `NULL`.}
+\item{target}{Object to test for \code{NULL}.}
 
-\item{default}{Object to return when `target` is `NULL`.}
+\item{default}{Object to return when \code{target} is \code{NULL}.}
 
-\item{enforceType}{Optional character string specifying the suffix of an
-  `as.*()` coercion function to apply to the returned value. For example,
-  `"double"` uses `as.double()`, `"character"` uses `as.character()`,
-  and `"Date"` uses `as.Date()`.
+\item{enforcedType}{Optional character string specifying the suffix of an
+\verb{as.*()} coercion function to apply to the returned value. For example,
+\code{"double"} uses \code{as.double()}, \code{"character"} uses \code{as.character()},
+and \code{"Date"} uses \code{as.Date()}.
 
-  If `NULL` (the default), no coercion is performed.}
+If \code{NULL} (the default), no coercion is performed.}
 }
 \value{
-The value of `target` if it is not `NULL`; otherwise `default`.
+The value of \code{target} if it is not \code{NULL}; otherwise \code{default}.
 
-If `enforceType` is specified, the returned value is coerced using the
-corresponding `as.*()` function.
+If \code{enforcedType} is specified, the returned value is coerced using the
+corresponding \verb{as.*()} function.
 }
 \description{
-Returns `default` when `target` is `NULL`; otherwise returns `target`
+Returns \code{default} when \code{target} is \code{NULL}; otherwise returns \code{target}
 unchanged.
 }
 \details{
 This is useful for assigning default values to optional arguments while
 preserving any user-supplied value exactly as provided.
 
-Optionally, `enforceType` may be used to coerce the returned value to a
-specific type. This coercion is applied after the `NULL` check and affects
-both `target` and `default`.
+Optionally, \code{enforcedType} may be used to coerce the returned value to a
+specific type. This coercion is applied after the \code{NULL} check and affects
+both \code{target} and \code{default}.
 }
 \examples{
 setIfNull(NULL, "foo")
@@ -47,7 +47,7 @@ setIfNull("mean", 0)
 setIfNull(mean, 0)
 
 # Optional type enforcement
-setIfNull("15", 0, enforceType = "double")
-setIfNull(NULL, "15", enforceType = "integer")
+setIfNull("15", 0, enforcedType = "double")
+setIfNull(NULL, "15", enforcedType = "integer")
 
 }

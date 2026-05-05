@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils-logging.R
 \name{logger.setup}
 \alias{logger.setup}
-\title{Set up python-style logging}
+\title{Set up Python-style logging}
 \usage{
 logger.setup(
   traceLog = NULL,
@@ -14,71 +14,77 @@ logger.setup(
 )
 }
 \arguments{
-\item{traceLog}{File name or full path where \code{logger.trace()} messages
-will be sent.}
+\item{traceLog}{File path receiving \code{TRACE} messages.}
 
-\item{debugLog}{File name or full path where \code{logger.debug()} messages
-will be sent.}
+\item{debugLog}{File path receiving \code{DEBUG} messages.}
 
-\item{infoLog}{File name or full path where \code{logger.info()} messages
-will be sent.}
+\item{infoLog}{File path receiving \code{INFO} messages.}
 
-\item{warnLog}{File name or full path where \code{logger.warn()} messages
-will be sent.}
+\item{warnLog}{File path receiving \code{WARN} messages.}
 
-\item{errorLog}{File name or full path where \code{logger.error()} messages
-will be sent.}
+\item{errorLog}{File path receiving \code{ERROR} messages.}
 
-\item{fatalLog}{File name or full path where \code{logger.fatal()} messages
-will be sent.}
+\item{fatalLog}{File path receiving \code{FATAL} messages.}
 }
 \value{
-No return value.
+No return value. Called for side effects.
 }
 \description{
-Good logging allows package developers and users to create log files at
-different levels to track and debug lengthy or complex calculations.
-"Python-style" logging is intended to suggest that users should set up
-multiple log files for different log severities so that the \code{errorLog}
-will contain only log messages at or above the \code{ERROR} level while a
-\code{debugLog} will contain log messages at the \code{DEBUG} level as well
-as all higher levels.
+Configure level-specific log files using the package logging API.
+}
+\details{
+Logging is built on top of the \href{https://daroczig.github.io/logger/}{logger}
+package while retaining the historical MazamaCoreUtils logging interface.
 
-Python-style log files are set up with \code{logger.setup()}. Logs can be set
-up for any combination of log levels. Accepting the default \code{NULL}
-setting for any log file simply means that log file will not be created.
+Separate log files can be created for different log levels so that, for
+example, an \code{errorLog} contains only \code{ERROR} and \code{FATAL} messages while a
+\code{debugLog} contains \code{DEBUG} messages as well as all higher-severity messages.
 
-Python-style logging requires the use of \code{logger.debug()} style logging
-statements as seen in the example below.
+Any log file argument left as \code{NULL} is disabled and no file will be created
+for that level.
+
+After initialization, logging statements can be generated with:
+\code{logger.trace()}, \code{logger.debug()}, \code{logger.info()},
+\code{logger.warn()}, \code{logger.error()}, and \code{logger.fatal()}.
+
+Log messages are formatted with:
+
+\preformatted{
+LEVEL [YYYY-MM-DD HH:MM:SS UTC] message
+}
+
+Console logging is enabled by default only for \code{FATAL} messages. Use
+\code{\link[=logger.setLevel]{logger.setLevel()}} to display additional log messages in the console.
 }
 \note{
-All functionality is built on top of the excellent \pkg{logger}
-  package.
+All functionality is implemented with the excellent \pkg{logger} package.
 }
 \examples{
 \dontrun{
-library(MazamaCoreUtils)
-
-# Only save three log files
+# Create three log files
 logger.setup(
   debugLog = "debug.log",
   infoLog = "info.log",
   errorLog = "error.log"
 )
 
-# But allow log statements at all levels within the code
+# Generate log messages
 logger.trace("trace statement #\%d", 1)
 logger.debug("debug statement")
 logger.info("info statement \%s \%s", "with", "arguments")
-logger.warn("warn statement \%s", "about to try something dumb")
-result <- try(1/"a", silent=TRUE)
+logger.warn("warn statement: \%s", "about to try something risky")
+
+result <- try(1 / "a", silent = TRUE)
 logger.error("error message: \%s", geterrmessage())
-logger.fatal("fatal statement \%s", "THE END")
+logger.fatal("fatal statement: \%s", "THE END")
+
+cat(readLines("debug.log"), sep = "\n")
+cat(readLines("info.log"), sep = "\n")
+cat(readLines("error.log"), sep = "\n")
 }
 
 }
 \seealso{
-\code{\link{logger.trace}} \code{\link{logger.debug}}
-  \code{\link{logger.info}} \code{\link{logger.warn}}
-  \code{\link{logger.error}} \code{\link{logger.fatal}}
+\code{\link[=logger.trace]{logger.trace()}}, \code{\link[=logger.debug]{logger.debug()}}, \code{\link[=logger.info]{logger.info()}},
+\code{\link[=logger.warn]{logger.warn()}}, \code{\link[=logger.error]{logger.error()}}, \code{\link[=logger.fatal]{logger.fatal()}}
 }

@@ -2,27 +2,30 @@
 % Please edit documentation in R/utils-logging.R
 \name{logger.isInitialized}
 \alias{logger.isInitialized}
-\title{Check for initialization of loggers}
+\title{Check whether logging has been initialized}
 \usage{
 logger.isInitialized()
 }
 \value{
-\code{TRUE} if logging has already been initialized.
+Logical scalar indicating whether logging has been initialized.
 }
 \description{
-Returns \code{TRUE} if logging has been initialized. This allows packages
-to emit logging statements only if logging has already been set up.
+Determine whether \code{\link[=logger.setup]{logger.setup()}} has already been called.
+}
+\details{
+This function is useful in package code that conditionally emits log
+statements only when logging has been configured.
 }
 \examples{
 \dontrun{
 logger.isInitialized()
+
 logger.setup()
+
 logger.isInitialized()
 }
 
 }
 \seealso{
-\code{\link{logger.setup}}
-
-\code{\link{initializeLogging}}
+\code{\link[=logger.setup]{logger.setup()}}
 }

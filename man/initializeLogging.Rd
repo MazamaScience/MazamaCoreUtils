@@ -9,11 +9,34 @@ initializeLogging(logDir = NULL, filePrefix = "", createDir = TRUE)
 \arguments{
 \item{logDir}{Directory in which to write log files.}
 
-\item{filePrefix}{Character string prepended to log files.}
+\item{filePrefix}{Character string prepended to log file names.}
 
-\item{createDir}{Logical specifying whether to create a missing \code{logDir}
-or issue an error message.}
+\item{createDir}{Logical specifying whether to create \code{logDir} if it does
+not already exist.}
+}
+\value{
+No return value. Called for side effects.
 }
 \description{
-Convenience function that wraps common logging initialization steps.
+Create a standard set of MazamaCoreUtils log files.
+}
+\details{
+This convenience function creates or validates a log directory, archives any
+existing standard log files by appending a UTC timestamp, and then initializes
+logging with \code{\link[=logger.setup]{logger.setup()}}.
+
+Standard log files include:
+
+\preformatted{
+TRACE.log
+DEBUG.log
+INFO.log
+WARN.log
+ERROR.log
+}
+
+When \code{filePrefix} is supplied, it is prepended to each log file name.
+}
+\seealso{
+\code{\link[=logger.setup]{logger.setup()}}
 }

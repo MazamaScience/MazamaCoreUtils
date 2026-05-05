@@ -1,45 +1,46 @@
-#' @export
+#' Create a POSIXct time range
 #'
-#' @title Create a POSIXct time range
+#' Create an ordered two-element `POSIXct` time range from start and end
+#' datetime values.
 #'
-#' @param starttime Desired start datetime (ISO 8601).
-#' @param endtime Desired end datetime (ISO 8601).
-#' @param timezone Olson timezone used to interpret dates (required).
-#' @param unit Units used to determine time at end-of-day.
-#' @param ceilingStart Logical instruction to apply
-#'   \code{\link[lubridate]{ceiling_date}} to the \code{startdate} rather than
-#'   \code{\link[lubridate]{floor_date}}
-#' @param ceilingEnd Logical instruction to apply
-#'   \code{\link[lubridate]{ceiling_date}} to the \code{enddate} rather than
-#'   \code{\link[lubridate]{floor_date}}
+#' Input values are converted with [parseDatetime()] using the required
+#' `timezone` argument. The resulting start and end times are sorted so the
+#' earlier time is always returned first.
 #'
-#' @description
-#' Uses incoming parameters to return a pair of \code{POSIXct} times in the
-#' proper order. Both start and end times will have \code{lubridate::floor_date()}
-#' applied to get the nearest \code{unit}. This can be modified by specifying
-#' \code{ceilingStart = TRUE} or \code{ceilingEnd = TRUE} in which case
-#' \code{lubridate::ceiling_date()} will be applied.
+#' By default, both times are rounded down with [lubridate::floor_date()] using
+#' the requested `unit`. Set `ceilingStart = TRUE` or `ceilingEnd = TRUE` to
+#' round either endpoint up with [lubridate::ceiling_date()] instead.
 #'
-#' The required \code{timezone} parameter must be one of those found in
-#' \code{\link[base]{OlsonNames}}.
+#' @param starttime Desired start datetime.
+#' @param endtime Desired end datetime.
+#' @param timezone Olson timezone used to interpret incoming datetimes.
+#' @param unit Unit used for rounding. Passed to [lubridate::floor_date()] or
+#'   [lubridate::ceiling_date()].
+#' @param ceilingStart Logical specifying whether to round the start time up
+#'   instead of down.
+#' @param ceilingEnd Logical specifying whether to round the end time up instead
+#'   of down.
 #'
-#' Dates can be anything that is understood by
-#' \code{lubrdiate::parse_date_time()} including either of the following
-#' recommended formats:
-#'
-#' \itemize{
-#'   \item{\code{"YYYYmmddHH[MMSS]"}}
-#'   \item{\code{"YYYY-mm-dd HH:MM:SS"}}
-#' }
+#' @return
+#' Two-element `POSIXct` vector ordered from earliest to latest.
 #'
 #' @inheritSection dateRange POSIXct inputs
 #'
-#' @return A vector of two \code{POSIXct}s.
-#'
 #' @examples
-#' library(MazamaCoreUtils)
+#' timeRange(
+#'   starttime = "2019-01-08 10:12:15",
+#'   endtime = 20190109102030,
+#'   timezone = "UTC"
+#' )
 #'
-#' timeRange("2019-01-08 10:12:15", 20190109102030, timezone = "UTC")
+#' timeRange(
+#'   starttime = "2019-01-08 10:12:15",
+#'   endtime = "2019-01-09 10:20:30",
+#'   timezone = "UTC",
+#'   unit = "hour"
+#' )
+#'
+#' @export
 #'
 timeRange <- function(
   starttime = NULL,
@@ -55,8 +56,9 @@ timeRange <- function(
   stopIfNull(starttime)
   stopIfNull(endtime)
   stopIfNull(timezone)
-  stopIfNull(unit)
-  stopIfNull(ceilingEnd)
+  setIfNull(unit, "sec")
+  setIfNull(ceilingStart, FALSE)
+  setIfNull(ceilingEnd, FALSE)
 
   if ( !timezone %in% base::OlsonNames() )
     stop(sprintf("'timezone = %s' is not found in OlsonNames()", timezone))

@@ -1,89 +1,59 @@
+#' Stop on try-error
+#'
+#' Generate a consistent error message from the result of a `try()` block.
+#'
+#' This function is intended for production code where potentially fragile
+#' operations are wrapped in `try(..., silent = TRUE)`. If `result` inherits
+#' from `"try-error"`, a cleaned and optionally customized error message is
+#' generated and passed to [stop()].
+#'
+#' If `result` is not a `"try-error"`, the function returns `NULL`.
+#'
+#' @param result Return value from a `try()` block.
+#' @param err_msg Optional custom error message.
+#' @param prefix Optional text to prepend to the error message.
+#' @param maxLength Maximum allowed error message length before truncation.
+#' @param truncatedLength Length of the truncated error message.
+#' @param call. Logical indicating whether the call should be included in the
+#'   error message. Passed to [stop()].
+#'
+#' @return
+#' Returns `NULL` if `result` is not a `"try-error"`; otherwise stops with an
+#' error.
+#'
+#' @note
+#' If logging has been initialized, the final error message is logged with
+#' [logger.error()] before calling [stop()].
+#'
+#' @examples
+#' \dontrun{
+#' myFunc <- function(x) {
+#'   log(x)
+#' }
+#'
+#' result <- try({
+#'   myFunc("ten")
+#' }, silent = TRUE)
+#'
+#' stopOnError(result)
+#'
+#' try({
+#'   myFunc("ten")
+#' }, silent = TRUE) %>%
+#'   stopOnError(err_msg = "Unable to process user input")
+#'
+#' try({
+#'   myFunc("ten")
+#' }, silent = TRUE) %>%
+#'   stopOnError(
+#'     prefix = "USER_INPUT_ERROR",
+#'     maxLength = 40,
+#'     truncatedLength = 32
+#'   )
+#' }
+#'
 #' @name stopOnError
 #' @export
-#' @title Error message generator
-#' @param result Return from a \code{try()} block.
-#' @param err_msg Custom error message.
-#' @param prefix Text string to add in front of the error message.
-#' @param maxLength Maximum length of an error message. Error messages
-#' beyond this limit will be truncated.
-#' @param truncatedLength Length of the output error message.
-#' @param call. Logical indicating whether the call should become part of the error message.
-#'
-#' @return Issues a \code{stop()} with an appropriate error message.
-#'
-#' @description When writing R code for use in production systems, it is
-#' important to enclose chunks of code inside of \code{try()} blocks. This is
-#' especially important when processing user input or data obtained from web
-#' services which may fail for a variety of reasons. If any problems arise
-#' within a \code{try()} block, it is important to generate informative and
-#' consistent error messages.
-#'
-#' Over the years, we have developed our own standard protocol for error handling
-#' that is easy to understand, easy to implement, and allows for consistent
-#' generation of error messages. To goal is to make it easy for developers to test
-#' sections of code that might fail and to create more uniform, more informative
-#' error messages than those that might come from deep within the \R execution stack.
-#'
-#' In addition to the generation of custom error messages, use of \code{prefix}
-#' allows for the creation of classes of errors that can be detected and handled
-#' appropriately as errors propagate to other functions.
-#'
-#' @note If logging has been initialized, the customized/modified error message
-#' will be logged with \code{logger.error(err_msg)} before issuing
-#' \code{stop(err_msg)}.
-#'
-#' The following examples show how to use this function:
-#'
-#' \preformatted{
-#' library(MazamaCoreUtils)
-#'
-#' # Arbitrarily deep in the stack we might have:
-#'
-#' myFunc <- function(x) {
-#'   a <- log(x)
-#' }
-#'
-#'
-#' # Simple usage
-#'
-#' userInput <- 10
-#' result <- try({
-#'   myFunc(x = userInput)
-#' }, silent = TRUE)
-#' stopOnError(result)
-#'
-#' userInput <- "ten"
-#' result <- try({
-#'   myFunc(x = userInput)
-#' }, silent = TRUE)
-#' stopOnError(result)
-#'
-#'
-#' # More concise code with the '\%>\%' operator
-#'
-#' try({
-#'   myFunc(x = userInput)
-#' }, silent = TRUE) \%>\%
-#' stopOnError(err_msg = "Unable to process user input")
-#'
-#' try({
-#'   myFunc(x = userInput)
-#' }, silent = TRUE) \%>\%
-#' stopOnError(prefix = "USER_INPUT_ERROR")
-#'
-#'
-#' # Truncating error message length
-#'
-#' try({
-#'   myFunc(x = userInput)
-#' }, silent = TRUE) \%>\%
-#' stopOnError(
-#'   prefix = "USER_INPUT_ERROR",
-#'   maxLength = 40,
-#'   truncatedLength = 32
-#' )
-#'
-#' }
 
 stopOnError <- function(
   result,

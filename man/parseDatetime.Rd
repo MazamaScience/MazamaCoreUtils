@@ -2,7 +2,7 @@
 % Please edit documentation in R/parseDatetime.R
 \name{parseDatetime}
 \alias{parseDatetime}
-\title{Parse datetime strings}
+\title{Parse datetimes}
 \usage{
 parseDatetime(
   datetime = NULL,
@@ -13,104 +13,96 @@ parseDatetime(
 )
 }
 \arguments{
-\item{datetime}{Vector of character or integer datetimes in Ymd[HMS] format
-(or POSIXct).}
+\item{datetime}{Vector of character, numeric, integer, or \code{POSIXct}
+datetimes.}
 
-\item{timezone}{Olson timezone used to interpret dates (required).}
+\item{timezone}{Olson timezone used to interpret incoming datetimes.}
 
-\item{expectAll}{Logical value determining if the function should fail if
-any elements fail to parse (default \code{FALSE}).}
+\item{expectAll}{Logical value specifying whether to stop if any non-missing
+input values fail to parse.}
 
-\item{isJulian}{Logical value determining whether \code{datetime} should be
-interpreted as a Julian date with day of year as a decimal number.}
+\item{isJulian}{Logical value specifying whether \code{datetime} should be
+interpreted as a Julian date using day-of-year notation.}
 
-\item{quiet}{Logical value passed on to \code{lubridate::parse_date_time} to
-optionally suppress warning messages.}
+\item{quiet}{Logical value passed to \code{\link[lubridate:parse_date_time]{lubridate::parse_date_time()}} to
+suppress parsing warnings.}
 }
 \value{
-A vector of POSIXct datetimes.
+A \code{POSIXct} vector.
 }
 \description{
-Transforms numeric and string representations of Ymd[HMS] datetimes to
-\code{POSIXct} format.
+Convert character, numeric, integer, or \code{POSIXct} datetimes to \code{POSIXct}.
+}
+\details{
+This function accepts a variety of compact date/time formats commonly used in
+Mazama Science packages, including \code{Y}, \code{Ym}, \code{Ymd}, \code{YmdH}, \code{YmdHM}, and
+\code{YmdHMS}. Inputs may be mixed within the same vector.
 
-Y, Ym, Ymd, YmdH, YmdHM, and YmdHMS formats are understood, where:
+Examples of equivalent inputs include:
 
-\describe{
-  \item{Y}{four digit year}
-  \item{m}{month number (1-12, 01-12) or english name month (October, oct.)}
-  \item{d}{day number of the month (0-31 or 01-31)}
-  \item{H}{hour number (0-24 or 00-24)}
-  \item{M}{minute number (0-59 or 00-59)}
-  \item{S}{second number (0-61 or 00-61)}
+\preformatted{
+20181012130900
+"2018-10-12-13-09-00"
+"2018 Oct. 12 13:09:00"
 }
 
-This allows for mixed inputs. For example, 20181012130900,
-"2018-10-12-13-09-00", and "2018 Oct. 12 13:09:00" will all be converted to
-the same \code{POSIXct} datetime. The incoming datetime vector does not need
-to have a homogeneous format either -- "20181012" and "2018-10-12 13:09" can
-exist in the same vector without issue. All incoming datetimes will be
-interpreted in the specified timezone.
+All incoming datetimes are interpreted in the specified \code{timezone}. If
+\code{datetime} is already \code{POSIXct}, it is converted to the requested timezone
+with \code{\link[lubridate:with_tz]{lubridate::with_tz()}}.
 
-If \code{datetime} is a \code{POSIXct} it will be returned unmodified, and
-formats not recognized will be returned as \code{NA}.
+If a character datetime includes signed offset information, such as
+\code{"-07:00"}, that offset is used by \code{\link[lubridate:parse_date_time]{lubridate::parse_date_time()}} when
+determining the equivalent instant.
 }
-\note{
-If \code{datetime} is a character string containing signed offset
-information, \emph{e.g.} "-07:00", this information is used to generate an
-equivalent UTC time which is then assigned to the timezone specified by
-the \code{timezone} argument.
-}
-\section{Mazama Science Conventions}{
+\section{Mazama Science conventions}{
 
-Within Mazama Science packages, datetimes not in \code{POSIXct} format are
-often represented as decimal values with no separation (ex: 20181012,
-20181012130900), either as numerics or strings.
+Within Mazama Science packages, datetimes not already in \code{POSIXct} format are
+often represented as compact decimal values with no separators, such as
+\code{20181012} or \code{20181012130900}, either as numbers or strings.
 }
 
 \section{Implementation}{
 
-\code{parseDatetime} is essentially a wrapper around
-\code{\link[lubridate]{parse_date_time}}, handling which formats we want to
-account for.
+\code{parseDatetime()} is a wrapper around \code{\link[lubridate:parse_date_time]{lubridate::parse_date_time()}} that
+defines the datetime formats supported by MazamaCoreUtils.
 }
 
 \examples{
-library(MazamaCoreUtils)
-
-# All y[md-hms] formats are accepted
+# All Y[mdHMS] formats are accepted
 parseDatetime(2018, timezone = "America/Los_Angeles")
 parseDatetime(201808, timezone = "America/Los_Angeles")
 parseDatetime(20180807, timezone = "America/Los_Angeles")
 parseDatetime(2018080718, timezone = "America/Los_Angeles")
 parseDatetime(201808071812, timezone = "America/Los_Angeles")
 parseDatetime(20180807181215, timezone = "America/Los_Angeles")
+
 parseDatetime("2018-08-07 18:12:15", timezone = "America/Los_Angeles")
-parseDatetime("2018-08-07 18:12:15-07:00", timezone = "America/Los_Angeles")
 parseDatetime("2018-08-07 18:12:15-07:00", timezone = "UTC")
 
-# Julian days are accepeted
-parseDatetime(2018219181215, timezone = "America/Los_Angeles",
-              isJulian = TRUE)
-
-# Vector dates are accepted and daylight savings is respected
+# Julian days are accepted
 parseDatetime(
-  c("2018-10-24 12:00", "2018-10-31 12:00",
-    "2018-11-07 12:00", "2018-11-08 12:00"),
+  2018219181215,
+  timezone = "America/Los_Angeles",
+  isJulian = TRUE
+)
+
+# Mixed vector inputs are accepted
+parseDatetime(
+  c("2018-10-24 12:00", "201810311200", "2018-11-07 12:00"),
   timezone = "America/New_York"
 )
 
 badInput <- c("20181013", NA, "20181015", "181016", "10172018")
 
-# Return a vector with \code{NA} for dates that could not be parsed
+# Return NA for dates that cannot be parsed
 parseDatetime(badInput, timezone = "UTC", expectAll = FALSE)
 
 \dontrun{
-# Fail if any dates cannot be parsed
+# Fail if any non-missing dates cannot be parsed
 parseDatetime(badInput, timezone = "UTC", expectAll = TRUE)
 }
 
 }
 \seealso{
-\code{\link[lubridate]{parse_date_time}} for implementation details.
+\code{\link[lubridate:parse_date_time]{lubridate::parse_date_time()}}
 }

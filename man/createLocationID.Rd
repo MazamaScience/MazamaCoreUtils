@@ -2,97 +2,58 @@
 % Please edit documentation in R/createLocationID.R
 \name{createLocationID}
 \alias{createLocationID}
-\title{Create one or more unique locationIDs}
+\title{Create one or more unique location IDs}
 \usage{
 createLocationID(
   longitude = NULL,
   latitude = NULL,
-  algorithm = c("geohash", "digest"),
   precision = 10,
   invalidID = as.character(NA)
 )
 }
 \arguments{
-\item{longitude}{Vector of longitudes in decimal degrees E.}
+\item{longitude}{Vector of longitudes in decimal degrees east.}
 
-\item{latitude}{Vector of latitudes in decimal degrees N.}
+\item{latitude}{Vector of latitudes in decimal degrees north.}
 
-\item{algorithm}{Algorithm to use -- either \code{"geohash"} or \code{"digest"}.}
-
-\item{precision}{\code{precision} argument used when encoding with \code{"geohash"}.}
+\item{precision}{Precision used when encoding geohashes.}
 
 \item{invalidID}{Identifier to use for invalid locations. This can be a
 character string or \code{NA}.}
 }
 \value{
-Vector of character locationIDs.
+Character vector of location IDs.
 }
 \description{
-A locationID is created for each incoming \code{longitude} and
-\code{latitude}. Each locationID is unique to within a certain spatial scale.
-With \code{algorithm = "geohash"}, the
-\code{precision} argument determines the size of a geohash grid cell. At the
-equator, the following grid cell sizes apply for different precision levels:
-
-\preformatted{
-precision   (maximum grid cell X axis, in m)
-        5   ± 2400
-        6   ± 610
-        7   ± 76
-        8   ± 19
-        9   ± 2.4
-       10   ± 0.6
-}
-
-Invalid locations will be assigned a locationID specified by the user with
-the \code{invalidID} argument, typically \code{NA}.
+Create a location ID for each longitude/latitude pair using a geohash.
 }
 \details{
-When the \code{"geohash"} algorithm is specified,
-the following code is used to generate each locationID:
+Each location ID is unique within a geohash grid cell. The \code{precision}
+argument determines the size of the grid cell. At the equator, approximate
+grid cell widths are:
 
 \preformatted{
-  locationID <-
-    geohashTools::gh_encode(latitude, longitude, precision)
+precision   maximum grid cell width
+        5   ~ 4.9 km
+        6   ~ 1.2 km
+        7   ~ 153 m
+        8   ~ 38 m
+        9   ~ 4.8 m
+       10   ~ 1.2 m
 }
 
-When the \code{"digest"} algorithm is specified,
-the following code is used:
-
-\preformatted{
-# Retain accuracy up to ~.1m
-locationString <- paste0(
-  sprintf("\%.7f", longitude),
-  "_",
-  sprintf("\%.7f", latitude)
-)
-# Avoid collisions until billions of records
-locationID <- digest::digest(locationString, algo = "xxhash64")
-}
-
-See the references for details on either algorithm.
-}
-\note{
-The \code{"geohash"} algorithm is preferred but the \code{"digest"}
-algorithm is retained because several existing databases
-use the \code{"digest"} algorithm as a unique identifier.
+Invalid locations are assigned the value specified by \code{invalidID}, typically
+\code{NA}.
 }
 \examples{
-library(MazamaCoreUtils)
-
 longitude <- c(-122.5, 0, NA, -122.5, -122.5)
-latitude <- c( 47.5, 0, 47.5, NA, 47.5)
+latitude <- c(47.5, 0, 47.5, NA, 47.5)
 
 createLocationID(longitude, latitude)
 createLocationID(longitude, latitude, precision = 7)
 createLocationID(longitude, latitude, invalidID = "bad")
-createLocationID(longitude, latitude, algorithm = "digest")
 
 }
 \references{
-\url{https://en.wikipedia.org/wiki/Decimal_degrees}
-
-\url{https://www.johndcook.com/blog/2017/01/10/probability-of-secure-hash-collisions/}
-
 \url{https://michaelchirico.github.io/geohashTools/index.html}
 }

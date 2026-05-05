@@ -4,7 +4,7 @@
 \alias{html_getLinks}
 \alias{html_getLinkNames}
 \alias{html_getLinkUrls}
-\title{Find all links in an html page}
+\title{Extract links from an HTML page}
 \usage{
 html_getLinks(url = NULL, relative = TRUE)
 
@@ -13,41 +13,50 @@ html_getLinkNames(url = NULL)
 html_getLinkUrls(url = NULL, relative = TRUE)
 }
 \arguments{
-\item{url}{URL or file path of an html page.}
+\item{url}{URL or local file path of an HTML page.}
 
-\item{relative}{Logical instruction to return relative URLs.}
+\item{relative}{Logical specifying whether to return relative URLs. If
+\code{FALSE}, relative URLs are converted to absolute URLs using \code{url} as the
+base.}
 }
 \value{
-A dataframe with \code{linkName} and/or \code{linkUrl} columns.
+A tibble with \code{linkName} and \code{linkUrl} columns.
+
+\code{html_getLinkNames()} returns a character vector of link names.
+
+\code{html_getLinkUrls()} returns a character vector of link URLs.
 }
 \description{
-Parses an html page to extract all \code{<a href="...">...</a>}
-links and return them in a dataframe where \code{linkName} is the human
-readable name and \code{linkUrl} is the \code{href} portion. By default this
-function will return relative URLs.
+Parse an HTML page and return all \verb{<a href="...">...</a>} links as a data
+frame.
+}
+\details{
+The returned data frame contains the human-readable link text in \code{linkName}
+and the \code{href} value in \code{linkUrl}. This is useful for extracting links from
+index pages, including web-accessible directories that list downloadable
+files.
 
-This is especially useful for extracting data from an index page that shows
-the contents of a web accessible directory.
-
-Wrapper functions \code{html_getLinkNames()} and \code{html_getLinkUrls()}
-return the appropriate columns as vectors.
+Wrapper functions \code{\link[=html_getLinkNames]{html_getLinkNames()}} and \code{\link[=html_getLinkUrls]{html_getLinkUrls()}} return the
+corresponding columns as character vectors.
 }
 \examples{
-library(MazamaCoreUtils)
+\dontrun{
 
-# Fail gracefully if the resource is not available
-try({
+# If you want to download lots of USCensus shapefiles
+url <- "https://www2.census.gov/geo/tiger/GENZ2019/shp/"
 
-  # US Census 2019 shapefiles
-  url <- "https://www2.census.gov/geo/tiger/GENZ2019/shp/"
+browseURL(url)
 
-  # Extract links
-  dataLinks <- html_getLinks(url)
+dataLinks <- html_getLinks(url)
 
-  dataLinks <- dataLinks \%>\%
-    dplyr::filter(stringr::str_detect(linkName, "us_county"))
-  head(dataLinks, 10)
+dataLinks <-
+  dataLinks \%>\%
+  dplyr::filter(stringr::str_detect(linkName, "us_county"))
 
-}, silent = FALSE)
+head(dataLinks, 10)
+
+html_getLinkNames(url)
+html_getLinkUrls(url, relative = FALSE)
+}
 
 }

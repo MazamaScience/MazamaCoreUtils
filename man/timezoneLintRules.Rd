@@ -3,55 +3,27 @@
 \docType{data}
 \name{timezoneLintRules}
 \alias{timezoneLintRules}
-\title{Rules for timezone linting.}
+\title{Timezone linting rules}
 \format{
-A list of function = argument pairs.
+A named list of function/argument pairs.
 }
 \usage{
 timezoneLintRules
 }
 \description{
-This set of rules is for use with the
-\code{lintFunctionArgs_~()}. functions. It includes all time-related
-functions from the \pkg{base} and \pkg{lubridate} packages that are involved
-with parsing or formatting datetimes and helps check whether the appropriate
-timezone arguments are being explicitly used.
-
-\preformatted{
-timezoneLintRules <- list(
-  # base functions
-  "as.Date" = "tz",
-  "as.POSIXct" = "tz",
-  "as.POSIXlt" = "tz",
-  "ISOdate" = "tz",
-  "ISOdatetime" = "tz",
-  "strftime" = "tz",
-  "strptime" = "tz",
-  "Sys.Date" = "DEPRECATED", # Please don't use this function!
-  "Sys.time" = "DEPRECATED", # Please don't use this function!
-  # lubridate functions
-  "as_datetime" = "tz",
-  "date_decimal" = "tz",
-  "fast_strptime" = "tz",
-  "force_tz" = "tzone",
-  "force_tzs" = "tzone_out",
-  "interval" = "tzone",
-  "local_time" = "tz",
-  "make_datetime" = "tz",
-  "now" = "tzone",
-  "parse_date_time" = "tz",
-  "parse_date_time2" = "tz",
-  "today" = "tzone",
-  "with_tz" = "tzone",
-  "ymd" = "tz",
-  "ymd_h" = "tz",
-  "ymd_hm" = "tz",
-  "ymd_hms" = "tz",
-  # MazamaCoreUtils functions
-  "dateRange" = "timezone",
-  "timeRange" = "timezone",
-  "parseDatetime" = "timezone"
-)
+Rules used by \code{\link[=lintFunctionArgs_file]{lintFunctionArgs_file()}} and \code{\link[=lintFunctionArgs_dir]{lintFunctionArgs_dir()}} to find
+date/time function calls that should explicitly specify timezone arguments.
 }
+\details{
+Each list name is a function to check. Each value is the required named
+timezone-related argument for that function.
+
+Entries with \code{"DEPRECATED"} are used to flag functions that should generally
+be avoided in package code because they depend on the local system clock or
+timezone.
+}
+\examples{
+str(timezoneLintRules)
+
 }
 \keyword{datasets}

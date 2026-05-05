@@ -10,18 +10,15 @@ getAPIKey(provider = NULL)
 \item{provider}{Web service provider.}
 }
 \value{
-API key string or a list of provider:key pairs.
+API key string, \code{NULL}, or a named list of all provider/key pairs.
 }
 \description{
-Returns the API key associated with a web service.
-If \code{provider == NULL} a list is returned containing all recognized
-API keys.
+Return the API key associated with a web service provider.
+}
+\details{
+If \code{provider = NULL}, all currently stored API keys are returned.
 }
 \seealso{
-\link{APIKeys}
-
-\link{setAPIKey}
-
-\link{showAPIKeys}
+\link{APIKeys}, \code{\link[=setAPIKey]{setAPIKey()}}, \code{\link[=showAPIKeys]{showAPIKeys()}}
 }
 \keyword{environment}

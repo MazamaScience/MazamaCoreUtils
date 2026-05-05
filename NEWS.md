@@ -1,3 +1,7 @@
+# MazamaCoreUtils 0.6.2
+
+* Restore but _deprecate_ the `algorithm` argument from `createLocationID()`.
+
 # MazamaCoreUtils 0.6.1
 
 * Fixed `setIfNull()` so that it doesn't ever convert type if the user provides 

@@ -8,6 +8,7 @@ createLocationID(
   longitude = NULL,
   latitude = NULL,
   precision = 10,
+  algorithm = c("geohash", "digest"),
   invalidID = as.character(NA)
 )
 }
@@ -17,6 +18,9 @@ createLocationID(
 \item{latitude}{Vector of latitudes in decimal degrees north.}
 
 \item{precision}{Precision used when encoding geohashes.}
+
+\item{algorithm}{Encoding algorithm to use. Only \code{"geohash"} is currently
+supported. \code{"digest"} is deprecated and will generate an error.}
 
 \item{invalidID}{Identifier to use for invalid locations. This can be a
 character string or \code{NA}.}

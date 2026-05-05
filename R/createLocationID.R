@@ -22,6 +22,8 @@
 #' @param longitude Vector of longitudes in decimal degrees east.
 #' @param latitude Vector of latitudes in decimal degrees north.
 #' @param precision Precision used when encoding geohashes.
+#' @param algorithm Encoding algorithm to use. Only `"geohash"` is currently
+#'   supported. `"digest"` is deprecated and will generate an error.
 #' @param invalidID Identifier to use for invalid locations. This can be a
 #'   character string or `NA`.
 #'
@@ -44,6 +46,7 @@ createLocationID <- function(
     longitude = NULL,
     latitude = NULL,
     precision = 10,
+    algorithm = c("geohash", "digest"),
     invalidID = as.character(NA)
 ) {
 
@@ -53,6 +56,15 @@ createLocationID <- function(
   stopIfNull(latitude)
 
   precision <- setIfNull(precision, 10)
+
+  algorithm <- match.arg(algorithm)
+
+  if ( algorithm == "digest" ) {
+    stop(
+      "algorithm = 'digest' is no longer supported.\n\n",
+      "Please use algorithm = 'geohash'."
+    )
+  }
 
   suppressWarnings({
     longitude <- as.numeric(longitude)

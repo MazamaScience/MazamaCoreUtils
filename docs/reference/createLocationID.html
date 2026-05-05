@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.2</span>
       </span>
     </div>
 
@@ -60,6 +60,7 @@
 <span>  longitude <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  latitude <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  precision <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  algorithm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"geohash"</span>, <span class="st">"digest"</span><span class="op">)</span>,</span>
 <span>  invalidID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="cn">NA</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -78,6 +79,11 @@
 
 <dt id="arg-precision">precision<a class="anchor" aria-label="anchor" href="#arg-precision"></a></dt>
 <dd><p>Precision used when encoding geohashes.</p></dd>
+
+
+<dt id="arg-algorithm">algorithm<a class="anchor" aria-label="anchor" href="#arg-algorithm"></a></dt>
+<dd><p>Encoding algorithm to use. Only <code>"geohash"</code> is currently
+supported. <code>"digest"</code> is deprecated and will generate an error.</p></dd>
 
 
 <dt id="arg-invalidid">invalidID<a class="anchor" aria-label="anchor" href="#arg-invalidid"></a></dt>

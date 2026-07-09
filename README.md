@@ -2,9 +2,8 @@
 [![Downloads](https://cranlogs.r-pkg.org/badges/MazamaCoreUtils)](https://cran.r-project.org/package=MazamaCoreUtils)
 [![DOI](https://zenodo.org/badge/152321630.svg)](https://zenodo.org/badge/latestdoi/152321630)
 
-A dedicated Slack channel has been created for announcements, support and to 
-help build a community of practice around this open source package. You may 
-request an invitation to join from <jonathan.s.callahan@gmail.com>.
+Please visit [Discussions](https://github.com/MazamaScience/MazamaCoreUtils/discussions)
+for announcements, support and to help  build a community of practice around this open source package.
 
 # MazamaCoreUtils
 

@@ -64,10 +64,10 @@ Run:
 
 ```
 Rscript -e 'devtools::test()'
-Rscript -e 'MazamaCoreUtils::check_slower()'
+Rscript -e 'MazamaCoreUtils::check_slow()'
 ```
 
-If any tests fail, or `check_slower()` reports errors or warnings, stop and
+If any tests fail, or `check_slow()` reports errors or warnings, stop and
 report them. Do not proceed.
 
 ## Step 7 — Commit and tag

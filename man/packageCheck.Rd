@@ -68,16 +68,13 @@ tests.
 }
 }
 }
-\examples{
-\dontrun{
-# Quick check while developing
-check_fast()
+\section{Usage}{
 
-# Thorough check before a release
-check_slower()
+Use \code{check_fast()} for a quick check while developing and \code{check_slow()}
+before a release. These functions run \code{\link[devtools:check]{devtools::check()}} on the package, so
+they have no runnable examples.
 }
 
-}
 \seealso{
 \code{\link[devtools:check]{devtools::check()}}
 }

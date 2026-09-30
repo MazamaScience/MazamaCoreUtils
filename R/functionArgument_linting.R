@@ -40,22 +40,31 @@
 #' @aliases lintFunctionArgs_file lintFunctionArgs_dir
 #'
 #' @examples
-#' \dontrun{
 #' rules <- list(
 #'   fn_one = "x",
 #'   fn_two = c("foo", "bar")
 #' )
 #'
-#' lintFunctionArgs_file(
-#'   filePath = "local_test/timezone_lint_test_script.R",
-#'   rules = rules
+#' # Create a small script to lint
+#' scriptDir <- file.path(tempdir(), "lintExample")
+#' dir.create(scriptDir, showWarnings = FALSE)
+#' scriptFile <- file.path(scriptDir, "script.R")
+#' writeLines(
+#'   c(
+#'     "fn_one(x = 1)",
+#'     "fn_one(1)",
+#'     "fn_two(foo = 1, bar = 2)",
+#'     "strftime(Sys.time(), format = '%Y')"
+#'   ),
+#'   scriptFile
 #' )
 #'
-#' lintFunctionArgs_dir(
-#'   dirPath = "./R",
-#'   rules = MazamaCoreUtils::timezoneLintRules
-#' )
-#' }
+#' # Lint a single file. Calls with includes_required = FALSE are missing
+#' # a required argument.
+#' lintFunctionArgs_file(scriptFile, rules)
+#'
+#' # Lint every .R file in a directory with the timezone rules
+#' lintFunctionArgs_dir(scriptDir, timezoneLintRules)
 NULL
 NULL
 

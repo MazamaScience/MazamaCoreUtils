@@ -204,7 +204,7 @@ thoroughness. Only `DESCRIPTION` holds the version.
   network requests: `loadDataFile()` uses local `file://` URLs and the HTML
   helpers use local files. Ad-hoc scripts are in `local_test/`.
 - CI: none, by design. This is a single-developer project and checks are run
-  locally before pushing (`check_fast()`, `check_slower()`, `/wrap-up`,
+  locally before pushing (`check_fast()`, `check_slow()`, `/wrap-up`,
   `/pre-publish`). Windows is checked before each release with
   `devtools::check_win_devel()`, which uploads to CRAN's win-builder and emails
   the results; `/pre-publish` lists this as a developer step. Revisit if

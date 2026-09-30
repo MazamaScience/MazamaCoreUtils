@@ -70,7 +70,7 @@ html_getLinks <- function(
       xml2::xml_attr("href")
 
   }, silent = TRUE) %>%
-  stopOnError()
+  MazamaCoreUtils::stopOnError()
 
   df <- dplyr::tibble(linkName = urlText, linkUrl = urlLinks)
 
@@ -116,7 +116,7 @@ html_getLinkNames <- function(
   # ----- Extract the link text ------------------------------------------------
 
   linkNames <-
-    html_getLinks(url) %>%
+    MazamaCoreUtils::html_getLinks(url) %>%
     dplyr::pull("linkName")
 
   # ----- Return ---------------------------------------------------------------
@@ -143,7 +143,7 @@ html_getLinkUrls <- function(
   # ----- Extract the link text ------------------------------------------------
 
   linkUrls <-
-    html_getLinks(url, relative) %>%
+    MazamaCoreUtils::html_getLinks(url, relative) %>%
     dplyr::pull("linkUrl")
 
   # ----- Return ---------------------------------------------------------------

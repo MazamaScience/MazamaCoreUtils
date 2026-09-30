@@ -53,20 +53,20 @@ timeRange <- function(
 
   # ----- Validate parameters --------------------------------------------------
 
-  stopIfNull(starttime)
-  stopIfNull(endtime)
-  stopIfNull(timezone)
-  unit <- setIfNull(unit, "sec")
-  ceilingStart <- setIfNull(ceilingStart, FALSE)
-  ceilingEnd <- setIfNull(ceilingEnd, FALSE)
+  MazamaCoreUtils::stopIfNull(starttime)
+  MazamaCoreUtils::stopIfNull(endtime)
+  MazamaCoreUtils::stopIfNull(timezone)
+  unit <- MazamaCoreUtils::setIfNull(unit, "sec")
+  ceilingStart <- MazamaCoreUtils::setIfNull(ceilingStart, FALSE)
+  ceilingEnd <- MazamaCoreUtils::setIfNull(ceilingEnd, FALSE)
 
   .validateTimezone(timezone)
 
   # ----- Process datetimes ----------------------------------------------------
 
   # Guarantee conversion to POSIXct
-  starttime <- parseDatetime(starttime, timezone = timezone)
-  endtime <- parseDatetime(endtime, timezone = timezone)
+  starttime <- MazamaCoreUtils::parseDatetime(starttime, timezone = timezone)
+  endtime <- MazamaCoreUtils::parseDatetime(endtime, timezone = timezone)
 
   # Guarantee proper ordering
   timeRange <- sort(c(starttime, endtime))

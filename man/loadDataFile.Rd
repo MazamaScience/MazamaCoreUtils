@@ -39,6 +39,10 @@ source is used as a fallback.
 
 The \code{.rda} file must contain exactly one object. A file containing several
 objects generates an error.
+
+Only load data from sources you trust. Loading an \code{.rda} file restores
+arbitrary R objects, which can include functions and other code, so \code{dataUrl}
+(and \code{dataDir}) should point to locations you control.
 }
 \examples{
 \dontrun{

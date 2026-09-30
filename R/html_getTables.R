@@ -59,7 +59,7 @@ html_getTables <- function(
     )
 
   }, silent = TRUE) %>%
-  stopOnError()
+  MazamaCoreUtils::stopOnError()
 
   # ----- Return ---------------------------------------------------------------
 
@@ -101,12 +101,12 @@ html_getTable <- function(
   try({
 
     # Get a list of tables in this document
-    tables <- html_getTables(url, header = header)
+    tables <- MazamaCoreUtils::html_getTables(url, header = header)
 
     returnTable <- tables[[index]]
 
   }, silent = TRUE) %>%
-  stopOnError()
+  MazamaCoreUtils::stopOnError()
 
   # ----- Return ---------------------------------------------------------------
 

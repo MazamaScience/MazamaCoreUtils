@@ -99,11 +99,11 @@ parseDatetime <- function(
 
   # Validate parameters --------------------------------------------------------
 
-  stopIfNull(datetime)
-  stopIfNull(timezone)
-  stopIfNull(expectAll)
-  stopIfNull(isJulian)
-  stopIfNull(quiet)
+  MazamaCoreUtils::stopIfNull(datetime)
+  MazamaCoreUtils::stopIfNull(timezone)
+  MazamaCoreUtils::stopIfNull(expectAll)
+  MazamaCoreUtils::stopIfNull(isJulian)
+  MazamaCoreUtils::stopIfNull(quiet)
 
   .validateTimezone(timezone)
 

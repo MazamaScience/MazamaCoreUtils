@@ -40,9 +40,9 @@ initializeLogging <- function(
 
   # ----- Validate parameters --------------------------------------------------
 
-  stopIfNull(logDir)
-  filePrefix <- setIfNull(filePrefix, "")
-  createDir <- setIfNull(createDir, TRUE)
+  MazamaCoreUtils::stopIfNull(logDir)
+  filePrefix <- MazamaCoreUtils::setIfNull(filePrefix, "")
+  createDir <- MazamaCoreUtils::setIfNull(createDir, TRUE)
 
   # ----- Create Directory -----------------------------------------------------
 
@@ -67,12 +67,12 @@ initializeLogging <- function(
       }
     }
   }, silent = TRUE) %>%
-  stopOnError("could not rename old log files")
+  MazamaCoreUtils::stopOnError("could not rename old log files")
 
   # ----- Set up logging -------------------------------------------------------
 
   try({
-    logger.setup(
+    MazamaCoreUtils::logger.setup(
       traceLog = file.path(logDir, sprintf("%sTRACE.log", filePrefix)),
       debugLog = file.path(logDir, sprintf("%sDEBUG.log", filePrefix)),
       infoLog = file.path(logDir, sprintf("%sINFO.log", filePrefix)),
@@ -80,7 +80,7 @@ initializeLogging <- function(
       errorLog = file.path(logDir, sprintf("%sERROR.log", filePrefix))
     )
   }, silent = TRUE) %>%
-  stopOnError("could not create log files")
+  MazamaCoreUtils::stopOnError("could not create log files")
 
   invisible(NULL)
 }

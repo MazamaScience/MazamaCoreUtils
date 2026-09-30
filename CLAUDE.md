@@ -65,7 +65,9 @@ Functional areas:
 - **Argument handling:** required arguments default to `NULL` and are checked
   with `stopIfNull()`; optional arguments are normalized with `setIfNull()`.
 - **Namespacing:** `%>%` is re-exported from **magrittr**. Call other packages
-  with `pkg::fun()`; `importFrom` is used only for **logger**, **magrittr**,
+  with `pkg::fun()`, and call this package's own exported utilities fully
+  qualified too (`MazamaCoreUtils::stopIfNull()`); internal `.helpers` are
+  called unqualified; `importFrom` is used only for **logger**, **magrittr**,
   **rlang** and `utils::str`.
 - **Error messages:** `stop(sprintf("'arg = %s' ...", arg))`, naming the
   offending argument in single quotes.

@@ -69,8 +69,8 @@ lintFunctionArgs_file <- function(
 
   # Validate input ------------------------------------------------------------
 
-  stopIfNull(filePath)
-  stopIfNull(rules)
+  MazamaCoreUtils::stopIfNull(filePath)
+  MazamaCoreUtils::stopIfNull(rules)
 
   if ( !is.list(rules) || is.null(names(rules)) ) {
     stop("rules must be a named list")
@@ -159,7 +159,7 @@ lintFunctionArgs_dir <- function(
 
   # Validate input -------------------------------------------------------------
 
-  stopIfNull(rules)
+  MazamaCoreUtils::stopIfNull(rules)
 
   if ( !is.list(rules) || is.null(names(rules)) )
     stop("rules must be a named list")

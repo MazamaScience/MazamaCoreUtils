@@ -83,8 +83,8 @@ stopOnError <- function(
     if ( stringr::str_length(err_msg) > maxLength )
       err_msg <- paste(stringr::str_sub(err_msg, end = truncatedLength), "...")
 
-    if ( logger.isInitialized() )
-      logger.error(err_msg)
+    if ( MazamaCoreUtils::logger.isInitialized() )
+      MazamaCoreUtils::logger.error(err_msg)
 
     stop(err_msg, call. = call.)
 

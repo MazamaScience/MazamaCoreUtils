@@ -11,6 +11,12 @@ invalid. Now only `(0, 0)` is removed.
 * **Fixed `html_getLinks()`:** with `relative = FALSE`, protocol-relative links
 (`//host/path`) are now resolved against the page URL and get its scheme,
 rather than being treated as relative paths.
+* `logger.setup()` now warns when an existing log file cannot be removed
+before logging starts.
+* Log line timestamps now use `lubridate::now(tzone = "UTC")`; output format is
+unchanged.
+* `loadDataFile()` documentation now advises loading data only from trusted
+sources.
 * `html_getLinks()` and `html_getLinkUrls()` now stop with an error when
 `relative` is not a single `TRUE` or `FALSE`; previously any other value was
 silently treated as `TRUE`.

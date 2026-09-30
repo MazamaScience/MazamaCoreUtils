@@ -95,3 +95,43 @@ test_that("log lines are properly formatted", {
   expect_match(tail5[5], paste0("^TRACE ", pattern))
 
 })
+
+test_that("logger.setup() warns when an old log file cannot be removed", {
+
+  skip_on_os("windows")
+
+  logDir <- tempfile("logs")
+  dir.create(logDir)
+  on.exit({
+    Sys.chmod(logDir, "755")
+    unlink(logDir, recursive = TRUE)
+    logger.setup()
+  })
+
+  infoLog <- file.path(logDir, "INFO.log")
+  writeLines("old", infoLog)
+
+  # A read-only directory prevents removal of the file inside it
+  Sys.chmod(logDir, "555")
+  skip_if(file.access(logDir, 2) == 0, "cannot make directory read-only")
+
+  expect_warning(logger.setup(infoLog = infoLog), "could not be removed")
+
+})
+
+test_that("logger.setup() removes old log files", {
+
+  logDir <- tempfile("logs")
+  dir.create(logDir)
+  on.exit({
+    unlink(logDir, recursive = TRUE)
+    logger.setup()
+  })
+
+  infoLog <- file.path(logDir, "INFO.log")
+  writeLines("old", infoLog)
+
+  expect_no_warning(logger.setup(infoLog = infoLog))
+  expect_false(file.exists(infoLog))
+
+})

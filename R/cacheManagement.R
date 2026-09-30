@@ -78,9 +78,9 @@ manageCache <- function(
 
   # Validate parameters --------------------------------------------------------
 
-  stopIfNull(cacheDir)
-  stopIfNull(extensions)
-  stopIfNull(maxCacheSize)
+  MazamaCoreUtils::stopIfNull(cacheDir)
+  MazamaCoreUtils::stopIfNull(extensions)
+  MazamaCoreUtils::stopIfNull(maxCacheSize)
 
   # NOTE:  Validate everything before any files are removed.
   sortBy <- match.arg(sortBy)
@@ -153,27 +153,5 @@ manageCache <- function(
   removalCount <- ageRemovalCount + sizeRemovalCount
 
   return(invisible(removalCount))
-
-}
-
-# ===== INTERNAL FUNCTIONS =====================================================
-
-# Remove files and return the paths that were actually removed. A single warning
-# reports any files that could not be removed (e.g. locked or read-only).
-.removeFiles <- function(files) {
-
-  removed <- suppressWarnings(file.remove(files))
-
-  if ( !all(removed) ) {
-    warning(
-      sprintf(
-        "%d of %d files could not be removed: %s",
-        sum(!removed), length(files), toString(files[!removed])
-      ),
-      call. = FALSE
-    )
-  }
-
-  return(files[removed])
 
 }

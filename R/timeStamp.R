@@ -79,10 +79,10 @@ timeStamp <- function(
     if ( is.null(timezone) ) timezone <- "UTC"
   }
 
-  stopIfNull(datetime)
-  stopIfNull(timezone)
-  stopIfNull(unit)
-  stopIfNull(style)
+  MazamaCoreUtils::stopIfNull(datetime)
+  MazamaCoreUtils::stopIfNull(timezone)
+  MazamaCoreUtils::stopIfNull(unit)
+  MazamaCoreUtils::stopIfNull(style)
 
   .validateTimezone(timezone)
 
@@ -95,7 +95,7 @@ timeStamp <- function(
   # ----- Format datetimes -----------------------------------------------------
 
   # Guarantee conversion to POSIXct
-  datetime <- parseDatetime(datetime, timezone = timezone)
+  datetime <- MazamaCoreUtils::parseDatetime(datetime, timezone = timezone)
 
   if ( unit == "year" ) {
     format <- "%Y"

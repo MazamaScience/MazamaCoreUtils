@@ -118,10 +118,10 @@ dateRange <- function(
 
   # Validate parameters --------------------------------------------------------
 
-  stopIfNull(timezone)
-  stopIfNull(unit)
-  ceilingStart <- setIfNull(ceilingStart, FALSE, "logical")
-  ceilingEnd <- setIfNull(ceilingEnd, FALSE, "logical")
+  MazamaCoreUtils::stopIfNull(timezone)
+  MazamaCoreUtils::stopIfNull(unit)
+  ceilingStart <- MazamaCoreUtils::setIfNull(ceilingStart, FALSE, "logical")
+  ceilingEnd <- MazamaCoreUtils::setIfNull(ceilingEnd, FALSE, "logical")
 
   .validateTimezone(timezone)
 
@@ -159,7 +159,7 @@ dateRange <- function(
     # ** Both found: use startdate, enddate ------------------------------------
 
     # Handle parsing and ordering
-    timeInput <- timeRange(startdate, enddate, timezone = timezone)
+    timeInput <- MazamaCoreUtils::timeRange(startdate, enddate, timezone = timezone)
 
     if ( ceilingStart ) {
       starttime <-
@@ -194,12 +194,12 @@ dateRange <- function(
     if ( ceilingStart ) {
       starttime <-
         startdate %>%
-        parseDatetime(timezone = timezone) %>%
+        MazamaCoreUtils::parseDatetime(timezone = timezone) %>%
         lubridate::ceiling_date(unit = "day")
     } else {
       starttime <-
         startdate %>%
-        parseDatetime(timezone = timezone) %>%
+        MazamaCoreUtils::parseDatetime(timezone = timezone) %>%
         lubridate::floor_date(unit = "day")
     }
 
@@ -215,7 +215,7 @@ dateRange <- function(
 
     endtime <-
       enddate %>%
-      parseDatetime(timezone = timezone) %>%
+      MazamaCoreUtils::parseDatetime(timezone = timezone) %>%
       lubridate::floor_date(unit = "day")
 
     if ( ceilingEnd ) {

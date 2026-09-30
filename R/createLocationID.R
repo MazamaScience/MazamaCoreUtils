@@ -52,10 +52,10 @@ createLocationID <- function(
 
   # Validate parameters --------------------------------------------------------
 
-  stopIfNull(longitude)
-  stopIfNull(latitude)
+  MazamaCoreUtils::stopIfNull(longitude)
+  MazamaCoreUtils::stopIfNull(latitude)
 
-  precision <- setIfNull(precision, 10)
+  precision <- MazamaCoreUtils::setIfNull(precision, 10)
 
   algorithm <- match.arg(algorithm)
 
@@ -75,7 +75,7 @@ createLocationID <- function(
   # Create locationID ----------------------------------------------------------
 
   locationID <- rep(as.character(invalidID), times = length(longitude))
-  mask <- createLocationMask(longitude, latitude, removeZeroZero = FALSE)
+  mask <- MazamaCoreUtils::createLocationMask(longitude, latitude, removeZeroZero = FALSE)
 
   # If all locations are bad, return immediately.
   if ( sum(mask) == 0 )

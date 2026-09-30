@@ -100,6 +100,7 @@ Load-bearing assumptions that downstream packages rely on:
 | `loadDataFile.R` | `loadDataFile` | Load `.rda` from dir or URL with fallback |
 | `parseDatetime.R` | `parseDatetime` | Compact/mixed datetime parsing to `POSIXct` |
 | `dateRange.R`, `timeRange.R`, `dateSequence.R`, `timeStamp.R` | same names | Date/time ranges, sequences, stamps |
+| `utils-files.R` | (internal) `.removeFiles()` | Remove files, warn on failures; used by `manageCache()` and `logger.setup()` |
 | `utils-timezone.R` | (internal) `.validateTimezone()` | Shared `timezone` validation for the date/time functions |
 | `utils-location.R` | `validateLonLat`, `validateLonsLats` | Coordinate validation (stop on failure) |
 | `createLocationMask.R` | `createLocationMask` | Logical mask of valid locations |

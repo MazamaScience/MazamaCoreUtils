@@ -131,7 +131,7 @@ appender.null <- function() {
 
   # Timestamp in UTC with timezone
   ts <- format(
-    as.POSIXct(Sys.time(), tz = "UTC"),
+    lubridate::now(tzone = "UTC"),
     "%Y-%m-%d %H:%M:%S %Z"
   )
 
@@ -243,7 +243,7 @@ logger.setup <- function(
     # IMPORTANT: appender_console is a function; do NOT call it.
     logger::log_appender(logger::appender_console, namespace = ns, index = 1L)
   } else {
-    if (file.exists(fatalLog)) file.remove(fatalLog)
+    if (file.exists(fatalLog)) .removeFiles(fatalLog)
     # appender_tee() is a factory (needs file), so DO call it.
     logger::log_appender(logger::appender_tee(fatalLog), namespace = ns, index = 1L)
   }
@@ -265,7 +265,7 @@ logger.setup <- function(
       # Prefer built-in void appender; consistent with {logger}.
       logger::log_appender(logger::appender_void, namespace = ns, index = index)
     } else {
-      if (file.exists(path)) file.remove(path)
+      if (file.exists(path)) .removeFiles(path)
       logger::log_appender(logger::appender_file(path), namespace = ns, index = index)
     }
 
@@ -364,8 +364,8 @@ logger.isInitialized <- function() {
 #' @seealso
 #' [logger.setup()]
 logger.setLevel <- function(level) {
-  if (!logger.isInitialized()) {
-    logger.setup()
+  if (!MazamaCoreUtils::logger.isInitialized()) {
+    MazamaCoreUtils::logger.setup()
   }
 
   lvl <- .logger_map_level(level)

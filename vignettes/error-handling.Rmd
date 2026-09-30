@@ -97,7 +97,9 @@ a `try()` function and then testing the result to see if an error occurred.
 * `try()` is a wrapper around `tryCatch()`
 * `try()` ignores warnings
 * `try()` returns a “try-error” object on error
-* `geterrmessage()` returns latest error msg
+* `as.character()` of a "try-error" object returns its error message
+* `geterrmessage()` returns the *latest* error message in the session, which is
+not necessarily the error that produced a particular `try-error` object
 
 For more details see:
 
@@ -115,7 +117,7 @@ result <- try({
 }, silent = TRUE)
 
 if ( "try-error" %in% class(result) ) {
-err_msg <- geterrmessage()
+  err_msg <- as.character(result) # the message stored in the try-error
   # logging of error message
   # detection and handling of particular error strings
   # stop() if necessary with user friendly error strings
@@ -128,9 +130,10 @@ The **`stopOnError()`** utility function regularizes our handling of
 errors in operational code. This function tests the first argument for a class of `try-error`
 and, if true, performs the following actions:
 
- 1. creates `err_msg` from a user provided error message or, if NULL, 
-`geterrmessage()`
- 1. allows modification of error messages with arguments `prefix` and `maxLength`
+ 1. creates `err_msg` from a user provided error message or, if none is
+provided, from the message stored in the `try-error` object itself
+ 1. allows modification of error messages with arguments `prefix`, `maxLength`
+and `truncatedLength`
  1. logs this message with `logger.error(err_msg)` if logging has been enabled
  1. throws an updated error message with `stop(err_msg)`
 

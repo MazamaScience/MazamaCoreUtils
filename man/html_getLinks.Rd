@@ -17,7 +17,7 @@ html_getLinkUrls(url = NULL, relative = TRUE)
 
 \item{relative}{Logical specifying whether to return relative URLs. If
 \code{FALSE}, relative URLs are converted to absolute URLs using \code{url} as the
-base.}
+base. Must be a single \code{TRUE} or \code{FALSE}; any other value is an error.}
 }
 \value{
 A tibble with \code{linkName} and \code{linkUrl} columns.
@@ -35,6 +35,15 @@ The returned data frame contains the human-readable link text in \code{linkName}
 and the \code{href} value in \code{linkUrl}. This is useful for extracting links from
 index pages, including web-accessible directories that list downloadable
 files.
+
+Links without an \code{href} value, Apache directory-listing sort links such as
+\verb{?C=N;O=D}, and "Parent Directory" links are removed.
+
+If \code{relative = TRUE} (the default), \code{href} values are returned as found in the
+page, except that the leading \verb{//} is removed from protocol-relative links
+(\verb{//host/path} becomes \code{host/path}). If \code{relative = FALSE}, every link is
+resolved against \code{url}, so protocol-relative links take the scheme of \code{url}
+(\verb{//host/path} becomes \verb{https://host/path} for an \code{https} page).
 
 Wrapper functions \code{\link[=html_getLinkNames]{html_getLinkNames()}} and \code{\link[=html_getLinkUrls]{html_getLinkUrls()}} return the
 corresponding columns as character vectors.

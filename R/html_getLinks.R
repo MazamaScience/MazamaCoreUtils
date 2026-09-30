@@ -8,13 +8,22 @@
 #' index pages, including web-accessible directories that list downloadable
 #' files.
 #'
+#' Links without an `href` value, Apache directory-listing sort links such as
+#' `?C=N;O=D`, and "Parent Directory" links are removed.
+#'
+#' If `relative = TRUE` (the default), `href` values are returned as found in the
+#' page, except that the leading `//` is removed from protocol-relative links
+#' (`//host/path` becomes `host/path`). If `relative = FALSE`, every link is
+#' resolved against `url`, so protocol-relative links take the scheme of `url`
+#' (`//host/path` becomes `https://host/path` for an `https` page).
+#'
 #' Wrapper functions [html_getLinkNames()] and [html_getLinkUrls()] return the
 #' corresponding columns as character vectors.
 #'
 #' @param url URL or local file path of an HTML page.
 #' @param relative Logical specifying whether to return relative URLs. If
 #'   `FALSE`, relative URLs are converted to absolute URLs using `url` as the
-#'   base.
+#'   base. Must be a single `TRUE` or `FALSE`; any other value is an error.
 #'
 #' @return
 #' A tibble with `linkName` and `linkUrl` columns.

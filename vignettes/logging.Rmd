@@ -170,7 +170,7 @@ for ( column in names(iris) ) {
   }, silent = TRUE)
   
   if ( "try-error" %in% class(result) ) {
-    logger.warn("Oops: %s", geterrmessage())
+    logger.warn("Oops: %s", as.character(result))
   }
   
 }
@@ -222,9 +222,11 @@ logger.setLevel(TRACE)
 ### `initializeLogging()`
 
 This function is a wrapper for our typical usage. It accepts a `logDir`
-parameter and looks for `TRACE`, `DEBUG`, `INFO` and `ERROR` logs in that 
-directory. If they are found, they are renamed as 
-`paste0(logLevel,".log.",timestamp)`. After renaming, new log files are setup.
+parameter and looks for `TRACE`, `DEBUG`, `INFO`, `WARN` and `ERROR` logs in
+that directory. If they are found, they are renamed as 
+`paste0(logLevel,".log.",timestamp)`, where `timestamp` is a UTC time stamp.
+After renaming, new log files are setup. An optional `filePrefix` is prepended
+to each log file name.
 
 This is particularly useful for operational code run inside docker containers
 which may be automatically rebooted.

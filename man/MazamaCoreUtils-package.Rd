@@ -16,13 +16,15 @@ Functionality includes:
 
 \itemize{
 \item Python-style logging
-\item simple error messaging
-\item cache management
+\item simple error messaging and \code{NULL} handling
+\item cache management and data loading
 \item API key handling
-\item date parsing and formatting
+\item date parsing and formatting with explicit timezones
 \item longitude/latitude validation
 \item unique location ID creation
+\item HTML link and table extraction
 \item source code linting
+\item \code{devtools::check()} wrappers
 }
 }
 \seealso{

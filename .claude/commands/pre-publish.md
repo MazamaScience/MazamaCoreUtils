@@ -89,17 +89,30 @@ and the correct push/publish commands for this project:
 
 ---
 
-**Release `<new-version>` is staged. To publish, run:**
+**Release `<new-version>` is staged. To publish:**
 
-```
-git push
-git push origin <new-version>
-```
+1. Check the package on Windows by running this in R, then wait for the results
+   to arrive by email (this uploads the package to CRAN's win-builder):
 
-Then submit the package to CRAN (e.g. `devtools::release()` or
-`devtools::submit_cran()`) from R.
+   ```
+   devtools::check_win_devel()
+   ```
 
-**Do not submit to CRAN until `git push` has succeeded.**
+   If win-builder reports problems, fix them and re-run `/pre-publish` (delete
+   the `<new-version>` tag first with `git tag -d <new-version>`).
+
+2. Once the Windows results are clean, run:
+
+   ```
+   git push
+   git push origin <new-version>
+   ```
+
+3. Then submit the package to CRAN (e.g. `devtools::release()` or
+   `devtools::submit_cran()`) from R.
+
+**Do not submit to CRAN until the win-builder results are clean and `git push`
+has succeeded.**
 
 ---
 

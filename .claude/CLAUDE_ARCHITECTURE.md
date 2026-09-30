@@ -196,8 +196,9 @@ thoroughness. Only `DESCRIPTION` holds the version.
   `local_test/`).
 - CI: none, by design. This is a single-developer project and checks are run
   locally before pushing (`check_fast()`, `check_slower()`, `/wrap-up`,
-  `/pre-publish`). For cross-platform checks before a CRAN submission, use
-  `devtools::check_win_devel()` or `rhub::rhub_check()` on demand. Revisit if
+  `/pre-publish`). Windows is checked before each release with
+  `devtools::check_win_devel()`, which uploads to CRAN's win-builder and emails
+  the results; `/pre-publish` lists this as a developer step. Revisit if
   outside contributors or platform-specific dependencies are added.
 
 ### Documentation

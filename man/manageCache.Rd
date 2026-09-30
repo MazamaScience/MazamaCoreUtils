@@ -27,7 +27,8 @@ older than this value are removed regardless of cache size. Fractional days
 are allowed.}
 }
 \value{
-Invisibly returns the number of files removed.
+Invisibly returns the number of files actually removed. If any file cannot be
+removed, a warning is generated and that file is not counted.
 }
 \description{
 Remove old or excess files from a cache directory.

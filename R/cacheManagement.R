@@ -27,7 +27,8 @@
 #'   are allowed.
 #'
 #' @return
-#' Invisibly returns the number of files removed.
+#' Invisibly returns the number of files actually removed. If any file cannot be
+#' removed, a warning is generated and that file is not counted.
 #'
 #' @details
 #' Timestamp meanings are:
@@ -119,13 +120,15 @@ manageCache <- function(
   } else {
     expiration <- lubridate::now(tzone = "UTC") - lubridate::ddays(maxFileAge)
     removalDF <- dplyr::filter(cacheDF, cacheDF$mtime < expiration)
-    ageRemovalCount <- nrow(removalDF)
-    if ( ageRemovalCount > 0 ) {
-      file.remove(removalDF$file)
-      # Remove deleted files before size-based cleanup.
+    ageRemovalCount <- 0
+    if ( nrow(removalDF) > 0 ) {
+      removedFiles <- .removeFiles(removalDF$file)
+      ageRemovalCount <- length(removedFiles)
+      # Remove deleted files before size-based cleanup. Files that could not
+      # be removed still occupy space so they stay in the size accounting.
       cacheDF <-
         cacheDF %>%
-        dplyr::filter(!.data$file %in% removalDF$file)
+        dplyr::filter(!.data$file %in% removedFiles)
     }
   }
 
@@ -140,9 +143,9 @@ manageCache <- function(
   # Remove all files associated with cumulativeSize > maxCacheSize
   removalMask <- sizeByDF$cumulativeSize > maxCacheSize
   removalFiles <- sizeByDF$file[removalMask]
-  sizeRemovalCount <- length(removalFiles)
-  if ( sizeRemovalCount > 0 ) {
-    file.remove(removalFiles)
+  sizeRemovalCount <- 0
+  if ( length(removalFiles) > 0 ) {
+    sizeRemovalCount <- length(.removeFiles(removalFiles))
   }
 
   # Return ---------------------------------------------------------------------
@@ -150,5 +153,27 @@ manageCache <- function(
   removalCount <- ageRemovalCount + sizeRemovalCount
 
   return(invisible(removalCount))
+
+}
+
+# ===== INTERNAL FUNCTIONS =====================================================
+
+# Remove files and return the paths that were actually removed. A single warning
+# reports any files that could not be removed (e.g. locked or read-only).
+.removeFiles <- function(files) {
+
+  removed <- suppressWarnings(file.remove(files))
+
+  if ( !all(removed) ) {
+    warning(
+      sprintf(
+        "%d of %d files could not be removed: %s",
+        sum(!removed), length(files), toString(files[!removed])
+      ),
+      call. = FALSE
+    )
+  }
+
+  return(files[removed])
 
 }

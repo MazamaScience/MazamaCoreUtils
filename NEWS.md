@@ -5,6 +5,8 @@ and `ceilingEnd` when they are `NULL`.
 * `manageCache()` now validates `sortBy`, `maxCacheSize` and `maxFileAge`
 before removing any files. `sortBy` is now validated with `match.arg()`, so
 unique abbreviations such as `"m"` are accepted.
+* `manageCache()` now checks whether each file was actually removed. Files that
+cannot be removed generate a warning and are not included in the returned count.
 * `stopOnError()` now builds its message from the supplied `try-error` rather
 than `geterrmessage()`, which could return an unrelated, more recent error.
 * Fixed a typo in a `dateRange()` error message.

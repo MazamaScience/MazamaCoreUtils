@@ -19,6 +19,11 @@ Set the minimum log level displayed in the console.
 By default, only \code{FATAL} messages are displayed in the console. This
 function allows users to display additional log messages interactively.
 
+Only the console threshold is changed. Messages written to log files by
+\code{\link[=logger.setup]{logger.setup()}} or \code{\link[=initializeLogging]{initializeLogging()}} are controlled by each file's own
+fixed level (for example, \code{INFO.log} always receives \code{INFO} and higher
+messages) and are not affected.
+
 Available log levels are:
 
 \preformatted{

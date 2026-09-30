@@ -8,6 +8,13 @@ unique abbreviations such as `"m"` are accepted.
 * `stopOnError()` now builds its message from the supplied `try-error` rather
 than `geterrmessage()`, which could return an unrelated, more recent error.
 * Fixed a typo in a `dateRange()` error message.
+* `showAPIKeys()` now masks key values by default. Use `mask = FALSE` to print
+complete keys.
+* `html_getTable()` now warns when `index < 1` and stops if `index` is not a
+single integer.
+* Replaced deprecated `.data$` tidyselect usage in `lintFunctionArgs_file()`.
+* Documented `loadDataFile()` (only first object returned), `parseDatetime()`
+(error when nothing parses) and `logger.setLevel()` (console only).
 
 # MazamaCoreUtils 0.6.2
 

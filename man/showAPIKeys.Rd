@@ -4,13 +4,22 @@
 \alias{showAPIKeys}
 \title{Show API keys}
 \usage{
-showAPIKeys()
+showAPIKeys(mask = TRUE)
+}
+\arguments{
+\item{mask}{Logical specifying whether to mask key values.}
 }
 \value{
 No return value. Called for side effects.
 }
 \description{
 Print all currently set API keys.
+}
+\details{
+By default, key values are masked so that they are not exposed in console
+output or logs: only the first four characters of keys longer than eight
+characters are shown. Use \code{mask = FALSE} to print complete keys, or
+\code{\link[=getAPIKey]{getAPIKey()}} to retrieve them programmatically.
 }
 \seealso{
 \code{\link[=getAPIKey]{getAPIKey()}}, \code{\link[=setAPIKey]{setAPIKey()}}

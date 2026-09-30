@@ -26,3 +26,4 @@
 ^data-raw$
 ^\.positai$
 ^\.claude$
+^CLAUDE\.md$

@@ -101,7 +101,7 @@ lintFunctionArgs_file <- function(
   # Given IDs as names, this vector outputs the IDs' parent IDs
   lookupParent <-
     parsedData %>%
-    dplyr::select(.data$id, .data$parent) %>%
+    dplyr::select("id", "parent") %>%
     tibble::deframe()
 
   # Group function arguments by which function they belong to
@@ -110,7 +110,7 @@ lintFunctionArgs_file <- function(
     dplyr::filter(.data$token == "SYMBOL_SUB") %>%
     dplyr::group_by(.data$parent) %>%
     dplyr::summarise(named_args = list(.data$text)) %>%
-    dplyr::rename(id = .data$parent)
+    dplyr::rename(id = "parent")
 
   # Pair function calls with their arguments
   functionCalls <-
@@ -118,13 +118,13 @@ lintFunctionArgs_file <- function(
     dplyr::mutate(lookup_pid = lookupParent[as.character(.data$parent)]) %>%
     dplyr::filter(.data$token == "SYMBOL_FUNCTION_CALL") %>%
     dplyr::select(
-      line_number = .data$line1,
-      column_number = .data$col1,
-      function_name = .data$text,
-      id = .data$lookup_pid
+      line_number = "line1",
+      column_number = "col1",
+      function_name = "text",
+      id = "lookup_pid"
     ) %>%
     dplyr::left_join(functionArgs, by = "id") %>%
-    dplyr::select(-.data$id)
+    dplyr::select(-"id")
 
 
   # Check function arguments ------------------------------------------------
@@ -142,7 +142,7 @@ lintFunctionArgs_file <- function(
       ),
       file = fileString
     ) %>%
-    dplyr::select(.data$file, dplyr::everything())
+    dplyr::select("file", dplyr::everything())
 
   return(results)
 

@@ -36,6 +36,10 @@ avoiding unnecessary internet access.
 If both \code{dataDir} and \code{dataUrl} are provided, \code{priority} determines which
 source is tried first. If loading from the first source fails, the other
 source is used as a fallback.
+
+If the \code{.rda} file contains more than one object, only the first object
+listed by \code{\link[=load]{load()}} is returned. Files intended for use with this function
+should contain a single object.
 }
 \examples{
 \dontrun{

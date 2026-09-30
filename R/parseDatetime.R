@@ -22,6 +22,11 @@
 #' `"-07:00"`, that offset is used by [lubridate::parse_date_time()] when
 #' determining the equivalent instant.
 #'
+#' Unparseable values are returned as `NA`, but if *none* of the input values can
+#' be parsed the function stops with the error `"no datetimes could be parsed"`,
+#' regardless of `expectAll`. When `expectAll = TRUE`, the function also stops
+#' if any non-missing value fails to parse.
+#'
 #' @param datetime Vector of character, numeric, integer, or `POSIXct`
 #'   datetimes.
 #' @param timezone Olson timezone used to interpret incoming datetimes.

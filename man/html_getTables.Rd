@@ -16,7 +16,8 @@ html_getTable(url = NULL, header = NA, index = 1)
 column names. If \code{NA}, the first row is used only when it contains \verb{<th>}
 elements.}
 
-\item{index}{Index identifying which table to return.}
+\item{index}{Index identifying which table to return. Values less than 1
+generate a warning and are replaced with 1.}
 }
 \value{
 List of data frames, one for each HTML table.

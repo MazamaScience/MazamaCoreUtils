@@ -55,6 +55,13 @@ NULL
 #'
 #' Print all currently set API keys.
 #'
+#' By default, key values are masked so that they are not exposed in console
+#' output or logs: only the first four characters of keys longer than eight
+#' characters are shown. Use `mask = FALSE` to print complete keys, or
+#' [getAPIKey()] to retrieve them programmatically.
+#'
+#' @param mask Logical specifying whether to mask key values.
+#'
 #' @return
 #' No return value. Called for side effects.
 #'
@@ -64,8 +71,22 @@ NULL
 #' @keywords environment
 #' @export
 #' @importFrom utils str
-showAPIKeys <- function() {
-  utils::str(MazamaCoreUtilsEnv$APIKeys)
+showAPIKeys <- function(mask = TRUE) {
+
+  keys <- MazamaCoreUtilsEnv$APIKeys
+
+  if ( isTRUE(mask) ) {
+    keys <- lapply(keys, function(key) {
+      if ( is.character(key) && length(key) == 1 && nchar(key) > 8 ) {
+        paste0(substr(key, 1, 4), "****")
+      } else {
+        "****"
+      }
+    })
+  }
+
+  utils::str(keys)
+
 }
 
 #' Get API key

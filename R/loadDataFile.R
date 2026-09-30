@@ -11,6 +11,10 @@
 #' source is tried first. If loading from the first source fails, the other
 #' source is used as a fallback.
 #'
+#' If the `.rda` file contains more than one object, only the first object
+#' listed by [load()] is returned. Files intended for use with this function
+#' should contain a single object.
+#'
 #' @param filename Name of the `.rda` file to load.
 #' @param dataUrl Remote URL directory containing data files.
 #' @param dataDir Local directory containing data files.

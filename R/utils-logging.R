@@ -324,6 +324,11 @@ logger.isInitialized <- function() {
 #' By default, only `FATAL` messages are displayed in the console. This
 #' function allows users to display additional log messages interactively.
 #'
+#' Only the console threshold is changed. Messages written to log files by
+#' [logger.setup()] or [initializeLogging()] are controlled by each file's own
+#' fixed level (for example, `INFO.log` always receives `INFO` and higher
+#' messages) and are not affected.
+#'
 #' Available log levels are:
 #'
 #' \preformatted{

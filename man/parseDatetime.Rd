@@ -53,6 +53,11 @@ with \code{\link[lubridate:with_tz]{lubridate::with_tz()}}.
 If a character datetime includes signed offset information, such as
 \code{"-07:00"}, that offset is used by \code{\link[lubridate:parse_date_time]{lubridate::parse_date_time()}} when
 determining the equivalent instant.
+
+Unparseable values are returned as \code{NA}, but if \emph{none} of the input values can
+be parsed the function stops with the error \code{"no datetimes could be parsed"},
+regardless of \code{expectAll}. When \code{expectAll = TRUE}, the function also stops
+if any non-missing value fails to parse.
 }
 \section{Mazama Science conventions}{
 

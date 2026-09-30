@@ -130,7 +130,7 @@ dateRange <- function(
     stop("'days' must be a single positive number")
 
   if ( !is.null(startdate) && length(startdate) != 1 )
-    stop("'startdat'e must be of length one, if specified")
+    stop("'startdate' must be of length one, if specified")
 
   if ( !is.null(enddate) && length(enddate) != 1 )
     stop("'enddate' must be of length one, if specified")

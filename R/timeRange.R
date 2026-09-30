@@ -56,9 +56,9 @@ timeRange <- function(
   stopIfNull(starttime)
   stopIfNull(endtime)
   stopIfNull(timezone)
-  setIfNull(unit, "sec")
-  setIfNull(ceilingStart, FALSE)
-  setIfNull(ceilingEnd, FALSE)
+  unit <- setIfNull(unit, "sec")
+  ceilingStart <- setIfNull(ceilingStart, FALSE)
+  ceilingEnd <- setIfNull(ceilingEnd, FALSE)
 
   if ( !timezone %in% base::OlsonNames() )
     stop(sprintf("'timezone = %s' is not found in OlsonNames()", timezone))

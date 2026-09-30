@@ -22,3 +22,12 @@ test_that("stopOnError() converts error messages", {
 
 })
 
+
+test_that("stopOnError() reports the error in 'result', not the latest error", {
+
+  result <- try(stop("first error"), silent = TRUE)
+  try(stop("second error"), silent = TRUE)
+
+  expect_error(stopOnError(result), "first error")
+
+})

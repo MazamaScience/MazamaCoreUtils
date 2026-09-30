@@ -110,3 +110,13 @@ test_that("unit, ceilingStart and ceilingEnd arguments work", {
 })
 
 
+
+test_that("NULL unit, ceilingStart and ceilingEnd use defaults", {
+
+  expect_identical(
+    timeRange("2019-01-08 12:34:56", "2019-01-09 01:02:03", timezone = "UTC",
+              unit = NULL, ceilingStart = NULL, ceilingEnd = NULL),
+    timeRange("2019-01-08 12:34:56", "2019-01-09 01:02:03", timezone = "UTC")
+  )
+
+})

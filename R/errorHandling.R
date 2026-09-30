@@ -66,8 +66,10 @@ stopOnError <- function(
 
   if ( "try-error" %in% class(result) ) {
 
-    # Use passed in message or cleaned up version from geterrmessage()
-    err_msg <- ifelse(err_msg == "", geterrmessage(), err_msg)
+    # Use passed in message or the message stored in the try-error itself.
+    # NOTE:  geterrmessage() returns the *last* error in the session, which may
+    # NOTE:  not be the error that produced 'result'.
+    err_msg <- ifelse(err_msg == "", as.character(result)[1], err_msg)
 
     err_msg <-
       err_msg %>%

@@ -71,7 +71,7 @@ manageCache <- function(
   cacheDir = NULL,
   extensions = c('html','json','pdf','png'),
   maxCacheSize = 100,
-  sortBy = 'atime',
+  sortBy = c('atime', 'ctime', 'mtime'),
   maxFileAge = NULL
 ) {
 
@@ -80,7 +80,17 @@ manageCache <- function(
   stopIfNull(cacheDir)
   stopIfNull(extensions)
   stopIfNull(maxCacheSize)
-  stopIfNull(sortBy)
+
+  # NOTE:  Validate everything before any files are removed.
+  sortBy <- match.arg(sortBy)
+
+  if ( !is.numeric(maxCacheSize) || length(maxCacheSize) != 1 ||
+       is.na(maxCacheSize) || maxCacheSize < 0 )
+    stop("'maxCacheSize' must be a single non-negative number")
+
+  if ( !is.null(maxFileAge) &&
+       ( !is.numeric(maxFileAge) || length(maxFileAge) != 1 || is.na(maxFileAge) ) )
+    stop("'maxFileAge' must be a single number, if specified")
 
   # Get file info --------------------------------------------------------------
 
@@ -122,11 +132,7 @@ manageCache <- function(
   # Remove excess files --------------------------------------------------------
 
   # Use dplyr to order by value specified by sortBy
-  if ( !sortBy %in% c("atime", "ctime", "mtime") ) {
-    stop("invalid value for parameter 'sortBy'")
-  } else {
-    sizeByDF <- dplyr::arrange(cacheDF, dplyr::desc(.data[[sortBy]]))
-  }
+  sizeByDF <- dplyr::arrange(cacheDF, dplyr::desc(.data[[sortBy]]))
 
   # Compute a running total
   sizeByDF$cumulativeSize <- cumsum(sizeByDF$size)

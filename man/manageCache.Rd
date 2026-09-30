@@ -8,7 +8,7 @@ manageCache(
   cacheDir = NULL,
   extensions = c("html", "json", "pdf", "png"),
   maxCacheSize = 100,
-  sortBy = "atime",
+  sortBy = c("atime", "ctime", "mtime"),
   maxFileAge = NULL
 )
 }

@@ -84,7 +84,7 @@ appender.null <- function() {
 }
 
 # Quick test if logging has been initialized (MazamaCoreUtils view of the world)
-.stopIfNotInitilized <- function() {
+.stopIfNotInitialized <- function() {
   if (!isTRUE(getOption("MazamaCoreUtils.logger.initialized", FALSE))) {
     stop(
       "You must initialize with 'logger.setup()' before issuing logger statements.",
@@ -392,7 +392,7 @@ logger.setLevel <- function(level) {
 #' @export
 #' @importFrom logger log_trace
 logger.trace <- function(msg, ...) {
-  .stopIfNotInitilized()
+  .stopIfNotInitialized()
   logger::log_trace(msg, ..., namespace = .MAZAMA_LOG_NAMESPACE)
 }
 
@@ -416,7 +416,7 @@ logger.trace <- function(msg, ...) {
 #' @importFrom logger log_debug
 #'
 logger.debug <- function(msg, ...) {
-  .stopIfNotInitilized()
+  .stopIfNotInitialized()
   logger::log_debug(msg, ..., namespace = .MAZAMA_LOG_NAMESPACE)
 }
 
@@ -440,7 +440,7 @@ logger.debug <- function(msg, ...) {
 #' @importFrom logger log_info
 #'
 logger.info <- function(msg, ...) {
-  .stopIfNotInitilized()
+  .stopIfNotInitialized()
   logger::log_info(msg, ..., namespace = .MAZAMA_LOG_NAMESPACE)
 }
 
@@ -464,7 +464,7 @@ logger.info <- function(msg, ...) {
 #' @importFrom logger log_warn
 #'
 logger.warn <- function(msg, ...) {
-  .stopIfNotInitilized()
+  .stopIfNotInitialized()
   logger::log_warn(msg, ..., namespace = .MAZAMA_LOG_NAMESPACE)
 }
 
@@ -488,7 +488,7 @@ logger.warn <- function(msg, ...) {
 #' @importFrom logger log_error
 #'
 logger.error <- function(msg, ...) {
-  .stopIfNotInitilized()
+  .stopIfNotInitialized()
   logger::log_error(msg, ..., namespace = .MAZAMA_LOG_NAMESPACE)
 }
 
@@ -512,7 +512,7 @@ logger.error <- function(msg, ...) {
 #' @importFrom logger log_fatal
 #'
 logger.fatal <- function(msg, ...) {
-  .stopIfNotInitilized()
+  .stopIfNotInitialized()
   logger::log_fatal(msg, ..., namespace = .MAZAMA_LOG_NAMESPACE)
 }
 

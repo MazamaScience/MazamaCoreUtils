@@ -1,3 +1,14 @@
+# MazamaCoreUtils (development version)
+
+* `timeRange()` now actually applies its defaults for `unit`, `ceilingStart`
+and `ceilingEnd` when they are `NULL`.
+* `manageCache()` now validates `sortBy`, `maxCacheSize` and `maxFileAge`
+before removing any files. `sortBy` is now validated with `match.arg()`, so
+unique abbreviations such as `"m"` are accepted.
+* `stopOnError()` now builds its message from the supplied `try-error` rather
+than `geterrmessage()`, which could return an unrelated, more recent error.
+* Fixed a typo in a `dateRange()` error message.
+
 # MazamaCoreUtils 0.6.2
 
 * Restore but _deprecate_ the `algorithm` argument from `createLocationID()`.

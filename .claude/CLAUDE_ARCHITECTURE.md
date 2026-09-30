@@ -175,7 +175,7 @@ bump and a `NEWS.md` entry (and usually deprecation first):
 | Invalid lon/lat values (mask / ID) | `FALSE` / `invalidID`, no error | `createLocationMask()`, `createLocationID()` |
 | Unparseable datetimes | Error if `expectAll = TRUE`; otherwise `NA` | `parseDatetime()` |
 | `try-error` result | Cleaned, truncated, logged (if initialized) error | `stopOnError()` |
-| Logging function called before setup | `stop()` | `.stopIfNotInitilized()` (sic) in `utils-logging.R` |
+| Logging function called before setup | `stop()` | `.stopIfNotInitialized()` in `utils-logging.R` |
 | Both `dataDir` and `dataUrl` fail | `stop()` | `loadDataFile()` |
 
 ### Build and Distribution
@@ -207,12 +207,6 @@ thoroughness. Only `DESCRIPTION` holds the version.
 
 ### Known Limitations and Future Work
 
-- `.stopIfNotInitilized()` is misspelled (internal only; harmless).
-- `timeRange()` calls `setIfNull(unit, "sec")` (and for `ceilingStart`,
-  `ceilingEnd`) without assigning the result, so those calls have no effect;
-  passing `NULL` for these arguments is not actually defaulted.
-- The error message in `dateRange()` for `startdate` has a misplaced quote
-  (`'startdat'e`).
 - Untested areas listed under Testing; `local_test/` scripts are not run
   automatically.
 - `_pkgdown.yml` pins old pandoc/pkgdown versions.

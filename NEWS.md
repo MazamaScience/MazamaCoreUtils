@@ -5,6 +5,14 @@ and `ceilingEnd` when they are `NULL`.
 * `manageCache()` now validates `sortBy`, `maxCacheSize` and `maxFileAge`
 before removing any files. `sortBy` is now validated with `match.arg()`, so
 unique abbreviations such as `"m"` are accepted.
+* **Fixed `createLocationMask()`:** with `removeZeroZero = TRUE` (the default) it
+treated every location where `longitude + latitude == 0`, e.g. (30, -30), as
+invalid. Now only `(0, 0)` is removed.
+* **Fixed `html_getLinks()`:** with `relative = FALSE`, protocol-relative links
+(`//host/path`) are now resolved against the page URL and get its scheme,
+rather than being treated as relative paths.
+* Added tests for `html_getLinks()`, `html_getLinkNames()` and
+`html_getLinkUrls()`.
 * `manageCache()` now checks whether each file was actually removed. Files that
 cannot be removed generate a warning and are not included in the returned count.
 * `stopOnError()` now builds its message from the supplied `try-error` rather

@@ -70,6 +70,15 @@ test_that("createLocationMask() works", {
       TRUE, FALSE, TRUE, FALSE, TRUE, FALSE)
   )
 
+  # Only (0, 0) is removed, not other locations with longitude == -latitude
+  expect_equal(
+    createLocationMask(
+      longitude = c(30, -45, 0, 0, 10),
+      latitude = c(-30, 45, 0, 10, 0)
+    ),
+    c(TRUE, TRUE, FALSE, TRUE, TRUE)
+  )
+
   # removeZeroZero = FALSE
   expect_equal(
     createLocationMask(

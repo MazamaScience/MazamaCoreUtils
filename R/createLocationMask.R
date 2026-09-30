@@ -77,7 +77,7 @@ createLocationMask <- function(
 
   zero_mask <- rep(TRUE, times = length(longitude))
   if ( removeZeroZero )
-    zero_mask <- (longitude + latitude) != 0.0
+    zero_mask <- !(longitude == 0 & latitude == 0)
 
   mask <-
     zero_mask &

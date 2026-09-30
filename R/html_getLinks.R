@@ -86,23 +86,12 @@ html_getLinks <- function(
     dplyr::filter(stringr::str_detect(.data$linkUrl, "^\\?C=.;O=.*", negate = TRUE)) %>%
 
     # Remove "Parent Directory"
-    dplyr::filter(stringr::str_detect(.data$linkName, "Parent Directory", negate = TRUE)) %>%
-
-    # Format URLs beginning with //
-    dplyr::mutate(linkUrl = stringr::str_replace(.data$linkUrl, stringr::regex("^//"), ""))
+    dplyr::filter(stringr::str_detect(.data$linkName, "Parent Directory", negate = TRUE))
 
 
-  # ----- Expand relative URLs -------------------------------------------------
+  # ----- Format URLs ----------------------------------------------------------
 
-  if ( !relative ) {
-
-    df <-
-      df %>%
-      dplyr::mutate(
-        linkUrl = xml2::url_absolute(.data$linkUrl, base = url)
-      )
-
-  }
+  df$linkUrl <- .formatLinkUrls(df$linkUrl, base = url, relative = relative)
 
   # ----- Return ---------------------------------------------------------------
 
@@ -160,5 +149,24 @@ html_getLinkUrls <- function(
   # ----- Return ---------------------------------------------------------------
 
   return(linkUrls)
+
+}
+
+# ===== INTERNAL FUNCTIONS =====================================================
+
+# Format link URLs for html_getLinks().
+#
+# * relative = TRUE:  protocol-relative URLs ("//host/path") lose their leading
+#                     "//" and all other URLs are returned unchanged.
+# * relative = FALSE: URLs are resolved against 'base'. This must happen *before*
+#                     any "//" is removed so that protocol-relative URLs pick up
+#                     the scheme of 'base' (e.g. "//host/path" -> "https://host/path").
+.formatLinkUrls <- function(linkUrl, base, relative = TRUE) {
+
+  if ( relative ) {
+    return(stringr::str_replace(linkUrl, stringr::regex("^//"), ""))
+  }
+
+  return(xml2::url_absolute(linkUrl, base = base))
 
 }

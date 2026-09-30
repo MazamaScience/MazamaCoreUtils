@@ -192,11 +192,10 @@ thoroughness. Only `DESCRIPTION` holds the version.
   `tests/testthat.R`; run with `devtools::test()`.
 - Tests cover API keys, cache management, location utilities, date/time
   functions (including shared timezone validation), error handling, logging,
-  `loadDataFile()`, `html_getTable()`/`html_getTables()` (local files only),
-  the linting functions, `setIfNull()` and `stopIfNull()`. Not currently
-  tested: `html_getLinks()` and its helpers, and `check_*()`. Network and URL
-  access is tested only through local `file://` URLs. Ad-hoc scripts are in
-  `local_test/`.
+  `loadDataFile()`, the HTML helpers (local files only), the linting functions,
+  `setIfNull()` and `stopIfNull()`. Not currently tested: `check_*()`. Tests make no
+  network requests: `loadDataFile()` uses local `file://` URLs and the HTML
+  helpers use local files. Ad-hoc scripts are in `local_test/`.
 - CI: none, by design. This is a single-developer project and checks are run
   locally before pushing (`check_fast()`, `check_slower()`, `/wrap-up`,
   `/pre-publish`). Windows is checked before each release with

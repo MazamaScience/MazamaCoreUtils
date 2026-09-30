@@ -1,4 +1,4 @@
-# MazamaCoreUtils (development version)
+# MazamaCoreUtils 0.6.3
 
 * `timeRange()` now actually applies its defaults for `unit`, `ceilingStart`
 and `ceilingEnd` when they are `NULL`.
@@ -11,6 +11,9 @@ invalid. Now only `(0, 0)` is removed.
 * **Fixed `html_getLinks()`:** with `relative = FALSE`, protocol-relative links
 (`//host/path`) are now resolved against the page URL and get its scheme,
 rather than being treated as relative paths.
+* `html_getLinks()` and `html_getLinkUrls()` now stop with an error when
+`relative` is not a single `TRUE` or `FALSE`; previously any other value was
+silently treated as `TRUE`.
 * Added tests for `html_getLinks()`, `html_getLinkNames()` and
 `html_getLinkUrls()`.
 * `manageCache()` now checks whether each file was actually removed. Files that

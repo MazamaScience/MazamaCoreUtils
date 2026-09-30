@@ -54,6 +54,10 @@ test_that("html_getLinkNames() and html_getLinkUrls() return vectors", {
 test_that("html_getLinks() handles missing input and missing files", {
 
   expect_error(html_getLinks(), "url")
+  expect_error(html_getLinks(.makeLinkFile(), relative = "yes"), "'relative' must be")
+  expect_error(html_getLinks(.makeLinkFile(), relative = NA), "'relative' must be")
+  expect_error(html_getLinks(.makeLinkFile(), relative = c(TRUE, FALSE)), "'relative' must be")
+  expect_error(html_getLinkUrls(.makeLinkFile(), relative = "yes"), "'relative' must be")
   expect_error(html_getLinks(file.path(tempdir(), "no_such_file.html")))
 
 })

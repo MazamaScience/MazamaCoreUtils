@@ -52,8 +52,8 @@ html_getLinks <- function(
 
   MazamaCoreUtils::stopIfNull(url)
 
-  if ( !is.logical(relative) )
-    relative <- TRUE
+  if ( !is.logical(relative) || length(relative) != 1 || is.na(relative) )
+    stop("'relative' must be a logical value of length one")
 
   # ----- Extract the links ----------------------------------------------------
 

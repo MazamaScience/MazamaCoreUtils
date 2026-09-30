@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.3</span>
       </span>
     </div>
 
@@ -165,7 +165,12 @@ see if an error occurred.</p>
 <li>
 <code><a href="https://rdrr.io/r/base/try.html" class="external-link">try()</a></code> returns a “try-error” object on error</li>
 <li>
-<code><a href="https://rdrr.io/r/base/stop.html" class="external-link">geterrmessage()</a></code> returns latest error msg</li>
+<code><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character()</a></code> of a “try-error” object returns its
+error message</li>
+<li>
+<code><a href="https://rdrr.io/r/base/stop.html" class="external-link">geterrmessage()</a></code> returns the <em>latest</em> error
+message in the session, which is not necessarily the error that produced
+a particular <code>try-error</code> object</li>
 </ul>
 <p>For more details see:</p>
 <ul>
@@ -183,7 +188,7 @@ that R considers everything between <code><a href="https://rdrr.io/r/base/Paren.
 <span><span class="op">}</span>, silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="kw">if</span> <span class="op">(</span> <span class="st">"try-error"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span> <span class="op">)</span> <span class="op">{</span></span>
-<span><span class="va">err_msg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/stop.html" class="external-link">geterrmessage</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="va">err_msg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span> <span class="co"># the message stored in the try-error</span></span>
 <span>  <span class="co"># logging of error message</span></span>
 <span>  <span class="co"># detection and handling of particular error strings</span></span>
 <span>  <span class="co"># stop() if necessary with user friendly error strings</span></span>
@@ -199,10 +204,11 @@ tests the first argument for a class of <code>try-error</code> and, if
 true, performs the following actions:</p>
 <ol style="list-style-type: decimal">
 <li>creates <code>err_msg</code> from a user provided error message or,
-if NULL, <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">geterrmessage()</a></code>
-</li>
+if none is provided, from the message stored in the
+<code>try-error</code> object itself</li>
 <li>allows modification of error messages with arguments
-<code>prefix</code> and <code>maxLength</code>
+<code>prefix</code>, <code>maxLength</code> and
+<code>truncatedLength</code>
 </li>
 <li>logs this message with <code>logger.error(err_msg)</code> if logging
 has been enabled</li>

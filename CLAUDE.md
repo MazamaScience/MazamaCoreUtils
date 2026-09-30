@@ -130,7 +130,7 @@ Run from the package root in R (or via `Rscript -e '...'`):
 | Run tests | `devtools::test()` (files in `tests/testthat/`) |
 | Quick check | `MazamaCoreUtils::check_fast()` |
 | Full check before release | `MazamaCoreUtils::check_slower()` |
-| Build website | `pkgdown::build_site()` (output in `docs/`, config in `_pkgdown.yml`; also run by `/wrap-up`) |
+| Build website | Run `/wrap-up` (output in `docs/`, config in `_pkgdown.yml`). It also removes `docs/CLAUDE.html`, which pkgdown generates from `CLAUDE.md`. |
 | Install locally | `devtools::install()` |
 
 - New behavior and bug fixes should come with a test in `tests/testthat/`

@@ -18,7 +18,7 @@ remote URL."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.3</span>
       </span>
     </div>
 
@@ -99,6 +99,11 @@ avoiding unnecessary internet access.</p>
 <p>If both <code>dataDir</code> and <code>dataUrl</code> are provided, <code>priority</code> determines which
 source is tried first. If loading from the first source fails, the other
 source is used as a fallback.</p>
+<p>The <code>.rda</code> file must contain exactly one object. A file containing several
+objects generates an error.</p>
+<p>Only load data from sources you trust. Loading an <code>.rda</code> file restores
+arbitrary R objects, which can include functions and other code, so <code>dataUrl</code>
+(and <code>dataDir</code>) should point to locations you control.</p>
     </div>
 
     <div id="ref-examples">

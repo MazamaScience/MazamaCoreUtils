@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.3</span>
       </span>
     </div>
 
@@ -75,6 +75,10 @@
     <h2>Details</h2>
     <p>By default, only <code>FATAL</code> messages are displayed in the console. This
 function allows users to display additional log messages interactively.</p>
+<p>Only the console threshold is changed. Messages written to log files by
+<code><a href="logger.setup.html">logger.setup()</a></code> or <code><a href="initializeLogging.html">initializeLogging()</a></code> are controlled by each file's own
+fixed level (for example, <code>INFO.log</code> always receives <code>INFO</code> and higher
+messages) and are not affected.</p>
 <p>Available log levels are:</p>
 <div class="sourceCode"><pre><code><span></span>
 <span><span class="va">TRACE</span></span>

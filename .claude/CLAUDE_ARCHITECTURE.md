@@ -215,6 +215,8 @@ thoroughness. Only `DESCRIPTION` holds the version.
 - roxygen2 (markdown enabled); regenerate with `devtools::document()`.
 - pkgdown site in `docs/`, configured by `_pkgdown.yml`; new exports must be
   added to its `reference:` sections.
+  pkgdown renders `CLAUDE.md` into the site, so `/wrap-up` rebuilds the site and
+  then removes `docs/CLAUDE.html` and its `sitemap.xml` entry.
 - Vignettes in `vignettes/` (four articles); `README.md` is hand-written.
 - `NEWS.md` is the authoritative changelog.
 

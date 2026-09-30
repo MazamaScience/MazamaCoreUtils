@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.3</span>
       </span>
     </div>
 
@@ -68,49 +68,114 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-
-
-<p>A dedicated Slack channel has been created for announcements, support and to help build a community of practice around this open source package. You may request an invitation to join from <a href="mailto:jonathan.s.callahan@gmail.com" class="email">jonathan.s.callahan@gmail.com</a>.</p>
 <div class="section level1">
 <div class="page-header"><h1 id="mazamacoreutils">MazamaCoreUtils<a class="anchor" aria-label="anchor" href="#mazamacoreutils"></a>
 </h1></div>
-<pre><code>A suite of utility functions providing functionality commonly needed for
-production level projects such as logging, error handling, cache management and
-date-time parsing. Functions for date-time parsing and formatting require that
-timezones be specified explicitly, avoiding a common source of error when
-working with environmental time series.</code></pre>
-<div class="section level2">
-<h2 id="background">Background<a class="anchor" aria-label="anchor" href="#background"></a>
-</h2>
-<p>The MazamaCoreUtils package was created by Mazama Science to regularize work building R packages, data processing pipelines and web services focused on environmental monitoring data.</p>
-<p>The main goal of this package is to create an internally standardized set of functions that for use in various systems that are being run operationally. Areas of functionality supported by this package include:</p>
-<ul>
-<li>python style logging</li>
-<li>simple error messaging</li>
-<li>cache management</li>
-<li>API key handling</li>
-<li>date-time parsing and formatting</li>
-<li>lat/lon validation and uniqueID creation</li>
-<li>source code linting</li>
-</ul>
-</div>
+<p><a href="https://cran.r-project.org/package=MazamaCoreUtils" class="external-link"><img src="https://www.r-pkg.org/badges/version/MazamaCoreUtils" alt="CRAN_Status_Badge"></a> <a href="https://cran.r-project.org/package=MazamaCoreUtils" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/MazamaCoreUtils" alt="Downloads"></a> <a href="https://zenodo.org/badge/latestdoi/152321630" class="external-link"><img src="https://zenodo.org/badge/152321630.svg" alt="DOI"></a></p>
+<p>MazamaCoreUtils is a suite of utility functions for production-level R code, providing functionality commonly needed by operational systems such as logging, error handling, cache management and date-time parsing.</p>
+<p>Functions for date-time parsing and formatting require that time zones be specified explicitly, avoiding a common source of error when working with environmental time series.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>Install from CRAN with:</p>
-<p><code>install.packages('MazamaCoreUtils')</code></p>
-<p>Install the latest version from GitHub with:</p>
-<p><code>devtools::install_github('mazamascience/MazamaCoreUtils')</code></p>
-<hr>
-<p>Development of this R package has been supported with funding from the following institutions:</p>
+<p>Install the released version from CRAN:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"MazamaCoreUtils"</span><span class="op">)</span></span></code></pre></div>
+<p>Install the development version from GitHub:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"MazamaScience/MazamaCoreUtils"</span><span class="op">)</span></span></code></pre></div>
+<p>MazamaCoreUtils requires R version 4.0.0 or later.</p>
+</div>
+<div class="section level2">
+<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+</h2>
+<p>Set up standard log files, request a range of days in an explicit time zone and record the request in the log:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MazamaScience/MazamaCoreUtils" class="external-link">MazamaCoreUtils</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create TRACE, DEBUG, INFO, WARN and ERROR log files</span></span>
+<span><span class="va">logDir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"logs"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/initializeLogging.html">initializeLogging</a></span><span class="op">(</span><span class="va">logDir</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Date-times always require an explicit time zone</span></span>
+<span><span class="va">tlim</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/dateRange.html">dateRange</a></span><span class="op">(</span><span class="st">"2024-03-01"</span>, <span class="st">"2024-03-03"</span>, timezone <span class="op">=</span> <span class="st">"America/Los_Angeles"</span><span class="op">)</span></span>
+<span><span class="va">tlim</span></span>
+<span><span class="co">#&gt; [1] "2024-03-01 00:00:00 PST" "2024-03-02 23:59:59 PST"</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/logger.info.html">logger.info</a></span><span class="op">(</span></span>
+<span>  <span class="st">"Requesting data from %s to %s"</span>,</span>
+<span>  <span class="fu"><a href="reference/timeStamp.html">timeStamp</a></span><span class="op">(</span><span class="va">tlim</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, timezone <span class="op">=</span> <span class="st">"America/Los_Angeles"</span>, unit <span class="op">=</span> <span class="st">"min"</span>, style <span class="op">=</span> <span class="st">"clock"</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="reference/timeStamp.html">timeStamp</a></span><span class="op">(</span><span class="va">tlim</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, timezone <span class="op">=</span> <span class="st">"America/Los_Angeles"</span>, unit <span class="op">=</span> <span class="st">"min"</span>, style <span class="op">=</span> <span class="st">"clock"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">logDir</span>, <span class="st">"INFO.log"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
 <ul>
-<li>USFS <a href="https://www.airfire.org" class="external-link">AirFire Research Team</a>
+<li>
+<strong>Logging</strong> — <code><a href="reference/initializeLogging.html">initializeLogging()</a></code>, <code><a href="reference/logger.setup.html">logger.setup()</a></code>, <code><a href="reference/logger.setLevel.html">logger.setLevel()</a></code>, <code><a href="reference/logger.info.html">logger.info()</a></code>, <code><a href="reference/logger.error.html">logger.error()</a></code>
+</li>
+<li>
+<strong>Error handling and <code>NULL</code> values</strong> — <code><a href="reference/stopOnError.html">stopOnError()</a></code>, <code><a href="reference/stopIfNull.html">stopIfNull()</a></code>, <code><a href="reference/setIfNull.html">setIfNull()</a></code>
+</li>
+<li>
+<strong>Date-times with explicit time zones</strong> — <code><a href="reference/parseDatetime.html">parseDatetime()</a></code>, <code><a href="reference/dateRange.html">dateRange()</a></code>, <code><a href="reference/timeRange.html">timeRange()</a></code>, <code><a href="reference/dateSequence.html">dateSequence()</a></code>, <code><a href="reference/timeStamp.html">timeStamp()</a></code>
+</li>
+<li>
+<strong>Locations</strong> — <code><a href="reference/validateLonLat.html">validateLonLat()</a></code>, <code><a href="reference/createLocationMask.html">createLocationMask()</a></code>, <code><a href="reference/createLocationID.html">createLocationID()</a></code>
+</li>
+<li>
+<strong>Cache management and data loading</strong> — <code><a href="reference/manageCache.html">manageCache()</a></code>, <code><a href="reference/loadDataFile.html">loadDataFile()</a></code>
+</li>
+<li>
+<strong>API keys</strong> — <code><a href="reference/setAPIKey.html">setAPIKey()</a></code>, <code><a href="reference/getAPIKey.html">getAPIKey()</a></code>, <code><a href="reference/showAPIKeys.html">showAPIKeys()</a></code>
+</li>
+<li>
+<strong>HTML utilities</strong> — <code><a href="reference/html_getLinks.html">html_getLinks()</a></code>, <code><a href="reference/html_getTables.html">html_getTables()</a></code>
+</li>
+<li>
+<strong>Code linting and package checks</strong> — <code><a href="reference/lintFunctionArgs.html">lintFunctionArgs_file()</a></code>, <code>timezoneLintRules</code>, <code><a href="reference/packageCheck.html">check_fast()</a></code>
 </li>
 </ul>
-<p>Questions regarding further development of the package should be directed to <a href="mailto:jonathan.s.callahan@gmail.com" class="email">jonathan.s.callahan@gmail.com</a>.</p>
+<p>Detailed argument and return value documentation is available in the function help pages, for example <code><a href="reference/parseDatetime.html">?parseDatetime</a></code>.</p>
+</div>
+<div class="section level2">
+<h2 id="background">Background<a class="anchor" aria-label="anchor" href="#background"></a>
+</h2>
+<p>MazamaCoreUtils was created by Mazama Science to standardize the work of building R packages, data processing pipelines and web services focused on environmental monitoring data. Its functions are used by other Mazama Science packages and by systems that are run operationally, where consistent logging, clear error messages and unambiguous time zones matter.</p>
+</div>
+<div class="section level2">
+<h2 id="documentation-and-help">Documentation and Help<a class="anchor" aria-label="anchor" href="#documentation-and-help"></a>
+</h2>
+<ul>
+<li>
+<a href="https://cran.r-project.org/package=MazamaCoreUtils" class="external-link">CRAN package page</a> for the reference manual and vignettes on cache management, date parsing, error handling and logging</li>
+<li>
+<a href="https://github.com/MazamaScience/MazamaCoreUtils/issues" class="external-link">GitHub Issues</a> for bug reports</li>
+<li>
+<a href="https://github.com/MazamaScience/MazamaCoreUtils/discussions" class="external-link">GitHub Discussions</a> for announcements, support and building a community of practice around this package</li>
+</ul>
+<p>Questions regarding further development of the package can also be directed to <a href="mailto:jonathan.s.callahan@gmail.com" class="email">jonathan.s.callahan@gmail.com</a>.</p>
+</div>
+<div class="section level2">
+<h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
+</h2>
+<p>For citation information, use:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"MazamaCoreUtils"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="acknowledgements">Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"></a>
+</h2>
+<p>Development of this package has been supported with funding from the USFS <a href="https://www.airfire.org" class="external-link">AirFire Research Team</a>.</p>
+</div>
+<div class="section level2">
+<h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
+</h2>
+<p>MazamaCoreUtils is released under the GPL-3 license.</p>
 </div>
 </div>
-
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -146,14 +211,7 @@ working with environmental time series.</code></pre>
 </ul>
 </div>
 
-<div class="dev-status">
-<h2 data-toc-skip>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="https://cran.r-project.org/package=MazamaCoreUtils" class="external-link"><img src="https://www.r-pkg.org/badges/version/MazamaCoreUtils" alt="CRAN_Status_Badge"></a></li>
-<li><a href="https://cran.r-project.org/package=MazamaCoreUtils" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/MazamaCoreUtils" alt="Downloads"></a></li>
-<li><a href="https://zenodo.org/badge/latestdoi/152321630" class="external-link"><img src="https://zenodo.org/badge/152321630.svg" alt="DOI"></a></li>
-</ul>
-</div>
+
 
   </div>
 </div>

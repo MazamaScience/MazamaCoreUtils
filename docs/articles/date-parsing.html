@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.3</span>
       </span>
     </div>
 
@@ -107,7 +107,7 @@ might be set to use UTC. Potential timezones (available with
 <li><code>UTC</code></li>
 </ul>
 <p>Which timezone should be used to convert a request for data from
-“2019-08-08” to “2018-08-15” into <code>POSIXct</code> datetimes?</p>
+“2019-08-08” to “2019-08-15” into <code>POSIXct</code> datetimes?</p>
 <p>To enforce specification of timezones and to help with the common
 user interface need to specify a range of dates or times, the
 <strong>MazamaCoreUtils</strong> package provides the following
@@ -118,11 +118,18 @@ functions:</p>
 start and end dates representing full days in the specified
 timezone</li>
 <li>
-<code><a href="../reference/timeRange.html">timeRange()</a></code> – parses and returns <code>POSixct</code>
+<code><a href="../reference/timeRange.html">timeRange()</a></code> – parses and returns <code>POSIXct</code>
 start and end times in the specified timezone</li>
+<li>
+<code><a href="../reference/dateSequence.html">dateSequence()</a></code> – returns a sequence of local-midnight
+<code>POSIXct</code> values, one for each day in the specified
+timezone</li>
 <li>
 <code><a href="../reference/parseDatetime.html">parseDatetime()</a></code> – parses and returns a vector of
 <code>POSIXct</code> values in the specified timezone</li>
+<li>
+<code><a href="../reference/timeStamp.html">timeStamp()</a></code> – formats datetimes as compact character
+timestamps in the specified timezone</li>
 </ul>
 <p>The <code><a href="../reference/parseDatetime.html">parseDatetime()</a></code> function is intended as a
 timezone-requiring replacement for
@@ -165,16 +172,14 @@ specification of timezones. The package includes a detailed list of
 the result of linting the <code>dateRange.R</code> function in this
 package:</p>
 <pre><code>&gt; lintFunctionArgs_file("R/dateRange.R", timezoneLintRules)
-# A tibble: 7 x 6
-  file        line_number column_number function_name   named_args includes_required
-  &lt;chr&gt;             &lt;int&gt;         &lt;int&gt; &lt;chr&gt;           &lt;list&gt;     &lt;lgl&gt;            
-1 dateRange.R         125            29 with_tz         &lt;chr [1]&gt;  TRUE             
-2 dateRange.R         128            27 with_tz         &lt;chr [1]&gt;  TRUE             
-3 dateRange.R         141            18 parse_date_time &lt;chr [2]&gt;  TRUE             
-4 dateRange.R         142            18 parse_date_time &lt;chr [2]&gt;  TRUE             
-5 dateRange.R         159            18 parse_date_time &lt;chr [2]&gt;  TRUE             
-6 dateRange.R         176            18 parse_date_time &lt;chr [2]&gt;  TRUE             
-7 dateRange.R         188            18 now             &lt;chr [1]&gt;  TRUE             </code></pre>
+# A tibble: 5 x 6
+  file        line_number column_number function_name named_args includes_required
+  &lt;chr&gt;             &lt;int&gt;         &lt;int&gt; &lt;chr&gt;         &lt;list&gt;     &lt;lgl&gt;            
+1 dateRange.R         162            35 timeRange     &lt;chr [1]&gt;  TRUE             
+2 dateRange.R         197            26 parseDatetime &lt;chr [1]&gt;  TRUE             
+3 dateRange.R         202            26 parseDatetime &lt;chr [1]&gt;  TRUE             
+4 dateRange.R         218            24 parseDatetime &lt;chr [1]&gt;  TRUE             
+5 dateRange.R         237            18 now           &lt;chr [1]&gt;  TRUE             </code></pre>
 <p>The result shows that the <code>dateRange.R</code> source code is
 consistent in always explicitly specifying a timezone.</p>
 <p>Hopefully, this attention to timezones will help your code avoid

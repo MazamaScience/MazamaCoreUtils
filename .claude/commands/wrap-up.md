@@ -12,9 +12,22 @@ Please run the end-of-session checklist for this project:
    with no new errors, warnings or notes.
 3. Run `Rscript -e 'devtools::document()'` to regenerate `man/` and `NAMESPACE`,
    then report whether it changed any files.
-4. Run `Rscript -e 'pkgdown::build_site()'` to rebuild the website in `docs/`
-   from the current documentation, and report any errors or warnings. If it
-   fails, stop and report the error.
+4. Rebuild the website in `docs/` from the current documentation, and report
+   any errors or warnings. If it fails, stop and report the error.
+
+   ```
+   Rscript -e 'pkgdown::build_site()'
+   ```
+
+   pkgdown renders `CLAUDE.md` (an AI project guide) to `docs/CLAUDE.html` and
+   lists it in `sitemap.xml`. Delete both after every build, and confirm they are
+   gone:
+
+   ```
+   rm -f docs/CLAUDE.html
+   grep -v 'CLAUDE.html' docs/sitemap.xml > docs/sitemap.tmp && mv docs/sitemap.tmp docs/sitemap.xml
+   ```
+
 5. Run `git status` and summarize any uncommitted changes, noting which are
    regenerated files (`man/`, `NAMESPACE`, `docs/`).
 6. If there are staged or unstaged changes, show a `git diff` summary and ask

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.3</span>
       </span>
     </div>
 
@@ -51,7 +51,43 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.6.2" id="mazamacoreutils-062">MazamaCoreUtils 0.6.2<a class="anchor" aria-label="anchor" href="#mazamacoreutils-062"></a></h2>
+<h2 class="page-header" data-toc-text="0.6.3" id="mazamacoreutils-063">MazamaCoreUtils 0.6.3<a class="anchor" aria-label="anchor" href="#mazamacoreutils-063"></a></h2>
+<ul><li>
+<code><a href="../reference/timeRange.html">timeRange()</a></code> now actually applies its defaults for <code>unit</code>, <code>ceilingStart</code> and <code>ceilingEnd</code> when they are <code>NULL</code>.</li>
+<li>
+<code><a href="../reference/manageCache.html">manageCache()</a></code> now validates <code>sortBy</code>, <code>maxCacheSize</code> and <code>maxFileAge</code> before removing any files. <code>sortBy</code> is now validated with <code><a href="https://rdrr.io/r/base/match.arg.html" class="external-link">match.arg()</a></code>, so unique abbreviations such as <code>"m"</code> are accepted.</li>
+<li>
+<strong>Fixed <code><a href="../reference/createLocationMask.html">createLocationMask()</a></code>:</strong> with <code>removeZeroZero = TRUE</code> (the default) it treated every location where <code>longitude + latitude == 0</code>, e.g. (30, -30), as invalid. Now only <code>(0, 0)</code> is removed.</li>
+<li>
+<strong>Fixed <code><a href="../reference/html_getLinks.html">html_getLinks()</a></code>:</strong> with <code>relative = FALSE</code>, protocol-relative links (<code>//host/path</code>) are now resolved against the page URL and get its scheme, rather than being treated as relative paths.</li>
+<li>
+<code><a href="../reference/logger.setup.html">logger.setup()</a></code> now warns when an existing log file cannot be removed before logging starts.</li>
+<li>Log line timestamps now use <code>lubridate::now(tzone = "UTC")</code>; output format is unchanged.</li>
+<li>
+<code><a href="../reference/loadDataFile.html">loadDataFile()</a></code> documentation now advises loading data only from trusted sources.</li>
+<li>
+<code><a href="../reference/html_getLinks.html">html_getLinks()</a></code> and <code><a href="../reference/html_getLinks.html">html_getLinkUrls()</a></code> now stop with an error when <code>relative</code> is not a single <code>TRUE</code> or <code>FALSE</code>; previously any other value was silently treated as <code>TRUE</code>.</li>
+<li>Added examples for the API key functions, <code><a href="../reference/initializeLogging.html">initializeLogging()</a></code>, the <code>logger.*()</code> functions, <code>logLevels</code> and the <code>check_*()</code> wrappers.</li>
+<li>Updated the README and vignettes (current <code><a href="../reference/stopOnError.html">stopOnError()</a></code> behavior, <code>WARN.log</code>, current linting output).</li>
+<li>Added tests for <code><a href="../reference/html_getLinks.html">html_getLinks()</a></code>, <code><a href="../reference/html_getLinks.html">html_getLinkNames()</a></code> and <code><a href="../reference/html_getLinks.html">html_getLinkUrls()</a></code>.</li>
+<li>
+<code><a href="../reference/manageCache.html">manageCache()</a></code> now checks whether each file was actually removed. Files that cannot be removed generate a warning and are not included in the returned count.</li>
+<li>
+<code><a href="../reference/stopOnError.html">stopOnError()</a></code> now builds its message from the supplied <code>try-error</code> rather than <code><a href="https://rdrr.io/r/base/stop.html" class="external-link">geterrmessage()</a></code>, which could return an unrelated, more recent error.</li>
+<li>Fixed a typo in a <code><a href="../reference/dateRange.html">dateRange()</a></code> error message.</li>
+<li>
+<code><a href="../reference/loadDataFile.html">loadDataFile()</a></code> now stops with a clear message when the <code>.rda</code> file contains more than one object; previously it failed with an obscure error from <code><a href="https://rdrr.io/r/base/get.html" class="external-link">get()</a></code>.</li>
+<li>Timezone validation is now shared by <code><a href="../reference/parseDatetime.html">parseDatetime()</a></code>, <code><a href="../reference/timeRange.html">timeRange()</a></code>, <code><a href="../reference/dateRange.html">dateRange()</a></code>, <code><a href="../reference/dateSequence.html">dateSequence()</a></code> and <code><a href="../reference/timeStamp.html">timeStamp()</a></code>, so a <code>timezone</code> that is not a single character string produces a clear error everywhere.</li>
+<li>Added tests for <code><a href="../reference/loadDataFile.html">loadDataFile()</a></code>, <code><a href="../reference/html_getTables.html">html_getTables()</a></code>, <code><a href="../reference/html_getTables.html">html_getTable()</a></code>, <code><a href="../reference/lintFunctionArgs.html">lintFunctionArgs_file()</a></code>, <code><a href="../reference/lintFunctionArgs.html">lintFunctionArgs_dir()</a></code> and timezone validation.</li>
+<li>
+<code><a href="../reference/showAPIKeys.html">showAPIKeys()</a></code> now masks key values by default. Use <code>mask = FALSE</code> to print complete keys.</li>
+<li>
+<code><a href="../reference/html_getTables.html">html_getTable()</a></code> now warns when <code>index &lt; 1</code> and stops if <code>index</code> is not a single integer.</li>
+<li>Replaced deprecated <code>.data$</code> tidyselect usage in <code><a href="../reference/lintFunctionArgs.html">lintFunctionArgs_file()</a></code>.</li>
+<li>Documented <code><a href="../reference/loadDataFile.html">loadDataFile()</a></code> (file must hold a single object), <code><a href="../reference/parseDatetime.html">parseDatetime()</a></code> (error when nothing parses) and <code><a href="../reference/logger.setLevel.html">logger.setLevel()</a></code> (console only).</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.6.2" id="mazamacoreutils-062">MazamaCoreUtils 0.6.2<small>2026-05-06</small><a class="anchor" aria-label="anchor" href="#mazamacoreutils-062"></a></h2>
 <ul><li>Restore but <em>deprecate</em> the <code>algorithm</code> argument from <code><a href="../reference/createLocationID.html">createLocationID()</a></code>.</li>
 </ul></div>
     <div class="section level2">

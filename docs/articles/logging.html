@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.3</span>
       </span>
     </div>
 
@@ -114,8 +114,7 @@ logging.basicConfig(filename="my_INFO.log",
 logging.error("ERROR level message")
 logging.warning("WARNING level message")
 logging.info("INFO level message")
-logging.debug("DEBUG level message")
-logging.trace("TRACE level message")</code></pre>
+logging.debug("DEBUG level message")</code></pre>
 </div>
 <div class="section level2">
 <h2 id="logging-in-r">Logging in R<a class="anchor" aria-label="anchor" href="#logging-in-r"></a>
@@ -232,7 +231,7 @@ statements and their output.</p>
 <span>  <span class="op">}</span>, silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span>  </span>
 <span>  <span class="kw">if</span> <span class="op">(</span> <span class="st">"try-error"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span> <span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="../reference/logger.warn.html">logger.warn</a></span><span class="op">(</span><span class="st">"Oops: %s"</span>, <span class="fu"><a href="https://rdrr.io/r/base/stop.html" class="external-link">geterrmessage</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="../reference/logger.warn.html">logger.warn</a></span><span class="op">(</span><span class="st">"Oops: %s"</span>, <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span>  </span>
 <span><span class="op">}</span></span>
@@ -255,20 +254,20 @@ statements and their output.</p>
 </h3>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmpDir</span>,<span class="st">"ERROR.log"</span><span class="op">)</span><span class="op">)</span>,collapse<span class="op">=</span><span class="st">'\n'</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ERROR [2026-05-05 21:20:50 UTC] NO ERRORS</span></span></code></pre></div>
+<span><span class="co">#&gt; ERROR [2026-09-30 19:02:03 UTC] NO ERRORS</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="info-log">INFO.log<a class="anchor" aria-label="anchor" href="#info-log"></a>
 </h3>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmpDir</span>,<span class="st">"INFO.log"</span><span class="op">)</span><span class="op">)</span>,collapse<span class="op">=</span><span class="st">'\n'</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO  [2026-05-05 21:20:50 UTC] Begin loggingExample ...</span></span>
-<span><span class="co">#&gt; WARN  [2026-05-05 21:20:50 UTC] Oops: Error in Summary.factor(structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,  : </span></span>
+<span><span class="co">#&gt; INFO  [2026-09-30 19:02:03 UTC] Begin loggingExample ...</span></span>
+<span><span class="co">#&gt; WARN  [2026-09-30 19:02:03 UTC] Oops: Error in Summary.factor(structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,  : </span></span>
 <span><span class="co">#&gt;   'sum' not meaningful for factors</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ERROR [2026-05-05 21:20:50 UTC] NO ERRORS</span></span>
-<span><span class="co">#&gt; INFO  [2026-05-05 21:20:50 UTC] Successfully completed loggingExample</span></span>
-<span><span class="co">#&gt; INFO  [2026-05-05 21:20:50 UTC] </span></span>
+<span><span class="co">#&gt; ERROR [2026-09-30 19:02:03 UTC] NO ERRORS</span></span>
+<span><span class="co">#&gt; INFO  [2026-09-30 19:02:03 UTC] Successfully completed loggingExample</span></span>
+<span><span class="co">#&gt; INFO  [2026-09-30 19:02:03 UTC] </span></span>
 <span><span class="co">#&gt; =============== THE END ===============</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -276,18 +275,18 @@ statements and their output.</p>
 </h3>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmpDir</span>,<span class="st">"TRACE.log"</span><span class="op">)</span><span class="op">)</span>,collapse<span class="op">=</span><span class="st">'\n'</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; INFO  [2026-05-05 21:20:50 UTC] Begin loggingExample ...</span></span>
-<span><span class="co">#&gt; TRACE [2026-05-05 21:20:50 UTC] Working on: Sepal.Length</span></span>
-<span><span class="co">#&gt; TRACE [2026-05-05 21:20:50 UTC] Working on: Sepal.Width</span></span>
-<span><span class="co">#&gt; TRACE [2026-05-05 21:20:50 UTC] Working on: Petal.Length</span></span>
-<span><span class="co">#&gt; TRACE [2026-05-05 21:20:50 UTC] Working on: Petal.Width</span></span>
-<span><span class="co">#&gt; TRACE [2026-05-05 21:20:50 UTC] Working on: Species</span></span>
-<span><span class="co">#&gt; WARN  [2026-05-05 21:20:50 UTC] Oops: Error in Summary.factor(structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,  : </span></span>
+<span><span class="co">#&gt; INFO  [2026-09-30 19:02:03 UTC] Begin loggingExample ...</span></span>
+<span><span class="co">#&gt; TRACE [2026-09-30 19:02:03 UTC] Working on: Sepal.Length</span></span>
+<span><span class="co">#&gt; TRACE [2026-09-30 19:02:03 UTC] Working on: Sepal.Width</span></span>
+<span><span class="co">#&gt; TRACE [2026-09-30 19:02:03 UTC] Working on: Petal.Length</span></span>
+<span><span class="co">#&gt; TRACE [2026-09-30 19:02:03 UTC] Working on: Petal.Width</span></span>
+<span><span class="co">#&gt; TRACE [2026-09-30 19:02:03 UTC] Working on: Species</span></span>
+<span><span class="co">#&gt; WARN  [2026-09-30 19:02:03 UTC] Oops: Error in Summary.factor(structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,  : </span></span>
 <span><span class="co">#&gt;   'sum' not meaningful for factors</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ERROR [2026-05-05 21:20:50 UTC] NO ERRORS</span></span>
-<span><span class="co">#&gt; INFO  [2026-05-05 21:20:50 UTC] Successfully completed loggingExample</span></span>
-<span><span class="co">#&gt; INFO  [2026-05-05 21:20:50 UTC] </span></span>
+<span><span class="co">#&gt; ERROR [2026-09-30 19:02:03 UTC] NO ERRORS</span></span>
+<span><span class="co">#&gt; INFO  [2026-09-30 19:02:03 UTC] Successfully completed loggingExample</span></span>
+<span><span class="co">#&gt; INFO  [2026-09-30 19:02:03 UTC] </span></span>
 <span><span class="co">#&gt; =============== THE END ===============</span></span></code></pre></div>
 </div>
 </div>
@@ -311,10 +310,12 @@ log messages as the are generated by entering the following command:</p>
 </h4>
 <p>This function is a wrapper for our typical usage. It accepts a
 <code>logDir</code> parameter and looks for <code>TRACE</code>,
-<code>DEBUG</code>, <code>INFO</code> and <code>ERROR</code> logs in
-that directory. If they are found, they are renamed as
-<code>paste0(logLevel,".log.",timestamp)</code>. After renaming, new log
-files are setup.</p>
+<code>DEBUG</code>, <code>INFO</code>, <code>WARN</code> and
+<code>ERROR</code> logs in that directory. If they are found, they are
+renamed as <code>paste0(logLevel,".log.",timestamp)</code>, where
+<code>timestamp</code> is a UTC time stamp. After renaming, new log
+files are setup. An optional <code>filePrefix</code> is prepended to
+each log file name.</p>
 <p>This is particularly useful for operational code run inside docker
 containers which may be automatically rebooted.</p>
 </div>

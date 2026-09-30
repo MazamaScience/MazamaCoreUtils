@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.3</span>
       </span>
     </div>
 
@@ -114,6 +114,10 @@ with <code><a href="https://lubridate.tidyverse.org/reference/with_tz.html" clas
 <p>If a character datetime includes signed offset information, such as
 <code>"-07:00"</code>, that offset is used by <code><a href="https://lubridate.tidyverse.org/reference/parse_date_time.html" class="external-link">lubridate::parse_date_time()</a></code> when
 determining the equivalent instant.</p>
+<p>Unparseable values are returned as <code>NA</code>, but if <em>none</em> of the input values can
+be parsed the function stops with the error <code>"no datetimes could be parsed"</code>,
+regardless of <code>expectAll</code>. When <code>expectAll = TRUE</code>, the function also stops
+if any non-missing value fails to parse.</p>
     </div>
     <div id="mazama-science-conventions">
     <h2>Mazama Science conventions</h2>

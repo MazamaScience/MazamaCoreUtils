@@ -18,7 +18,7 @@ frame.'><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/math
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.3</span>
       </span>
     </div>
 
@@ -76,7 +76,7 @@ frame.</p>
 <dt id="arg-relative">relative<a class="anchor" aria-label="anchor" href="#arg-relative"></a></dt>
 <dd><p>Logical specifying whether to return relative URLs. If
 <code>FALSE</code>, relative URLs are converted to absolute URLs using <code>url</code> as the
-base.</p></dd>
+base. Must be a single <code>TRUE</code> or <code>FALSE</code>; any other value is an error.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -91,6 +91,13 @@ base.</p></dd>
 and the <code>href</code> value in <code>linkUrl</code>. This is useful for extracting links from
 index pages, including web-accessible directories that list downloadable
 files.</p>
+<p>Links without an <code>href</code> value, Apache directory-listing sort links such as
+<code>?C=N;O=D</code>, and "Parent Directory" links are removed.</p>
+<p>If <code>relative = TRUE</code> (the default), <code>href</code> values are returned as found in the
+page, except that the leading <code>//</code> is removed from protocol-relative links
+(<code>//host/path</code> becomes <code>host/path</code>). If <code>relative = FALSE</code>, every link is
+resolved against <code>url</code>, so protocol-relative links take the scheme of <code>url</code>
+(<code>//host/path</code> becomes <code>https://host/path</code> for an <code>https</code> page).</p>
 <p>Wrapper functions <code>html_getLinkNames()</code> and <code>html_getLinkUrls()</code> return the
 corresponding columns as character vectors.</p>
     </div>

@@ -123,8 +123,7 @@ dateRange <- function(
   ceilingStart <- setIfNull(ceilingStart, FALSE, "logical")
   ceilingEnd <- setIfNull(ceilingEnd, FALSE, "logical")
 
-  if ( !timezone %in% base::OlsonNames() )
-    stop(sprintf("'timezone = %s' is not found in OlsonNames()", timezone))
+  .validateTimezone(timezone)
 
   if ( !is.numeric(days) || length(days) > 1 || days < 1 )
     stop("'days' must be a single positive number")

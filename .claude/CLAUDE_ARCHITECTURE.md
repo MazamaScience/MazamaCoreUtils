@@ -100,6 +100,7 @@ Load-bearing assumptions that downstream packages rely on:
 | `loadDataFile.R` | `loadDataFile` | Load `.rda` from dir or URL with fallback |
 | `parseDatetime.R` | `parseDatetime` | Compact/mixed datetime parsing to `POSIXct` |
 | `dateRange.R`, `timeRange.R`, `dateSequence.R`, `timeStamp.R` | same names | Date/time ranges, sequences, stamps |
+| `utils-timezone.R` | (internal) `.validateTimezone()` | Shared `timezone` validation for the date/time functions |
 | `utils-location.R` | `validateLonLat`, `validateLonsLats` | Coordinate validation (stop on failure) |
 | `createLocationMask.R` | `createLocationMask` | Logical mask of valid locations |
 | `createLocationID.R` | `createLocationID` | Geohash-based location IDs |
@@ -189,11 +190,13 @@ thoroughness. Only `DESCRIPTION` holds the version.
 
 - testthat (>= 3.1.7); tests in `tests/testthat/test-<topic>.R`, runner
   `tests/testthat.R`; run with `devtools::test()`.
-- There are tests for API keys, cache management, location utilities,
-  date/time functions, error handling, logging, `setIfNull()` and
-  `stopIfNull()`. Not currently tested: `loadDataFile()`, the HTML helpers,
-  the linting functions and `check_*()` (ad-hoc scripts for some are in
-  `local_test/`).
+- Tests cover API keys, cache management, location utilities, date/time
+  functions (including shared timezone validation), error handling, logging,
+  `loadDataFile()`, `html_getTable()`/`html_getTables()` (local files only),
+  the linting functions, `setIfNull()` and `stopIfNull()`. Not currently
+  tested: `html_getLinks()` and its helpers, and `check_*()`. Network and URL
+  access is tested only through local `file://` URLs. Ad-hoc scripts are in
+  `local_test/`.
 - CI: none, by design. This is a single-developer project and checks are run
   locally before pushing (`check_fast()`, `check_slower()`, `/wrap-up`,
   `/pre-publish`). Windows is checked before each release with

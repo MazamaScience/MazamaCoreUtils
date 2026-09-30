@@ -89,8 +89,7 @@ dateSequence <- function(
   stopIfNull(timezone)
   stopIfNull(ceilingEnd)
 
-  if ( !timezone %in% base::OlsonNames() )
-    stop(sprintf("'timezone = %s' is not found in OlsonNames()", timezone))
+  .validateTimezone(timezone)
 
   # ----- Create sequence ------------------------------------------------------
 

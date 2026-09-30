@@ -8,12 +8,19 @@ unique abbreviations such as `"m"` are accepted.
 * `stopOnError()` now builds its message from the supplied `try-error` rather
 than `geterrmessage()`, which could return an unrelated, more recent error.
 * Fixed a typo in a `dateRange()` error message.
+* `loadDataFile()` now stops with a clear message when the `.rda` file contains
+more than one object; previously it failed with an obscure error from `get()`.
+* Timezone validation is now shared by `parseDatetime()`, `timeRange()`,
+`dateRange()`, `dateSequence()` and `timeStamp()`, so a `timezone` that is not a
+single character string produces a clear error everywhere.
+* Added tests for `loadDataFile()`, `html_getTables()`, `html_getTable()`,
+`lintFunctionArgs_file()`, `lintFunctionArgs_dir()` and timezone validation.
 * `showAPIKeys()` now masks key values by default. Use `mask = FALSE` to print
 complete keys.
 * `html_getTable()` now warns when `index < 1` and stops if `index` is not a
 single integer.
 * Replaced deprecated `.data$` tidyselect usage in `lintFunctionArgs_file()`.
-* Documented `loadDataFile()` (only first object returned), `parseDatetime()`
+* Documented `loadDataFile()` (file must hold a single object), `parseDatetime()`
 (error when nothing parses) and `logger.setLevel()` (console only).
 
 # MazamaCoreUtils 0.6.2

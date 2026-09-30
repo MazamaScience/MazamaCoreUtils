@@ -60,8 +60,7 @@ timeRange <- function(
   ceilingStart <- setIfNull(ceilingStart, FALSE)
   ceilingEnd <- setIfNull(ceilingEnd, FALSE)
 
-  if ( !timezone %in% base::OlsonNames() )
-    stop(sprintf("'timezone = %s' is not found in OlsonNames()", timezone))
+  .validateTimezone(timezone)
 
   # ----- Process datetimes ----------------------------------------------------
 

@@ -37,9 +37,8 @@ If both \code{dataDir} and \code{dataUrl} are provided, \code{priority} determin
 source is tried first. If loading from the first source fails, the other
 source is used as a fallback.
 
-If the \code{.rda} file contains more than one object, only the first object
-listed by \code{\link[=load]{load()}} is returned. Files intended for use with this function
-should contain a single object.
+The \code{.rda} file must contain exactly one object. A file containing several
+objects generates an error.
 }
 \examples{
 \dontrun{

@@ -105,11 +105,7 @@ parseDatetime <- function(
   stopIfNull(isJulian)
   stopIfNull(quiet)
 
-  if ( !is.character(timezone) || length(timezone) > 1 )
-    stop(paste0("argument 'timezone' must be a character string of length one"))
-
-  if ( !timezone %in% base::OlsonNames() )
-    stop(sprintf("'timezone = %s' is not found in OlsonNames()", timezone))
+  .validateTimezone(timezone)
 
   if ( !is.logical(expectAll) || length(expectAll) != 1 )
     stop("argument 'expectAll' must be a logical value of length one")

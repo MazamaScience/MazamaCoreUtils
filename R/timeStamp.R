@@ -84,8 +84,7 @@ timeStamp <- function(
   stopIfNull(unit)
   stopIfNull(style)
 
-  if ( !timezone %in% base::OlsonNames() )
-    stop(sprintf("'timezone = %s' is not found in OlsonNames()", timezone))
+  .validateTimezone(timezone)
 
   if ( !unit %in% c("year", "month", "day", "hour", "min", "sec", "msec") )
     stop(sprintf("'unit = %s' is not recognized", unit))

@@ -11,9 +11,8 @@
 #' source is tried first. If loading from the first source fails, the other
 #' source is used as a fallback.
 #'
-#' If the `.rda` file contains more than one object, only the first object
-#' listed by [load()] is returned. Files intended for use with this function
-#' should contain a single object.
+#' The `.rda` file must contain exactly one object. A file containing several
+#' objects generates an error.
 #'
 #' @param filename Name of the `.rda` file to load.
 #' @param dataUrl Remote URL directory containing data files.
@@ -148,6 +147,7 @@ loadDataFile <- function(
   }
 
   # No error
+  .stopIfNotSingleObject(objectName, filepath)
   loadedData <- get(objectName)
   return(loadedData)
 
@@ -172,7 +172,25 @@ loadDataFile <- function(
   }
 
   # No error
+  .stopIfNotSingleObject(objectName, filepath)
   loadedData <- get(objectName)
   return(loadedData)
+
+}
+
+# Stop with a clear message if load() created more than one object.
+.stopIfNotSingleObject <- function(objectName, filepath) {
+
+  if ( length(objectName) != 1 ) {
+    stop(
+      sprintf(
+        "data file must contain exactly one object but contains %d: %s",
+        length(objectName), filepath
+      ),
+      call. = FALSE
+    )
+  }
+
+  invisible(NULL)
 
 }

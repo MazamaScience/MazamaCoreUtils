@@ -170,7 +170,7 @@ lintFunctionArgs_dir <- function(
   normDirPath <- normalizePath(dirPath)
 
   if ( !utils::file_test("-d", normDirPath) )
-    stop("filePath must point to a directory, not a file")
+    stop("dirPath must point to a directory, not a file")
 
 
   # Lint files -----------------------------------------------------------------

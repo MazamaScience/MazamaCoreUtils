@@ -1,0 +1,52 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git status)",
+      "Bash(git log*)",
+      "Bash(git diff*)",
+      "Bash(git add *)",
+      "Bash(git commit*)",
+      "Bash(git branch*)",
+      "Bash(git checkout*)",
+      "Bash(git fetch*)",
+      "Bash(git stash*)",
+      "Bash(git tag*)",
+      "Bash(git describe*)",
+      "Bash(ls*)",
+      "Bash(find*)",
+      "Bash(grep*)",
+      "Bash(cat *)",
+      "Bash(echo *)",
+      "Bash(which *)",
+      "Bash(pwd)",
+      "Bash(uname*)"
+    ],
+    "deny": [
+      "Bash(sudo *)",
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/.env-*)",
+      "Read(**/credentials.json)",
+      "Read(**/.netrc)",
+      "Read(**/.aws/credentials)",
+      "Read(**/.ssh/*)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Write(**/.env)",
+      "Write(**/.env.*)",
+      "Write(**/.env-*)",
+      "Write(**/credentials.json)",
+      "Write(**/.netrc)",
+      "Write(**/.aws/credentials)",
+      "Write(**/.ssh/*)",
+      "Write(**/*.pem)",
+      "Write(**/*.key)",
+      "Bash(rm -rf /)",
+      "Bash(rm -rf ~)",
+      "Bash(rm -rf .)",
+      "Bash(rm -rf ..)",
+      "Bash(rm -rf /*)",
+      "Bash(rm -rf ~/*)"
+    ]
+  }
+}

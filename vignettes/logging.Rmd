@@ -57,7 +57,6 @@ logging.error("ERROR level message")
 logging.warning("WARNING level message")
 logging.info("INFO level message")
 logging.debug("DEBUG level message")
-logging.trace("TRACE level message")
 ```
 
 # Logging in R

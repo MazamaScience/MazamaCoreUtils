@@ -20,6 +20,11 @@ Emit a \code{TRACE} level log message.
 \details{
 Logging must first be initialized with \code{\link[=logger.setup]{logger.setup()}}.
 }
+\examples{
+logger.setup(traceLog = file.path(tempdir(), "TRACE.log"))
+logger.trace("Processed \%d of \%d records", 5L, 10L)
+
+}
 \seealso{
 \code{\link[=logger.setup]{logger.setup()}}
 }

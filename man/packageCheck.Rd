@@ -68,6 +68,16 @@ tests.
 }
 }
 }
+\examples{
+\dontrun{
+# Quick check while developing
+check_fast()
+
+# Thorough check before a release
+check_slower()
+}
+
+}
 \seealso{
 \code{\link[devtools:check]{devtools::check()}}
 }

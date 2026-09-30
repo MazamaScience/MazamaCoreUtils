@@ -18,6 +18,16 @@ Return the API key associated with a web service provider.
 \details{
 If \code{provider = NULL}, all currently stored API keys are returned.
 }
+\examples{
+setAPIKey("exampleProvider", "abcd1234efgh5678")
+
+getAPIKey("exampleProvider")
+getAPIKey()
+
+# Remove the example key
+setAPIKey("exampleProvider", NULL)
+
+}
 \seealso{
 \link{APIKeys}, \code{\link[=setAPIKey]{setAPIKey()}}, \code{\link[=showAPIKeys]{showAPIKeys()}}
 }

@@ -20,6 +20,11 @@ Emit a \code{FATAL} level log message.
 \details{
 Logging must first be initialized with \code{\link[=logger.setup]{logger.setup()}}.
 }
+\examples{
+logger.setup(fatalLog = file.path(tempdir(), "FATAL.log"))
+logger.fatal("Processed \%d of \%d records", 5L, 10L)
+
+}
 \seealso{
 \code{\link[=logger.setup]{logger.setup()}}
 }

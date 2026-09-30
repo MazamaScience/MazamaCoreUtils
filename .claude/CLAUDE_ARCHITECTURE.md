@@ -118,6 +118,10 @@ utils-logging (logger.*)  <- initializeLogging, stopOnError (only if initialized
 stopOnError               <- initializeLogging, loadDataFile
 parseDatetime             <- dateRange, timeRange, dateSequence, timeStamp
                              (which wrap lubridate)
+timeRange                 <- dateRange
+createLocationMask        <- createLocationID
+html_getLinks             <- html_getLinkNames, html_getLinkUrls
+html_getTables            <- html_getTable
 ```
 
 `validateLonLat()` / `validateLonsLats()` are standalone; `createLocationMask()`
@@ -161,6 +165,8 @@ bump and a `NEWS.md` entry (and usually deprecation first):
 - Renaming, removing, or reordering arguments of an exported function
 - Changing argument defaults or return types/classes
 - Changing log file names, log line layout, or log level constants
+- Changing the output format of `showAPIKeys()` (keys are masked by default;
+  `mask = FALSE` prints them in full)
 - Changing datetime format acceptance in `parseDatetime()` or end-of-period
   behavior in `dateRange()` / `timeRange()`
 - Changing the geohash algorithm or precision default in `createLocationID()`

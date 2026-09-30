@@ -37,6 +37,18 @@ ERROR.log
 
 When \code{filePrefix} is supplied, it is prepended to each log file name.
 }
+\examples{
+logDir <- file.path(tempdir(), "logs")
+
+initializeLogging(logDir, filePrefix = "example_")
+
+logger.info("Processing started")
+logger.error("Something went wrong")
+
+list.files(logDir)
+readLines(file.path(logDir, "example_INFO.log"))
+
+}
 \seealso{
 \code{\link[=logger.setup]{logger.setup()}}
 }

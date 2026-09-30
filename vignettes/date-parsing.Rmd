@@ -42,7 +42,7 @@ machine  might be set to use UTC. Potential timezones
 * `UTC`
 
 Which timezone should be used to convert a request for data from "2019-08-08" to 
-"2018-08-15" into `POSIXct` datetimes?
+"2019-08-15" into `POSIXct` datetimes?
 
 To enforce specification of timezones and to help with the common user interface
 need to specify a range of dates or times, the **MazamaCoreUtils** package
@@ -50,9 +50,13 @@ provides the following functions:
 
 * `dateRange()` -- parses and returns `POSIXct` start and end dates 
 representing full days in the specified timezone
-* `timeRange()` -- parses and returns `POSixct` start and end times in the 
+* `timeRange()` -- parses and returns `POSIXct` start and end times in the 
 specified timezone
+* `dateSequence()` -- returns a sequence of local-midnight `POSIXct` values, one
+for each day in the specified timezone
 * `parseDatetime()` -- parses and returns a vector of `POSIXct` values in the
+specified timezone
+* `timeStamp()` -- formats datetimes as compact character timestamps in the
 specified timezone
 
 The `parseDatetime()` function is intended as a timezone-requiring replacement 
@@ -95,16 +99,14 @@ function in this package:
 
 ```
 > lintFunctionArgs_file("R/dateRange.R", timezoneLintRules)
-# A tibble: 7 x 6
-  file        line_number column_number function_name   named_args includes_required
-  <chr>             <int>         <int> <chr>           <list>     <lgl>            
-1 dateRange.R         125            29 with_tz         <chr [1]>  TRUE             
-2 dateRange.R         128            27 with_tz         <chr [1]>  TRUE             
-3 dateRange.R         141            18 parse_date_time <chr [2]>  TRUE             
-4 dateRange.R         142            18 parse_date_time <chr [2]>  TRUE             
-5 dateRange.R         159            18 parse_date_time <chr [2]>  TRUE             
-6 dateRange.R         176            18 parse_date_time <chr [2]>  TRUE             
-7 dateRange.R         188            18 now             <chr [1]>  TRUE             
+# A tibble: 5 x 6
+  file        line_number column_number function_name named_args includes_required
+  <chr>             <int>         <int> <chr>         <list>     <lgl>            
+1 dateRange.R         162            35 timeRange     <chr [1]>  TRUE             
+2 dateRange.R         197            26 parseDatetime <chr [1]>  TRUE             
+3 dateRange.R         202            26 parseDatetime <chr [1]>  TRUE             
+4 dateRange.R         218            24 parseDatetime <chr [1]>  TRUE             
+5 dateRange.R         237            18 now           <chr [1]>  TRUE             
 ```
 
 The result shows that the `dateRange.R` source code is consistent in always

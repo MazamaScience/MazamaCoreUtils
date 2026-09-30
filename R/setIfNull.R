@@ -30,7 +30,6 @@
 #' @examples
 #' setIfNull(NULL, "foo")
 #' setIfNull(10, 0)
-#' setIfNull("15", 0)
 #'
 #' # User-supplied values are returned unchanged
 #' setIfNull("15", 0)

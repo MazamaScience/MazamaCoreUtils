@@ -29,6 +29,17 @@
 #' @name initializeLogging
 #' @export
 #'
+#' @examples
+#' logDir <- file.path(tempdir(), "logs")
+#'
+#' initializeLogging(logDir, filePrefix = "example_")
+#'
+#' logger.info("Processing started")
+#' logger.error("Something went wrong")
+#'
+#' list.files(logDir)
+#' readLines(file.path(logDir, "example_INFO.log"))
+#'
 #' @seealso
 #' [logger.setup()]
 #'

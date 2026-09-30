@@ -21,6 +21,17 @@ Set the API key associated with a web service provider.
 API keys are stored in package session state and are remembered only for the
 duration of the current R session.
 }
+\examples{
+# Setting a key invisibly returns the previous value (NULL at first)
+setAPIKey("exampleProvider", "abcd1234efgh5678")
+old <- setAPIKey("exampleProvider", "newkey5678")
+old
+
+# Setting a key to NULL removes it
+setAPIKey("exampleProvider", NULL)
+getAPIKey("exampleProvider")
+
+}
 \seealso{
 \code{\link[=getAPIKey]{getAPIKey()}}, \code{\link[=showAPIKeys]{showAPIKeys()}}
 }

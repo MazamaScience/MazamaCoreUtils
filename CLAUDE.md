@@ -130,7 +130,7 @@ Run from the package root in R (or via `Rscript -e '...'`):
 | Run tests | `devtools::test()` (files in `tests/testthat/`) |
 | Quick check | `MazamaCoreUtils::check_fast()` |
 | Full check before release | `MazamaCoreUtils::check_slower()` |
-| Build website | `pkgdown::build_site()` (output in `docs/`, config in `_pkgdown.yml`) |
+| Build website | `pkgdown::build_site()` (output in `docs/`, config in `_pkgdown.yml`; also run by `/wrap-up`) |
 | Install locally | `devtools::install()` |
 
 - New behavior and bug fixes should come with a test in `tests/testthat/`

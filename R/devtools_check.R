@@ -44,6 +44,15 @@
 #' @seealso
 #' [devtools::check()]
 #'
+#' @examples
+#' \dontrun{
+#' # Quick check while developing
+#' check_fast()
+#'
+#' # Thorough check before a release
+#' check_slower()
+#' }
+#'
 #' @name packageCheck
 #' @aliases check_slow check
 NULL

@@ -11,12 +11,16 @@ Please run the end-of-session checklist for this project:
    `devtools::check(vignettes = FALSE)`) to verify the package checks cleanly
    with no new errors, warnings or notes.
 3. Run `Rscript -e 'devtools::document()'` to regenerate `man/` and `NAMESPACE`,
-   then report whether it changed any files. Do not rebuild the pkgdown site
-   (`docs/`) unless I ask.
-4. Run `git status` and summarize any uncommitted changes.
-5. If there are staged or unstaged changes, show a `git diff` summary and ask
+   then report whether it changed any files.
+4. Run `Rscript -e 'pkgdown::build_site()'` to rebuild the website in `docs/`
+   from the current documentation, and report any errors or warnings. If it
+   fails, stop and report the error.
+5. Run `git status` and summarize any uncommitted changes, noting which are
+   regenerated files (`man/`, `NAMESPACE`, `docs/`).
+6. If there are staged or unstaged changes, show a `git diff` summary and ask
    whether I want to commit them.
-6. Report the current `Version:` from `DESCRIPTION` and the most recent entry in
+7. Report the current `Version:` from `DESCRIPTION` and the most recent entry in
    `NEWS.md`, and note whether `NEWS.md` covers the changes made this session.
 
-Do not commit, push, or modify any files unless I explicitly ask.
+Regenerating documentation (steps 3 and 4) is expected to change files. Do not
+commit, push, or make any other changes unless I explicitly ask.

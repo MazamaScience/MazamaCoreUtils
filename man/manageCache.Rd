@@ -17,7 +17,8 @@ manageCache(
 
 \item{extensions}{Vector of file extensions eligible for removal.}
 
-\item{maxCacheSize}{Maximum cache size in megabytes.}
+\item{maxCacheSize}{Maximum cache size in megabytes. Must be a single
+non-negative number.}
 
 \item{sortBy}{Timestamp used to order files for size-based removal. One of
 \code{"atime"}, \code{"ctime"}, or \code{"mtime"}.}

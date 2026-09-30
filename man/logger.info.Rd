@@ -20,6 +20,11 @@ Emit an \code{INFO} level log message.
 \details{
 Logging must first be initialized with \code{\link[=logger.setup]{logger.setup()}}.
 }
+\examples{
+logger.setup(infoLog = file.path(tempdir(), "INFO.log"))
+logger.info("Processed \%d of \%d records", 5L, 10L)
+
+}
 \seealso{
 \code{\link[=logger.setup]{logger.setup()}}
 }

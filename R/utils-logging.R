@@ -394,6 +394,10 @@ logger.setLevel <- function(level) {
 #' @seealso
 #' [logger.setup()]
 #'
+#' @examples
+#' logger.setup(traceLog = file.path(tempdir(), "TRACE.log"))
+#' logger.trace("Processed %d of %d records", 5L, 10L)
+#'
 #' @export
 #' @importFrom logger log_trace
 logger.trace <- function(msg, ...) {
@@ -416,6 +420,10 @@ logger.trace <- function(msg, ...) {
 #'
 #' @seealso
 #' [logger.setup()]
+#'
+#' @examples
+#' logger.setup(debugLog = file.path(tempdir(), "DEBUG.log"))
+#' logger.debug("Processed %d of %d records", 5L, 10L)
 #'
 #' @export
 #' @importFrom logger log_debug
@@ -441,6 +449,10 @@ logger.debug <- function(msg, ...) {
 #' @seealso
 #' [logger.setup()]
 #'
+#' @examples
+#' logger.setup(infoLog = file.path(tempdir(), "INFO.log"))
+#' logger.info("Processed %d of %d records", 5L, 10L)
+#'
 #' @export
 #' @importFrom logger log_info
 #'
@@ -464,6 +476,10 @@ logger.info <- function(msg, ...) {
 #'
 #' @seealso
 #' [logger.setup()]
+#'
+#' @examples
+#' logger.setup(warnLog = file.path(tempdir(), "WARN.log"))
+#' logger.warn("Processed %d of %d records", 5L, 10L)
 #'
 #' @export
 #' @importFrom logger log_warn
@@ -489,6 +505,10 @@ logger.warn <- function(msg, ...) {
 #' @seealso
 #' [logger.setup()]
 #'
+#' @examples
+#' logger.setup(errorLog = file.path(tempdir(), "ERROR.log"))
+#' logger.error("Processed %d of %d records", 5L, 10L)
+#'
 #' @export
 #' @importFrom logger log_error
 #'
@@ -512,6 +532,10 @@ logger.error <- function(msg, ...) {
 #'
 #' @seealso
 #' [logger.setup()]
+#'
+#' @examples
+#' logger.setup(fatalLog = file.path(tempdir(), "FATAL.log"))
+#' logger.fatal("Processed %d of %d records", 5L, 10L)
 #'
 #' @export
 #' @importFrom logger log_fatal
@@ -549,6 +573,17 @@ logger.fatal <- function(msg, ...) {
 #' @docType data
 #' @name logLevels
 #' @aliases FATAL ERROR WARN INFO DEBUG TRACE
+#'
+#' @examples
+#' # Level constants are named integers
+#' c(FATAL, ERROR, WARN, INFO, DEBUG, TRACE)
+#' names(INFO)
+#'
+#' # Show INFO and higher messages in the console
+#' logger.setup()
+#' logger.setLevel(INFO)
+#' logger.info("Console logging is now enabled for INFO")
+#'
 #' @export
 #'
 FATAL <- 1L

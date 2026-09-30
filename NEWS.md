@@ -20,6 +20,10 @@ sources.
 * `html_getLinks()` and `html_getLinkUrls()` now stop with an error when
 `relative` is not a single `TRUE` or `FALSE`; previously any other value was
 silently treated as `TRUE`.
+* Added examples for the API key functions, `initializeLogging()`, the
+`logger.*()` functions, `logLevels` and the `check_*()` wrappers.
+* Updated the README and vignettes (current `stopOnError()` behavior, `WARN.log`,
+current linting output).
 * Added tests for `html_getLinks()`, `html_getLinkNames()` and
 `html_getLinkUrls()`.
 * `manageCache()` now checks whether each file was actually removed. Files that

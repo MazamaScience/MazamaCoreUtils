@@ -34,4 +34,15 @@ TRACE
 These constants are retained for backwards compatibility with the original
 MazamaCoreUtils logging system.
 }
+\examples{
+# Level constants are named integers
+c(FATAL, ERROR, WARN, INFO, DEBUG, TRACE)
+names(INFO)
+
+# Show INFO and higher messages in the console
+logger.setup()
+logger.setLevel(INFO)
+logger.info("Console logging is now enabled for INFO")
+
+}
 \keyword{datasets}

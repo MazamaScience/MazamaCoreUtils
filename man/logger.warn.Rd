@@ -20,6 +20,11 @@ Emit a \code{WARN} level log message.
 \details{
 Logging must first be initialized with \code{\link[=logger.setup]{logger.setup()}}.
 }
+\examples{
+logger.setup(warnLog = file.path(tempdir(), "WARN.log"))
+logger.warn("Processed \%d of \%d records", 5L, 10L)
+
+}
 \seealso{
 \code{\link[=logger.setup]{logger.setup()}}
 }

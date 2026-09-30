@@ -21,6 +21,17 @@ output or logs: only the first four characters of keys longer than eight
 characters are shown. Use \code{mask = FALSE} to print complete keys, or
 \code{\link[=getAPIKey]{getAPIKey()}} to retrieve them programmatically.
 }
+\examples{
+setAPIKey("exampleProvider", "abcd1234efgh5678")
+
+# Keys are masked by default
+showAPIKeys()
+showAPIKeys(mask = FALSE)
+
+# Remove the example key
+setAPIKey("exampleProvider", NULL)
+
+}
 \seealso{
 \code{\link[=getAPIKey]{getAPIKey()}}, \code{\link[=setAPIKey]{setAPIKey()}}
 }

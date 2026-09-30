@@ -19,7 +19,8 @@
 #'
 #' @param cacheDir Location of cache directory.
 #' @param extensions Vector of file extensions eligible for removal.
-#' @param maxCacheSize Maximum cache size in megabytes.
+#' @param maxCacheSize Maximum cache size in megabytes. Must be a single
+#'   non-negative number.
 #' @param sortBy Timestamp used to order files for size-based removal. One of
 #'   `"atime"`, `"ctime"`, or `"mtime"`.
 #' @param maxFileAge Maximum file age in days. Files with modification times

@@ -70,6 +70,16 @@ NULL
 #' @seealso
 #' [getAPIKey()], [setAPIKey()]
 #'
+#' @examples
+#' setAPIKey("exampleProvider", "abcd1234efgh5678")
+#'
+#' # Keys are masked by default
+#' showAPIKeys()
+#' showAPIKeys(mask = FALSE)
+#'
+#' # Remove the example key
+#' setAPIKey("exampleProvider", NULL)
+#'
 #' @keywords environment
 #' @export
 #' @importFrom utils str
@@ -105,6 +115,15 @@ showAPIKeys <- function(mask = TRUE) {
 #' @seealso
 #' [APIKeys], [setAPIKey()], [showAPIKeys()]
 #'
+#' @examples
+#' setAPIKey("exampleProvider", "abcd1234efgh5678")
+#'
+#' getAPIKey("exampleProvider")
+#' getAPIKey()
+#'
+#' # Remove the example key
+#' setAPIKey("exampleProvider", NULL)
+#'
 #' @keywords environment
 #' @export
 getAPIKey <- function(provider = NULL) {
@@ -130,6 +149,16 @@ getAPIKey <- function(provider = NULL) {
 #'
 #' @seealso
 #' [getAPIKey()], [showAPIKeys()]
+#'
+#' @examples
+#' # Setting a key invisibly returns the previous value (NULL at first)
+#' setAPIKey("exampleProvider", "abcd1234efgh5678")
+#' old <- setAPIKey("exampleProvider", "newkey5678")
+#' old
+#'
+#' # Setting a key to NULL removes it
+#' setAPIKey("exampleProvider", NULL)
+#' getAPIKey("exampleProvider")
 #'
 #' @keywords environment
 #' @export

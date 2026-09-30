@@ -56,7 +56,7 @@ MazamaSpatialUtils), general data wrangling, or domain-specific analysis.
 - The version is defined in `DESCRIPTION` (`Version:`); release tags match the
   version (e.g. `0.6.2`). Release notes go at the top of `NEWS.md`.
 - `.Rbuildignore` keeps `.claude/`, `docs/`, `_pkgdown.yml`, `local_test/`,
-  RStudio files and CI config out of the built package.
+  RStudio files and other non-package files out of the built package.
 - Releases are prepared with `/pre-publish`; pushing and CRAN submission are
   done manually by the maintainer.
 
@@ -194,8 +194,11 @@ thoroughness. Only `DESCRIPTION` holds the version.
   `stopIfNull()`. Not currently tested: `loadDataFile()`, the HTML helpers,
   the linting functions and `check_*()` (ad-hoc scripts for some are in
   `local_test/`).
-- CI: `.travis.yml` is present but legacy and excluded from the build; there
-  is no GitHub Actions configuration in the repository.
+- CI: none, by design. This is a single-developer project and checks are run
+  locally before pushing (`check_fast()`, `check_slower()`, `/wrap-up`,
+  `/pre-publish`). For cross-platform checks before a CRAN submission, use
+  `devtools::check_win_devel()` or `rhub::rhub_check()` on demand. Revisit if
+  outside contributors or platform-specific dependencies are added.
 
 ### Documentation
 

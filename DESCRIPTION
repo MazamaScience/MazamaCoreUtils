@@ -28,7 +28,7 @@ Imports:
     magrittr,
     purrr,
     rlang (>= 1.1.0),
-    rvest,
+    rvest (>= 1.0.0),
     stringr,
     tibble,
     xml2

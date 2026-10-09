@@ -54,7 +54,6 @@ html_getTables <- function(
       tableNodes,
       header = header,        # use first row as header
       trim = TRUE,            # remove leading/trailing white space
-      fill = TRUE,            # NA fill rows with fewer than max columns
       dec = "."
     )
 

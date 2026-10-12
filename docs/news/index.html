@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MazamaCoreUtils</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.4</span>
       </span>
     </div>
 
@@ -51,11 +51,13 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="development version" id="mazamacoreutils-development-version">MazamaCoreUtils (development version)<a class="anchor" aria-label="anchor" href="#mazamacoreutils-development-version"></a></h2>
+<h2 class="page-header" data-toc-text="0.6.4" id="mazamacoreutils-064">MazamaCoreUtils 0.6.4<a class="anchor" aria-label="anchor" href="#mazamacoreutils-064"></a></h2>
 <ul><li>
 <code><a href="../reference/timeStamp.html">timeStamp()</a></code> gains <code>style = "human"</code>, which is like <code>"clock"</code> but uses a space instead of the <code>"T"</code> separator, e.g. <code>"2019-01-08 12:30:15"</code>. Hour timestamps always include minutes (<code>"2019-01-08 12:00"</code>).</li>
 <li>
 <code><a href="../reference/html_getTables.html">html_getTables()</a></code> no longer passes the deprecated <code>fill</code> argument to <code><a href="https://rvest.tidyverse.org/reference/html_table.html" class="external-link">rvest::html_table()</a></code>, which now always fills ragged rows with <code>NA</code>. The <strong>rvest</strong> dependency is now <code>rvest (&gt;= 1.0.0)</code>.</li>
+<li>Added tests for ragged HTML tables and for <code><a href="../reference/setIfNull.html">setIfNull()</a></code> with integer input.</li>
+<li>Documentation updates: clearer <code><a href="../reference/timeStamp.html">timeStamp()</a></code> description, consistent “timezone” wording and a refreshed package website.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.6.3" id="mazamacoreutils-063">MazamaCoreUtils 0.6.3<small>2026-09-30</small><a class="anchor" aria-label="anchor" href="#mazamacoreutils-063"></a></h2>

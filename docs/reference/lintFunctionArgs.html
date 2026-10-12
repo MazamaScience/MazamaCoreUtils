@@ -129,22 +129,42 @@ unnamed argument <code>"baz"</code> are not inspected.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="va">rules</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">rules</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  fn_one <span class="op">=</span> <span class="st">"x"</span>,</span></span>
 <span class="r-in"><span>  fn_two <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"foo"</span>, <span class="st">"bar"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">lintFunctionArgs_file</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  filePath <span class="op">=</span> <span class="st">"local_test/timezone_lint_test_script.R"</span>,</span></span>
-<span class="r-in"><span>  rules <span class="op">=</span> <span class="va">rules</span></span></span>
+<span class="r-in"><span><span class="co"># Create a small script to lint</span></span></span>
+<span class="r-in"><span><span class="va">scriptDir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"lintExample"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="va">scriptDir</span>, showWarnings <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">scriptFile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">scriptDir</span>, <span class="st">"script.R"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"fn_one(x = 1)"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"fn_one(1)"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"fn_two(foo = 1, bar = 2)"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"strftime(Sys.time(), format = '%Y')"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="va">scriptFile</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">lintFunctionArgs_dir</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  dirPath <span class="op">=</span> <span class="st">"./R"</span>,</span></span>
-<span class="r-in"><span>  rules <span class="op">=</span> <span class="fu">MazamaCoreUtils</span><span class="fu">::</span><span class="va"><a href="timezoneLintRules.html">timezoneLintRules</a></span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="co"># Lint a single file. Calls with includes_required = FALSE are missing</span></span></span>
+<span class="r-in"><span><span class="co"># a required argument.</span></span></span>
+<span class="r-in"><span><span class="fu">lintFunctionArgs_file</span><span class="op">(</span><span class="va">scriptFile</span>, <span class="va">rules</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 x 6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   file     line_number column_number function_name named_args includes_required</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> script.R           1             1 fn_one        <span style="color: #949494;">&lt;chr [1]&gt;</span>  TRUE             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> script.R           2             1 fn_one        <span style="color: #949494;">&lt;NULL&gt;</span>     FALSE            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> script.R           3             1 fn_two        <span style="color: #949494;">&lt;chr [2]&gt;</span>  TRUE             </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Lint every .R file in a directory with the timezone rules</span></span></span>
+<span class="r-in"><span><span class="fu">lintFunctionArgs_dir</span><span class="op">(</span><span class="va">scriptDir</span>, <span class="va">timezoneLintRules</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 x 6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   file     line_number column_number function_name named_args includes_required</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> script.R           4             1 strftime      <span style="color: #949494;">&lt;chr [1]&gt;</span>  FALSE            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> script.R           4            10 Sys.time      <span style="color: #949494;">&lt;NULL&gt;</span>     FALSE            </span>
 </code></pre></div>
     </div>
   </div>

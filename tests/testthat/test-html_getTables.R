@@ -48,3 +48,27 @@ test_that("html_getTables() handles missing input and missing files", {
   expect_error(html_getTables(file.path(tempdir(), "no_such_file.html")))
 
 })
+
+test_that("html_getTables() fills ragged rows with NA", {
+
+  htmlFile <- tempfile(fileext = ".html")
+  writeLines(
+    paste0(
+      "<html><body><table>",
+      "<tr><th>a</th><th>b</th><th>c</th></tr>",
+      "<tr><td>1</td><td>2</td></tr>",
+      "<tr><td>3</td><td>4</td><td>5</td></tr>",
+      "</table></body></html>"
+    ),
+    htmlFile
+  )
+  on.exit(unlink(htmlFile))
+
+  expect_no_warning(table <- html_getTable(htmlFile))
+
+  expect_named(table, c("a", "b", "c"))
+  expect_equal(nrow(table), 2)
+  expect_true(is.na(table$c[1]))
+  expect_equal(table$c[2], 5)
+
+})

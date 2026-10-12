@@ -8,7 +8,7 @@ MazamaCoreUtils is a suite of utility functions for production-level R code,
 providing functionality commonly needed by operational systems such as logging,
 error handling, cache management and date-time parsing.
 
-Functions for date-time parsing and formatting require that time zones be
+Functions for date-time parsing and formatting require that timezones be
 specified explicitly, avoiding a common source of error when working with
 environmental time series.
 
@@ -30,7 +30,7 @@ MazamaCoreUtils requires R version 4.0.0 or later.
 
 ## Example
 
-Set up standard log files, request a range of days in an explicit time zone and
+Set up standard log files, request a range of days in an explicit timezone and
 record the request in the log:
 
 ```r
@@ -40,15 +40,15 @@ library(MazamaCoreUtils)
 logDir <- file.path(tempdir(), "logs")
 initializeLogging(logDir)
 
-# Date-times always require an explicit time zone
+# Date-times always require an explicit timezone
 tlim <- dateRange("2024-03-01", "2024-03-03", timezone = "America/Los_Angeles")
 tlim
 #> [1] "2024-03-01 00:00:00 PST" "2024-03-02 23:59:59 PST"
 
 logger.info(
   "Requesting data from %s to %s",
-  timeStamp(tlim[1], timezone = "America/Los_Angeles", unit = "min", style = "clock"),
-  timeStamp(tlim[2], timezone = "America/Los_Angeles", unit = "min", style = "clock")
+  timeStamp(tlim[1], timezone = "America/Los_Angeles", unit = "min", style = "human"),
+  timeStamp(tlim[2], timezone = "America/Los_Angeles", unit = "min", style = "human")
 )
 
 readLines(file.path(logDir, "INFO.log"))
@@ -60,7 +60,7 @@ readLines(file.path(logDir, "INFO.log"))
   `logger.info()`, `logger.error()`
 - **Error handling and `NULL` values** — `stopOnError()`, `stopIfNull()`,
   `setIfNull()`
-- **Date-times with explicit time zones** — `parseDatetime()`, `dateRange()`,
+- **Date-times with explicit timezones** — `parseDatetime()`, `dateRange()`,
   `timeRange()`, `dateSequence()`, `timeStamp()`
 - **Locations** — `validateLonLat()`, `createLocationMask()`,
   `createLocationID()`
@@ -79,7 +79,7 @@ MazamaCoreUtils was created by Mazama Science to standardize the work of
 building R packages, data processing pipelines and web services focused on
 environmental monitoring data. Its functions are used by other Mazama Science
 packages and by systems that are run operationally, where consistent logging,
-clear error messages and unambiguous time zones matter.
+clear error messages and unambiguous timezones matter.
 
 ## Documentation and Help
 

@@ -1,7 +1,8 @@
 #' Create character timestamps
 #'
-#' Convert datetimes to compact character timestamps suitable for file names,
-#' identifiers, labels, and other reproducible text output.
+#' Convert datetimes to character timestamps in compact, ISO-like or
+#' human-readable styles, suitable for file names, identifiers, labels, and other
+#' reproducible text output.
 #'
 #' Input values are converted with [parseDatetime()] using the required
 #' `timezone` argument. When `datetime = NULL`, the current UTC time is used

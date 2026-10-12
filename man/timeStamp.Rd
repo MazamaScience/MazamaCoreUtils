@@ -19,8 +19,9 @@ timeStamp(datetime = NULL, timezone = NULL, unit = "sec", style = "ymdhms")
 Character vector of timestamps.
 }
 \description{
-Convert datetimes to compact character timestamps suitable for file names,
-identifiers, labels, and other reproducible text output.
+Convert datetimes to character timestamps in compact, ISO-like or
+human-readable styles, suitable for file names, identifiers, labels, and other
+reproducible text output.
 }
 \details{
 Input values are converted with \code{\link[=parseDatetime]{parseDatetime()}} using the required

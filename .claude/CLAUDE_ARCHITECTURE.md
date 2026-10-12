@@ -224,7 +224,6 @@ thoroughness. Only `DESCRIPTION` holds the version.
 
 - Untested areas listed under Testing; `local_test/` scripts are not run
   automatically.
-- `_pkgdown.yml` pins old pandoc/pkgdown versions.
 - `DESCRIPTION` lists `devtools` in `Imports` (needed only by `check_*()`);
   moving it to `Suggests` would be a possible, but behavior-affecting, change.
 - Do not "fix" these as part of unrelated work without the maintainer's approval.

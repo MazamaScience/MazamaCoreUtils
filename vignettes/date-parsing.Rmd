@@ -56,8 +56,8 @@ specified timezone
 for each day in the specified timezone
 * `parseDatetime()` -- parses and returns a vector of `POSIXct` values in the
 specified timezone
-* `timeStamp()` -- formats datetimes as compact character timestamps in the
-specified timezone
+* `timeStamp()` -- formats datetimes as character timestamps (compact, ISO-like
+or human-readable) in the specified timezone
 
 The `parseDatetime()` function is intended as a timezone-requiring replacement 
 for `lubridate::parse_date_time()`.

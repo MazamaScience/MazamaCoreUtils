@@ -13,6 +13,8 @@ test_that("setIfNull() returns supplied target unchanged", {
   expect_identical(setIfNull(TRUE, 0), TRUE)
   expect_identical(setIfNull(mean, 0), mean)
   expect_identical(setIfNull(c(1, 2, 3), 0), c(1, 2, 3))
+  expect_identical(setIfNull(5L, "max"), 5L)
+  expect_identical(setIfNull(1:3, "max"), 1:3)
 
 })
 

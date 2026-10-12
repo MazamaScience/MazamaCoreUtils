@@ -49,7 +49,12 @@ Supported \code{style} values are:
 "ymdThms"  compact calendar time with "T" separator
 "julian"   year and Julian day
 "clock"    ISO-like clock time
+"human"    clock time with a space instead of the "T" separator
 }
+
+For \code{style = "human"}, hour timestamps always include minutes (\verb{:00}), e.g.
+\code{"2019-01-08 12:00"}, so that every timestamp containing a time of day looks
+like a time of day.
 
 For \code{style = "julian"} and \code{unit = "month"}, the timestamp uses the Julian
 day associated with the beginning of the month.
@@ -78,5 +83,8 @@ timeStamp(datetime, "UTC", unit = "sec", style = "julian")
 timeStamp(datetime, "UTC", unit = "sec", style = "clock")
 timeStamp(datetime, "America/Los_Angeles", unit = "sec", style = "clock")
 timeStamp(datetime, "America/Los_Angeles", unit = "msec", style = "clock")
+timeStamp(datetime, "UTC", unit = "hour", style = "human")
+timeStamp(datetime, "UTC", unit = "min", style = "human")
+timeStamp(datetime, "UTC", unit = "sec", style = "human")
 
 }

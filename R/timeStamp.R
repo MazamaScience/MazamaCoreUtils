@@ -29,7 +29,12 @@
 #' "ymdThms"  compact calendar time with "T" separator
 #' "julian"   year and Julian day
 #' "clock"    ISO-like clock time
+#' "human"    clock time with a space instead of the "T" separator
 #' }
+#'
+#' For `style = "human"`, hour timestamps always include minutes (`:00`), e.g.
+#' `"2019-01-08 12:00"`, so that every timestamp containing a time of day looks
+#' like a time of day.
 #'
 #' For `style = "julian"` and `unit = "month"`, the timestamp uses the Julian
 #' day associated with the beginning of the month.
@@ -61,6 +66,9 @@
 #' timeStamp(datetime, "UTC", unit = "sec", style = "clock")
 #' timeStamp(datetime, "America/Los_Angeles", unit = "sec", style = "clock")
 #' timeStamp(datetime, "America/Los_Angeles", unit = "msec", style = "clock")
+#' timeStamp(datetime, "UTC", unit = "hour", style = "human")
+#' timeStamp(datetime, "UTC", unit = "min", style = "human")
+#' timeStamp(datetime, "UTC", unit = "sec", style = "human")
 #'
 #' @export
 #'
@@ -89,7 +97,7 @@ timeStamp <- function(
   if ( !unit %in% c("year", "month", "day", "hour", "min", "sec", "msec") )
     stop(sprintf("'unit = %s' is not recognized", unit))
 
-  if ( !style %in% c("ymdhms", "ymdThms", "julian", "clock") )
+  if ( !style %in% c("ymdhms", "ymdThms", "julian", "clock", "human") )
     stop(sprintf("'style = %s' is not recognized", style))
 
   # ----- Format datetimes -----------------------------------------------------
@@ -111,6 +119,8 @@ timeStamp <- function(
     }
     if ( style == "clock" )
       format <- "%Y-%m"
+    if ( style == "human" )
+      format <- "%Y-%m"
 
   } else if ( unit == "day" ) {
     if ( style == "ymdhms" )
@@ -120,6 +130,8 @@ timeStamp <- function(
     if ( style == "julian" )
       format <- "%Y%j"
     if ( style == "clock" )
+      format <- "%Y-%m-%d"
+    if ( style == "human" )
       format <- "%Y-%m-%d"
 
   } else if ( unit == "hour" ) {
@@ -131,6 +143,8 @@ timeStamp <- function(
       format <- "%Y%j%H"
     if ( style == "clock" )
       format <- "%Y-%m-%dT%H"
+    if ( style == "human" )
+      format <- "%Y-%m-%d %H:00"
 
   } else if ( unit == "min" ) {
     if ( style == "ymdhms" )
@@ -141,6 +155,8 @@ timeStamp <- function(
       format <- "%Y%j%H%M"
     if ( style == "clock" )
       format <- "%Y-%m-%dT%H:%M"
+    if ( style == "human" )
+      format <- "%Y-%m-%d %H:%M"
 
   } else if ( unit == "sec" ) {
     if ( style == "ymdhms" )
@@ -151,6 +167,8 @@ timeStamp <- function(
       format <- "%Y%j%H%M%S"
     if ( style == "clock" )
       format <- "%Y-%m-%dT%H:%M:%S"
+    if ( style == "human" )
+      format <- "%Y-%m-%d %H:%M:%S"
 
   } else if ( unit == "msec" ) {
     if ( style == "ymdhms" )
@@ -161,6 +179,8 @@ timeStamp <- function(
       format <- "%Y%j%H%M%OS3"
     if ( style == "clock" )
       format <- "%Y-%m-%dT%H:%M:%OS3"
+    if ( style == "human" )
+      format <- "%Y-%m-%d %H:%M:%OS3"
 
   }
 

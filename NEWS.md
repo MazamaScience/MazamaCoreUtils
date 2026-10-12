@@ -1,3 +1,9 @@
+# MazamaCoreUtils (development version)
+
+* `timeStamp()` gains `style = "human"`, which is like `"clock"` but uses a
+space instead of the `"T"` separator, e.g. `"2019-01-08 12:30:15"`. Hour
+timestamps always include minutes (`"2019-01-08 12:00"`).
+
 # MazamaCoreUtils 0.6.3
 
 * `timeRange()` now actually applies its defaults for `unit`, `ceilingStart`

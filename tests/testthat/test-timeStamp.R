@@ -71,6 +71,41 @@ test_that("'clock' output is correct", {
 
 })
 
+test_that("'human' output is correct", {
+
+  datetime <- parseDatetime("2019-01-08 12:30:15", timezone = "UTC")
+
+  expect_identical(timeStamp(datetime, "UTC", style = "human", unit = "year"), "2019")
+  expect_identical(timeStamp(datetime, "UTC", style = "human", unit = "month"), "2019-01")
+  expect_identical(timeStamp(datetime, "UTC", style = "human", unit = "day"), "2019-01-08")
+  expect_identical(timeStamp(datetime, "UTC", style = "human", unit = "hour"), "2019-01-08 12:00")
+  expect_identical(timeStamp(datetime, "UTC", style = "human", unit = "min"), "2019-01-08 12:30")
+  expect_identical(timeStamp(datetime, "UTC", style = "human", unit = "sec"), "2019-01-08 12:30:15")
+  expect_identical(timeStamp(datetime, "UTC", style = "human", unit = "msec"), "2019-01-08 12:30:15.000")
+
+})
+
+test_that("'human' differs from 'clock' only by the separator and hour minutes", {
+
+  datetime <- parseDatetime("2019-01-08 12:30:15", timezone = "UTC")
+
+  for ( unit in c("min", "sec", "msec") ) {
+    clock <- timeStamp(datetime, "UTC", style = "clock", unit = unit)
+    human <- timeStamp(datetime, "UTC", style = "human", unit = unit)
+    expect_identical(sub(" ", "T", human), clock)
+  }
+
+  # Vectors work and the timezone is respected
+  datetimes <- parseDatetime(c("2019-01-08 12:00:00", "2019-07-08 12:00:00"), timezone = "UTC")
+  expect_identical(
+    timeStamp(datetimes, "America/Los_Angeles", style = "human", unit = "hour"),
+    c("2019-01-08 04:00", "2019-07-08 05:00")
+  )
+
+  expect_error(timeStamp(datetime, "UTC", style = "notAStyle"), "not recognized")
+
+})
+
 test_that("timezones are respected", {
 
   # PST
